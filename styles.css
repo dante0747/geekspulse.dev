@@ -735,6 +735,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 @media(max-width:640px){
   .support-strip { flex-direction:column; text-align:center; padding:24px 20px; }
+  .support-strip .btn { display:flex; width:100%; justify-content:center; box-sizing:border-box; white-space:normal; }
 }
 .support-text { display:flex; flex-direction:column; gap:5px; }
 .support-title { font-family:var(--display); font-size:22px; letter-spacing:1.5px; color:var(--ink); }
