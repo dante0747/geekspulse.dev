@@ -707,6 +707,162 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .card-row .card-link { flex-shrink: 0; align-self: center; }
 .card-row .card-footer { display: none; }
 
+/* ── Card image placeholder ─────────────────────────────────── */
+
+/* ── Shared keyframes ── */
+@keyframes ph-grid-drift    { 0% { background-position: 0 0; } 100% { background-position: 18px 18px; } }
+@keyframes ph-scan          { 0% { top:-20%; opacity:0; } 10% { opacity:1; } 90% { opacity:.6; } 100% { top:110%; opacity:0; } }
+@keyframes ph-tag-blink     { 0%,90%,100% { opacity:.75; } 95% { opacity:.15; } }
+@keyframes ph-glow-soft     { 0%,100% { filter: drop-shadow(0 0 6px var(--ph-color)); } 50% { filter: drop-shadow(0 0 18px var(--ph-color)) drop-shadow(0 0 36px var(--ph-color)); } }
+
+/* General — typewriter jitter: icon shakes like it's being typed */
+@keyframes ph-general-type  { 0%,100% { transform:translate(-50%,-50%); } 10% { transform:translate(calc(-50% + 2px),-50%); } 20% { transform:translate(-50%,calc(-50% - 1px)); } 30% { transform:translate(calc(-50% - 2px),-50%); } 40% { transform:translate(-50%,calc(-50% + 1px)); } }
+
+/* Security — pulse ring radar */
+@keyframes ph-security-ring { 0% { transform:translate(-50%,-50%) scale(.8); opacity:.8; } 100% { transform:translate(-50%,-50%) scale(2.2); opacity:0; } }
+@keyframes ph-security-icon { 0%,100% { transform:translate(-50%,-50%) scale(1); } 50% { transform:translate(-50%,-50%) scale(1.08); } }
+
+/* AI — "thinking" orbit spin around icon */
+@keyframes ph-ai-orbit      { 0% { transform:translate(-50%,-50%) rotate(0deg); } 100% { transform:translate(-50%,-50%) rotate(360deg); } }
+@keyframes ph-ai-icon       { 0%,100% { transform:translate(-50%,-50%) scale(1); opacity:1; } 50% { transform:translate(-50%,-50%) scale(1.1); opacity:.8; } }
+
+/* Python — side-to-side slither */
+@keyframes ph-python-slither { 0%,100% { transform:translate(-50%,-50%) rotate(-6deg) scaleX(1); } 25% { transform:translate(calc(-50% + 5px),-50%) rotate(4deg) scaleX(1.05); } 75% { transform:translate(calc(-50% - 5px),-50%) rotate(-4deg) scaleX(0.96); } }
+
+/* JavaScript — electric zap bounce */
+@keyframes ph-js-zap        { 0%,100% { transform:translate(-50%,-50%); } 15% { transform:translate(-50%,calc(-50% - 8px)) scale(1.15); } 30% { transform:translate(-50%,-50%) scale(.95); } 45% { transform:translate(-50%,calc(-50% - 4px)); } 60% { transform:translate(-50%,-50%); } }
+
+/* DevOps — slow clockwise gear spin */
+@keyframes ph-devops-spin   { 0% { transform:translate(-50%,-50%) rotate(0deg); } 100% { transform:translate(-50%,-50%) rotate(360deg); } }
+
+/* Open Source — orbit revolve (icon orbits a tiny satellite dot) */
+@keyframes ph-os-float      { 0%,100% { transform:translate(-50%,-50%) rotate(-4deg); } 50% { transform:translate(-50%,-50%) rotate(4deg) translateY(-3px); } }
+
+/* Java — steam bob upward */
+@keyframes ph-java-steam    { 0%,100% { transform:translate(-50%,-50%); opacity:1; } 40% { transform:translate(-50%,calc(-50% - 7px)); opacity:.85; } 60% { transform:translate(-50%,calc(-50% - 9px)); opacity:.7; } }
+
+/* Rust — jagged gear ratchet */
+@keyframes ph-rust-ratchet  { 0% { transform:translate(-50%,-50%) rotate(0deg); } 20% { transform:translate(-50%,-50%) rotate(30deg); } 40% { transform:translate(-50%,-50%) rotate(25deg); } 60% { transform:translate(-50%,-50%) rotate(60deg); } 80% { transform:translate(-50%,-50%) rotate(55deg); } 100% { transform:translate(-50%,-50%) rotate(90deg); } }
+
+/* Go — running hop: icon bounces sideways */
+@keyframes ph-go-run        { 0%,100% { transform:translate(-50%,-50%); } 20% { transform:translate(calc(-50% + 6px),calc(-50% - 5px)) rotate(4deg); } 40% { transform:translate(calc(-50% + 10px),-50%) rotate(0deg); } 60% { transform:translate(calc(-50% + 6px),calc(-50% - 5px)) rotate(-4deg); } 80% { transform:translate(-50%,-50%) rotate(0deg); } }
+
+/* ── Base placeholder styles ── */
+.card-placeholder {
+  position: relative; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden; cursor: pointer; text-decoration: none;
+  background: linear-gradient(135deg,
+    rgba(var(--ph-rgb,148,163,184), 0.10) 0%,
+    var(--surface2) 60%,
+    rgba(var(--ph-rgb,148,163,184), 0.05) 100%
+  );
+  border-bottom: 1px solid rgba(var(--ph-rgb,148,163,184), 0.25);
+}
+/* Scan line sweeps top → bottom */
+.card-placeholder::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ph-color), transparent);
+  animation: ph-scan 3.5s ease-in-out infinite;
+  pointer-events: none; z-index: 2; opacity: 0.5;
+}
+/* Dot-grid drifts diagonally */
+.card-placeholder__grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, var(--ph-color) 1px, transparent 1px);
+  background-size: 18px 18px; opacity: 0.18;
+  animation: ph-grid-drift 5s linear infinite;
+}
+/* Icon — base positioning; animation overridden per-category below */
+.card-placeholder__icon {
+  position: absolute; z-index: 1; top: 50%; left: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ph-color);
+  animation: ph-glow-soft 3s ease-in-out infinite;
+}
+/* Tag line */
+.card-placeholder__tag {
+  position: absolute; z-index: 1;
+  bottom: 10px; left: 0; right: 0; text-align: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px;
+  color: var(--ph-color); opacity: 0.75;
+  animation: ph-tag-blink 4s step-end infinite;
+  text-shadow: 0 0 8px var(--ph-color);
+}
+
+/* ── Per-category icon animations ── */
+.card-placeholder[data-ph-cat="General"]     .card-placeholder__icon { animation: ph-general-type  1.4s steps(1) infinite, ph-glow-soft 3s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="Security"]    .card-placeholder__icon { animation: ph-security-icon 2s ease-in-out infinite, ph-glow-soft 2s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="AI"]          .card-placeholder__icon { animation: ph-ai-icon       2.5s ease-in-out infinite, ph-glow-soft 2.5s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="Python"]      .card-placeholder__icon { animation: ph-python-slither 2.4s ease-in-out infinite, ph-glow-soft 2.4s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="JavaScript"]  .card-placeholder__icon { animation: ph-js-zap        1.8s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="DevOps"]      .card-placeholder__icon { animation: ph-devops-spin   6s linear infinite; }
+.card-placeholder[data-ph-cat="Open Source"] .card-placeholder__icon { animation: ph-os-float      3s ease-in-out infinite, ph-glow-soft 3s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="Java"]        .card-placeholder__icon { animation: ph-java-steam    2s ease-in-out infinite; }
+.card-placeholder[data-ph-cat="Rust"]        .card-placeholder__icon { animation: ph-rust-ratchet  2s steps(5,end) infinite; }
+.card-placeholder[data-ph-cat="Go"]          .card-placeholder__icon { animation: ph-go-run        2s ease-in-out infinite; }
+
+/* Security — extra radar ring behind the icon */
+.card-placeholder[data-ph-cat="Security"]::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 48px; height: 48px; border-radius: 50%;
+  border: 2px solid var(--ph-color); opacity: 0;
+  animation: ph-security-ring 2s ease-out infinite;
+}
+/* AI — orbit ring spins around icon */
+.card-placeholder[data-ph-cat="AI"]::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 72px; height: 72px; border-radius: 50%;
+  border: 1px dashed var(--ph-color); opacity: 0.35;
+  animation: ph-ai-orbit 4s linear infinite;
+}
+/* DevOps — second ring counter-spins */
+.card-placeholder[data-ph-cat="DevOps"]::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 68px; height: 68px; border-radius: 50%;
+  border: 1px dashed var(--ph-color); opacity: 0.25;
+  animation: ph-ai-orbit 9s linear infinite reverse;
+}
+
+/* Grid variation per category — different drift directions */
+.card-placeholder[data-ph-cat="AI"]         .card-placeholder__grid { animation: ph-grid-drift 3s linear infinite; }
+.card-placeholder[data-ph-cat="Security"]   .card-placeholder__grid { animation: ph-grid-drift 6s linear infinite reverse; }
+.card-placeholder[data-ph-cat="JavaScript"] .card-placeholder__grid { animation: ph-grid-drift 2s linear infinite; opacity: 0.22; }
+.card-placeholder[data-ph-cat="DevOps"]     .card-placeholder__grid { animation: ph-grid-drift 8s linear infinite; }
+
+/* List-view compact variant */
+.card-placeholder--list {
+  display: inline-flex; flex-direction: column;
+  border-bottom: none;
+  border: 1px solid rgba(var(--ph-rgb,148,163,184), 0.3);
+  border-radius: 6px;
+}
+.card-placeholder--list::after  { display: none; }
+.card-placeholder--list::before { display: none; }
+.card-placeholder--list .card-placeholder__tag { display: none; }
+
+/* ── Card thumbnail image ───────────────────────────────────── */
+.card-img-wrap {
+  display: block; overflow: hidden; border-radius: 6px 6px 0 0;
+  margin: -16px -16px 12px -16px; /* bleed to card edges */
+  aspect-ratio: 16 / 9; background: var(--surface2);
+  flex-shrink: 0;
+}
+.card-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.card:hover .card-img { transform: scale(1.03); }
+
+/* List-view side thumbnail */
+.card-img-wrap--list {
+  margin: 0; border-radius: 6px;
+  width: 90px; min-width: 90px; aspect-ratio: 4 / 3;
+  align-self: flex-start; flex-shrink: 0;
+}
+.card-img--list { border-radius: 6px; }
+.card-row { display: flex; align-items: flex-start; gap: 12px; }
+
 .card-num { font-family: var(--mono); font-size: 18px; color: var(--border2); flex-shrink: 0; line-height: 1; font-weight: 700; }
 .card-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; overflow: hidden; }
 .card-cat {
@@ -1292,3 +1448,40 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Back to top button ─────────────────────────────────────── */
+@keyframes btt-in  { from { opacity:0; transform:translateY(12px) scale(0.85); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes btt-out { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(12px) scale(0.85); } }
+
+.back-to-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  background: #111827;
+  border: 1px solid rgba(6,182,212,0.5);
+  border-radius: 50%;
+  color: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(6,182,212,0.25), 0 4px 16px rgba(0,0,0,0.5);
+  opacity: 0; pointer-events: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.back-to-top.visible {
+  pointer-events: auto;
+  animation: btt-in 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+.back-to-top.hiding {
+  pointer-events: none;
+  animation: btt-out 0.22s ease forwards;
+}
+.back-to-top:hover {
+  background: rgba(6,182,212,0.12);
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(6,182,212,0.4), 0 4px 16px rgba(0,0,0,0.5);
+}
+.back-to-top:hover svg {
+  transform: translateY(-2px);
+}
+.back-to-top svg { transition: transform 0.2s ease; }
+
+

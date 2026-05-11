@@ -143,6 +143,31 @@
   }
 
   // Render a standalone category icon for cards (bigger, separate from the pill)
+  // ── Card image placeholder (no image available) ──────────────
+  function cardPlaceholder(category, link) {
+    const meta = catMeta[category];
+    const color = meta ? meta.color : '#94A3B8';
+    const bigSvg = meta ? meta.icon.replace(/width="\d+" height="\d+"/, 'width="48" height="48"') : '';
+    // Pick a fun tag line per category
+    const tag = {
+      'General':     '{ breaking; }',
+      'Security':    'sudo cat news',
+      'AI':          'model.predict()',
+      'Python':      'import news',
+      'JavaScript':  'const news = fetch()',
+      'DevOps':      'kubectl get news',
+      'Open Source': 'git pull origin',
+      'Java':        'new News()',
+      'Rust':        'fn read() -> News',
+      'Go':          'go get news',
+    }[category] || '> _';
+    return `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-placeholder" data-ph-cat="${esc(category)}" style="--ph-color:${color}" tabindex="-1" aria-hidden="true">
+      <span class="card-placeholder__icon">${bigSvg}</span>
+      <span class="card-placeholder__tag">${esc(tag)}</span>
+      <span class="card-placeholder__grid"></span>
+    </a>`;
+  }
+
   function catIconCard(category) {
     const meta = catMeta[category];
     if (!meta) return '';
@@ -562,6 +587,7 @@
     const mins = readTime(a.title, a.snippet);
     return `
       <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}" data-card-idx="${i}">
+        ${a.image ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(a.image)}" alt="" loading="lazy" onerror="this.parentElement.replaceWith(cardPlaceholder(${JSON.stringify(a.category)}, ${JSON.stringify(a.link)}))"></a>` : cardPlaceholder(a.category, a.link)}
         <div class="card-top">
           <span class="card-num">${num}</span>
           ${catIconCard(a.category)}
@@ -601,6 +627,9 @@
     return `
       <article class="card card-row ${catClass(a.category)}" data-card-idx="${i}">
         <span class="card-num">${num}</span>
+        ${a.image ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(a.image)}" alt="" loading="lazy" onerror="this.parentElement.replaceWith(cardPlaceholder(${JSON.stringify(a.category)}, ${JSON.stringify(a.link)}))"></a>` : `<span class="card-img-wrap card-img-wrap--list card-placeholder card-placeholder--list" style="--ph-color:${catMeta[a.category]?.color||'#94A3B8'}">
+          <span class="card-placeholder__icon">${catMeta[a.category] ? catMeta[a.category].icon.replace(/width="\d+" height="\d+"/, 'width="28" height="28"') : ''}</span>
+        </span>`}
         <div class="card-body">
           <div class="card-top">
             ${catIconCard(a.category)}
@@ -1240,5 +1269,37 @@
   }
 
   document.addEventListener('DOMContentLoaded', init);
+
+  // ── Back to top ───────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    let visible = false;
+    let hideTimer = null;
+
+    function onScroll() {
+      const shouldShow = window.scrollY > 300;
+      if (shouldShow && !visible) {
+        visible = true;
+        clearTimeout(hideTimer);
+        btn.classList.remove('hiding');
+        btn.classList.add('visible');
+      } else if (!shouldShow && visible) {
+        visible = false;
+        btn.classList.add('hiding');
+        hideTimer = setTimeout(() => {
+          btn.classList.remove('visible', 'hiding');
+        }, 220);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // Run once in case page loads already scrolled
+    onScroll();
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
 
 })();
