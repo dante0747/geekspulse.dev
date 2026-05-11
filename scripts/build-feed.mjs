@@ -44,7 +44,14 @@ function hashId(input) {
 function normalizeUrl(url) {
   if (!url) return null;
   try {
-    const u = new URL(url.trim());
+    // Decode HTML entities before parsing (feeds often encode & as &amp;)
+    const decoded = String(url.trim())
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+    const u = new URL(decoded);
     if (!['http:', 'https:'].includes(u.protocol)) return null;
     u.hash = '';
     return u.toString();
@@ -104,28 +111,80 @@ function scoreImage(url, source, w = 0, h = 0) {
   let score = 0;
   if (source === 'media:content' || source === 'media:thumbnail') score += 20;
   else if (source === 'enclosure') score += 15;
+  else if (source === 'html-img')    score += 8;   // inline images in article HTML
+  else if (source === 'html-srcset') score += 6;   // srcset images in article HTML
   if (IMG_EXT.test(url)) score += 10;
   if (w > 0 && h > 0) {
     score += Math.min(w * h, 800_000) / 12_000;
     const r = w / h;
     if (r < 0.5 || r > 4) score -= 8;
     if (r >= 1.2 && r <= 2.0) score += 5;
+    // Penalise tiny images (likely icons/thumbnails)
+    if (w < 200 || h < 100) score -= 12;
   }
   if (/\/(image|img|photo|thumb|hero|featured|cover|banner|post|article|upload|media|content)\b/i.test(url)) score += 6;
   if (isBadImageUrl(url)) score -= 30;
   return score;
 }
 
+/** Decode HTML entities in a URL string. */
+function decodeHtmlEntities(str) {
+  return String(str || '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+/** Extract <img> URLs from an HTML string using regex (no DOM available in Node). */
+function extractImagesFromHtml(html) {
+  if (!html || typeof html !== 'string') return [];
+  const results = [];
+
+  const imgRe = /<img\b[^>]+>/gi;
+  let imgMatch;
+  while ((imgMatch = imgRe.exec(html)) !== null) {
+    const tag = imgMatch[0];
+
+    const srcMatch = tag.match(/\bsrc\s*=\s*["']([^"']+)["']/i);
+    if (srcMatch) {
+      const url = normalizeUrl(decodeHtmlEntities(srcMatch[1].trim()));
+      const wMatch = tag.match(/\bwidth\s*=\s*["']?(\d+)/i);
+      const hMatch = tag.match(/\bheight\s*=\s*["']?(\d+)/i);
+      const w = wMatch ? parseInt(wMatch[1], 10) : 0;
+      const h = hMatch ? parseInt(hMatch[1], 10) : 0;
+      if (url && !isBadImageUrl(url)) {
+        results.push({ url, source: 'html-img', w, h });
+      }
+    }
+
+    const srcsetMatch = tag.match(/\bsrcset\s*=\s*["']([^"']+)["']/i);
+    if (srcsetMatch) {
+      const parts = srcsetMatch[1].split(',')
+        .map(p => decodeHtmlEntities(p.trim().split(/\s+/)[0]))
+        .filter(Boolean);
+      const best = normalizeUrl(parts[parts.length - 1]);
+      if (best && !isBadImageUrl(best)) {
+        results.push({ url: best, source: 'html-srcset', w: 0, h: 0 });
+      }
+    }
+  }
+
+  return results;
+}
+
 function extractBestImage(item) {
   const candidates = [];
 
-  // media:content / media:thumbnail
+  // 1. media:content / media:thumbnail (highest confidence)
   for (const key of ['media:content', 'media:thumbnail']) {
     const node = item[key];
     if (node) {
       const nodes = Array.isArray(node) ? node : [node];
       for (const n of nodes) {
-        const url = n['@_url'];
+        const rawUrl = n['@_url'];
+        const url = normalizeUrl(decodeHtmlEntities(rawUrl || ''));
         if (url && !isBadImageUrl(url)) {
           const w = parseInt(n['@_width']  || 0, 10) || 0;
           const h = parseInt(n['@_height'] || 0, 10) || 0;
@@ -135,17 +194,30 @@ function extractBestImage(item) {
     }
   }
 
-  // RSS enclosure
+  // 2. RSS enclosure
   const enc = item.enclosure;
   if (enc) {
     const encNodes = Array.isArray(enc) ? enc : [enc];
     for (const e of encNodes) {
       const t = e['@_type'] || '';
-      const u = e['@_url']  || '';
+      const rawU = e['@_url']  || '';
+      const u = normalizeUrl(decodeHtmlEntities(rawU)) || rawU;
       if ((t.startsWith('image/') || IMG_EXT.test(u)) && !isBadImageUrl(u)) {
         candidates.push({ url: u, source: 'enclosure', w: 0, h: 0 });
       }
     }
+  }
+
+  // 3. Mine HTML payloads: content:encoded first (richer), then description/summary
+  const htmlSources = [
+    item['content:encoded'],
+    item.content?.['#text'] || item.content,
+    item.description,
+    item.summary?.['#text'] || item.summary,
+  ].filter(s => s && typeof s === 'string');
+
+  for (const html of htmlSources) {
+    candidates.push(...extractImagesFromHtml(html));
   }
 
   if (!candidates.length) return null;
