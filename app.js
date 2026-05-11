@@ -259,6 +259,18 @@
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  // Validate a URL: only allow http/https, strip everything else
+  function safeUrl(value) {
+    if (!value) return '#';
+    try {
+      const u = new URL(String(value).trim());
+      if (!['http:', 'https:'].includes(u.protocol)) return '#';
+      return u.toString();
+    } catch {
+      return '#';
+    }
+  }
+
   function catClass(cat) {
     return 'cat-' + cat.toLowerCase().replace(/\s+/g, '-');
   }
@@ -743,19 +755,38 @@
     }
   }
 
-  // ── Fetch all feeds ───────────────────────────────────────────
-  async function fetchAll() {
-    if (isLoading) return;
-    isLoading = true;
-    failedFeeds = 0;
-    setLoading();
+  // ── Load from pre-built cache (public/feed.json) ─────────────
+  async function loadFeedCache() {
+    const resp = await fetch('/public/feed.json', { cache: 'no-cache', signal: AbortSignal.timeout(8000) });
+    if (!resp.ok) throw new Error(`Cache ${resp.status}`);
+    const data = await resp.json();
+    // Reject empty placeholder
+    if (!data.generatedAt || !Array.isArray(data.articles) || data.articles.length === 0) {
+      throw new Error('Cache empty or not yet generated');
+    }
+    return data;
+  }
 
+  // Normalise a cached article to match the internal shape used by render()
+  function normaliseCachedArticle(a) {
+    return {
+      title:    a.title    || 'Untitled',
+      link:     safeUrl(a.link),
+      snippet:  a.summary  || '',
+      image:    a.image    ? safeUrl(a.image) : null,
+      date:     a.publishedAt || null,
+      source:   a.source   || '',
+      category: a.category || 'General',
+    };
+  }
+
+  // ── Fetch all feeds (called when cache miss or manual refresh) ─
+  async function fetchAllFromRSS() {
     const results = await Promise.allSettled(feeds.map(fetchFeed));
     const articles = [];
 
     results.forEach((res, i) => {
       if (res.status === 'fulfilled') {
-        // cap per feed so high-volume sources don't drown out smaller ones
         articles.push(...res.value.slice(0, MAX_PER_FEED));
       } else {
         failedFeeds++;
@@ -763,7 +794,6 @@
       }
     });
 
-    // Sort newest-first; undated items go to the end
     articles.sort((a, b) => {
       const da = new Date(a.date), db = new Date(b.date);
       if (isNaN(da) && isNaN(db)) return 0;
@@ -772,19 +802,39 @@
       return db - da;
     });
 
-    allArticles = articles.slice(0, MAX_ARTICLES);
-    isLoading = false;
+    return articles.slice(0, MAX_ARTICLES);
+  }
 
+  // ── Primary entry point: cache-first, RSS fallback ────────────
+  async function fetchAll() {
+    if (isLoading) return;
+    isLoading = true;
+    failedFeeds = 0;
+    setLoading();
+
+    try {
+      const data = await loadFeedCache();
+      allArticles = data.articles.map(normaliseCachedArticle).filter(a => a.link && a.link !== '#');
+      failedFeeds = data.failedFeeds || 0;
+      console.info(`[GeeksPulse] Loaded ${allArticles.length} articles from feed cache (generated ${data.generatedAt}).`);
+    } catch (cacheErr) {
+      console.warn('[GeeksPulse] Feed cache unavailable, fetching RSS directly…', cacheErr.message);
+      try {
+        allArticles = await fetchAllFromRSS();
+      } catch (rssErr) {
+        console.error('[GeeksPulse] RSS fetch also failed:', rssErr.message);
+        allArticles = [];
+      }
+    }
+
+    isLoading = false;
     setLive();
     updateSidebarStats();
-    buildFilters();   // rebuild with real counts
+    buildFilters();
     render();
 
-    if (failedFeeds > 0) {
-      console.info(`[GeeksPulse] ${failedFeeds} feed(s) failed silently — no drama.`);
-      if (allArticles.length > 0) {
-        showError(`${failedFeeds} feed(s) failed to load. Showing stories from ${feeds.length - failedFeeds} feeds.`);
-      }
+    if (failedFeeds > 0 && allArticles.length > 0) {
+      showError(`${failedFeeds} feed(s) failed to load. Showing stories from the remaining feeds.`);
     } else {
       hideError();
     }
@@ -835,18 +885,15 @@
       isListMode ? listCard(a, i) : gridCard(a, i)
     ).join('');
 
-    // stagger fade-in
+    // CSS-based stagger using --i custom property (no JS timers needed)
     feedGrid.querySelectorAll('.card').forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(6px)';
-      setTimeout(() => {
-        el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, Math.min(i * 20, 350));
+      el.style.setProperty('--i', Math.min(i, 20));
     });
 
     if (statArticles) statArticles.textContent = allArticles.length;
+
+    // Announce result to screen readers
+    announce(`${visible.length} stories shown.`);
 
     // Progressively fill in missing images from article metadata
     setTimeout(progressivelyResolveMissingImages, 100);
@@ -1011,8 +1058,9 @@
       if (c.id === 'All') count = allArticles.length;
       else if (c.id === 'Bookmarks') count = bmCount;
       else count = counts[c.id] || 0;
+      const isActive = c.id === activeFilter;
       return `
-        <button class="filter-item${c.id === activeFilter ? ' active' : ''}" data-cat="${esc(c.id)}">
+        <button class="filter-item${isActive ? ' active' : ''}" data-cat="${esc(c.id)}" aria-pressed="${isActive}">
           <span class="fi-icon" style="color:${c.color}">${c.icon}</span>
           <span class="fi-label">${esc(c.label)}</span>
           <span class="fi-count">${count}</span>
@@ -1038,7 +1086,9 @@
     PREF.set('filter', cat);
     [sidebarFilters, mobileFilters].forEach(container => {
       container.querySelectorAll('[data-cat]').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.cat === cat);
+        const active = btn.dataset.cat === cat;
+        btn.classList.toggle('active', active);
+        if (btn.hasAttribute('aria-pressed')) btn.setAttribute('aria-pressed', String(active));
       });
     });
     render();
@@ -1301,7 +1351,43 @@
     toastTimer = setTimeout(() => toast.classList.remove('visible'), 2400);
   }
 
-  // ── Theme toggle ─────────────────────────────────────────────
+  // ── Lazy-load Giscus comments ─────────────────────────────────
+  function initGiscusLazy() {
+    const mount = document.getElementById('commentsMount');
+    if (!mount) return;
+
+    function loadGiscus() {
+      if (document.getElementById('giscus-script')) return;
+      const script = document.createElement('script');
+      script.id = 'giscus-script';
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.dataset.repo = 'dante0747/geekspulse.dev';
+      script.dataset.repoId = 'R_kgDOSZ3OMg';
+      script.dataset.category = 'General';
+      script.dataset.categoryId = 'DIC_kwDOSZ3OMs4C8xt4';
+      script.dataset.mapping = 'pathname';
+      script.dataset.theme = (PREF.get('theme') === 'light') ? 'light' : 'dark_dimmed';
+      script.dataset.lang = 'en';
+      mount.appendChild(script);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) {
+        loadGiscus();
+        observer.disconnect();
+      }
+    }, { rootMargin: '300px' });
+
+    observer.observe(mount);
+  }
+
+  // ── Live-region for screen reader announcements ───────────────
+  function announce(message) {
+    const el = document.getElementById('feedStatus');
+    if (el) el.textContent = message;
+  }
   function giscusTheme(theme) {
     // Map site theme → a Giscus theme name
     const gTheme = theme === 'light' ? 'light' : 'dark_dimmed';
@@ -1359,6 +1445,7 @@
     initNav();
     initSettings();
     initPayPalModal();
+    initGiscusLazy();
     applyView();
     buildFilters();
 

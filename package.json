@@ -1,0 +1,13 @@
+{
+  "name": "geekspulse.dev",
+  "version": "1.0.0",
+  "description": "GeeksPulse — Developer News Aggregator",
+  "type": "module",
+  "scripts": {
+    "build-feed": "node scripts/build-feed.mjs"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.4.1"
+  }
+}
+

@@ -7,11 +7,9 @@
   <!-- Primary SEO -->
   <title>GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev</title>
   <meta name="description" content="GeeksPulse is a free, indie developer news aggregator that curates the best stories from trusted RSS feeds across AI, security, DevOps, JavaScript, open source, Java, and more — no ads, no trackers, no paywalls." />
-  <meta name="keywords" content="developer news, tech news aggregator, programming news, RSS aggregator, dev feed, software engineering news, open source news, cybersecurity news, AI news, machine learning news, web development, DevOps news, Hacker News, Lobsters, The Register, Ars Technica, InfoQ, IEEE Spectrum, Bleeping Computer, The Hacker News, Krebs on Security, Schneier on Security, SANS Internet Storm, MIT AI News, Google AI Blog, The Gradient, Planet Python, Real Python, JavaScript Weekly, Node Weekly, MDN Blog, Docker Blog, Kubernetes Blog, HashiCorp Blog, AWS DevOps Blog, LWN.net, GitHub Blog, OpenSource.com, Spring Blog, Baeldung, Inside Java, InfoQ Java" />
   <meta name="author" content="GeeksPulse" />
   <meta name="copyright" content="GeeksPulse 2026" />
   <meta name="language" content="English" />
-  <meta name="revisit-after" content="1 days" />
   <meta name="rating" content="general" />
   <link rel="canonical" href="https://geekspulse.dev/" />
 
@@ -19,7 +17,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://geekspulse.dev/" />
   <meta property="og:title" content="GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev" />
-  <meta property="og:description" content="Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise." />
+  <meta property="og:description" content="Free developer news aggregator. 32 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise." />
   <meta property="og:image" content="https://geekspulse.dev/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -33,7 +31,7 @@
   <meta name="twitter:creator" content="@geekspulse" />
   <meta name="twitter:url" content="https://geekspulse.dev/" />
   <meta name="twitter:title" content="GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev" />
-  <meta name="twitter:description" content="Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise." />
+  <meta name="twitter:description" content="Free developer news aggregator. 32 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise." />
   <meta name="twitter:image" content="https://geekspulse.dev/og-image.png" />
   <meta name="twitter:image:alt" content="GeeksPulse — Developer News Aggregator" />
 
@@ -91,7 +89,7 @@
       "@type": "WebPage",
       "name": "GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev",
       "url": "https://geekspulse.dev/",
-      "description": "Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise.",
+      "description": "Free developer news aggregator. 32 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise.",
       "isPartOf": { "@type": "WebSite", "url": "https://geekspulse.dev/" },
       "about": {
         "@type": "Thing",
@@ -117,9 +115,9 @@
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Developer News Sources aggregated by GeeksPulse",
-    "description": "All 29 RSS feed sources aggregated by GeeksPulse — the free developer news aggregator.",
+    "description": "All 32 RSS feed sources aggregated by GeeksPulse — the free developer news aggregator.",
     "url": "https://geekspulse.dev/",
-    "numberOfItems": 29,
+    "numberOfItems": 32,
     "itemListElement": [
       {"@type":"ListItem","position":1,"name":"Hacker News","url":"https://geekspulse.dev/?source=Hacker+News"},
       {"@type":"ListItem","position":2,"name":"Lobsters","url":"https://geekspulse.dev/?source=Lobsters"},
@@ -146,15 +144,22 @@
       {"@type":"ListItem","position":23,"name":"AWS DevOps Blog","url":"https://geekspulse.dev/?source=AWS+DevOps+Blog"},
       {"@type":"ListItem","position":24,"name":"LWN.net","url":"https://geekspulse.dev/?source=LWN.net"},
       {"@type":"ListItem","position":25,"name":"GitHub Blog","url":"https://geekspulse.dev/?source=GitHub+Blog"},
-      {"@type":"ListItem","position":26,"name":"OpenSource.com","url":"https://geekspulse.dev/?source=OpenSource.com"},
-      {"@type":"ListItem","position":27,"name":"Spring Blog","url":"https://geekspulse.dev/?source=Spring+Blog"},
-      {"@type":"ListItem","position":28,"name":"Baeldung","url":"https://geekspulse.dev/?source=Baeldung"},
-      {"@type":"ListItem","position":29,"name":"Inside Java","url":"https://geekspulse.dev/?source=Inside+Java"}
+      {"@type":"ListItem","position":26,"name":"Spring Blog","url":"https://geekspulse.dev/?source=Spring+Blog"},
+      {"@type":"ListItem","position":27,"name":"InfoQ Java","url":"https://geekspulse.dev/?source=InfoQ+Java"},
+      {"@type":"ListItem","position":28,"name":"Rust Blog","url":"https://geekspulse.dev/?source=Rust+Blog"},
+      {"@type":"ListItem","position":29,"name":"This Week in Rust","url":"https://geekspulse.dev/?source=This+Week+in+Rust"},
+      {"@type":"ListItem","position":30,"name":"Go Blog","url":"https://geekspulse.dev/?source=Go+Blog"},
+      {"@type":"ListItem","position":31,"name":"Go Weekly","url":"https://geekspulse.dev/?source=Go+Weekly"},
+      {"@type":"ListItem","position":32,"name":"Dave Cheney","url":"https://geekspulse.dev/?source=Dave+Cheney"}
     ]
   }
   </script>
 </head>
 <body>
+  <!-- Skip to main content (accessibility) -->
+  <a class="skip-link" href="#latest">Skip to latest articles</a>
+  <!-- Live region for screen reader feed status announcements -->
+  <div id="feedStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
   <!-- NAV -->
   <nav class="top-nav" aria-label="Main navigation">
     <div class="page-wrap">
@@ -881,6 +886,8 @@
           <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Leave feedback on GitHub
         </a>
       </div>
+      <!-- Giscus comments — loaded lazily when scrolled into view -->
+      <div id="commentsMount" class="giscus-wrap"></div>
       <div class="feedback-terminal">
         <div class="term-bar">
           <span class="term-dot red"></span>
@@ -914,10 +921,10 @@
           <li><a href="/?filter=Python">Python</a>: <a href="/?source=Planet+Python">Planet Python</a>, <a href="/?source=Real+Python">Real Python</a></li>
           <li><a href="/?filter=JavaScript">JavaScript</a>: <a href="/?source=JavaScript+Weekly">JavaScript Weekly</a>, <a href="/?source=Node+Weekly">Node Weekly</a>, <a href="/?source=MDN+Blog">MDN Blog</a></li>
           <li><a href="/?filter=DevOps">DevOps</a>: <a href="/?source=Docker+Blog">Docker Blog</a>, <a href="/?source=Kubernetes+Blog">Kubernetes Blog</a>, <a href="/?source=HashiCorp+Blog">HashiCorp Blog</a>, <a href="/?source=AWS+DevOps+Blog">AWS DevOps Blog</a></li>
-          <li><a href="/?filter=Open+Source">Open Source</a>: <a href="/?source=LWN.net">LWN.net</a>, <a href="/?source=GitHub+Blog">GitHub Blog</a>, <a href="/?source=OpenSource.com">OpenSource.com</a></li>
-          <li><a href="/?filter=Java">Java</a>: <a href="/?source=Spring+Blog">Spring Blog</a>, <a href="/?source=Baeldung">Baeldung</a>, <a href="/?source=Inside+Java">Inside Java</a>, <a href="/?source=InfoQ+Java">InfoQ Java</a></li>
+          <li><a href="/?filter=Open+Source">Open Source</a>: <a href="/?source=LWN.net">LWN.net</a>, <a href="/?source=GitHub+Blog">GitHub Blog</a></li>
+          <li><a href="/?filter=Java">Java</a>: <a href="/?source=Spring+Blog">Spring Blog</a>, <a href="/?source=InfoQ+Java">InfoQ Java</a></li>
           <li><a href="/?filter=Rust">Rust</a>: <a href="/?source=Rust+Blog">Rust Blog</a>, <a href="/?source=This+Week+in+Rust">This Week in Rust</a></li>
-          <li><a href="/?filter=Go">Go</a>: <a href="/?source=Go+Blog">Go Blog</a></li>
+          <li><a href="/?filter=Go">Go</a>: <a href="/?source=Go+Blog">Go Blog</a>, <a href="/?source=Go+Weekly">Go Weekly</a>, <a href="/?source=Dave+Cheney">Dave Cheney</a></li>
         </ul>
       </section>
       <div class="footer-inner">
