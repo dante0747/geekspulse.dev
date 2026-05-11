@@ -1756,6 +1756,44 @@
     // Initialize bookmark count
     updateSidebarStats();
 
+    // Delegated image load handler — if the loaded image is smaller than the
+    // card's display area, it would be upscaled and look blurry. Replace it
+    // with the category placeholder instead. Capture phase to run reliably.
+    feedGrid.addEventListener('load', async event => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      if (!img.classList.contains('card-img')) return;
+
+      const nW = img.naturalWidth  || 0;
+      const nH = img.naturalHeight || 0;
+      // Ignore obviously invalid loads (handled by error path)
+      if (nW === 0 || nH === 0) return;
+
+      const wrap = img.closest('.card-img-wrap');
+      const card = img.closest('.card');
+      if (!wrap || !card) return;
+
+      // Required size = rendered wrap size scaled by device pixel ratio (cap dpr at 2
+      // to avoid being overly strict on retina screens). Fall back to declared
+      // width/height attributes if layout hasn't measured the wrap yet.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = wrap.getBoundingClientRect();
+      const targetW = (rect.width  || Number(img.getAttribute('width'))  || 0) * dpr;
+      const targetH = (rect.height || Number(img.getAttribute('height')) || 0) * dpr;
+      if (targetW === 0 || targetH === 0) return;
+
+      // Allow a small tolerance (image may be slightly under target without
+      // looking bad). Treat as "too small" if either dimension is < 80% of target.
+      const TOL = 0.8;
+      if (nW >= targetW * TOL && nH >= targetH * TOL) return;
+
+      const category = card.dataset.category || img.dataset.category || 'General';
+      const link     = card.dataset.articleUrl || img.dataset.link || '#';
+      // Prevent the error handler from also firing if we strip the src
+      img.onerror = null;
+      wrap.outerHTML = cardPlaceholder(category, link);
+    }, true);
+
     // Delegated image error handler — capture phase so it fires before bubbling stops.
     // Replaces broken images with a placeholder, then tries to resolve a metadata fallback.
     feedGrid.addEventListener('error', async event => {
