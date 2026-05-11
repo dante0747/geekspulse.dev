@@ -116,6 +116,7 @@
     { id: 'Java',        label: 'Java',        color: '#f07f2f', icon: CAT_SVG['Java']        },
     { id: 'DevOps',      label: 'DevOps',      color: '#58c8ff', icon: CAT_SVG['DevOps']      },
     { id: 'Open Source', label: 'Open Source', color: '#56b4d3', icon: CAT_SVG['Open Source'] },
+    { id: 'Bookmarks',   label: 'Bookmarks',   color: '#6e7681', icon: `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>` },
   ];
 
   // Fast lookup: category id → { icon, color }
@@ -150,6 +151,34 @@
     'Parsing XML like it\'s 2005...',
     'curl -s https://dev.news | jq .',
   ];
+
+  // ── Bookmarks ─────────────────────────────────────────────────
+  const BOOKMARK_KEY = 'geeksup_bookmarks';
+
+  function loadBookmarks() {
+    try { return JSON.parse(localStorage.getItem(BOOKMARK_KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function saveBookmarks(bms) {
+    localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bms));
+  }
+
+  function isBookmarked(link) {
+    return loadBookmarks().some(b => b.link === link);
+  }
+
+  function toggleBookmark(article) {
+    let bms = loadBookmarks();
+    const idx = bms.findIndex(b => b.link === article.link);
+    if (idx === -1) {
+      bms.unshift({ ...article, bookmarkedAt: new Date().toISOString() });
+    } else {
+      bms.splice(idx, 1);
+    }
+    saveBookmarks(bms);
+    return idx === -1; // true = just bookmarked
+  }
 
   // ── State ────────────────────────────────────────────────────
   let allArticles   = [];
@@ -429,20 +458,26 @@
 
   // ── Render articles ───────────────────────────────────────────
   function render() {
-    const visible = activeFilter === 'All'
-      ? allArticles
-      : allArticles.filter(a => a.category === activeFilter);
+    let visible;
+    if (activeFilter === 'Bookmarks') {
+      visible = loadBookmarks();
+    } else {
+      visible = activeFilter === 'All'
+        ? allArticles
+        : allArticles.filter(a => a.category === activeFilter);
+    }
 
     feedGrid.innerHTML = '';
     // Apply filtered class so CSS can color cards by category
     feedGrid.classList.toggle('feed-filtered', activeFilter !== 'All');
 
     if (visible.length === 0 && !isLoading) {
+      const isBookmarkView = activeFilter === 'Bookmarks';
       feedGrid.innerHTML = `
         <div class="empty-state visible">
-          <div class="empty-art">  ¯\\_(ツ)_/¯\n  404: news not found</div>
-          <div class="empty-title">No news found for this filter.</div>
-          <div class="empty-sub">// try another category, or blame the algorithm</div>
+          <div class="empty-art">${isBookmarkView ? '  [ GeeksPulse Bookmarks ]\n  // folder is empty' : '  ¯\\_(ツ)_/¯\n  404: news not found'}</div>
+          <div class="empty-title">${isBookmarkView ? 'No bookmarks yet.' : 'No news found for this filter.'}</div>
+          <div class="empty-sub">${isBookmarkView ? '// hit the bookmark icon on any article to save it here' : '// try another category, or blame the algorithm'}</div>
         </div>`;
       articleCount.style.display = 'none';
       return;
@@ -474,6 +509,7 @@
     const date = relTime(a.date);
     const num  = String(i + 1).padStart(2, '0');
     const featured = i === 0;
+    const bm = isBookmarked(a.link);
     return `
       <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}">
         <div class="card-top">
@@ -481,6 +517,9 @@
           ${catIconCard(a.category)}
           <span class="card-cat ${catClass(a.category)}">${esc(a.category)}</span>
           ${date ? `<span class="card-date">${date}</span>` : ''}
+          <button class="bm-btn${bm ? ' bm-active' : ''}" data-bm-link="${esc(a.link)}" title="${bm ? 'Remove bookmark' : 'Save to GeeksPulse bookmarks'}" aria-label="${bm ? 'Remove bookmark' : 'Bookmark this article'}">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="${bm ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
         </div>
         <h2 class="card-title">
           <a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>
@@ -501,6 +540,7 @@
   function listCard(a, i) {
     const date = relTime(a.date);
     const num  = String(i + 1).padStart(2, '0');
+    const bm = isBookmarked(a.link);
     return `
       <article class="card card-row ${catClass(a.category)}">
         <span class="card-num">${num}</span>
@@ -509,6 +549,9 @@
             ${catIconCard(a.category)}
             <span class="card-cat ${catClass(a.category)}">${esc(a.category)}</span>
             ${date ? `<span class="card-date">${date}</span>` : ''}
+            <button class="bm-btn${bm ? ' bm-active' : ''}" data-bm-link="${esc(a.link)}" title="${bm ? 'Remove bookmark' : 'Save to GeeksPulse bookmarks'}" aria-label="${bm ? 'Remove bookmark' : 'Bookmark this article'}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="${bm ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
           </div>
           <h2 class="card-title">
             <a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>
@@ -572,6 +615,8 @@
     if (sbFeeds)   sbFeeds.textContent   = feeds.length - failedFeeds;
     if (sbUpdated) sbUpdated.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     if (sbFailed)  sbFailed.textContent  = failedFeeds;
+    const sbBmCount = document.getElementById('sbBmCount');
+    if (sbBmCount) sbBmCount.textContent = loadBookmarks().length;
   }
 
   function showError(msg) { errorMessage.textContent = msg; errorBanner.classList.add('visible'); }
@@ -581,9 +626,13 @@
   function buildFilters() {
     const counts = {};
     allArticles.forEach(a => { counts[a.category] = (counts[a.category] || 0) + 1; });
+    const bmCount = loadBookmarks().length;
 
     sidebarFilters.innerHTML = categories.map(c => {
-      const count = c.id === 'All' ? allArticles.length : (counts[c.id] || 0);
+      let count;
+      if (c.id === 'All') count = allArticles.length;
+      else if (c.id === 'Bookmarks') count = bmCount;
+      else count = counts[c.id] || 0;
       return `
         <button class="filter-item${c.id === activeFilter ? ' active' : ''}" data-cat="${esc(c.id)}">
           <span class="fi-icon" style="color:${c.color}">${c.icon}</span>
@@ -834,6 +883,22 @@
     });
   }
 
+  // ── Bookmark toast ────────────────────────────────────────────
+  let toastTimer = null;
+  function showBmToast(msg) {
+    let toast = document.getElementById('bmToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'bmToast';
+      toast.className = 'bm-toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('visible'), 2400);
+  }
+
   // ── Init ──────────────────────────────────────────────────────
   function init() {
     // Cyberpunk theme — no data-theme attribute needed
@@ -862,6 +927,50 @@
     });
 
     fetchAll().then(() => startAutoRefresh(autoRefreshMin));
+
+    // Clear bookmarks button
+    const clearBmBtn = document.getElementById('clearBookmarksBtn');
+    if (clearBmBtn) {
+      clearBmBtn.addEventListener('click', () => {
+        if (loadBookmarks().length === 0) return;
+        saveBookmarks([]);
+        buildFilters();
+        updateSidebarStats();
+        if (activeFilter === 'Bookmarks') render();
+        showBmToast('🗑️ All bookmarks cleared');
+      });
+    }
+
+    // Initialize bookmark count
+    updateSidebarStats();
+
+    // Bookmark button delegation
+    feedGrid.addEventListener('click', e => {
+      const btn = e.target.closest('.bm-btn');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const link = btn.dataset.bmLink;
+      // find article from allArticles or bookmarks list
+      let article = allArticles.find(a => a.link === link)
+                 || loadBookmarks().find(a => a.link === link);
+      if (!article) return;
+      const added = toggleBookmark(article);
+      // update button UI immediately without full re-render
+      const svg = btn.querySelector('svg');
+      if (svg) svg.setAttribute('fill', added ? 'currentColor' : 'none');
+      btn.classList.toggle('bm-active', added);
+      btn.title = added ? 'Remove bookmark' : 'Save to GeeksPulse bookmarks';
+      btn.setAttribute('aria-label', added ? 'Remove bookmark' : 'Bookmark this article');
+      // toast notification
+      showBmToast(added
+        ? '🔖 Saved to GeeksPulse bookmarks'
+        : '🗑️ Removed from bookmarks');
+      // refresh sidebar filter count
+      buildFilters();
+      // if currently viewing bookmarks, re-render
+      if (activeFilter === 'Bookmarks') render();
+    });
   }
 
   document.addEventListener('DOMContentLoaded', init);
