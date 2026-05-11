@@ -320,49 +320,132 @@
     return loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
   }
 
-  // ── Image extraction from a feed item/entry element ──────────
+  // ── Image pipeline ────────────────────────────────────────────
 
-  // Hosts / path fragments that indicate tracking pixels or non-editorial images
-  const _SKIP_IMG_HOST = /\b(feedburner|feedproxy|pixel|tracking|analytics|counter|stats|beacon|feedblitz|mailchimp|list-manage|gravatar|avatar|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch)\b/i;
-  const _SKIP_IMG_PATH = /\/(pixel|track|beacon|open|spacer|clear|1x1|blank|dot\.gif|transparent)\b/i;
-  const _IMG_EXT       = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
+  const IMAGE_CACHE_TTL           = 7 * 24 * 60 * 60 * 1000; // 7 days
+  const IMAGE_METADATA_CONCURRENCY = 3;
+  const _IMG_EXT = /\.(jpe?g|png|webp|avif)(\?|$)/i;
 
-  function _isBadImage(src, w, h) {
-    if (!src) return true;
-    if (w !== null && w <= 2) return true;
-    if (h !== null && h <= 2) return true;
-    // Known 1×1 GIF magic bytes indicator in data URIs
-    if (src.startsWith('data:')) return true;
+  // Bad URL patterns — tracking pixels, icons, logos, etc.
+  const _BAD_URL_RE = /\b(logo|icon|favicon|avatar|sprite|pixel|tracking|badge|placeholder|spacer|1x1|blank|beacon|counter|feedburner|feedproxy|analytics|stats|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch|feedblitz|mailchimp|list-manage|gravatar)\b/i;
+
+  function normalizeImageUrl(url, baseUrl) {
+    if (!url) return null;
+    if (url.startsWith('data:')) return null;
     try {
-      const u = new URL(src, location.href);
-      if (_SKIP_IMG_HOST.test(u.hostname)) return true;
-      if (_SKIP_IMG_PATH.test(u.pathname)) return true;
-    } catch { /* relative URL — keep */ }
+      return new URL(url, baseUrl || location.href).href;
+    } catch { return null; }
+  }
+
+  function isProbablyBadImageUrl(url) {
+    if (!url) return true;
+    if (url.startsWith('data:')) return true;
+    if (/\.svg(\?|$)/i.test(url)) return true;
+    try {
+      const u = new URL(url, location.href);
+      if (_BAD_URL_RE.test(u.hostname)) return true;
+      if (_BAD_URL_RE.test(u.pathname)) return true;
+    } catch { /* keep */ }
     return false;
   }
 
-  function _scoreImage(src, w, h) {
-    let score = 0;
-    // Reward known image extensions
-    if (_IMG_EXT.test(src)) score += 10;
-    // Reward size if known
-    if (w > 0 && h > 0) score += Math.min(w * h, 600000) / 10000;
+  function scoreImageCandidate(candidate) {
+    const { url, source, width: w, height: h } = candidate;
+    let score = candidate.score || 0;
+
+    // High-confidence metadata sources
+    if (source === 'og:image' || source === 'twitter:image') score += 30;
+    else if (source === 'media:thumbnail' || source === 'media:content') score += 20;
+    else if (source === 'enclosure' || source === 'itunes:image') score += 15;
+
+    // Reward known good extensions
+    if (_IMG_EXT.test(url)) score += 10;
+
+    // Reward size and reasonable aspect ratio
+    if (w > 0 && h > 0) {
+      score += Math.min(w * h, 800000) / 12000;
+      const ratio = w / h;
+      // Penalise extreme ratios (too narrow or too wide)
+      if (ratio < 0.5 || ratio > 4) score -= 8;
+      // Reward card-friendly aspect ratios (roughly 16:9 to 4:3)
+      if (ratio >= 1.2 && ratio <= 2.0) score += 5;
+    }
+
     // Reward editorial-sounding path segments
-    if (/\/(image|img|photo|thumb|hero|featured|cover|banner|post|article|upload|media|content)/i.test(src)) score += 6;
-    // Penalise icons / logos / avatars
-    if (/\/(icon|logo|avatar|sprite|badge|favicon)/i.test(src)) score -= 10;
+    if (/\/(image|img|photo|thumb|hero|featured|cover|banner|post|article|upload|media|content)\b/i.test(url)) score += 6;
+
+    // Penalise bad patterns
+    if (isProbablyBadImageUrl(url)) score -= 30;
+
     return score;
   }
 
-  /**
-   * extractImage(el, descHtml, contentHtml?)
-   * Gathers every image candidate from the XML element and its HTML payloads,
-   * scores each one, and returns the URL of the best candidate (or null).
-   */
-  function extractImage(el, descHtml, contentHtml) {
-    const candidates = []; // { url, score }
+  function parseSrcset(srcset, baseUrl) {
+    return srcset
+      .split(',')
+      .map(part => part.trim())
+      .map(part => {
+        const pieces = part.split(/\s+/);
+        const rawUrl = pieces[0];
+        const descriptor = pieces[1] || '1x';
+        if (!rawUrl) return null;
+        let descriptorScore = 1;
+        if (descriptor.endsWith('w')) {
+          descriptorScore = parseInt(descriptor, 10);
+        } else if (descriptor.endsWith('x')) {
+          descriptorScore = parseFloat(descriptor) * 1000;
+        }
+        const url = normalizeImageUrl(rawUrl, baseUrl);
+        if (!url) return null;
+        return { url, descriptor, descriptorScore: Number.isFinite(descriptorScore) ? descriptorScore : 1 };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.descriptorScore - a.descriptorScore);
+  }
 
-    // 1. <media:content> / <media:thumbnail> — iterate ALL nodes, not just first
+  function extractImageCandidatesFromHtml(html, baseUrl) {
+    const candidates = [];
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    // <picture> sources
+    tmp.querySelectorAll('picture source[srcset]').forEach(src => {
+      const parsed = parseSrcset(src.getAttribute('srcset') || '', baseUrl);
+      if (parsed.length) {
+        const url = parsed[0].url;
+        if (!isProbablyBadImageUrl(url)) {
+          candidates.push({ url, source: 'picture-source', width: 0, height: 0, score: 0 });
+        }
+      }
+    });
+
+    // <img src>
+    tmp.querySelectorAll('img[src]').forEach(img => {
+      const rawSrc = img.getAttribute('src') || '';
+      const url = normalizeImageUrl(rawSrc, baseUrl);
+      if (!url || isProbablyBadImageUrl(url)) return;
+      const w = parseInt(img.getAttribute('width')  || '0', 10) || 0;
+      const h = parseInt(img.getAttribute('height') || '0', 10) || 0;
+      const inFigure = !!img.closest('figure');
+      candidates.push({ url, source: 'html-img', width: w, height: h, score: inFigure ? 8 : 0 });
+
+      // Also check srcset on this img
+      const srcset = img.getAttribute('srcset');
+      if (srcset) {
+        const parsed = parseSrcset(srcset, baseUrl);
+        if (parsed.length && !isProbablyBadImageUrl(parsed[0].url)) {
+          candidates.push({ url: parsed[0].url, source: 'html-srcset', width: 0, height: 0, score: 2 });
+        }
+      }
+    });
+
+    return candidates;
+  }
+
+  function extractImageCandidatesFromFeedItem(el, descHtml, contentHtml) {
+    const candidates = [];
+
+    // 1. <media:content> / <media:thumbnail>
     const mediaNS = 'http://search.yahoo.com/mrss/';
     for (const tag of ['content', 'thumbnail']) {
       const nodes = el.getElementsByTagNameNS(mediaNS, tag);
@@ -370,11 +453,10 @@
         const node   = nodes[i];
         const url    = node.getAttribute('url') || '';
         const medium = node.getAttribute('medium') || '';
-        const w = parseInt(node.getAttribute('width')  || '0', 10) || null;
-        const h = parseInt(node.getAttribute('height') || '0', 10) || null;
-        // Accept when medium is "image", empty, or absent — skip "audio"/"video"
-        if (url && !/^(audio|video)$/i.test(medium) && !_isBadImage(url, w, h)) {
-          candidates.push({ url, score: _scoreImage(url, w, h) + 20 }); // media tags are highly reliable
+        const w = parseInt(node.getAttribute('width')  || '0', 10) || 0;
+        const h = parseInt(node.getAttribute('height') || '0', 10) || 0;
+        if (url && !/^(audio|video)$/i.test(medium) && !isProbablyBadImageUrl(url)) {
+          candidates.push({ url, source: tag === 'thumbnail' ? 'media:thumbnail' : 'media:content', width: w, height: h, score: 0 });
         }
       }
     }
@@ -384,17 +466,17 @@
     if (enc) {
       const t = enc.getAttribute('type') || '';
       const u = enc.getAttribute('url')  || '';
-      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !_isBadImage(u, null, null)) {
-        candidates.push({ url: u, score: _scoreImage(u, null, null) + 15 });
+      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !isProbablyBadImageUrl(u)) {
+        candidates.push({ url: u, source: 'enclosure', width: 0, height: 0, score: 0 });
       }
     }
 
-    // 3. <link rel="enclosure" type="image/..."> (Atom)
+    // 3. <link rel="enclosure"> (Atom)
     el.querySelectorAll('link[rel="enclosure"]').forEach(link => {
       const t = link.getAttribute('type')  || '';
       const u = link.getAttribute('href')  || '';
-      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !_isBadImage(u, null, null)) {
-        candidates.push({ url: u, score: _scoreImage(u, null, null) + 15 });
+      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !isProbablyBadImageUrl(u)) {
+        candidates.push({ url: u, source: 'enclosure', width: 0, height: 0, score: 0 });
       }
     });
 
@@ -402,44 +484,155 @@
     const itunes = el.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'image')[0];
     if (itunes) {
       const href = itunes.getAttribute('href') || '';
-      if (href && !_isBadImage(href, null, null)) {
-        candidates.push({ url: href, score: _scoreImage(href, null, null) + 15 });
+      if (href && !isProbablyBadImageUrl(href)) {
+        candidates.push({ url: href, source: 'itunes:image', width: 0, height: 0, score: 0 });
       }
     }
 
-    // 5. Extract <img> tags from HTML payloads — content:encoded first (richer), then description
+    // 5. Mine HTML payloads
     const htmlSources = [contentHtml, descHtml].filter(Boolean);
     for (const html of htmlSources) {
-      const tmp = document.createElement('div');
-      tmp.innerHTML = html;
-
-      tmp.querySelectorAll('img[src]').forEach(img => {
-        const src = img.getAttribute('src') || '';
-        if (!src) return;
-        const w = parseInt(img.getAttribute('width')  || '0', 10) || null;
-        const h = parseInt(img.getAttribute('height') || '0', 10) || null;
-        if (_isBadImage(src, w, h)) return;
-        const inFigure = !!img.closest('figure');
-        candidates.push({ url: src, score: _scoreImage(src, w, h) + (inFigure ? 8 : 0) });
-      });
-
-      // Also try srcset — grab the highest-density descriptor URL
-      tmp.querySelectorAll('img[srcset]').forEach(img => {
-        const srcset = img.getAttribute('srcset') || '';
-        // Parse "url descriptor, url descriptor, ..." — pick the last (largest) entry
-        const parts = srcset.split(',').map(s => s.trim().split(/\s+/)[0]).filter(Boolean);
-        const best  = parts[parts.length - 1];
-        if (best && !_isBadImage(best, null, null)) {
-          candidates.push({ url: best, score: _scoreImage(best, null, null) + 2 });
-        }
-      });
+      candidates.push(...extractImageCandidatesFromHtml(html, location.href));
     }
 
-    if (!candidates.length) return null;
+    return candidates;
+  }
 
-    // Return the highest-scoring unique URL
-    candidates.sort((a, b) => b.score - a.score);
-    return candidates[0].url;
+  function pickBestImageCandidate(candidates) {
+    if (!candidates.length) return null;
+    const scored = candidates
+      .filter(c => !isProbablyBadImageUrl(c.url))
+      .map(c => ({ ...c, score: scoreImageCandidate(c) }));
+    if (!scored.length) return null;
+    scored.sort((a, b) => b.score - a.score);
+    return scored[0];
+  }
+
+  /** Validate an image URL by actually loading it; resolves with dimensions or null. */
+  function validateImageUrl(url, timeoutMs = 3500) {
+    return new Promise(resolve => {
+      const img   = new Image();
+      const timer = setTimeout(() => resolve(null), timeoutMs);
+      img.onload = () => {
+        clearTimeout(timer);
+        const width  = img.naturalWidth;
+        const height = img.naturalHeight;
+        const ratio  = width / height;
+        if (width < 240 || height < 120) return resolve(null);
+        if (ratio < 0.5 || ratio > 4)   return resolve(null);
+        resolve({ url, width, height, ratio });
+      };
+      img.onerror = () => { clearTimeout(timer); resolve(null); };
+      img.referrerPolicy = 'no-referrer';
+      img.src = url;
+    });
+  }
+
+  // extractImage — thin wrapper that uses the new pipeline
+  function extractImage(el, descHtml, contentHtml) {
+    const candidates = extractImageCandidatesFromFeedItem(el, descHtml, contentHtml);
+    const best = pickBestImageCandidate(candidates);
+    return best ? best.url : null;
+  }
+
+  // ── Image metadata cache ────────────────────────────────────
+
+  function getCachedImage(articleUrl) {
+    try {
+      const raw = localStorage.getItem('gp:image:' + articleUrl);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      if (Date.now() - data.savedAt > IMAGE_CACHE_TTL) {
+        localStorage.removeItem('gp:image:' + articleUrl);
+        return null;
+      }
+      return data;
+    } catch { return null; }
+  }
+
+  function setCachedImage(articleUrl, imageData) {
+    try {
+      localStorage.setItem('gp:image:' + articleUrl, JSON.stringify({ ...imageData, savedAt: Date.now() }));
+    } catch { /* quota exceeded — silently ignore */ }
+  }
+
+  /** Fetch article HTML via CORS proxy and extract og:/twitter: meta image. */
+  async function resolveArticleMetadataImage(articleUrl) {
+    // Check cache first
+    const cached = getCachedImage(articleUrl);
+    if (cached) return cached;
+
+    try {
+      const proxyUrl = CORS_PROXY + encodeURIComponent(articleUrl);
+      const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
+      if (!resp.ok) return null;
+      const html = await resp.text();
+
+      // Parse just the <head> portion for speed
+      const tmp = document.createElement('div');
+      // Only take up to first ~8 KB to find meta tags quickly
+      tmp.innerHTML = html.slice(0, 8000);
+
+      const metaSelectors = [
+        'meta[property="og:image"]',
+        'meta[property="og:image:secure_url"]',
+        'meta[name="twitter:image"]',
+        'meta[name="twitter:image:src"]',
+        'link[rel="image_src"]',
+      ];
+
+      let imageUrl = null;
+      for (const sel of metaSelectors) {
+        const el = tmp.querySelector(sel);
+        if (el) {
+          imageUrl = el.getAttribute('content') || el.getAttribute('href') || null;
+          if (imageUrl) break;
+        }
+      }
+
+      if (!imageUrl || isProbablyBadImageUrl(imageUrl)) return null;
+
+      // Validate the resolved image
+      const validated = await validateImageUrl(imageUrl);
+      if (!validated) return null;
+
+      const result = { url: imageUrl, source: 'og:image', width: validated.width, height: validated.height };
+      setCachedImage(articleUrl, result);
+      return result;
+    } catch { return null; }
+  }
+
+  /** After the feed renders, find cards with no image and progressively resolve them. */
+  async function progressivelyResolveMissingImages() {
+    const cards = Array.from(feedGrid.querySelectorAll('.card[data-article-url]'));
+    // Find cards that still show a placeholder (no img.card-img)
+    const missing = cards.filter(card => !card.querySelector('img.card-img'));
+    if (!missing.length) return;
+
+    // Process in batches of IMAGE_METADATA_CONCURRENCY
+    for (let i = 0; i < missing.length; i += IMAGE_METADATA_CONCURRENCY) {
+      const batch = missing.slice(i, i + IMAGE_METADATA_CONCURRENCY);
+      await Promise.all(batch.map(async card => {
+        const articleUrl = card.dataset.articleUrl;
+        if (!articleUrl || articleUrl === '#') return;
+        const imageData = await resolveArticleMetadataImage(articleUrl);
+        if (imageData) updateCardImage(card, imageData);
+      }));
+    }
+  }
+
+  /** Replace the placeholder in a card with a real image. */
+  function updateCardImage(cardEl, imageData) {
+    const wrap = cardEl.querySelector('.card-img-wrap');
+    if (!wrap) return;
+    const category = cardEl.dataset.category || 'General';
+    const link     = cardEl.dataset.articleUrl || '#';
+    const isList   = cardEl.classList.contains('card-row');
+    const w = isList ? 240 : 640;
+    const h = isList ? 180 : 360;
+    const cls = isList ? 'card-img card-img--list' : 'card-img';
+    const wrapCls = isList ? 'card-img-wrap card-img-wrap--list' : 'card-img-wrap';
+    wrap.outerHTML = `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="${wrapCls}" tabindex="-1" aria-hidden="true"><img class="${cls}" src="${esc(imageData.url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="${w}" height="${h}" data-category="${esc(category)}" data-link="${esc(link)}"></a>`;
   }
 
   // ── RSS XML parser ────────────────────────────────────────────
@@ -513,44 +706,18 @@
     return (data.items || []).map(item => {
       const descHtml    = item.description || '';
       const contentHtml = item.content     || '';
-      // rss2json exposes thumbnail directly — use it as a strong hint
-      let image = null;
+      // rss2json exposes thumbnail directly — treat as a strong candidate
       const thumb = item.thumbnail || item.enclosure?.link || null;
-      if (thumb && !_isBadImage(thumb, null, null)) image = thumb;
-
-      // If no direct thumbnail, or we may find something better in the HTML, collect candidates
-      if (!image || _IMG_EXT.test(image) === false) {
-        // Build a fake XML-like structure isn't possible here; just mine the HTML
-        const htmlSources = [contentHtml, descHtml].filter(Boolean);
-        const candidates = thumb && !_isBadImage(thumb, null, null)
-          ? [{ url: thumb, score: _scoreImage(thumb, null, null) + 20 }]
-          : [];
-        for (const html of htmlSources) {
-          const tmp = document.createElement('div');
-          tmp.innerHTML = html;
-          tmp.querySelectorAll('img[src]').forEach(img => {
-            const src = img.getAttribute('src') || '';
-            if (!src) return;
-            const w = parseInt(img.getAttribute('width')  || '0', 10) || null;
-            const h = parseInt(img.getAttribute('height') || '0', 10) || null;
-            if (_isBadImage(src, w, h)) return;
-            const inFigure = !!img.closest('figure');
-            candidates.push({ url: src, score: _scoreImage(src, w, h) + (inFigure ? 8 : 0) });
-          });
-          tmp.querySelectorAll('img[srcset]').forEach(img => {
-            const srcset = img.getAttribute('srcset') || '';
-            const parts  = srcset.split(',').map(s => s.trim().split(/\s+/)[0]).filter(Boolean);
-            const best   = parts[parts.length - 1];
-            if (best && !_isBadImage(best, null, null)) {
-              candidates.push({ url: best, score: _scoreImage(best, null, null) + 2 });
-            }
-          });
-        }
-        if (candidates.length) {
-          candidates.sort((a, b) => b.score - a.score);
-          image = candidates[0].url;
-        }
+      const candidates = [];
+      if (thumb && !isProbablyBadImageUrl(thumb)) {
+        candidates.push({ url: thumb, source: 'rss-thumbnail', width: 0, height: 0, score: 20 });
       }
+      // Mine HTML payloads for additional candidates
+      for (const html of [contentHtml, descHtml].filter(Boolean)) {
+        candidates.push(...extractImageCandidatesFromHtml(html, location.href));
+      }
+      const best = pickBestImageCandidate(candidates);
+      const image = best ? best.url : null;
       return {
         title:    item.title    || 'Untitled',
         link:     item.link     || item.url || '#',
@@ -680,6 +847,9 @@
     });
 
     if (statArticles) statArticles.textContent = allArticles.length;
+
+    // Progressively fill in missing images from article metadata
+    setTimeout(progressivelyResolveMissingImages, 100);
   }
 
   function gridCard(a, i) {
@@ -688,9 +858,14 @@
     const featured = i === 0;
     const bm = isBookmarked(a.link);
     const mins = readTime(a.title, a.snippet);
+    const loadingAttr  = featured ? 'eager'  : 'lazy';
+    const fetchpriAttr = featured ? 'high'   : 'auto';
+    const imgHtml = a.image
+      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(a.image)}" alt="" loading="${loadingAttr}" fetchpriority="${fetchpriAttr}" decoding="async" referrerpolicy="no-referrer" width="640" height="360" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
+      : cardPlaceholder(a.category, a.link);
     return `
-      <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}" data-card-idx="${i}">
-        ${a.image ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(a.image)}" alt="" loading="lazy" onerror="this.parentElement.replaceWith(cardPlaceholder(${JSON.stringify(a.category)}, ${JSON.stringify(a.link)}))"></a>` : cardPlaceholder(a.category, a.link)}
+      <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}" data-card-idx="${i}" data-article-url="${esc(a.link)}" data-category="${esc(a.category)}">
+        ${imgHtml}
         <div class="card-top">
           <span class="card-num">${num}</span>
           ${catIconCard(a.category)}
@@ -727,12 +902,13 @@
     const num  = String(i + 1).padStart(2, '0');
     const bm = isBookmarked(a.link);
     const mins = readTime(a.title, a.snippet);
+    const imgHtml = a.image
+      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="240" height="180" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
+      : `<span class="card-img-wrap card-img-wrap--list card-placeholder card-placeholder--list" style="--ph-color:${catMeta[a.category]?.color||'#94A3B8'}"><span class="card-placeholder__icon">${catMeta[a.category] ? catMeta[a.category].icon.replace(/width="\d+" height="\d+"/, 'width="28" height="28"') : ''}</span></span>`;
     return `
-      <article class="card card-row ${catClass(a.category)}" data-card-idx="${i}">
+      <article class="card card-row ${catClass(a.category)}" data-card-idx="${i}" data-article-url="${esc(a.link)}" data-category="${esc(a.category)}">
         <span class="card-num">${num}</span>
-        ${a.image ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(a.image)}" alt="" loading="lazy" onerror="this.parentElement.replaceWith(cardPlaceholder(${JSON.stringify(a.category)}, ${JSON.stringify(a.link)}))"></a>` : `<span class="card-img-wrap card-img-wrap--list card-placeholder card-placeholder--list" style="--ph-color:${catMeta[a.category]?.color||'#94A3B8'}">
-          <span class="card-placeholder__icon">${catMeta[a.category] ? catMeta[a.category].icon.replace(/width="\d+" height="\d+"/, 'width="28" height="28"') : ''}</span>
-        </span>`}
+        ${imgHtml}
         <div class="card-body">
           <div class="card-top">
             ${catIconCard(a.category)}
@@ -1234,6 +1410,18 @@
 
     // Initialize bookmark count
     updateSidebarStats();
+
+    // Delegated image error handler — replaces broken images with placeholders
+    feedGrid.addEventListener('error', event => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      if (!img.classList.contains('card-img')) return;
+      const wrap = img.closest('.card-img-wrap');
+      if (!wrap) return;
+      const category = img.dataset.category || 'General';
+      const link     = img.dataset.link     || '#';
+      wrap.outerHTML = cardPlaceholder(category, link);
+    }, true);
 
     // Bookmark button delegation
     feedGrid.addEventListener('click', e => {
