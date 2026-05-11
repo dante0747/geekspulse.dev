@@ -376,8 +376,8 @@
     // Reward size and reasonable aspect ratio
     if (w > 0 && h > 0) {
       score += Math.min(w * h, 1200000) / 8000;  // stronger reward for larger images
-      // Penalise images too small to look good in a card (< 400 wide)
-      if (w < 400 || h < 200) score -= 20;
+      // Penalise images too small to look good in a card (both dimensions must be small)
+      if (w < 400 && h < 200) score -= 20;
       const ratio = w / h;
       // Penalise extreme ratios (too narrow or too wide)
       if (ratio < 0.5 || ratio > 4) score -= 8;
@@ -532,8 +532,8 @@
         const width  = img.naturalWidth;
         const height = img.naturalHeight;
         const ratio  = width / height;
-        // Require at least 400×200 to avoid blurry upscaled thumbnails
-        if (width < 400 || height < 200) return resolve(null);
+        // Require both dimensions to be sufficient to avoid blurry upscaled thumbnails
+        if (width < 400 && height < 200) return resolve(null);
         if (ratio < 0.5 || ratio > 4)   return resolve(null);
         resolve({ url, width, height, ratio });
       };
