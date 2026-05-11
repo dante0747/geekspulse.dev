@@ -7,7 +7,7 @@
   <!-- Primary SEO -->
   <title>GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev</title>
   <meta name="description" content="GeeksPulse is a free, indie developer news aggregator. Get the best stories from Hacker News, GitHub Blog, Krebs on Security, IEEE Spectrum and 25+ RSS feeds — no paywalls, no trackers, updated daily." />
-  <meta name="keywords" content="developer news, tech news aggregator, programming news, hacker news, RSS aggregator, dev feed, software engineering news, open source news, cybersecurity news, AI news, machine learning news, web development, DevOps news" />
+  <meta name="keywords" content="developer news, tech news aggregator, programming news, RSS aggregator, dev feed, software engineering news, open source news, cybersecurity news, AI news, machine learning news, web development, DevOps news, Hacker News, Lobsters, The Register, Ars Technica, InfoQ, IEEE Spectrum, Bleeping Computer, The Hacker News, Krebs on Security, Schneier on Security, SANS Internet Storm, MIT AI News, Google AI Blog, The Gradient, Planet Python, Real Python, JavaScript Weekly, Node Weekly, MDN Blog, Docker Blog, Kubernetes Blog, HashiCorp Blog, AWS DevOps Blog, LWN.net, GitHub Blog, OpenSource.com, Spring Blog, Baeldung, Inside Java, InfoQ Java" />
   <meta name="author" content="GeeksPulse" />
   <meta name="copyright" content="GeeksPulse 2026" />
   <meta name="language" content="English" />
@@ -111,6 +111,48 @@
       }
     }
   ]
+  ]
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Developer News Sources aggregated by GeeksPulse",
+    "description": "All 29 RSS feed sources aggregated by GeeksPulse — the free developer news aggregator.",
+    "url": "https://geekspulse.dev/",
+    "numberOfItems": 29,
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Hacker News","url":"https://geekspulse.dev/?source=Hacker+News"},
+      {"@type":"ListItem","position":2,"name":"Lobsters","url":"https://geekspulse.dev/?source=Lobsters"},
+      {"@type":"ListItem","position":3,"name":"The Register","url":"https://geekspulse.dev/?source=The+Register"},
+      {"@type":"ListItem","position":4,"name":"Ars Technica","url":"https://geekspulse.dev/?source=Ars+Technica"},
+      {"@type":"ListItem","position":5,"name":"InfoQ","url":"https://geekspulse.dev/?source=InfoQ"},
+      {"@type":"ListItem","position":6,"name":"IEEE Spectrum","url":"https://geekspulse.dev/?source=IEEE+Spectrum"},
+      {"@type":"ListItem","position":7,"name":"Bleeping Computer","url":"https://geekspulse.dev/?source=Bleeping+Computer"},
+      {"@type":"ListItem","position":8,"name":"The Hacker News","url":"https://geekspulse.dev/?source=The+Hacker+News"},
+      {"@type":"ListItem","position":9,"name":"Krebs on Security","url":"https://geekspulse.dev/?source=Krebs+on+Security"},
+      {"@type":"ListItem","position":10,"name":"Schneier on Security","url":"https://geekspulse.dev/?source=Schneier+on+Security"},
+      {"@type":"ListItem","position":11,"name":"SANS Internet Storm","url":"https://geekspulse.dev/?source=SANS+Internet+Storm"},
+      {"@type":"ListItem","position":12,"name":"MIT AI News","url":"https://geekspulse.dev/?source=MIT+AI+News"},
+      {"@type":"ListItem","position":13,"name":"Google AI Blog","url":"https://geekspulse.dev/?source=Google+AI+Blog"},
+      {"@type":"ListItem","position":14,"name":"The Gradient","url":"https://geekspulse.dev/?source=The+Gradient"},
+      {"@type":"ListItem","position":15,"name":"Planet Python","url":"https://geekspulse.dev/?source=Planet+Python"},
+      {"@type":"ListItem","position":16,"name":"Real Python","url":"https://geekspulse.dev/?source=Real+Python"},
+      {"@type":"ListItem","position":17,"name":"JavaScript Weekly","url":"https://geekspulse.dev/?source=JavaScript+Weekly"},
+      {"@type":"ListItem","position":18,"name":"Node Weekly","url":"https://geekspulse.dev/?source=Node+Weekly"},
+      {"@type":"ListItem","position":19,"name":"MDN Blog","url":"https://geekspulse.dev/?source=MDN+Blog"},
+      {"@type":"ListItem","position":20,"name":"Docker Blog","url":"https://geekspulse.dev/?source=Docker+Blog"},
+      {"@type":"ListItem","position":21,"name":"Kubernetes Blog","url":"https://geekspulse.dev/?source=Kubernetes+Blog"},
+      {"@type":"ListItem","position":22,"name":"HashiCorp Blog","url":"https://geekspulse.dev/?source=HashiCorp+Blog"},
+      {"@type":"ListItem","position":23,"name":"AWS DevOps Blog","url":"https://geekspulse.dev/?source=AWS+DevOps+Blog"},
+      {"@type":"ListItem","position":24,"name":"LWN.net","url":"https://geekspulse.dev/?source=LWN.net"},
+      {"@type":"ListItem","position":25,"name":"GitHub Blog","url":"https://geekspulse.dev/?source=GitHub+Blog"},
+      {"@type":"ListItem","position":26,"name":"OpenSource.com","url":"https://geekspulse.dev/?source=OpenSource.com"},
+      {"@type":"ListItem","position":27,"name":"Spring Blog","url":"https://geekspulse.dev/?source=Spring+Blog"},
+      {"@type":"ListItem","position":28,"name":"Baeldung","url":"https://geekspulse.dev/?source=Baeldung"},
+      {"@type":"ListItem","position":29,"name":"Inside Java","url":"https://geekspulse.dev/?source=Inside+Java"}
+    ]
+  }
   </script>
 </head>
 <body>
@@ -316,6 +358,20 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="page-wrap">
+      <!-- Feed Sources index — helps search engines associate feed names with GeeksPulse -->
+      <section class="footer-sources" aria-label="Aggregated feed sources">
+        <div class="footer-sources-title">// feed sources</div>
+        <ul class="footer-sources-list">
+          <li><a href="/?filter=General">General</a>: <a href="/?source=Hacker+News">Hacker News</a>, <a href="/?source=Lobsters">Lobsters</a>, <a href="/?source=The+Register">The Register</a>, <a href="/?source=Ars+Technica">Ars Technica</a>, <a href="/?source=InfoQ">InfoQ</a>, <a href="/?source=IEEE+Spectrum">IEEE Spectrum</a></li>
+          <li><a href="/?filter=Security">Security</a>: <a href="/?source=Bleeping+Computer">Bleeping Computer</a>, <a href="/?source=The+Hacker+News">The Hacker News</a>, <a href="/?source=Krebs+on+Security">Krebs on Security</a>, <a href="/?source=Schneier+on+Security">Schneier on Security</a>, <a href="/?source=SANS+Internet+Storm">SANS Internet Storm</a></li>
+          <li><a href="/?filter=AI">AI</a>: <a href="/?source=MIT+AI+News">MIT AI News</a>, <a href="/?source=Google+AI+Blog">Google AI Blog</a>, <a href="/?source=The+Gradient">The Gradient</a></li>
+          <li><a href="/?filter=Python">Python</a>: <a href="/?source=Planet+Python">Planet Python</a>, <a href="/?source=Real+Python">Real Python</a></li>
+          <li><a href="/?filter=JavaScript">JavaScript</a>: <a href="/?source=JavaScript+Weekly">JavaScript Weekly</a>, <a href="/?source=Node+Weekly">Node Weekly</a>, <a href="/?source=MDN+Blog">MDN Blog</a></li>
+          <li><a href="/?filter=DevOps">DevOps</a>: <a href="/?source=Docker+Blog">Docker Blog</a>, <a href="/?source=Kubernetes+Blog">Kubernetes Blog</a>, <a href="/?source=HashiCorp+Blog">HashiCorp Blog</a>, <a href="/?source=AWS+DevOps+Blog">AWS DevOps Blog</a></li>
+          <li><a href="/?filter=Open+Source">Open Source</a>: <a href="/?source=LWN.net">LWN.net</a>, <a href="/?source=GitHub+Blog">GitHub Blog</a>, <a href="/?source=OpenSource.com">OpenSource.com</a></li>
+          <li><a href="/?filter=Java">Java</a>: <a href="/?source=Spring+Blog">Spring Blog</a>, <a href="/?source=Baeldung">Baeldung</a>, <a href="/?source=Inside+Java">Inside Java</a>, <a href="/?source=InfoQ+Java">InfoQ Java</a></li>
+        </ul>
+      </section>
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-tagline">Built for developers who like clean feeds, good tools, and fewer tabs.</div>

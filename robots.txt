@@ -22,15 +22,23 @@ Allow: /?source=
 
 User-agent: Slurp
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 User-agent: DuckDuckBot
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 User-agent: Baiduspider
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 User-agent: YandexBot
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 # Sitemap location
 Sitemap: https://geekspulse.dev/sitemap.xml
