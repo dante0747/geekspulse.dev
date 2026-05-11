@@ -334,9 +334,12 @@
 
   // ── Image pipeline ────────────────────────────────────────────
 
-  const IMAGE_CACHE_TTL           = 7 * 24 * 60 * 60 * 1000; // 7 days
+  const IMAGE_CACHE_TTL            = 7 * 24 * 60 * 60 * 1000; // 7 days
   const IMAGE_METADATA_CONCURRENCY = 3;
   const _IMG_EXT = /\.(jpe?g|png|webp|avif)(\?|$)/i;
+
+  // Tracks article URLs currently being fetched — prevents duplicate concurrent requests
+  const resolvingImageUrls = new Set();
 
   // Bad URL patterns — tracking pixels, icons, logos, etc.
   const _BAD_URL_RE = /\b(logo|icon|favicon|avatar|sprite|pixel|tracking|badge|placeholder|spacer|1x1|blank|beacon|counter|feedburner|feedproxy|analytics|stats|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch|feedblitz|mailchimp|list-manage|gravatar)\b/i;
@@ -351,8 +354,10 @@
 
   function isProbablyBadImageUrl(url) {
     if (!url) return true;
-    if (url.startsWith('data:')) return true;
-    if (/\.svg(\?|$)/i.test(url)) return true;
+    const lower = String(url).toLowerCase();
+    if (lower.startsWith('data:')) return true;
+    if (lower.includes('base64')) return true;
+    if (/\.svg(\?|$)/i.test(lower)) return true;
     try {
       const u = new URL(url, location.href);
       if (_BAD_URL_RE.test(u.hostname)) return true;
@@ -525,16 +530,20 @@
   /** Validate an image URL by actually loading it; resolves with dimensions or null. */
   function validateImageUrl(url, timeoutMs = 3500) {
     return new Promise(resolve => {
+      if (!url) { resolve(null); return; }
       const img   = new Image();
-      const timer = setTimeout(() => resolve(null), timeoutMs);
+      const timer = setTimeout(() => {
+        img.onload = null; img.onerror = null;
+        resolve(null);
+      }, timeoutMs);
       img.onload = () => {
         clearTimeout(timer);
         const width  = img.naturalWidth;
         const height = img.naturalHeight;
+        if (!width || !height) { resolve(null); return; }
         const ratio  = width / height;
-        // Require both dimensions to be sufficient to avoid blurry upscaled thumbnails
-        if (width < 400 && height < 200) return resolve(null);
-        if (ratio < 0.5 || ratio > 4)   return resolve(null);
+        if (width < 240 || height < 120)   { resolve(null); return; }
+        if (ratio < 0.7 || ratio > 3.2)    { resolve(null); return; }
         resolve({ url, width, height, ratio });
       };
       img.onerror = () => { clearTimeout(timer); resolve(null); };
@@ -557,6 +566,10 @@
       const raw = localStorage.getItem('gp:image:' + articleUrl);
       if (!raw) return null;
       const data = JSON.parse(raw);
+      if (!data.url || isProbablyBadImageUrl(data.url)) {
+        localStorage.removeItem('gp:image:' + articleUrl);
+        return null;
+      }
       if (Date.now() - data.savedAt > IMAGE_CACHE_TTL) {
         localStorage.removeItem('gp:image:' + articleUrl);
         return null;
@@ -571,11 +584,24 @@
     } catch { /* quota exceeded — silently ignore */ }
   }
 
+  /** Extract the <head> section from raw HTML, or fall back to the first 50 KB. */
+  function getHeadHtml(html) {
+    if (!html) return '';
+    const match = html.match(/<head[^>]*>[\s\S]*?<\/head>/i);
+    if (match) return match[0];
+    return html.slice(0, 50000);
+  }
+
   /** Fetch article HTML via CORS proxy and extract og:/twitter: meta image. */
   async function resolveArticleMetadataImage(articleUrl) {
-    // Check cache first
+    if (!articleUrl) return null;
+
     const cached = getCachedImage(articleUrl);
     if (cached) return cached;
+
+    // Prevent duplicate concurrent fetches for the same URL
+    if (resolvingImageUrls.has(articleUrl)) return null;
+    resolvingImageUrls.add(articleUrl);
 
     try {
       const proxyUrl = CORS_PROXY + encodeURIComponent(articleUrl);
@@ -583,71 +609,113 @@
       if (!resp.ok) return null;
       const html = await resp.text();
 
-      // Parse just the <head> portion for speed
-      const tmp = document.createElement('div');
-      // Only take up to first ~8 KB to find meta tags quickly
-      tmp.innerHTML = html.slice(0, 8000);
+      // Parse the full <head> for metadata (avoids missing tags hidden after scripts/analytics)
+      const tmp = document.createElement('template');
+      tmp.innerHTML = getHeadHtml(html);
 
       const metaSelectors = [
         'meta[property="og:image"]',
+        'meta[property="og:image:url"]',
         'meta[property="og:image:secure_url"]',
         'meta[name="twitter:image"]',
         'meta[name="twitter:image:src"]',
         'link[rel="image_src"]',
       ];
 
-      let imageUrl = null;
-      for (const sel of metaSelectors) {
-        const el = tmp.querySelector(sel);
-        if (el) {
-          imageUrl = el.getAttribute('content') || el.getAttribute('href') || null;
-          if (imageUrl) break;
-        }
+      for (const selector of metaSelectors) {
+        const el = tmp.content.querySelector(selector);
+        if (!el) continue;
+
+        let imageUrl = el.getAttribute('content') || el.getAttribute('href') || null;
+        // Normalize against the article URL so relative paths resolve correctly
+        imageUrl = normalizeImageUrl(imageUrl, articleUrl);
+
+        if (!imageUrl || isProbablyBadImageUrl(imageUrl)) continue;
+
+        const validated = await validateImageUrl(imageUrl);
+        if (!validated) continue;
+
+        const result = {
+          url: imageUrl,
+          source: selector.includes('twitter') ? 'twitter:image' : 'og:image',
+          width: validated.width,
+          height: validated.height,
+          ratio: validated.ratio,
+          savedAt: Date.now(),
+        };
+
+        setCachedImage(articleUrl, result);
+        return result;
       }
 
-      if (!imageUrl || isProbablyBadImageUrl(imageUrl)) return null;
+      return null;
+    } catch (err) {
+      console.warn('[GeeksPulse] Failed to resolve article metadata image', articleUrl, err);
+      return null;
+    } finally {
+      resolvingImageUrls.delete(articleUrl);
+    }
+  }
 
-      // Validate the resolved image
-      const validated = await validateImageUrl(imageUrl);
-      if (!validated) return null;
-
-      const result = { url: imageUrl, source: 'og:image', width: validated.width, height: validated.height };
-      setCachedImage(articleUrl, result);
-      return result;
-    } catch { return null; }
+  /** Run async worker over items with limited concurrency. */
+  async function runLimited(items, limit, worker) {
+    const queue = [...items];
+    const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+      while (queue.length) {
+        await worker(queue.shift());
+      }
+    });
+    await Promise.all(workers);
   }
 
   /** After the feed renders, find cards with no image and progressively resolve them. */
   async function progressivelyResolveMissingImages() {
-    const cards = Array.from(feedGrid.querySelectorAll('.card[data-article-url]'));
-    // Find cards that still show a placeholder (no img.card-img)
-    const missing = cards.filter(card => !card.querySelector('img.card-img'));
-    if (!missing.length) return;
+    const cards = Array.from(
+      feedGrid.querySelectorAll('.card[data-article-url]')
+    ).filter(card => {
+      const hasImage       = Boolean(card.querySelector('img.card-img'));
+      const hasPlaceholder = Boolean(card.querySelector('.card-placeholder, .card-img-placeholder'));
+      const state          = card.dataset.imageState;
+      return !hasImage || hasPlaceholder || state === 'missing' || state === 'failed';
+    });
 
-    // Process in batches of IMAGE_METADATA_CONCURRENCY
-    for (let i = 0; i < missing.length; i += IMAGE_METADATA_CONCURRENCY) {
-      const batch = missing.slice(i, i + IMAGE_METADATA_CONCURRENCY);
-      await Promise.all(batch.map(async card => {
-        const articleUrl = card.dataset.articleUrl;
-        if (!articleUrl || articleUrl === '#') return;
-        const imageData = await resolveArticleMetadataImage(articleUrl);
-        if (imageData) updateCardImage(card, imageData);
-      }));
-    }
+    if (!cards.length) return;
+
+    await runLimited(cards, IMAGE_METADATA_CONCURRENCY, async card => {
+      const articleUrl = card.dataset.articleUrl;
+      if (!articleUrl || articleUrl === '#') return;
+
+      const cached = getCachedImage(articleUrl);
+      if (cached) { updateCardImage(card, cached); return; }
+
+      const imageData = await resolveArticleMetadataImage(articleUrl);
+      if (imageData) updateCardImage(card, imageData);
+    });
   }
 
-  /** Replace the placeholder in a card with a real image. */
+  /** Replace the placeholder or broken image in a card with a real image. */
   function updateCardImage(cardEl, imageData) {
-    const wrap = cardEl.querySelector('.card-img-wrap');
-    if (!wrap) return;
-    const category = cardEl.dataset.category || 'General';
-    const link     = cardEl.dataset.articleUrl || '#';
-    const isList   = cardEl.classList.contains('card-row');
-    const w = isList ? 240 : 640;
-    const h = isList ? 180 : 360;
-    const cls = isList ? 'card-img card-img--list' : 'card-img';
-    const wrapCls = isList ? 'card-img-wrap card-img-wrap--list' : 'card-img-wrap';
-    wrap.outerHTML = `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="${wrapCls}" tabindex="-1" aria-hidden="true"><img class="${cls}" src="${esc(imageData.url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="${w}" height="${h}" data-category="${esc(category)}" data-link="${esc(link)}"></a>`;
+    if (!cardEl || !imageData || !imageData.url) return;
+
+    const existing =
+      cardEl.querySelector('.card-img-wrap') ||
+      cardEl.querySelector('.card-placeholder') ||
+      cardEl.querySelector('.card-img-placeholder');
+
+    if (!existing) return;
+
+    const category  = cardEl.dataset.category  || 'General';
+    const link      = cardEl.dataset.articleUrl || '#';
+    const isList    = cardEl.classList.contains('card-row');
+    const isFeatured = cardEl.classList.contains('card-featured');
+    const w         = isList ? 240 : 640;
+    const h         = isList ? 180 : 360;
+    const imgCls    = isList ? 'card-img card-img--list' : 'card-img';
+    const wrapCls   = isList ? 'card-img-wrap card-img-wrap--list' : 'card-img-wrap';
+
+    existing.outerHTML = `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="${wrapCls}" tabindex="-1" aria-hidden="true"><img class="${imgCls}" src="${esc(imageData.url)}" alt="" loading="${isFeatured ? 'eager' : 'lazy'}" fetchpriority="${isFeatured ? 'high' : 'auto'}" decoding="async" referrerpolicy="no-referrer" width="${w}" height="${h}" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(category)}" data-link="${esc(link)}"></a>`;
+
+    cardEl.dataset.imageState = 'resolved';
   }
 
   // ── RSS XML parser ────────────────────────────────────────────
@@ -1531,16 +1599,32 @@
     // Initialize bookmark count
     updateSidebarStats();
 
-    // Delegated image error handler — replaces broken images with placeholders
-    feedGrid.addEventListener('error', event => {
+    // Delegated image error handler — capture phase so it fires before bubbling stops.
+    // Replaces broken images with a placeholder, then tries to resolve a metadata fallback.
+    feedGrid.addEventListener('error', async event => {
       const img = event.target;
       if (!(img instanceof HTMLImageElement)) return;
       if (!img.classList.contains('card-img')) return;
+
+      const card = img.closest('.card');
       const wrap = img.closest('.card-img-wrap');
-      if (!wrap) return;
-      const category = img.dataset.category || 'General';
-      const link     = img.dataset.link     || '#';
+      if (!card || !wrap) return;
+
+      const category = card.dataset.category || img.dataset.category || 'General';
+      const link     = card.dataset.articleUrl || img.dataset.link || '#';
+
+      // Immediately replace the broken image with the category placeholder
       wrap.outerHTML = cardPlaceholder(category, link);
+
+      if (!link || link === '#') return;
+
+      // Then attempt to resolve a better image from the article's page metadata
+      try {
+        const imageData = await resolveArticleMetadataImage(link);
+        if (imageData) updateCardImage(card, imageData);
+      } catch (err) {
+        console.warn('[GeeksPulse] Could not resolve fallback image after image error', err);
+      }
     }, true);
 
     // Bookmark button delegation
