@@ -901,10 +901,89 @@
     toastTimer = setTimeout(() => toast.classList.remove('visible'), 2400);
   }
 
+  // ── Theme toggle ─────────────────────────────────────────────
+  function giscusTheme(theme) {
+    // Map site theme → a Giscus theme name
+    const gTheme = theme === 'light' ? 'light' : 'dark_dimmed';
+    // Update the script tag so a future page load picks the right default
+    const script = document.getElementById('giscus-script');
+    if (script) script.setAttribute('data-theme', gTheme);
+    // Notify an already-loaded Giscus iframe via postMessage
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (iframe) {
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: gTheme } } },
+        'https://giscus.app'
+      );
+    }
+  }
+
+  function initTheme() {
+    const savedTheme = PREF.get('theme') || 'dark';
+    if (savedTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    // Sync Giscus with the restored theme (works if Giscus loaded before app.js runs)
+    giscusTheme(savedTheme);
+
+    // If Giscus iframe loads after us, catch it with a MutationObserver
+    if (savedTheme !== 'dark') {
+      const observer = new MutationObserver(() => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (iframe) {
+          observer.disconnect();
+          // Give the iframe a moment to finish initialising before sending the message
+          setTimeout(() => giscusTheme(savedTheme), 300);
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    const navActions = document.querySelector('.nav-actions');
+    if (!navActions) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'themeToggleBtn';
+    btn.className = 'btn btn-ghost btn-sm';
+    btn.setAttribute('aria-label', 'Toggle light / dark theme');
+    btn.title = 'Toggle theme';
+    btn.innerHTML = `
+      <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>`;
+
+    btn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        PREF.set('theme', 'dark');
+        giscusTheme('dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        PREF.set('theme', 'light');
+        giscusTheme('light');
+      }
+    });
+
+    // Insert as first child of nav-actions
+    navActions.insertBefore(btn, navActions.firstElementChild);
+
+    // ── Comments jump button ──────────────────────────────────
+    const commentsBtn = document.createElement('a');
+    commentsBtn.id = 'commentsJumpBtn';
+    commentsBtn.href = '#feedback';
+    commentsBtn.className = 'btn btn-ghost btn-sm';
+    commentsBtn.setAttribute('aria-label', 'Jump to comments');
+    commentsBtn.title = 'Comments';
+    commentsBtn.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="btn-label"> Comments</span>`;
+    // Insert right after the theme toggle (second position)
+    navActions.insertBefore(commentsBtn, btn.nextSibling);
+  }
+
   // ── Init ──────────────────────────────────────────────────────
   function init() {
-    // Cyberpunk theme — no data-theme attribute needed
-    document.documentElement.removeAttribute('data-theme');
+    initTheme();
 
     // Sync all static feed-count placeholders to actual feeds.length
     ['heroFeedCount', 'termFeedCount'].forEach(id => {

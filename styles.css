@@ -1041,6 +1041,103 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   }
 }
 
+/* ── Light Theme ─────────────────────────────── */
+html[data-theme="light"] {
+  --bg:          #f0f4f8;
+  --bg2:         #ffffff;
+  --surface:     #ffffff;
+  --surface2:    #eef2f7;
+  --ink:         #0f172a;
+  --ink2:        #334155;
+  --ink3:        #64748b;
+  --border:      rgba(15,23,42,0.09);
+  --border2:     #cbd5e1;
+  --cyan-glow:   rgba(6,182,212,0.18);
+  --green-glow:  rgba(34,197,94,0.18);
+  --shadow:      0 0 0 1px var(--border2);
+  --shadow-lg:   0 0 0 1px var(--border2), 0 8px 24px rgba(0,0,0,0.08);
+  --glow-cyan:   0 0 6px rgba(6,182,212,0.3);
+  --glow-green:  0 0 6px rgba(34,197,94,0.3);
+}
+
+html[data-theme="light"] .top-nav {
+  background: rgba(240,244,248,0.94);
+  box-shadow: 0 1px 0 var(--cyan), 0 4px 24px rgba(6,182,212,0.05);
+}
+html[data-theme="light"] .top-nav.scrolled {
+  background: rgba(240,244,248,0.99);
+}
+
+html[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(rgba(6,182,212,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6,182,212,0.07) 1px, transparent 1px);
+}
+html[data-theme="light"] body::after {
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.008) 3px, rgba(0,0,0,0.008) 4px
+  );
+}
+
+html[data-theme="light"] .card {
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+}
+html[data-theme="light"] .card:hover {
+  box-shadow:
+    0 0 0 1px var(--card-accent, var(--cyan)),
+    0 0 18px var(--card-glow, rgba(6,182,212,0.1)),
+    0 8px 20px rgba(0,0,0,0.1);
+}
+html[data-theme="light"] .hero-stat {
+  background: linear-gradient(180deg, #ffffff, #eef2f7);
+}
+html[data-theme="light"] .sk {
+  background: linear-gradient(90deg, #e2e8f0 25%, #eef2f7 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+html[data-theme="light"] .settings-popover {
+  box-shadow: 0 0 0 1px var(--cyan), 0 20px 40px rgba(0,0,0,0.15);
+}
+html[data-theme="light"] .pp-modal-backdrop {
+  background: rgba(15,23,42,0.7);
+}
+html[data-theme="light"] .feedback-section {
+  background: var(--bg2);
+}
+html[data-theme="light"] .site-footer {
+  background: var(--bg2);
+}
+html[data-theme="light"] .bm-toast {
+  background: var(--surface2);
+  box-shadow: 0 0 16px rgba(110,118,129,0.15), 0 8px 24px rgba(0,0,0,0.1);
+}
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+/* ── Comments jump button ────────────────────── */
+#commentsJumpBtn {
+  width: 34px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+@media(min-width: 640px) {
+  #commentsJumpBtn { width: auto; padding: 5px 12px; }
+}
+
+/* ── Theme toggle button ─────────────────────── */
+#themeToggleBtn {
+  width: 34px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+#themeToggleBtn .icon-sun  { display: none; }
+#themeToggleBtn .icon-moon { display: block; }
+html[data-theme="light"] #themeToggleBtn .icon-sun  { display: block; }
+html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
+
 /* ── Reduced motion ──────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
