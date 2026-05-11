@@ -429,14 +429,20 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .app-layout {
   display: grid; grid-template-columns: 240px 1fr; gap: 36px; padding: 40px 0 80px;
 }
+@media(max-width:1024px){
+  .app-layout { grid-template-columns: 200px 1fr; gap: 24px; }
+}
 @media(max-width:900px){
-  .app-layout { grid-template-columns: 1fr; }
+  .app-layout { grid-template-columns: 1fr; gap: 0; }
   .sidebar { display: none; }
   .mobile-filters { display: flex !important; }
 }
 
 /* ── SIDEBAR ────────────────────────────────── */
 .sidebar { position: sticky; top: 70px; align-self: start; display: flex; flex-direction: column; gap: 28px; }
+@media(max-width:900px){
+  .sidebar { display: none !important; }
+}
 .sidebar-section { display: flex; flex-direction: column; gap: 6px; }
 .sidebar-label {
   font-family: var(--display); font-size: 18px; letter-spacing: 1px;
@@ -477,12 +483,23 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .q-mark { color: var(--purple); font-weight: 700; }
 
 /* ── MOBILE FILTERS ─────────────────────────── */
-.mobile-filters { display: none; gap: 6px; flex-wrap: wrap; padding: 20px 0 8px; }
+.mobile-filters {
+  display: none;
+  gap: 6px;
+  padding: 20px 0 8px;
+  /* horizontal scroll on small screens */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* hide scrollbar on Firefox */
+  flex-wrap: nowrap;
+}
+.mobile-filters::-webkit-scrollbar { display: none; }
 .chip {
   padding: 5px 12px; font-size: 11px; font-weight: 700;
   border: 1px solid var(--border2); background: var(--surface); color: var(--ink2);
   transition: border-color var(--ease), color var(--ease), box-shadow var(--ease);
   cursor: pointer; user-select: none;
+  white-space: nowrap; flex-shrink: 0;
 }
 .chip:hover { border-color: var(--cyan); color: var(--cyan); }
 .chip.active {
@@ -532,7 +549,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .feed-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
 .feed-grid .card-featured { grid-column: 1 / -1; }
 @media(min-width:1100px) { .feed-grid { grid-template-columns: repeat(3,1fr); } }
-@media(max-width:640px)  { .feed-grid { grid-template-columns: 1fr; } }
+@media(max-width:700px)  { .feed-grid { grid-template-columns: 1fr; gap: 14px; } }
 .feed-grid.list-view { grid-template-columns: 1fr; }
 
 /* ── CARD ────────────────────────────────────── */
@@ -592,14 +609,15 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .card-row .card-footer { display: none; }
 
 .card-num { font-family: var(--display); font-size: 22px; color: var(--border2); flex-shrink: 0; line-height: 1; }
-.card-top { display: flex; align-items: center; gap: 8px; }
+.card-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; overflow: hidden; }
 .card-cat {
   display: inline-flex; align-items: center; padding: 2px 8px;
   font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
   text-transform: uppercase; border: 1px solid; flex-shrink: 0; line-height: 1.6;
-  font-weight: 700;
+  font-weight: 700; max-width: 120px; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.card-date { font-family: var(--mono); font-size: 10px; color: var(--ink3); white-space: nowrap; margin-left: auto; }
+.card-date { font-family: var(--mono); font-size: 10px; color: var(--ink3); white-space: nowrap; margin-left: auto; flex-shrink: 0; }
 .card-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; margin: 0; }
 .card-title a { color: inherit; transition: color var(--ease), text-shadow var(--ease); }
 .card-title a:hover { color: var(--cyan); text-shadow: 0 0 8px rgba(88,200,255,0.4); }
@@ -743,5 +761,11 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .hero { padding:40px 0 36px; }
   .hero-stats { gap:10px; }
   .footer-inner { flex-direction:column; align-items:flex-start; }
+  .toolbar { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .toolbar-left { flex-wrap: wrap; gap: 8px; }
+  .card { padding: 14px 16px; }
+  .card-featured { padding: 18px 16px; }
+  .nav-actions { gap: 4px; }
+  .btn-sm { padding: 4px 8px; font-size: 10px; }
 }
 
