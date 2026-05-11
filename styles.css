@@ -1560,7 +1560,8 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
   position: relative;
 }
 .tweet-track-outer {
-  flex: 1; overflow: hidden; min-width: 0;
+  flex: 1; overflow-x: clip; overflow-y: visible; min-width: 0;
+  padding: 8px 0;
 }
 .tweet-track {
   display: flex; gap: 20px;
@@ -1597,6 +1598,9 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   position: relative; overflow: hidden;
   border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 .tweet-card::before {
   content: '';

@@ -833,11 +833,8 @@
     buildFilters();
     render();
 
-    if (failedFeeds > 0 && allArticles.length > 0) {
-      showError(`${failedFeeds} feed(s) failed to load. Showing stories from the remaining feeds.`);
-    } else {
-      hideError();
-    }
+    // feed errors are silently suppressed; failed count still tracked in sidebar stats
+    hideError();
   }
 
   // ── Render articles ───────────────────────────────────────────
