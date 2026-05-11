@@ -190,6 +190,8 @@
   // ── DOM ───────────────────────────────────────────────────────
   const $  = id => document.getElementById(id);
   const feedGrid       = $('feedGrid');
+  const feedSpinner    = $('feedSpinner');
+  const spinnerText    = $('spinnerText');
   const sidebarFilters = $('sidebarFilters');
   const mobileFilters  = $('mobileFilters');
   const statusDot      = $('statusDot');
@@ -587,11 +589,18 @@
     if (navStatus) navStatus.textContent = 'geeksup --fetch';
     articleCount.style.display = 'none';
     setRefreshBusy(true);
-    showSkeletons(8);
+    // Show spinner, hide grid
+    feedGrid.style.display = 'none';
+    if (feedSpinner) feedSpinner.classList.add('visible');
+    const spinnerMsgs = ['fetching pulse...', 'loading feeds...', 'parsing rss...', 'crunching stories...'];
+    if (spinnerText) spinnerText.textContent = spinnerMsgs[Math.floor(Math.random() * spinnerMsgs.length)];
     hideError();
   }
 
   function setLive() {
+    // Hide spinner, restore grid
+    if (feedSpinner) feedSpinner.classList.remove('visible');
+    feedGrid.style.display = '';
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     statusDot.className = 'status-dot live';
@@ -621,7 +630,11 @@
     if (sbBmCount) sbBmCount.textContent = loadBookmarks().length;
   }
 
-  function showError(msg) { errorMessage.textContent = msg; errorBanner.classList.add('visible'); }
+  function showError(msg) {
+    if (feedSpinner) feedSpinner.classList.remove('visible');
+    feedGrid.style.display = '';
+    errorMessage.textContent = msg; errorBanner.classList.add('visible');
+  }
   function hideError()    { errorBanner.classList.remove('visible'); }
 
   // ── Build sidebar + mobile filters ───────────────────────────
