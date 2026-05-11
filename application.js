@@ -2027,13 +2027,110 @@
     prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
     nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
 
-    // Swipe support
-    let touchStartX = 0;
-    track.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
-    });
+    // ── Pointer-based swipe / drag (mouse + touch + pen) ──────────
+    let dragging      = false;
+    let pointerId     = null;
+    let startX        = 0;
+    let startY        = 0;
+    let currentDx     = 0;
+    let baseTranslate = 0;
+    let axisLocked    = false;   // becomes true once we know horizontal vs vertical
+    let isHorizontal  = false;
+    let dragStartTime = 0;
+    let suppressClick = false;
+    const DRAG_THRESHOLD = 6;     // px before we decide axis
+    const SWIPE_DISTANCE = 50;    // px to advance one slide
+    const SWIPE_VELOCITY = 0.4;   // px/ms quick-flick threshold
+
+    function onPointerDown(e) {
+      // Ignore non-primary mouse buttons
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging      = true;
+      axisLocked    = false;
+      isHorizontal  = false;
+      pointerId     = e.pointerId;
+      startX        = e.clientX;
+      startY        = e.clientY;
+      currentDx     = 0;
+      dragStartTime = performance.now();
+      baseTranslate = -current * cardWidth();
+      track.style.transition = 'none';
+      clearInterval(autoTimer);
+    }
+
+    function onPointerMove(e) {
+      if (!dragging || e.pointerId !== pointerId) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      if (!axisLocked) {
+        if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
+        isHorizontal = Math.abs(dx) > Math.abs(dy);
+        axisLocked   = true;
+        if (isHorizontal) {
+          track.style.cursor = 'grabbing';
+          try { track.setPointerCapture(pointerId); } catch (_) {}
+        } else {
+          // Let the page scroll vertically; abandon drag.
+          dragging = false;
+          track.style.transition = 'transform 0.45s cubic-bezier(0.25,0.8,0.25,1)';
+          track.style.transform = `translateX(${baseTranslate}px)`;
+          resetAuto();
+          return;
+        }
+      }
+
+      if (isHorizontal) {
+        e.preventDefault();
+        // Apply mild rubber-banding at the edges
+        let applied = dx;
+        const atStart = current === 0 && dx > 0;
+        const atEnd   = current >= maxIndex() && dx < 0;
+        if (atStart || atEnd) applied = dx * 0.35;
+        currentDx = applied;
+        track.style.transform = `translateX(${baseTranslate + applied}px)`;
+        suppressClick = Math.abs(dx) > DRAG_THRESHOLD;
+      }
+    }
+
+    function endDrag(e) {
+      if (!dragging || (e && e.pointerId !== pointerId)) return;
+      dragging = false;
+      track.style.cursor = '';
+      try { track.releasePointerCapture(pointerId); } catch (_) {}
+
+      if (!isHorizontal) { resetAuto(); return; }
+
+      const dt       = Math.max(1, performance.now() - dragStartTime);
+      const velocity = currentDx / dt; // px per ms (signed)
+      let target = current;
+
+      if (currentDx <= -SWIPE_DISTANCE || velocity <= -SWIPE_VELOCITY) {
+        target = current + 1;
+      } else if (currentDx >= SWIPE_DISTANCE || velocity >= SWIPE_VELOCITY) {
+        target = current - 1;
+      }
+
+      goTo(target);
+      resetAuto();
+
+      // Suppress the synthetic click that follows a drag on tweet-card links
+      if (suppressClick) {
+        const blockClick = ev => { ev.preventDefault(); ev.stopPropagation(); };
+        track.addEventListener('click', blockClick, { capture: true, once: true });
+        setTimeout(() => track.removeEventListener('click', blockClick, { capture: true }), 0);
+        suppressClick = false;
+      }
+    }
+
+    track.style.touchAction = 'pan-y';
+    track.style.cursor = 'grab';
+    track.addEventListener('pointerdown',   onPointerDown);
+    track.addEventListener('pointermove',   onPointerMove);
+    track.addEventListener('pointerup',     endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    // Prevent native image/link drag from hijacking the gesture
+    track.addEventListener('dragstart', e => e.preventDefault());
 
     // Recalc on resize
     window.addEventListener('resize', () => goTo(Math.min(current, maxIndex()), false), { passive: true });
