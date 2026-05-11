@@ -67,11 +67,8 @@
     // ── Open Source ──────────────────────────────────────────
     { name: 'LWN.net',           url: 'https://lwn.net/headlines/rss',                                   category: 'Open Source' },
     { name: 'GitHub Blog',       url: 'https://github.blog/feed/',                                       category: 'Open Source' },
-    { name: 'OpenSource.com',    url: 'https://opensource.com/feed',                                     category: 'Open Source' },
     // ── Java & Spring ─────────────────────────────────────────
     { name: 'Spring Blog',       url: 'https://spring.io/blog.atom',                                     category: 'Java'        },
-    { name: 'Baeldung',          url: 'https://www.baeldung.com/feed/',                                  category: 'Java'        },
-    { name: 'Inside Java',       url: 'https://inside.java/feed/rss',                                    category: 'Java'        },
     { name: 'InfoQ Java',        url: 'https://feed.infoq.com/java/',                                    category: 'Java'        },
   ];
 
@@ -908,6 +905,16 @@
   function init() {
     // Cyberpunk theme — no data-theme attribute needed
     document.documentElement.removeAttribute('data-theme');
+
+    // Sync all static feed-count placeholders to actual feeds.length
+    ['heroFeedCount', 'termFeedCount'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = feeds.length;
+    });
+    // statFeeds is animated after fetch; seed it now so it's never stale on first paint
+    const statFeedsEl = document.getElementById('statFeeds');
+    if (statFeedsEl) statFeedsEl.textContent = feeds.length;
+
     initNav();
     initSettings();
     initPayPalModal();
