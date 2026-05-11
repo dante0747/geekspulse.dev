@@ -355,6 +355,66 @@
       </button>
     </section>
   </div><!-- /.page-wrap -->
+
+  <!-- FEEDBACK TERMINAL -->
+  <section class="feedback-section" id="feedback" aria-label="Leave feedback">
+    <div class="page-wrap">
+      <div class="feedback-header">
+        <div class="feedback-eyebrow">
+          <span class="pulse" aria-hidden="true"></span>
+          <span>open channel</span>
+        </div>
+        <h2 class="feedback-title">Push your thoughts<br /><em>to main.</em></h2>
+        <div class="feedback-desc">
+          <span class="comment">// Your feedback is a PR to make GeeksPulse better.</span><br />
+          <span class="comment">// Drop a comment below via GitHub — no spam, no noise.</span><br />
+          <span class="keyword">await</span> geekspulse.<span class="fn">listenTo</span>(<span class="string">"you"</span>);
+        </div>
+      </div>
+      <!-- Terminal frame wrapping Giscus -->
+      <div class="feedback-terminal">
+        <div class="term-bar">
+          <span class="term-dot red"></span>
+          <span class="term-dot yellow"></span>
+          <span class="term-dot green"></span>
+          <span class="term-title">geekspulse ~ git commit -m "feedback"</span>
+        </div>
+        <div class="feedback-term-body">
+          <div class="feedback-git-log" aria-hidden="true">
+            <div class="git-line"><span class="git-cmd">$</span> <span class="git-arg">git log --oneline --graph --decorate</span></div>
+            <div class="git-line"><span class="git-ok">*</span> <span class="git-hash">a3f9c12</span> <span class="git-msg">(HEAD → main) feat: added 4 new RSS feeds</span></div>
+            <div class="git-line"><span class="git-ok">*</span> <span class="git-hash">7b2e841</span> <span class="git-msg">fix: improved load performance</span></div>
+            <div class="git-line"><span class="git-ok">*</span> <span class="git-hash">c19d005</span> <span class="git-msg">chore: zero paywalls, zero trackers</span></div>
+            <div class="git-line git-prompt"><span class="git-cmd">$</span> <span class="git-arg">git commit -m <span class="git-str">"your feedback here"</span></span> <span class="term-cursor"></span></div>
+          </div>
+          <div class="feedback-divider">
+            <span class="fd-line"></span>
+            <span class="fd-label">// discussion thread</span>
+            <span class="fd-line"></span>
+          </div>
+          <!-- Giscus widget -->
+          <div class="giscus-wrap">
+            <script src="https://giscus.app/client.js"
+              data-repo="dante0747/geekspulse.dev"
+              data-repo-id="R_kgDOSZ3OMg"
+              data-category="General"
+              data-category-id="DIC_kwDOSZ3OMs4C8xt4"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="bottom"
+              data-theme="dark_dimmed"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="page-wrap">

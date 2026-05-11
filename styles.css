@@ -776,6 +776,96 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .footer-sources-list a { color: var(--ink2); text-decoration: none; }
 .footer-sources-list a:hover { color: var(--cyan); text-decoration: underline; }
 
+/* ── Feedback / Giscus Terminal ─────────────── */
+.feedback-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border2);
+  border-bottom: 1px solid var(--border2);
+  padding: 72px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+.feedback-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(57,211,83,0.06) 0%, transparent 70%);
+}
+.feedback-header {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 16px; margin-bottom: 40px;
+}
+.feedback-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--green);
+  background: rgba(57,211,83,0.07); border: 1px solid var(--green);
+  padding: 4px 12px; text-transform: uppercase; letter-spacing: 0.1em;
+  text-shadow: var(--glow-green);
+}
+.feedback-title {
+  font-family: var(--display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400; letter-spacing: 2px; line-height: 1.05; color: var(--ink);
+}
+.feedback-title em {
+  font-style: normal;
+  color: var(--green);
+  text-shadow: var(--glow-green);
+}
+.feedback-desc {
+  font-family: var(--mono); font-size: 12px; color: var(--ink2); line-height: 2;
+  padding: 14px 20px; border: 1px solid var(--border2);
+  background: var(--surface2); border-left: 3px solid var(--green);
+  text-align: left; max-width: 560px;
+}
+.feedback-desc .comment { color: var(--ink3); font-style: italic; }
+.feedback-desc .keyword { color: var(--purple); }
+.feedback-desc .fn      { color: var(--cyan); }
+.feedback-desc .string  { color: var(--green); text-shadow: var(--glow-green); }
+
+.feedback-terminal {
+  background: var(--bg2); border: 1px solid var(--border2);
+  overflow: hidden; font-family: var(--mono); font-size: 12px;
+  box-shadow:
+    0 0 0 1px var(--green),
+    0 0 40px rgba(57,211,83,0.10),
+    0 24px 48px rgba(0,0,0,0.5);
+  max-width: 860px; margin: 0 auto;
+}
+.feedback-term-body { padding: 20px 24px 24px; }
+.feedback-git-log {
+  display: flex; flex-direction: column; gap: 4px; margin-bottom: 20px;
+}
+.git-line { display: flex; gap: 8px; font-size: 12px; align-items: baseline; }
+.git-cmd  { color: var(--green); flex-shrink: 0; text-shadow: var(--glow-green); }
+.git-arg  { color: var(--cyan); }
+.git-ok   { color: var(--green); flex-shrink: 0; }
+.git-hash { color: var(--orange); flex-shrink: 0; }
+.git-msg  { color: var(--ink2); }
+.git-str  { color: var(--green); text-shadow: var(--glow-green); }
+.git-prompt { margin-top: 8px; }
+
+.feedback-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0; color: var(--ink3);
+  font-family: var(--mono); font-size: 11px;
+}
+.fd-line { flex: 1; height: 1px; background: var(--border2); }
+.fd-label { flex-shrink: 0; color: var(--cyan); text-shadow: var(--glow-cyan); font-weight: 700; letter-spacing: 0.08em; }
+
+.giscus-wrap {
+  /* Let Giscus inherit dark theme from the page */
+  min-height: 200px;
+}
+/* Override Giscus iframe background to blend in */
+.giscus-wrap iframe { border-radius: 0 !important; }
+
+@media(max-width:640px){
+  .feedback-section { padding: 48px 0 56px; }
+  .feedback-term-body { padding: 14px 16px 18px; }
+  .git-line { font-size: 11px; }
+}
+
 /* ── Focus / Accessibility ───────────────────── */
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
