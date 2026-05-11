@@ -166,7 +166,6 @@
         </a>
         <div class="nav-links" aria-label="Site sections">
           <a href="#latest" class="nav-link">Latest</a>
-          <a href="#newsletter-heading" class="nav-link">Newsletter</a>
           <a href="#sources" class="nav-link">Sources</a>
           <a href="#feedback" class="nav-link">Feedback</a>
         </div>
@@ -377,43 +376,6 @@
         <div id="feedGrid" class="feed-grid"></div>
       </main>
     </div><!-- /.app-layout -->
-    <!-- NEWSLETTER SIGNUP -->
-    <section class="newsletter-section" aria-labelledby="newsletter-heading">
-      <div class="newsletter-inner">
-        <div class="newsletter-text">
-          <div class="newsletter-eyebrow">
-            <span class="pulse" aria-hidden="true"></span>
-            Daily Digest · Free · No spam
-          </div>
-          <h2 id="newsletter-heading" class="newsletter-title">Get the dev pulse<br /><em>in your inbox.</em></h2>
-          <p class="newsletter-desc">One email a day. Top stories from AI, security, JS, DevOps and open source — curated from <span id="newsletterFeedCount">27</span> sources. Unsubscribe anytime.</p>
-          <ul class="newsletter-bullets">
-            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Curated daily digest — not raw firehose</li>
-            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Zero ads, zero trackers, zero paywalls</li>
-            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Indie project — your support keeps it alive</li>
-          </ul>
-        </div>
-        <form class="newsletter-form" id="newsletterForm" action="https://formspree.io/f/xovdwjlr" method="POST" novalidate>
-          <input type="hidden" name="_subject" value="New GeeksPulse newsletter subscriber" />
-          <div class="newsletter-field-wrap">
-            <input
-              type="email" name="email" id="newsletterEmail"
-              class="newsletter-input"
-              placeholder="you@example.com"
-              required
-              autocomplete="email"
-              aria-label="Your email address"
-            />
-            <button type="submit" class="btn btn-primary newsletter-btn" id="newsletterSubmit">
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9l20-7z"/></svg>
-              Subscribe free
-            </button>
-          </div>
-          <div id="newsletterMsg" class="newsletter-msg" aria-live="polite" style="display:none"></div>
-          <p class="newsletter-fine">No spam. Unsubscribe with one click. We don't sell your data.</p>
-        </form>
-      </div>
-    </section>
     <!-- SUPPORT STRIP -->
     <section class="support-strip" aria-label="Support GeeksPulse">
       <div class="support-text">

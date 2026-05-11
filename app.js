@@ -75,6 +75,8 @@
     { name: 'This Week in Rust', url: 'https://this-week-in-rust.org/rss.xml',                           category: 'Rust'        },
     // ── Go ───────────────────────────────────────────────────
     { name: 'Go Blog',           url: 'https://go.dev/blog/feed.atom',                                   category: 'Go'          },
+    { name: 'Go Weekly',         url: 'https://golangweekly.com/rss/full.xml',                           category: 'Go'          },
+    { name: 'Dave Cheney',       url: 'https://dave.cheney.net/feed/atom',                               category: 'Go'          },
   ];
 
   // SVG icons — paths sourced from Lucide Icons (lucide.dev) and Simple Icons (simpleicons.org)
