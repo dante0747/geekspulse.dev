@@ -3,16 +3,22 @@
 
 User-agent: *
 Allow: /
-
-# Block crawlers from hitting noisy query-string URLs
+# Allow filter and source query params (used for category/feed pages)
+Allow: /?filter=
+Allow: /?source=
+# Block all other query-string URLs to avoid crawl noise
 Disallow: /*?*
 
 # Allow major search engines to index everything
 User-agent: Googlebot
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 User-agent: Bingbot
 Allow: /
+Allow: /?filter=
+Allow: /?source=
 
 User-agent: Slurp
 Allow: /
