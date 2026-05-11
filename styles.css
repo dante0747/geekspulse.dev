@@ -92,13 +92,13 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   box-shadow: 0 1px 0 var(--cyan), 0 4px 24px rgba(88,200,255,0.08);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  overflow: hidden;
+  /* overflow: hidden removed — was clipping settings popover */
   max-width: 100%;
 }
 .top-nav.scrolled { background: rgba(8,11,18,0.98); }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
-  height: 62px; gap: 16px;
+  height: 62px; gap: 12px;
   min-width: 0;
 }
 .logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-width: 0; }
@@ -131,7 +131,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--ink3); display: none;
 }
 @media(min-width:640px){ .logo-sub { display: block; } }
-.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; position: relative; }
 .nav-prompt {
   font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--green);
   padding: 4px 10px; border: 1px solid var(--green);
@@ -785,11 +785,27 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .toolbar-left { flex-wrap: wrap; gap: 8px; }
   .card { padding: 14px 16px; }
   .card-featured { padding: 18px 16px; }
-  .nav-actions { gap: 4px; }
-  .btn-sm { padding: 4px 8px; font-size: 10px; }
-  /* hide refresh button text, keep icon only on very small screens */
-  #refreshBtn .refresh-label { display: none; }
+
+  /* ── Mobile nav: icon-only buttons ── */
+  .nav-actions { gap: 6px; flex-shrink: 0; }
+  .nav-actions .btn-label { display: none; }
+  .btn-sm { padding: 6px 10px; font-size: 12px; }
+
   .term-body { padding: 12px 14px; font-size: 11px; overflow-x: auto; }
   .term-line { flex-wrap: nowrap; }
+}
+
+/* Settings popover — full-width on small screens */
+@media(max-width:480px){
+  .settings-popover {
+    position: fixed !important;
+    top: 62px !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    border-left: none;
+    border-right: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 1px 0 var(--cyan);
+  }
 }
 

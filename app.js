@@ -647,7 +647,8 @@
     settingsBtn.className = 'btn btn-ghost btn-sm';
     settingsBtn.title = 'Settings';
     settingsBtn.setAttribute('aria-label', 'Open settings');
-    settingsBtn.innerHTML = '⚙ Settings';
+    settingsBtn.innerHTML = '⚙<span class="btn-label"> Settings</span>';
+    settingsBtn.title = 'Settings';
     // insert before the support button (last child)
     navActions.insertBefore(settingsBtn, navActions.lastElementChild);
 
@@ -697,8 +698,10 @@
     const openPopover = () => {
       open = true;
       const r = settingsBtn.getBoundingClientRect();
-      popover.style.top  = (r.bottom + window.scrollY + 8) + 'px';
+      popover.style.position = 'fixed';
+      popover.style.top  = (r.bottom + 8) + 'px';
       popover.style.right = (window.innerWidth - r.right) + 'px';
+      popover.style.left = '';
       popover.classList.add('open');
     };
     const closePopover = () => { open = false; popover.classList.remove('open'); };
