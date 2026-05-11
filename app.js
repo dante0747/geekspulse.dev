@@ -584,11 +584,15 @@
     } catch { /* quota exceeded — silently ignore */ }
   }
 
-  /** Extract the <head> section from raw HTML, or fall back to the first 50 KB. */
+  /** Extract the contents of the <head> section from raw HTML, or fall back to the first 50 KB.
+   *  Returns the inner content (not the <head> tags themselves) so it can be safely parsed
+   *  in a div without triggering browser fragment-context quirks. */
   function getHeadHtml(html) {
     if (!html) return '';
-    const match = html.match(/<head[^>]*>[\s\S]*?<\/head>/i);
-    if (match) return match[0];
+    // Capture everything BETWEEN <head> and </head> (not the tags themselves)
+    const match = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+    if (match) return match[1];
+    // Fallback: take up to 50 KB — enough to cover analytics-heavy preambles
     return html.slice(0, 50000);
   }
 
@@ -609,8 +613,8 @@
       if (!resp.ok) return null;
       const html = await resp.text();
 
-      // Parse the full <head> for metadata (avoids missing tags hidden after scripts/analytics)
-      const tmp = document.createElement('template');
+      // Parse the head's inner content in a div — more reliable than <template> for meta/link tags
+      const tmp = document.createElement('div');
       tmp.innerHTML = getHeadHtml(html);
 
       const metaSelectors = [
@@ -623,7 +627,7 @@
       ];
 
       for (const selector of metaSelectors) {
-        const el = tmp.content.querySelector(selector);
+        const el = tmp.querySelector(selector);
         if (!el) continue;
 
         let imageUrl = el.getAttribute('content') || el.getAttribute('href') || null;
