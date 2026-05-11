@@ -30,12 +30,21 @@
   /** True when the response body looks like real web content (not an error JSON). */
   function looksLikeUsableBody(text) {
     if (!text || text.length < 100) return false;
+    const head = text.slice(0, 600).trimStart();
     // Detect known proxy error JSON envelopes (corsproxy.io etc.)
-    const head = text.slice(0, 400).trimStart();
+    // Example: {"error":"Free usage is limited to localhost and development environments. ..."}
     if (head.startsWith('{') || head.startsWith('[')) {
-      if (/"error"\s*:/i.test(head) || /not allowed|upgrade|rate ?limit|forbidden/i.test(head)) {
+      if (
+        /"error"\s*:/i.test(head) ||
+        /(api[\s_-]?key|free usage|limited to localhost|not allowed|upgrade|rate ?limit|forbidden|quota|pricing)/i.test(head)
+      ) {
         return false;
       }
+    }
+    // Generic Cloudflare / proxy error pages
+    if (/temporarily rate limited|attention required|cloudflare/i.test(head) &&
+        /<title|<html/i.test(head) === false) {
+      return false;
     }
     return true;
   }
