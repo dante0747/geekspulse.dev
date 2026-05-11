@@ -166,6 +166,7 @@
         </a>
         <div class="nav-links" aria-label="Site sections">
           <a href="#latest" class="nav-link">Latest</a>
+          <a href="#newsletter-heading" class="nav-link">Newsletter</a>
           <a href="#sources" class="nav-link">Sources</a>
           <a href="#feedback" class="nav-link">Feedback</a>
         </div>
@@ -208,7 +209,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>Support indie project
           </button>
         </div>
-        <div class="hero-trust">No ads &nbsp;·&nbsp; No trackers &nbsp;·&nbsp; No paywalls
+        <div class="hero-trust">No ads &nbsp;·&nbsp; No trackers &nbsp;·&nbsp; No paywalls &nbsp;·&nbsp; <span style="color:var(--cyan)">Open source</span>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -220,12 +221,12 @@
             <span class="lbl">Articles ready</span>
           </div>
           <div class="hero-stat">
-            <span class="val">0</span>
-            <span class="lbl">Paywalls hit</span>
+            <span class="val" id="statToday">--</span>
+            <span class="lbl">Today's stories</span>
           </div>
           <div class="hero-stat">
-            <span class="val">&#8734;</span>
-            <span class="lbl">Tabs saved</span>
+            <span class="val">0</span>
+            <span class="lbl">Paywalls hit</span>
           </div>
         </div>
       </div>
@@ -344,6 +345,15 @@
         <h2 id="latest-heading" class="section-heading">
           <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:8px"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>Latest Pulse
         </h2>
+        <!-- Search bar -->
+        <div class="search-bar-wrap">
+          <label for="articleSearch" class="sr-only">Search articles</label>
+          <div class="search-bar">
+            <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" id="articleSearch" class="search-input" placeholder="Search articles… (press / to focus)" autocomplete="off" spellcheck="false" />
+            <kbd class="search-kbd" id="searchKbd">/</kbd>
+          </div>
+        </div>
         <!-- Toolbar -->
         <div class="toolbar">
           <div class="toolbar-left">
@@ -367,6 +377,43 @@
         <div id="feedGrid" class="feed-grid"></div>
       </main>
     </div><!-- /.app-layout -->
+    <!-- NEWSLETTER SIGNUP -->
+    <section class="newsletter-section" aria-labelledby="newsletter-heading">
+      <div class="newsletter-inner">
+        <div class="newsletter-text">
+          <div class="newsletter-eyebrow">
+            <span class="pulse" aria-hidden="true"></span>
+            Daily Digest · Free · No spam
+          </div>
+          <h2 id="newsletter-heading" class="newsletter-title">Get the dev pulse<br /><em>in your inbox.</em></h2>
+          <p class="newsletter-desc">One email a day. Top stories from AI, security, JS, DevOps and open source — curated from <span id="newsletterFeedCount">27</span> sources. Unsubscribe anytime.</p>
+          <ul class="newsletter-bullets">
+            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Curated daily digest — not raw firehose</li>
+            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Zero ads, zero trackers, zero paywalls</li>
+            <li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Indie project — your support keeps it alive</li>
+          </ul>
+        </div>
+        <form class="newsletter-form" id="newsletterForm" action="https://formspree.io/f/xovdwjlr" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New GeeksPulse newsletter subscriber" />
+          <div class="newsletter-field-wrap">
+            <input
+              type="email" name="email" id="newsletterEmail"
+              class="newsletter-input"
+              placeholder="you@example.com"
+              required
+              autocomplete="email"
+              aria-label="Your email address"
+            />
+            <button type="submit" class="btn btn-primary newsletter-btn" id="newsletterSubmit">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9l20-7z"/></svg>
+              Subscribe free
+            </button>
+          </div>
+          <div id="newsletterMsg" class="newsletter-msg" aria-live="polite" style="display:none"></div>
+          <p class="newsletter-fine">No spam. Unsubscribe with one click. We don't sell your data.</p>
+        </form>
+      </div>
+    </section>
     <!-- SUPPORT STRIP -->
     <section class="support-strip" aria-label="Support GeeksPulse">
       <div class="support-text">
@@ -456,11 +503,21 @@
           <li><a href="/?filter=DevOps">DevOps</a>: <a href="/?source=Docker+Blog">Docker Blog</a>, <a href="/?source=Kubernetes+Blog">Kubernetes Blog</a>, <a href="/?source=HashiCorp+Blog">HashiCorp Blog</a>, <a href="/?source=AWS+DevOps+Blog">AWS DevOps Blog</a></li>
           <li><a href="/?filter=Open+Source">Open Source</a>: <a href="/?source=LWN.net">LWN.net</a>, <a href="/?source=GitHub+Blog">GitHub Blog</a>, <a href="/?source=OpenSource.com">OpenSource.com</a></li>
           <li><a href="/?filter=Java">Java</a>: <a href="/?source=Spring+Blog">Spring Blog</a>, <a href="/?source=Baeldung">Baeldung</a>, <a href="/?source=Inside+Java">Inside Java</a>, <a href="/?source=InfoQ+Java">InfoQ Java</a></li>
+          <li><a href="/?filter=Rust">Rust</a>: <a href="/?source=Rust+Blog">Rust Blog</a>, <a href="/?source=This+Week+in+Rust">This Week in Rust</a></li>
+          <li><a href="/?filter=Go">Go</a>: <a href="/?source=Go+Blog">Go Blog</a></li>
         </ul>
       </section>
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-tagline">Built for developers who like clean feeds, good tools, and fewer tabs.</div>
+          <div class="footer-shortcuts" aria-label="Keyboard shortcuts">
+            <span class="footer-kbd-label">// keyboard shortcuts:</span>
+            <kbd class="footer-kbd">/</kbd><span> search</span>
+            <kbd class="footer-kbd">j</kbd><kbd class="footer-kbd">k</kbd><span> navigate</span>
+            <kbd class="footer-kbd">o</kbd><span> open</span>
+            <kbd class="footer-kbd">r</kbd><span> refresh</span>
+            <kbd class="footer-kbd">Esc</kbd><span> clear</span>
+          </div>
           <div class="footer-copy">&#169; 2026 GeeksPulse &mdash; No trackers. No ads. No BS.</div>
         </div>
 
