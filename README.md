@@ -12,7 +12,7 @@
 **`{ GeeksPulse }` — Feel the pulse of dev.**
 
 [![Live](https://img.shields.io/badge/status-live-39d353?style=flat-square&logo=statuspage&logoColor=black)](https://geekspulse.dev)
-[![Feeds](https://img.shields.io/badge/RSS_feeds-29-58c8ff?style=flat-square&logo=rss&logoColor=black)](https://geekspulse.dev)
+[![Feeds](https://img.shields.io/badge/RSS_feeds-32-58c8ff?style=flat-square&logo=rss&logoColor=black)](https://geekspulse.dev)
 [![Paywalls](https://img.shields.io/badge/paywalls-0-39d353?style=flat-square)](https://geekspulse.dev)
 [![No Trackers](https://img.shields.io/badge/trackers-none-ff5555?style=flat-square)](https://geekspulse.dev)
 [![No Ads](https://img.shields.io/badge/ads-nope-bc8cff?style=flat-square)](https://geekspulse.dev)
@@ -32,8 +32,9 @@
 ✓ IEEE Spectrum ........... 18 stories
 ✓ GitHub Blog ............. 8 stories
 ✓ Google AI Blog .......... 10 stories
-✓ Kubernetes Blog ......... 6 stories
-# 29 feeds · 0 paywalls · 100% signal
+✓ Rust Blog ............... 6 stories
+✓ Go Blog ................. 5 stories
+# 32 feeds · 0 paywalls · 100% signal
 ✓ Ready. No paywalls. You're welcome.
 ▮
 ```
@@ -42,7 +43,7 @@
 
 ## 📡 What Is GeeksPulse?
 
-**GeeksPulse** is a free, indie, no-BS developer news aggregator. It pulls from **29 hand-picked RSS feeds** across 8 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
+**GeeksPulse** is a free, indie, no-BS developer news aggregator. It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
 
 - 🚫 **No ads.** No VC money. No tracking pixels.
 - ⚡ **No backend.** Pure vanilla HTML, CSS & JavaScript.
@@ -55,8 +56,8 @@
 
 | Feature | Details |
 |---|---|
-| 📡 **29 RSS Feeds** | Hand-curated from the best dev sources on the web |
-| 🗂️ **8 Categories** | General · Security · AI/ML · Python · JavaScript · Java · DevOps · Open Source |
+| 📡 **32 RSS Feeds** | Hand-curated from the best dev sources on the web |
+| 🗂️ **10 Categories** | General · Security · AI/ML · Python · JavaScript · Java · DevOps · Open Source · Rust · Go |
 | 🔄 **Auto-Refresh** | Configurable: 1m · 5m · 10m · 15m · 30m · 1h |
 | 🃏 **Grid & List View** | Toggle between layouts, preference saved locally |
 | 💾 **localStorage Prefs** | Your filter, view mode & refresh interval persist across sessions |
@@ -66,6 +67,8 @@
 | ♿ **Accessible** | ARIA roles, labels, `aria-pressed`, keyboard navigation |
 | 📱 **Responsive** | Mobile-first with chip filters on small screens |
 | 🛡️ **Dual Fetch Strategy** | CORS proxy → rss2json fallback per feed |
+| 🔖 **Bookmarks** | Save articles to localStorage for later reading |
+| ⌨️ **Keyboard Shortcuts** | `/` search · `j/k` navigate · `o` open · `r` refresh · `Esc` clear |
 
 ---
 
@@ -135,7 +138,6 @@
 
 - [LWN.net](https://lwn.net)
 - [GitHub Blog](https://github.blog)
-- [OpenSource.com](https://opensource.com)
 
 </details>
 
@@ -143,9 +145,24 @@
 <summary><strong>☕ Java</strong></summary>
 
 - [Spring Blog](https://spring.io/blog)
-- [Baeldung](https://baeldung.com)
-- [Inside Java](https://inside.java)
 - [InfoQ Java](https://infoq.com/java)
+
+</details>
+
+<details>
+<summary><strong>🦀 Rust</strong></summary>
+
+- [Rust Blog](https://blog.rust-lang.org)
+- [This Week in Rust](https://this-week-in-rust.org)
+
+</details>
+
+<details>
+<summary><strong>🐹 Go</strong></summary>
+
+- [Go Blog](https://go.dev/blog)
+- [Go Weekly](https://golangweekly.com)
+- [Dave Cheney](https://dave.cheney.net)
 
 </details>
 
@@ -158,9 +175,9 @@ const stack = {
   markup:  "HTML5",          // semantic, accessible
   styles:  "Vanilla CSS",    // custom properties, animations, grid
   logic:   "Vanilla JS",     // ES2020+, IIFE, no bundler
-  fonts:   ["JetBrains Mono", "Bangers", "Comic Neue"],
+  fonts:   ["JetBrains Mono", "Space Grotesk", "Bangers"],
   proxies: ["corsproxy.io", "rss2json (fallback)"],
-  storage: "localStorage",   // preferences only
+  storage: "localStorage",   // preferences & bookmarks
   backend: null,             // 💀 doesn't exist
   deps:    [],               // zero. zilch. nada.
 };
@@ -197,7 +214,10 @@ geekspulse.dev/
 ├── index.html      # App shell — nav, hero, sidebar, feed grid
 ├── styles.css      # Full cyberpunk design system
 ├── app.js          # All logic: fetching, parsing, rendering, settings
-└── favicon.svg     # SVG favicon
+├── favicon.svg     # SVG favicon
+├── og-image.png    # Open Graph image
+├── sitemap.xml     # SEO sitemap
+└── robots.txt      # Crawler rules
 ```
 
 ---
@@ -245,4 +265,3 @@ If it saves you from opening 12 tabs today, consider tossing a coffee:
 *Built for developers who like clean feeds, good tools, and fewer tabs.*
 
 </div>
-
