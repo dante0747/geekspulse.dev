@@ -280,6 +280,8 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   min-height: 32px;
 }
 .settings-opt:hover { border-color: var(--cyan); color: var(--cyan); }
+.settings-opt--danger { color: var(--red, #F43F5E); border-color: rgba(244,63,94,0.3); }
+.settings-opt--danger:hover { border-color: var(--red, #F43F5E); color: var(--red, #F43F5E); background: rgba(244,63,94,0.07); }
 .settings-opt.active {
   border-color: var(--green); color: var(--green);
   background: rgba(34,197,94,0.07); text-shadow: var(--glow-green);
@@ -287,6 +289,58 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .settings-footer {
   padding: 8px 14px; background: var(--surface2);
   border-top: 1px solid var(--border);
+}
+
+/* ── Clear-cache confirmation dialog ─────────────────────── */
+.cache-confirm-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  animation: fade-in 0.15s ease;
+}
+@keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+.cache-confirm-dialog {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  box-shadow: 0 0 0 1px rgba(244,63,94,0.4), 0 24px 48px rgba(0,0,0,0.7);
+  border-radius: 10px;
+  padding: 28px 28px 24px;
+  max-width: 360px; width: 90%;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  text-align: center;
+  animation: pop-in 0.18s ease;
+}
+.cache-confirm-icon {
+  color: #F43F5E;
+  background: rgba(244,63,94,0.1);
+  border-radius: 50%; width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cache-confirm-title {
+  font-family: var(--font-display); font-size: 18px;
+  color: var(--ink); margin: 0;
+}
+.cache-confirm-desc {
+  font-size: 13px; color: var(--ink3); line-height: 1.6; margin: 0;
+}
+.cache-confirm-note {
+  font-family: var(--mono); font-size: 11px; color: #F43F5E; opacity: 0.8;
+}
+.cache-confirm-actions {
+  display: flex; gap: 10px; margin-top: 4px; width: 100%; justify-content: center;
+}
+.cache-confirm-delete {
+  background: rgba(244,63,94,0.12);
+  border: 1px solid rgba(244,63,94,0.5);
+  color: #F43F5E; font-weight: 700;
+  padding: 7px 16px; border-radius: 4px; cursor: pointer;
+  font-size: 12px; font-family: var(--font-sans);
+  display: flex; align-items: center;
+  transition: background var(--ease), border-color var(--ease);
+}
+.cache-confirm-delete:hover {
+  background: rgba(244,63,94,0.22);
+  border-color: #F43F5E;
 }
 .settings-note { font-family: var(--mono); font-size: 10px; color: var(--ink3); }
 

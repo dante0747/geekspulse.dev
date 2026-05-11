@@ -1221,6 +1221,12 @@
           <button class="settings-opt${(PREF.get('theme') || 'dark') === 'light' ? ' active' : ''}" data-theme-opt="light">Light</button>
         </div>
       </div>
+      <div class="settings-section">
+        <div class="settings-label">Cache</div>
+        <button class="settings-opt settings-opt--danger" id="clearCacheBtn" style="width:100%;text-align:left;">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>Clear all site data
+        </button>
+      </div>
       <div class="settings-footer">
         <span class="settings-note">// prefs saved in localStorage</span>
       </div>`;
@@ -1274,6 +1280,47 @@
         // sync main view toggle buttons too
         document.getElementById('gridViewBtn')?.classList.toggle('active', viewMode === 'grid');
         document.getElementById('listViewBtn')?.classList.toggle('active', viewMode === 'list');
+      });
+    });
+
+    // Clear cache button inside settings
+    popover.querySelector('#clearCacheBtn')?.addEventListener('click', () => {
+      // Build confirmation dialog
+      const overlay = document.createElement('div');
+      overlay.className = 'cache-confirm-overlay';
+      overlay.innerHTML = `
+        <div class="cache-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="cacheConfirmTitle">
+          <div class="cache-confirm-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </div>
+          <h3 id="cacheConfirmTitle" class="cache-confirm-title">Clear all site data?</h3>
+          <p class="cache-confirm-desc">This will remove all cached images, bookmarks, and preferences (theme, view, filters, auto-refresh). The page will reload.<br/><span class="cache-confirm-note">// This action cannot be undone.</span></p>
+          <div class="cache-confirm-actions">
+            <button class="btn btn-ghost btn-sm" id="cacheConfirmCancel">Cancel</button>
+            <button class="btn btn-sm cache-confirm-delete" id="cacheConfirmOk">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:5px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Yes, clear everything
+            </button>
+          </div>
+        </div>`;
+      document.body.appendChild(overlay);
+      closePopover();
+
+      const removeOverlay = () => overlay.remove();
+
+      overlay.querySelector('#cacheConfirmCancel').addEventListener('click', removeOverlay);
+      overlay.addEventListener('click', e => { if (e.target === overlay) removeOverlay(); });
+      document.addEventListener('keydown', function onKey(e) {
+        if (e.key === 'Escape') { removeOverlay(); document.removeEventListener('keydown', onKey); }
+      });
+
+      overlay.querySelector('#cacheConfirmOk').addEventListener('click', () => {
+        const siteKeys = Object.keys(localStorage).filter(k =>
+          k.startsWith('gp:') || k.startsWith('geeksup_')
+        );
+        siteKeys.forEach(k => localStorage.removeItem(k));
+        removeOverlay();
+        showBmToast(`🗑️ Cache cleared (${siteKeys.length} item${siteKeys.length !== 1 ? 's' : ''}) — reloading…`);
+        setTimeout(() => location.reload(), 1200);
       });
     });
 
