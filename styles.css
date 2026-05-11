@@ -36,7 +36,7 @@
 
 /* ── Reset ─────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
 
 body {
   font-family: var(--font);
@@ -45,6 +45,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Animated grid background */
@@ -81,7 +82,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 ::-webkit-scrollbar-thumb { background: var(--cyan); box-shadow: var(--glow-cyan); }
 
 /* ── Layout ─────────────────────────────────── */
-.page-wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+.page-wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; width: 100%; }
 
 /* ── NAV ────────────────────────────────────── */
 .top-nav {
@@ -91,13 +92,16 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   box-shadow: 0 1px 0 var(--cyan), 0 4px 24px rgba(88,200,255,0.08);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  max-width: 100%;
 }
 .top-nav.scrolled { background: rgba(8,11,18,0.98); }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
   height: 62px; gap: 16px;
+  min-width: 0;
 }
-.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-width: 0; }
 .logo-mark {
   width: 36px; height: 36px;
   background: var(--cyan);
@@ -116,9 +120,10 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 .logo-name {
   font-family: var(--display);
-  font-size: 26px; letter-spacing: 2px;
+  font-size: clamp(16px, 4vw, 26px); letter-spacing: 2px;
   color: var(--cyan);
   text-shadow: var(--glow-cyan);
+  white-space: nowrap;
 }
 .logo-name .bracket { color: var(--green); text-shadow: var(--glow-green); }
 .logo-sub {
@@ -126,7 +131,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--ink3); display: none;
 }
 @media(min-width:640px){ .logo-sub { display: block; } }
-.nav-actions { display: flex; align-items: center; gap: 8px; }
+.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .nav-prompt {
   font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--green);
   padding: 4px 10px; border: 1px solid var(--green);
@@ -376,6 +381,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 /* Terminal */
 .hero-right-col {
   display: flex; flex-direction: column; gap: 0; align-items: stretch;
+  min-width: 0;
 }
 .hero-mascot { display: none; }
 
@@ -386,6 +392,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     0 0 0 1px var(--green),
     0 0 32px rgba(57,211,83,0.12),
     0 20px 40px rgba(0,0,0,0.5);
+  max-width: 100%;
 }
 .term-bar {
   display: flex; align-items: center; gap: 6px;
@@ -489,9 +496,12 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   padding: 20px 0 8px;
   /* horizontal scroll on small screens */
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* hide scrollbar on Firefox */
   flex-wrap: nowrap;
+  /* contain scroll within this element */
+  max-width: 100%;
 }
 .mobile-filters::-webkit-scrollbar { display: none; }
 .chip {
@@ -757,7 +767,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .footer-sources { border-bottom: 1px solid rgba(88,200,255,0.12); padding-bottom: 20px; margin-bottom: 20px; }
 .footer-sources-title { font-family: var(--mono); font-size: 11px; color: var(--cyan); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .06em; }
 .footer-sources-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.footer-sources-list li { font-family: var(--mono); font-size: 11px; color: var(--ink3); line-height: 1.6; }
+.footer-sources-list li { font-family: var(--mono); font-size: 11px; color: var(--ink3); line-height: 1.6; word-break: break-word; overflow-wrap: break-word; }
 .footer-sources-list a { color: var(--ink2); text-decoration: none; }
 .footer-sources-list a:hover { color: var(--cyan); text-decoration: underline; }
 
@@ -769,6 +779,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .page-wrap { padding:0 16px; }
   .hero { padding:40px 0 36px; }
   .hero-stats { gap:10px; }
+  .hero-tagline { font-size:11px; word-break: break-word; overflow-wrap: break-word; }
   .footer-inner { flex-direction:column; align-items:flex-start; }
   .toolbar { flex-direction: column; align-items: flex-start; gap: 8px; }
   .toolbar-left { flex-wrap: wrap; gap: 8px; }
@@ -776,5 +787,9 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .card-featured { padding: 18px 16px; }
   .nav-actions { gap: 4px; }
   .btn-sm { padding: 4px 8px; font-size: 10px; }
+  /* hide refresh button text, keep icon only on very small screens */
+  #refreshBtn .refresh-label { display: none; }
+  .term-body { padding: 12px 14px; font-size: 11px; overflow-x: auto; }
+  .term-line { flex-wrap: nowrap; }
 }
 
