@@ -20,6 +20,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, '..');
 
 const FEED_TIMEOUT_MS  = 10_000;
+const ARTICLE_TIMEOUT_MS = 8_000;
+const ARTICLE_FETCH_CONCURRENCY = 8;
 const MAX_PER_FEED     = 15;
 const MAX_ARTICLES     = 300;
 const USER_AGENT       = 'GeeksPulse/1.0 (+https://geekspulse.dev; feed-bot)';
@@ -230,7 +232,118 @@ function extractBestImage(item) {
 }
 
 // ── Feed parsers ───────────────────────────────────────────────────────────
+// ── Article-page image resolver (Node-side; no CORS limits) ────────────────
 
+/** Extract the first matching <meta>/<link> attribute from raw HTML. */
+function extractMetaUrl(html, attr, valueRe) {
+  if (!html) return null;
+  // Match e.g. <meta property="og:image" content="..."> in any attribute order
+  const re = new RegExp(
+    `<(?:meta|link)\\b[^>]*\\b${attr}\\s*=\\s*["']${valueRe.source}["'][^>]*>`,
+    'i'
+  );
+  const m = html.match(re);
+  if (!m) return null;
+  const tag = m[0];
+  // Pull content="..." or href="..." from the matched tag
+  const c = tag.match(/\b(?:content|href)\s*=\s*["']([^"']+)["']/i);
+  return c ? decodeHtmlEntities(c[1]) : null;
+}
+
+/** Resolve a relative URL against a base; return null on failure. */
+function absUrl(url, base) {
+  if (!url) return null;
+  try { return new URL(url, base).href; } catch { return null; }
+}
+
+/** Fetch an article page and extract og:image / twitter:image / first body <img>. */
+async function fetchArticleImage(articleUrl) {
+  const controller = new AbortController();
+  const timeout    = setTimeout(() => controller.abort(), ARTICLE_TIMEOUT_MS);
+  try {
+    const resp = await fetch(articleUrl, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      },
+    });
+    if (!resp.ok) return null;
+    // Cap body size — we only need the head for OG tags
+    const reader = resp.body?.getReader?.();
+    let html = '';
+    if (reader) {
+      const decoder = new TextDecoder('utf-8');
+      let bytes = 0;
+      const MAX_BYTES = 256 * 1024; // 256 KB is plenty for <head>
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        bytes += value.length;
+        html += decoder.decode(value, { stream: true });
+        if (bytes >= MAX_BYTES || /<\/head>/i.test(html)) {
+          try { reader.cancel(); } catch { /* ignore */ }
+          break;
+        }
+      }
+      html += decoder.decode();
+    } else {
+      html = await resp.text();
+    }
+
+    if (!html) return null;
+    const finalUrl = resp.url || articleUrl;
+
+    // Try OG / Twitter / image_src in priority order
+    const metaCandidates = [
+      extractMetaUrl(html, 'property', /og:image:secure_url/),
+      extractMetaUrl(html, 'property', /og:image:url/),
+      extractMetaUrl(html, 'property', /og:image/),
+      extractMetaUrl(html, 'name',     /twitter:image:src/),
+      extractMetaUrl(html, 'name',     /twitter:image/),
+      extractMetaUrl(html, 'rel',      /image_src/),
+    ];
+
+    for (const raw of metaCandidates) {
+      if (!raw) continue;
+      const u = normalizeUrl(absUrl(raw, finalUrl));
+      if (u && !isBadImageUrl(u)) return u;
+    }
+
+    // Fallback: first decent <img> in <body>
+    const bodyMatch = html.match(/<body\b[\s\S]*$/i);
+    const bodyHtml  = bodyMatch ? bodyMatch[0] : html;
+    const bodyImgs  = extractImagesFromHtml(bodyHtml);
+    for (const c of bodyImgs) {
+      const u = normalizeUrl(absUrl(c.url, finalUrl));
+      if (!u || isBadImageUrl(u)) continue;
+      // Skip obviously tiny images
+      if ((c.w && c.w < 200) || (c.h && c.h < 100)) continue;
+      return u;
+    }
+
+    return null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/** Run an async worker over items with bounded concurrency. */
+async function runLimited(items, limit, worker) {
+  const queue = items.slice();
+  const workers = Array.from({ length: Math.min(limit, queue.length) }, async () => {
+    while (queue.length) {
+      const item = queue.shift();
+      await worker(item);
+    }
+  });
+  await Promise.all(workers);
+}
+
+// ── Feed parsers ───────────────────────────────────────────────────────────
 function parseRssItems(parsed, feed) {
   const channel = parsed?.rss?.channel || parsed?.channel;
   if (!channel) return [];
@@ -348,6 +461,21 @@ async function main() {
   });
 
   const articles = unique.slice(0, MAX_ARTICLES);
+
+  // ── Resolve missing images by fetching the article page (Node has no CORS) ──
+  const needImage = articles.filter(a => !a.image && a.link);
+  if (needImage.length) {
+    console.log(`[build-feed] Resolving og:image for ${needImage.length} articles…`);
+    let resolved = 0;
+    await runLimited(needImage, ARTICLE_FETCH_CONCURRENCY, async a => {
+      const img = await fetchArticleImage(a.link);
+      if (img) {
+        a.image = img;
+        resolved++;
+      }
+    });
+    console.log(`[build-feed]   ↳ filled ${resolved}/${needImage.length} (${Math.round(resolved / needImage.length * 100)}%)`);
+  }
 
   const failedCount  = health.filter(h => !h.ok).length;
   const successCount = health.filter(h => h.ok).length;
