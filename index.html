@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GeeksPulse — The dev news feed that doesn't make you want to close the tab." />
+  <meta property="og:title" content="GeeksPulse — Feel the pulse of dev." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0b0d12" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.svg" />
+  <title>GeeksPulse — Feel the pulse of dev.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="top-nav">
+    <div class="page-wrap">
+      <div class="nav-inner">
+        <a href="/" class="logo" aria-label="GeeksPulse home">
+          <div class="logo-mark" aria-hidden="true">GP</div>
+          <span class="logo-name"><span class="bracket">{</span> GeeksPulse <span class="bracket">}</span></span>
+          <span class="logo-sub">// feel the pulse of dev</span>
+        </a>
+        <div class="nav-actions">
+          <div class="nav-prompt" aria-hidden="true">
+            <span class="prompt-sym">$</span>
+            <span id="navStatus">geekspulse --fetch</span>
+          </div>
+          <button id="refreshBtn" class="btn btn-ghost btn-sm">
+            <span id="refreshIcon">&#8635;</span> Refresh
+          </button>
+          <!-- nav support button -->
+          <button data-support class="btn btn-primary btn-sm">
+            &#x50; Support
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="page-wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="pulse" aria-hidden="true"></span>
+          Aggregating dev signals since 2026
+        </div>
+        <h1>Your daily<br /><em>dev briefing,</em><br />minus the noise.</h1>
+        <div class="hero-tagline">
+          <span class="comment">// GeeksPulse collects the good stuff so you</span><br />
+          <span class="comment">// don't have to doomscroll Twitter at 2am.</span><br />
+          <span class="keyword">const</span> mood = <span class="string">"caffeinated &amp; shipping"</span>;
+        </div>
+        <div class="hero-ctas">
+          <button data-support class="btn btn-primary btn-lg">
+            &#x50; Support via PayPal
+          </button>
+          <button id="refreshBtnHero" class="btn btn-ghost btn-lg">
+            &#8635; Refresh feeds
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="val" id="statFeeds">29</span>
+            <span class="lbl">RSS feeds</span>
+          </div>
+          <div class="hero-stat">
+            <span class="val" id="statArticles">0</span>
+            <span class="lbl">Articles fetched</span>
+          </div>
+          <div class="hero-stat">
+            <span class="val">0</span>
+            <span class="lbl">Paywalls hit</span>
+          </div>
+          <div class="hero-stat">
+            <span class="val">&#8734;</span>
+            <span class="lbl">Tabs saved</span>
+          </div>
+        </div>
+      </div>
+      <!-- Mascot + Terminal column -->
+      <div class="hero-right-col">
+      <!-- Terminal window -->
+      <div class="hero-terminal" aria-hidden="true">
+        <div class="term-bar">
+          <span class="term-dot red"></span>
+          <span class="term-dot yellow"></span>
+          <span class="term-dot green"></span>
+          <span class="term-title">geekspulse ~ bash</span>
+        </div>
+        <div class="term-body">
+          <div class="term-line">
+            <span class="prompt">&#10095;</span>
+            <span class="cmd">geekspulse</span>
+            <span class="arg">fetch</span>
+            <span class="flag">--all</span>
+            <span class="flag">--fresh</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; Hacker News ............. 30 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; Krebs on Security ....... 12 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; IEEE Spectrum ........... 18 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; GitHub Blog ............. 8 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; Google AI Blog .......... 10 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out ok">&#10003; Kubernetes Blog ......... 6 stories</span>
+          </div>
+          <div class="term-line">
+            <span class="out cmt"># 25 feeds · 0 paywalls · 100% signal</span>
+          </div>
+          <div class="term-line">
+            <span class="prompt">&#10095;</span>
+            <span class="out ok">&#10003; 60 articles ready. No paywalls. You're welcome.</span>
+          </div>
+          <div class="term-line">
+            <span class="prompt">&#10095;</span>
+            <span class="term-cursor"></span>
+          </div>
+        </div>
+      </div><!-- /.hero-terminal -->
+      </div><!-- /.hero-right-col -->
+    </section>
+    <!-- MOBILE FILTERS (shown on small screens) -->
+    <div id="mobileFilters" class="mobile-filters" role="group" aria-label="Filter by category"></div>
+    <!-- APP LAYOUT -->
+    <div class="app-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-label">// categories</div>
+          <nav id="sidebarFilters" class="filter-nav" aria-label="Category filters"></nav>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">&#x50; Support GeeksPulse</div>
+            <p>Free &amp; indie. No trackers, no ads, no VC money. Just dev news and vibes.</p>
+            <button data-support class="btn btn-paypal">
+              Pay via PayPal
+            </button>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-quote">
+            <span class="q-mark">"</span>It works on my machine.<span class="q-mark">"</span><br />
+            <br />
+            — Every developer, ever
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">// stats</div>
+          <div class="sidebar-card">
+            <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-3);">
+              <div style="display:flex;justify-content:space-between;">
+                <span>feeds online</span>
+                <span id="sbFeeds" style="color:var(--green)">--</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>last refresh</span>
+                <span id="sbUpdated" style="color:var(--cyan)">--</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>failed feeds</span>
+                <span id="sbFailed" style="color:var(--yellow)">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- MAIN CONTENT -->
+      <main class="content">
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="toolbar-status">
+              <span id="statusDot" class="status-dot loading"></span>
+              <span id="statusText">Booting up the feed engine...</span>
+            </div>
+            <span id="articleCount" class="article-count" style="display:none"></span>
+          </div>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button class="view-btn active" id="gridViewBtn" title="Grid view" aria-pressed="true">&#9639;&#9639;</button>
+            <button class="view-btn" id="listViewBtn" title="List view" aria-pressed="false">&#9776;</button>
+          </div>
+        </div>
+        <!-- Error banner -->
+        <div id="errorBanner" class="error-banner" role="alert">
+          <span class="e-icon">&#9888;</span>
+          <span id="errorMessage"></span>
+        </div>
+        <!-- Feed grid -->
+        <div id="feedGrid" class="feed-grid"></div>
+      </main>
+    </div><!-- /.app-layout -->
+    <!-- SUPPORT STRIP -->
+    <section class="support-strip" aria-label="Support GeeksPulse">
+      <div class="support-text">
+        <div class="support-title">GeeksPulse saved you from opening <span id="tabsSaved">12</span> tabs today. &#127881;</div>
+        <div class="support-desc">It's free, indie, and runs on coffee. If it's useful, consider tossing a coffee this way.</div>
+      </div>
+      <button data-support class="btn btn-primary btn-lg">
+        &#x50; Support via PayPal
+      </button>
+    </section>
+  </div><!-- /.page-wrap -->
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="page-wrap">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-tagline">Built for developers who like clean feeds, good tools, and fewer tabs.</div>
+          <div class="footer-copy">&#169; 2026 GeeksPulse &mdash; No trackers. No ads. No BS.</div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
