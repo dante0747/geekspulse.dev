@@ -469,7 +469,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   background: rgba(88,200,255,0.07); border: 1px solid var(--cyan);
   color: var(--cyan); box-shadow: 0 0 8px rgba(88,200,255,0.1);
 }
-.fi-icon  { font-size: 15px; flex-shrink: 0; }
+.fi-icon  { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 16px; }
 .fi-label { flex: 1; font-family: var(--display); font-size: 16px; letter-spacing: 1px; }
 .fi-count {
   font-family: var(--mono); font-size: 10px; padding: 1px 6px; font-weight: 700;
@@ -539,7 +539,8 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .view-toggle { display: flex; gap: 4px; }
 .view-btn {
   padding: 5px 9px; border: 1px solid var(--border2);
-  background: var(--surface); color: var(--ink2); font-size: 13px;
+  background: var(--surface); color: var(--ink2);
+  display: inline-flex; align-items: center; justify-content: center;
   transition: border-color var(--ease), color var(--ease);
 }
 .view-btn:hover { border-color: var(--cyan); color: var(--cyan); }
@@ -626,6 +627,10 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   text-transform: uppercase; border: 1px solid; flex-shrink: 0; line-height: 1.6;
   font-weight: 700; max-width: 120px; overflow: hidden; text-overflow: ellipsis;
   white-space: nowrap;
+}
+.card-cat-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; opacity: 0.9;
 }
 .card-date { font-family: var(--mono); font-size: 10px; color: var(--ink3); white-space: nowrap; margin-left: auto; flex-shrink: 0; }
 .card-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; margin: 0; }

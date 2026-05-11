@@ -75,17 +75,67 @@
     { name: 'InfoQ Java',        url: 'https://feed.infoq.com/java/',                                    category: 'Java'        },
   ];
 
+  // SVG icons — paths sourced from Lucide Icons (lucide.dev) and Simple Icons (simpleicons.org)
+  const CAT_SVG = {
+    // Lucide: radio
+    'All':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>`,
+    // Lucide: code-2
+    'General':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`,
+    // Lucide: shield-check
+    'Security':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>`,
+    // Lucide: bot
+    'AI':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`,
+    // Simple Icons: python (official logo path, viewBox 0 0 24 24)
+    'Python':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969C0 18.15 3.403 17.93 3.403 17.93h2.034v-2.853s-.11-3.403 3.347-3.403h5.768s3.24.052 3.24-3.13V3.26S18.302 0 11.914 0zm-3.22 1.874a1.04 1.04 0 0 1 1.04 1.04 1.04 1.04 0 0 1-1.04 1.04 1.04 1.04 0 0 1-1.04-1.04 1.04 1.04 0 0 1 1.04-1.04z"/><path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.961-3.403-5.961h-2.034v2.853s.11 3.403-3.347 3.403H9.448s-3.24-.052-3.24 3.13V18.74S5.698 24 12.086 24zm3.22-1.874a1.04 1.04 0 0 1-1.04-1.04 1.04 1.04 0 0 1 1.04-1.04 1.04 1.04 0 0 1 1.04 1.04 1.04 1.04 0 0 1-1.04 1.04z"/></svg>`,
+    // Lucide: braces
+    'JavaScript':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>`,
+    // Lucide: coffee
+    'Java':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>`,
+    // Lucide: layers
+    'DevOps':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+    // Lucide: globe
+    'Open Source':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  };
+
   const categories = [
-    { id: 'All',         label: 'All news',    icon: '📡' },
-    { id: 'General',     label: 'General',     icon: '🗞️' },
-    { id: 'Security',    label: 'Security',    icon: '🔐' },
-    { id: 'AI',          label: 'AI / ML',     icon: '🤖' },
-    { id: 'Python',      label: 'Python',      icon: '🐍' },
-    { id: 'JavaScript',  label: 'JavaScript',  icon: '🟡' },
-    { id: 'Java',        label: 'Java',        icon: '☕' },
-    { id: 'DevOps',      label: 'DevOps',      icon: '🐳' },
-    { id: 'Open Source', label: 'Open Source', icon: '🌍' },
+    { id: 'All',         label: 'All news',    color: '#58c8ff', icon: CAT_SVG['All']         },
+    { id: 'General',     label: 'General',     color: '#6e7681', icon: CAT_SVG['General']     },
+    { id: 'Security',    label: 'Security',    color: '#ff5555', icon: CAT_SVG['Security']    },
+    { id: 'AI',          label: 'AI / ML',     color: '#bc8cff', icon: CAT_SVG['AI']          },
+    { id: 'Python',      label: 'Python',      color: '#3fb950', icon: CAT_SVG['Python']      },
+    { id: 'JavaScript',  label: 'JavaScript',  color: '#e3c55e', icon: CAT_SVG['JavaScript']  },
+    { id: 'Java',        label: 'Java',        color: '#f07f2f', icon: CAT_SVG['Java']        },
+    { id: 'DevOps',      label: 'DevOps',      color: '#58c8ff', icon: CAT_SVG['DevOps']      },
+    { id: 'Open Source', label: 'Open Source', color: '#56b4d3', icon: CAT_SVG['Open Source'] },
   ];
+
+  // Fast lookup: category id → { icon, color }
+  const catMeta = Object.fromEntries(categories.map(c => [c.id, { icon: c.icon, color: c.color }]));
+
+  // Render a scaled-down category icon for use inside card pills
+  function catIconSm(category) {
+    const meta = catMeta[category];
+    if (!meta) return '';
+    const svg = meta.icon.replace(/width="\d+" height="\d+"/, 'width="11" height="11"');
+    return `<span style="display:inline-flex;align-items:center;color:${meta.color};margin-right:3px;flex-shrink:0">${svg}</span>`;
+  }
+
+  // Render a standalone category icon for cards (bigger, separate from the pill)
+  function catIconCard(category) {
+    const meta = catMeta[category];
+    if (!meta) return '';
+    const svg = meta.icon.replace(/width="\d+" height="\d+"/, 'width="18" height="18"');
+    return `<span class="card-cat-icon" style="color:${meta.color}">${svg}</span>`;
+  }
 
   // Rotating funny loading messages
   const loadingMessages = [
@@ -428,6 +478,7 @@
       <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}">
         <div class="card-top">
           <span class="card-num">${num}</span>
+          ${catIconCard(a.category)}
           <span class="card-cat ${catClass(a.category)}">${esc(a.category)}</span>
           ${date ? `<span class="card-date">${date}</span>` : ''}
         </div>
@@ -455,6 +506,7 @@
         <span class="card-num">${num}</span>
         <div class="card-body">
           <div class="card-top">
+            ${catIconCard(a.category)}
             <span class="card-cat ${catClass(a.category)}">${esc(a.category)}</span>
             ${date ? `<span class="card-date">${date}</span>` : ''}
           </div>
@@ -534,7 +586,7 @@
       const count = c.id === 'All' ? allArticles.length : (counts[c.id] || 0);
       return `
         <button class="filter-item${c.id === activeFilter ? ' active' : ''}" data-cat="${esc(c.id)}">
-          <span class="fi-icon">${c.icon}</span>
+          <span class="fi-icon" style="color:${c.color}">${c.icon}</span>
           <span class="fi-label">${esc(c.label)}</span>
           <span class="fi-count">${count}</span>
         </button>`;
@@ -542,7 +594,7 @@
 
     mobileFilters.innerHTML = categories.map(c => `
       <button class="chip${c.id === activeFilter ? ' active' : ''}" data-cat="${esc(c.id)}">
-        ${c.icon} ${esc(c.id)}
+        <span style="color:${c.color};display:inline-flex;vertical-align:middle;margin-right:4px">${c.icon}</span>${esc(c.id)}
       </button>`).join('');
 
     [sidebarFilters, mobileFilters].forEach(el => {
@@ -647,7 +699,7 @@
     settingsBtn.className = 'btn btn-ghost btn-sm';
     settingsBtn.title = 'Settings';
     settingsBtn.setAttribute('aria-label', 'Open settings');
-    settingsBtn.innerHTML = '⚙<span class="btn-label"> Settings</span>';
+    settingsBtn.innerHTML = '<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.22 3.22l1.06 1.06M11.72 11.72l1.06 1.06M3.22 12.78l1.06-1.06M11.72 4.28l1.06-1.06"/></svg><span class="btn-label"> Settings</span>';
     settingsBtn.title = 'Settings';
     // insert before the support button (last child)
     navActions.insertBefore(settingsBtn, navActions.lastElementChild);
@@ -670,7 +722,7 @@
     popover.setAttribute('aria-label', 'Settings');
     popover.innerHTML = `
       <div class="settings-header">
-        <span class="settings-title">⚙ Settings</span>
+        <span class="settings-title"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.22 3.22l1.06 1.06M11.72 11.72l1.06 1.06M3.22 12.78l1.06-1.06M11.72 4.28l1.06-1.06"/></svg>Settings</span>
       </div>
       <div class="settings-section">
         <div class="settings-label">Auto-refresh</div>
@@ -766,7 +818,7 @@
         <a href="${PAYPAL_ME}" target="_blank" rel="noopener noreferrer" class="pp-link">
           Or open PayPal.me →
         </a>
-        <p class="pp-thanks">// thank you, you absolute legend 🙏</p>
+        <p class="pp-thanks">// thank you, you absolute legend <svg aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="currentColor" style="vertical-align:-2px"><path d="M8 14s-6-3.9-6-8a4 4 0 0 1 6-3.44A4 4 0 0 1 14 6c0 4.1-6 8-6 8z"/></svg></p>
       </div>`;
     document.body.appendChild(modal);
 
