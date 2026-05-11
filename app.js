@@ -321,49 +321,125 @@
   }
 
   // ── Image extraction from a feed item/entry element ──────────
-  function extractImage(el, descHtml) {
-    // 1. <media:content url="..."> or <media:thumbnail url="...">
+
+  // Hosts / path fragments that indicate tracking pixels or non-editorial images
+  const _SKIP_IMG_HOST = /\b(feedburner|feedproxy|pixel|tracking|analytics|counter|stats|beacon|feedblitz|mailchimp|list-manage|gravatar|avatar|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch)\b/i;
+  const _SKIP_IMG_PATH = /\/(pixel|track|beacon|open|spacer|clear|1x1|blank|dot\.gif|transparent)\b/i;
+  const _IMG_EXT       = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
+
+  function _isBadImage(src, w, h) {
+    if (!src) return true;
+    if (w !== null && w <= 2) return true;
+    if (h !== null && h <= 2) return true;
+    // Known 1×1 GIF magic bytes indicator in data URIs
+    if (src.startsWith('data:')) return true;
+    try {
+      const u = new URL(src, location.href);
+      if (_SKIP_IMG_HOST.test(u.hostname)) return true;
+      if (_SKIP_IMG_PATH.test(u.pathname)) return true;
+    } catch { /* relative URL — keep */ }
+    return false;
+  }
+
+  function _scoreImage(src, w, h) {
+    let score = 0;
+    // Reward known image extensions
+    if (_IMG_EXT.test(src)) score += 10;
+    // Reward size if known
+    if (w > 0 && h > 0) score += Math.min(w * h, 600000) / 10000;
+    // Reward editorial-sounding path segments
+    if (/\/(image|img|photo|thumb|hero|featured|cover|banner|post|article|upload|media|content)/i.test(src)) score += 6;
+    // Penalise icons / logos / avatars
+    if (/\/(icon|logo|avatar|sprite|badge|favicon)/i.test(src)) score -= 10;
+    return score;
+  }
+
+  /**
+   * extractImage(el, descHtml, contentHtml?)
+   * Gathers every image candidate from the XML element and its HTML payloads,
+   * scores each one, and returns the URL of the best candidate (or null).
+   */
+  function extractImage(el, descHtml, contentHtml) {
+    const candidates = []; // { url, score }
+
+    // 1. <media:content> / <media:thumbnail> — iterate ALL nodes, not just first
     const mediaNS = 'http://search.yahoo.com/mrss/';
     for (const tag of ['content', 'thumbnail']) {
-      const node = el.getElementsByTagNameNS(mediaNS, tag)[0];
-      if (node) {
-        const url = node.getAttribute('url');
-        if (url && /\.(jpe?g|png|gif|webp|svg)/i.test(url)) return url;
-        if (url) return url;
+      const nodes = el.getElementsByTagNameNS(mediaNS, tag);
+      for (let i = 0; i < nodes.length; i++) {
+        const node   = nodes[i];
+        const url    = node.getAttribute('url') || '';
+        const medium = node.getAttribute('medium') || '';
+        const w = parseInt(node.getAttribute('width')  || '0', 10) || null;
+        const h = parseInt(node.getAttribute('height') || '0', 10) || null;
+        // Accept when medium is "image", empty, or absent — skip "audio"/"video"
+        if (url && !/^(audio|video)$/i.test(medium) && !_isBadImage(url, w, h)) {
+          candidates.push({ url, score: _scoreImage(url, w, h) + 20 }); // media tags are highly reliable
+        }
       }
     }
 
-    // 2. <enclosure type="image/...">
+    // 2. <enclosure type="image/..."> (RSS 2.0)
     const enc = el.querySelector('enclosure');
     if (enc) {
       const t = enc.getAttribute('type') || '';
-      const u = enc.getAttribute('url') || '';
-      if (t.startsWith('image/') || /\.(jpe?g|png|gif|webp)/i.test(u)) return u;
-    }
-
-    // 3. First <img src="..."> inside description/content HTML
-    if (descHtml) {
-      const tmp = document.createElement('div');
-      tmp.innerHTML = descHtml;
-      const img = tmp.querySelector('img[src]');
-      if (img) {
-        const src = img.getAttribute('src') || '';
-        // Skip tiny tracking pixels (width/height <= 2)
-        const w = parseInt(img.getAttribute('width') || '999', 10);
-        const h = parseInt(img.getAttribute('height') || '999', 10);
-        if (src && w > 2 && h > 2) return src;
-        if (src && !img.getAttribute('width')) return src;
+      const u = enc.getAttribute('url')  || '';
+      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !_isBadImage(u, null, null)) {
+        candidates.push({ url: u, score: _scoreImage(u, null, null) + 15 });
       }
     }
 
-    // 4. og:image or similar inside item content (rare but happens)
+    // 3. <link rel="enclosure" type="image/..."> (Atom)
+    el.querySelectorAll('link[rel="enclosure"]').forEach(link => {
+      const t = link.getAttribute('type')  || '';
+      const u = link.getAttribute('href')  || '';
+      if ((t.startsWith('image/') || _IMG_EXT.test(u)) && !_isBadImage(u, null, null)) {
+        candidates.push({ url: u, score: _scoreImage(u, null, null) + 15 });
+      }
+    });
+
+    // 4. iTunes image
     const itunes = el.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'image')[0];
     if (itunes) {
-      const href = itunes.getAttribute('href');
-      if (href) return href;
+      const href = itunes.getAttribute('href') || '';
+      if (href && !_isBadImage(href, null, null)) {
+        candidates.push({ url: href, score: _scoreImage(href, null, null) + 15 });
+      }
     }
 
-    return null;
+    // 5. Extract <img> tags from HTML payloads — content:encoded first (richer), then description
+    const htmlSources = [contentHtml, descHtml].filter(Boolean);
+    for (const html of htmlSources) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+
+      tmp.querySelectorAll('img[src]').forEach(img => {
+        const src = img.getAttribute('src') || '';
+        if (!src) return;
+        const w = parseInt(img.getAttribute('width')  || '0', 10) || null;
+        const h = parseInt(img.getAttribute('height') || '0', 10) || null;
+        if (_isBadImage(src, w, h)) return;
+        const inFigure = !!img.closest('figure');
+        candidates.push({ url: src, score: _scoreImage(src, w, h) + (inFigure ? 8 : 0) });
+      });
+
+      // Also try srcset — grab the highest-density descriptor URL
+      tmp.querySelectorAll('img[srcset]').forEach(img => {
+        const srcset = img.getAttribute('srcset') || '';
+        // Parse "url descriptor, url descriptor, ..." — pick the last (largest) entry
+        const parts = srcset.split(',').map(s => s.trim().split(/\s+/)[0]).filter(Boolean);
+        const best  = parts[parts.length - 1];
+        if (best && !_isBadImage(best, null, null)) {
+          candidates.push({ url: best, score: _scoreImage(best, null, null) + 2 });
+        }
+      });
+    }
+
+    if (!candidates.length) return null;
+
+    // Return the highest-scoring unique URL
+    candidates.sort((a, b) => b.score - a.score);
+    return candidates[0].url;
   }
 
   // ── RSS XML parser ────────────────────────────────────────────
@@ -380,13 +456,15 @@
     doc.querySelectorAll('item').forEach(item => {
       const link = getText(item, 'link') ||
                    item.querySelector('link')?.getAttribute('href') || '#';
-      const desc  = getText(item, 'description') || getText(item, 'summary') || getText(item, 'content\\:encoded') || '';
+      // content:encoded is the richest HTML source; description is shorter summary
+      const contentEncoded = getText(item, 'content\\:encoded') || '';
+      const desc  = getText(item, 'description') || getText(item, 'summary') || contentEncoded;
       const date  = getText(item, 'pubDate') || getText(item, 'published') || getText(item, 'updated') || '';
       items.push({
         title:    getText(item, 'title') || 'Untitled',
         link,
         snippet:  truncate(stripHtml(desc)),
-        image:    extractImage(item, desc),
+        image:    extractImage(item, desc, contentEncoded),
         date,
         source:   feed.name,
         category: feed.category,
@@ -398,13 +476,14 @@
       doc.querySelectorAll('entry').forEach(entry => {
         const linkEl = entry.querySelector('link[rel="alternate"]') || entry.querySelector('link');
         const link   = linkEl ? (linkEl.getAttribute('href') || linkEl.textContent.trim()) : '#';
-        const desc   = getText(entry, 'summary') || getText(entry, 'content') || '';
+        const contentHtml = getText(entry, 'content') || '';
+        const desc   = getText(entry, 'summary') || contentHtml;
         const date   = getText(entry, 'updated') || getText(entry, 'published') || '';
         items.push({
           title:    getText(entry, 'title') || 'Untitled',
           link,
           snippet:  truncate(stripHtml(desc)),
-          image:    extractImage(entry, desc),
+          image:    extractImage(entry, desc, contentHtml),
           date,
           source:   feed.name,
           category: feed.category,
@@ -432,26 +511,50 @@
     const data = await resp.json();
     if (data.status !== 'ok') throw new Error(data.message || 'rss2json error');
     return (data.items || []).map(item => {
-      const descHtml = item.description || item.content || '';
-      // rss2json exposes thumbnail directly
-      let image = item.thumbnail || item.enclosure?.link || null;
-      // try extracting from description HTML if no direct image
-      if (!image && descHtml) {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = descHtml;
-        const img = tmp.querySelector('img[src]');
-        if (img) {
-          const src = img.getAttribute('src') || '';
-          const w = parseInt(img.getAttribute('width') || '999', 10);
-          const h = parseInt(img.getAttribute('height') || '999', 10);
-          if (src && w > 2 && h > 2) image = src;
-          else if (src && !img.getAttribute('width')) image = src;
+      const descHtml    = item.description || '';
+      const contentHtml = item.content     || '';
+      // rss2json exposes thumbnail directly — use it as a strong hint
+      let image = null;
+      const thumb = item.thumbnail || item.enclosure?.link || null;
+      if (thumb && !_isBadImage(thumb, null, null)) image = thumb;
+
+      // If no direct thumbnail, or we may find something better in the HTML, collect candidates
+      if (!image || _IMG_EXT.test(image) === false) {
+        // Build a fake XML-like structure isn't possible here; just mine the HTML
+        const htmlSources = [contentHtml, descHtml].filter(Boolean);
+        const candidates = thumb && !_isBadImage(thumb, null, null)
+          ? [{ url: thumb, score: _scoreImage(thumb, null, null) + 20 }]
+          : [];
+        for (const html of htmlSources) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = html;
+          tmp.querySelectorAll('img[src]').forEach(img => {
+            const src = img.getAttribute('src') || '';
+            if (!src) return;
+            const w = parseInt(img.getAttribute('width')  || '0', 10) || null;
+            const h = parseInt(img.getAttribute('height') || '0', 10) || null;
+            if (_isBadImage(src, w, h)) return;
+            const inFigure = !!img.closest('figure');
+            candidates.push({ url: src, score: _scoreImage(src, w, h) + (inFigure ? 8 : 0) });
+          });
+          tmp.querySelectorAll('img[srcset]').forEach(img => {
+            const srcset = img.getAttribute('srcset') || '';
+            const parts  = srcset.split(',').map(s => s.trim().split(/\s+/)[0]).filter(Boolean);
+            const best   = parts[parts.length - 1];
+            if (best && !_isBadImage(best, null, null)) {
+              candidates.push({ url: best, score: _scoreImage(best, null, null) + 2 });
+            }
+          });
+        }
+        if (candidates.length) {
+          candidates.sort((a, b) => b.score - a.score);
+          image = candidates[0].url;
         }
       }
       return {
         title:    item.title    || 'Untitled',
         link:     item.link     || item.url || '#',
-        snippet:  truncate(stripHtml(descHtml)),
+        snippet:  truncate(stripHtml(descHtml || contentHtml)),
         image,
         date:     item.pubDate  || item.published || '',
         source:   feed.name,
