@@ -10,9 +10,33 @@
 
   // ── Feeds ────────────────────────────────────────────────────
   // Primary: direct CORS proxy that returns raw XML
+  // NOTE: corsproxy.io tightened its policy and now blocks many production
+  // origins (it works fine from localhost which is why dev "just works").
+  // We keep it as primary but add public fallbacks so og:image resolution
+  // does not silently fail on https://geekspulse.dev.
   const CORS_PROXY   = 'https://corsproxy.io/?';
+  const CORS_PROXIES = [
+    url => 'https://corsproxy.io/?'              + encodeURIComponent(url),
+    url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
+    url => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
+    url => 'https://cors.eu.org/'                + url,
+  ];
   // Fallback: rss2json (may rate-limit on free tier)
   const RSS2JSON     = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+  /** Fetch a URL via a chain of public CORS proxies; returns response text or null. */
+  async function fetchViaCorsProxy(targetUrl, { timeoutMs = 8000 } = {}) {
+    for (const build of CORS_PROXIES) {
+      try {
+        const proxied = build(targetUrl);
+        const resp = await fetch(proxied, { signal: AbortSignal.timeout(timeoutMs) });
+        if (!resp.ok) continue;
+        const text = await resp.text();
+        if (text && text.length > 0) return text;
+      } catch { /* try next proxy */ }
+    }
+    return null;
+  }
 
   const MAX_ARTICLES = 300; // enough for all categories to have articles
   const MAX_PER_FEED = 15;  // cap per feed so high-volume sources don't crowd out others
@@ -348,7 +372,15 @@
     if (!url) return null;
     if (url.startsWith('data:')) return null;
     try {
-      return new URL(url, baseUrl || location.href).href;
+      const abs = new URL(url, baseUrl || location.href);
+      // Mixed content: when the page is https, an http image will be silently
+      // blocked by the browser (often without firing onerror reliably). Try to
+      // upgrade to https; if that's not possible, treat as unusable here so the
+      // pipeline can fall back to og:image / placeholder instead.
+      if (abs.protocol === 'http:' && location.protocol === 'https:') {
+        abs.protocol = 'https:';
+      }
+      return abs.href;
     } catch { return null; }
   }
 
@@ -608,10 +640,8 @@
     resolvingImageUrls.add(articleUrl);
 
     try {
-      const proxyUrl = CORS_PROXY + encodeURIComponent(articleUrl);
-      const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-      if (!resp.ok) return null;
-      const html = await resp.text();
+      const html = await fetchViaCorsProxy(articleUrl, { timeoutMs: 8000 });
+      if (!html) return null;
 
       // Parse the head's inner content in a div — more reliable than <template> for meta/link tags
       const tmp = document.createElement('div');
@@ -844,11 +874,17 @@
 
   // Normalise a cached article to match the internal shape used by render()
   function normaliseCachedArticle(a) {
+    // Run cached image URLs through normalizeImageUrl so http URLs get upgraded
+    // to https on the production https origin (avoids silent mixed-content
+    // blocking, which made some cards appear empty on geekspulse.dev while
+    // working fine on http://localhost during dev).
+    const rawImg  = a.image ? safeUrl(a.image) : null;
+    const safeImg = rawImg && rawImg !== '#' ? normalizeImageUrl(rawImg, a.link) : null;
     return {
       title:    a.title    || 'Untitled',
       link:     safeUrl(a.link),
       snippet:  a.summary  || '',
-      image:    a.image    ? safeUrl(a.image) : null,
+      image:    safeImg,
       date:     a.publishedAt || null,
       source:   a.source   || '',
       category: a.category || 'General',
