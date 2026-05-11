@@ -9,30 +9,51 @@
   'use strict';
 
   // ── Feeds ────────────────────────────────────────────────────
-  // Primary: direct CORS proxy that returns raw XML
-  // NOTE: corsproxy.io tightened its policy and now blocks many production
-  // origins (it works fine from localhost which is why dev "just works").
-  // We keep it as primary but add public fallbacks so og:image resolution
-  // does not silently fail on https://geekspulse.dev.
-  const CORS_PROXY   = 'https://corsproxy.io/?';
+  // Public CORS proxies for browser-side fetches.
+  // IMPORTANT: corsproxy.io now returns a 200-OK JSON error blob
+  // (`{"error":"Server-side requests are not allowed on your plan..."}`)
+  // for unregistered production origins like https://geekspulse.dev — that's
+  // why images "work on local but not on the website domain". `resp.ok` is
+  // true so a naive proxy chain never falls through.
+  // Codetabs MUST use the trailing slash before `?` (without it the server
+  // returns a 301 to the slashy URL which some clients/CORS modes drop).
   const CORS_PROXIES = [
-    url => 'https://corsproxy.io/?'              + encodeURIComponent(url),
-    url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
-    url => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
-    url => 'https://cors.eu.org/'                + url,
+    url => 'https://api.codetabs.com/v1/proxy/?quest='     + encodeURIComponent(url),
+    url => 'https://api.allorigins.win/raw?url='           + encodeURIComponent(url),
+    url => 'https://corsproxy.io/?'                        + encodeURIComponent(url),
   ];
+  // Kept for backward references; first proxy is the de-facto primary.
+  const CORS_PROXY   = 'https://api.codetabs.com/v1/proxy/?quest=';
   // Fallback: rss2json (may rate-limit on free tier)
   const RSS2JSON     = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
-  /** Fetch a URL via a chain of public CORS proxies; returns response text or null. */
+  /** True when the response body looks like real web content (not an error JSON). */
+  function looksLikeUsableBody(text) {
+    if (!text || text.length < 100) return false;
+    // Detect known proxy error JSON envelopes (corsproxy.io etc.)
+    const head = text.slice(0, 400).trimStart();
+    if (head.startsWith('{') || head.startsWith('[')) {
+      if (/"error"\s*:/i.test(head) || /not allowed|upgrade|rate ?limit|forbidden/i.test(head)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /** Fetch a URL via a chain of public CORS proxies; returns response text or null.
+   *  Tries each proxy until one returns a body that doesn't look like a proxy error. */
   async function fetchViaCorsProxy(targetUrl, { timeoutMs = 8000 } = {}) {
     for (const build of CORS_PROXIES) {
       try {
         const proxied = build(targetUrl);
-        const resp = await fetch(proxied, { signal: AbortSignal.timeout(timeoutMs) });
+        const resp = await fetch(proxied, {
+          signal: AbortSignal.timeout(timeoutMs),
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+        });
         if (!resp.ok) continue;
         const text = await resp.text();
-        if (text && text.length > 0) return text;
+        if (looksLikeUsableBody(text)) return text;
       } catch { /* try next proxy */ }
     }
     return null;
@@ -806,10 +827,8 @@
 
   // ── Fetch one feed via CORS proxy → XML ───────────────────────
   async function fetchFeedDirect(feed) {
-    const url  = CORS_PROXY + encodeURIComponent(feed.url);
-    const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const text = await resp.text();
+    const text = await fetchViaCorsProxy(feed.url, { timeoutMs: 10000 });
+    if (!text) throw new Error('All CORS proxies failed');
     return parseRssXml(text, feed);
   }
 
