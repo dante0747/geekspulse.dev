@@ -389,6 +389,7 @@
   // ── Image pipeline ────────────────────────────────────────────
 
   const IMAGE_CACHE_TTL            = 7 * 24 * 60 * 60 * 1000; // 7 days
+  const IMAGE_NEG_CACHE_TTL        = 6 * 60 * 60 * 1000;      // 6h — re-try misses occasionally
   const IMAGE_METADATA_CONCURRENCY = 3;
   const _IMG_EXT = /\.(jpe?g|png|webp|avif)(\?|$)/i;
 
@@ -628,6 +629,14 @@
       const raw = localStorage.getItem('gp:image:' + articleUrl);
       if (!raw) return null;
       const data = JSON.parse(raw);
+      // Negative cache: we previously tried and found nothing usable.
+      if (data && data.notFound) {
+        if (Date.now() - data.savedAt > IMAGE_NEG_CACHE_TTL) {
+          localStorage.removeItem('gp:image:' + articleUrl);
+          return null;
+        }
+        return { notFound: true };
+      }
       if (!data.url || isProbablyBadImageUrl(data.url)) {
         localStorage.removeItem('gp:image:' + articleUrl);
         return null;
@@ -646,6 +655,13 @@
     } catch { /* quota exceeded — silently ignore */ }
   }
 
+  /** Remember that this article has no usable image so we don't keep re-fetching it. */
+  function setCachedImageMiss(articleUrl) {
+    try {
+      localStorage.setItem('gp:image:' + articleUrl, JSON.stringify({ notFound: true, savedAt: Date.now() }));
+    } catch { /* ignore quota */ }
+  }
+
   /** Extract the contents of the <head> section from raw HTML, or fall back to the first 50 KB.
    *  Returns the inner content (not the <head> tags themselves) so it can be safely parsed
    *  in a div without triggering browser fragment-context quirks. */
@@ -658,12 +674,38 @@
     return html.slice(0, 50000);
   }
 
+  /** Try to find the first reasonable <img> in the article body as a last
+   *  resort when no og:/twitter: meta image is available. */
+  function findBodyImageInHtml(html, baseUrl) {
+    if (!html) return null;
+    // Strip <head> so we don't accidentally hit favicon/preload icons
+    const bodyHtml = html.replace(/<head[\s\S]*?<\/head>/i, '');
+    const candidates = extractImageCandidatesFromHtml(bodyHtml, baseUrl);
+    return pickBestImageCandidate(candidates);
+  }
+
+  /** Extract first image URL from a Markdown body (used for r.jina.ai fallback). */
+  function findImageInMarkdown(md, baseUrl) {
+    if (!md) return null;
+    const re = /!\[[^\]]*\]\(([^)\s]+)/g;
+    let m;
+    while ((m = re.exec(md)) !== null) {
+      const url = normalizeImageUrl(m[1], baseUrl);
+      if (url && !isProbablyBadImageUrl(url) && _IMG_EXT.test(url)) return url;
+    }
+    return null;
+  }
+
   /** Fetch article HTML via CORS proxy and extract og:/twitter: meta image. */
   async function resolveArticleMetadataImage(articleUrl) {
     if (!articleUrl) return null;
 
     const cached = getCachedImage(articleUrl);
-    if (cached) return cached;
+    if (cached) {
+      // Negative cache hit — skip re-fetching for a while
+      if (cached.notFound) return null;
+      return cached;
+    }
 
     // Prevent duplicate concurrent fetches for the same URL
     if (resolvingImageUrls.has(articleUrl)) return null;
@@ -671,7 +713,35 @@
 
     try {
       const html = await fetchViaCorsProxy(articleUrl, { timeoutMs: 8000 });
-      if (!html) return null;
+      if (!html) {
+        // All proxies failed — try r.jina.ai (returns markdown, very reliable, free)
+        const jinaUrl = 'https://r.jina.ai/' + articleUrl;
+        try {
+          const r = await fetch(jinaUrl, {
+            signal: AbortSignal.timeout(8000),
+            referrerPolicy: 'no-referrer',
+          });
+          if (r.ok) {
+            const md = await r.text();
+            const imgUrl = findImageInMarkdown(md, articleUrl);
+            if (imgUrl) {
+              const v = await validateImageUrl(imgUrl);
+              if (v) {
+                const result = {
+                  url: imgUrl,
+                  source: 'jina-md',
+                  width: v.width, height: v.height, ratio: v.ratio,
+                  savedAt: Date.now(),
+                };
+                setCachedImage(articleUrl, result);
+                return result;
+              }
+            }
+          }
+        } catch { /* ignore */ }
+        setCachedImageMiss(articleUrl);
+        return null;
+      }
 
       // Parse the head's inner content in a div — more reliable than <template> for meta/link tags
       const tmp = document.createElement('div');
@@ -712,6 +782,25 @@
         return result;
       }
 
+      // No og:/twitter: meta found OR all candidates failed validation
+      // (e.g. hotlink-blocked CDNs returning 403). Try the article body.
+      const bodyBest = findBodyImageInHtml(html, articleUrl);
+      if (bodyBest && bodyBest.url) {
+        const v = await validateImageUrl(bodyBest.url);
+        if (v) {
+          const result = {
+            url: bodyBest.url,
+            source: 'body-img',
+            width: v.width, height: v.height, ratio: v.ratio,
+            savedAt: Date.now(),
+          };
+          setCachedImage(articleUrl, result);
+          return result;
+        }
+      }
+
+      // Nothing usable — remember this so we don't keep re-fetching the URL
+      setCachedImageMiss(articleUrl);
       return null;
     } catch (err) {
       console.warn('[GeeksPulse] Failed to resolve article metadata image', articleUrl, err);
