@@ -5,30 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO -->
-  <title>GeeksPulse — Feel the pulse of dev.</title>
-  <meta name="description" content="GeeksPulse is a free, indie developer news aggregator. Get the best stories from Hacker News, GitHub Blog, Krebs on Security, IEEE Spectrum and 25+ RSS feeds — no paywalls, no trackers." />
-  <meta name="keywords" content="developer news, tech news, programming news, hacker news, RSS aggregator, dev feed, software engineering, open source, cybersecurity news, AI news" />
+  <title>GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev</title>
+  <meta name="description" content="GeeksPulse is a free, indie developer news aggregator. Get the best stories from Hacker News, GitHub Blog, Krebs on Security, IEEE Spectrum and 25+ RSS feeds — no paywalls, no trackers, updated daily." />
+  <meta name="keywords" content="developer news, tech news aggregator, programming news, hacker news, RSS aggregator, dev feed, software engineering news, open source news, cybersecurity news, AI news, machine learning news, web development, DevOps news" />
   <meta name="author" content="GeeksPulse" />
+  <meta name="copyright" content="GeeksPulse 2026" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="1 days" />
+  <meta name="rating" content="general" />
   <link rel="canonical" href="https://geekspulse.dev/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://geekspulse.dev/" />
-  <meta property="og:title" content="GeeksPulse — Feel the pulse of dev." />
-  <meta property="og:description" content="Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise." />
+  <meta property="og:title" content="GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev" />
+  <meta property="og:description" content="Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise." />
   <meta property="og:image" content="https://geekspulse.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="GeeksPulse — Developer News Aggregator" />
   <meta property="og:site_name" content="GeeksPulse" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@geekspulse" />
+  <meta name="twitter:creator" content="@geekspulse" />
   <meta name="twitter:url" content="https://geekspulse.dev/" />
-  <meta name="twitter:title" content="GeeksPulse — Feel the pulse of dev." />
+  <meta name="twitter:title" content="GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev" />
   <meta name="twitter:description" content="Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise." />
   <meta name="twitter:image" content="https://geekspulse.dev/og-image.png" />
+  <meta name="twitter:image:alt" content="GeeksPulse — Developer News Aggregator" />
 
   <!-- Robots -->
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
   <!-- Theme / PWA -->
   <meta name="theme-color" content="#0b0d12" />
@@ -36,6 +46,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.svg" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -43,30 +54,63 @@
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "GeeksPulse",
-    "url": "https://geekspulse.dev/",
-    "description": "Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": "https://geekspulse.dev/?q={search_term_string}"
-      },
-      "query-input": "required name=search_term_string"
-    },
-    "publisher": {
-      "@type": "Organization",
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
       "name": "GeeksPulse",
+      "alternateName": "GeeksPulse Dev News",
       "url": "https://geekspulse.dev/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://geekspulse.dev/favicon.svg"
+      "description": "Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Built for developers who value signal over noise.",
+      "inLanguage": "en-US",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://geekspulse.dev/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GeeksPulse",
+        "url": "https://geekspulse.dev/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://geekspulse.dev/favicon.svg",
+          "width": 512,
+          "height": 512
+        },
+        "sameAs": [
+          "https://twitter.com/geekspulse"
+        ]
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "GeeksPulse — Developer News Aggregator | Feel the Pulse of Dev",
+      "url": "https://geekspulse.dev/",
+      "description": "Free developer news aggregator. 29 RSS feeds, zero paywalls, zero trackers. Hacker News, GitHub Blog, IEEE Spectrum and more — built for developers who value signal over noise.",
+      "isPartOf": { "@type": "WebSite", "url": "https://geekspulse.dev/" },
+      "about": {
+        "@type": "Thing",
+        "name": "Developer News Aggregation"
+      },
+      "dateModified": "2026-05-11",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://geekspulse.dev/"
+          }
+        ]
       }
     }
-  }
+  ]
   </script>
 </head>
 <body>
@@ -261,7 +305,7 @@
     <!-- SUPPORT STRIP -->
     <section class="support-strip" aria-label="Support GeeksPulse">
       <div class="support-text">
-        <div class="support-title">GeeksPulse saved you from opening <span id="tabsSaved">12</span> tabs today. &#127881;</div>
+        <div class="support-title">29 feeds. One tab. Zero nonsense. &#9889;</div>
         <div class="support-desc">It's free, indie, and runs on coffee. If it's useful, consider tossing a coffee this way.</div>
       </div>
       <button data-support class="btn btn-primary btn-lg">
