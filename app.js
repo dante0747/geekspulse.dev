@@ -140,14 +140,13 @@
 
   // Rotating funny loading messages
   const loadingMessages = [
+    'Fetching the latest developer pulse...',
     'Bribing the RSS gods...',
     'npm install news...',
     'git fetch --all-the-gossip...',
-    'Booting up the feed engine...',
     'Untangling the internet...',
     'grep -r "good news" /dev/null...',
     'Reticulating dev splines...',
-    'Have you tried turning the internet off?',
     'Parsing XML like it\'s 2005...',
     'curl -s https://dev.news | jq .',
   ];
@@ -452,8 +451,12 @@
 
     if (failedFeeds > 0) {
       console.info(`[GeeksPulse] ${failedFeeds} feed(s) failed silently — no drama.`);
+      if (allArticles.length > 0) {
+        showError(`${failedFeeds} feed(s) failed to load. Showing stories from ${feeds.length - failedFeeds} feeds.`);
+      }
+    } else {
+      hideError();
     }
-    hideError();
   }
 
   // ── Render articles ───────────────────────────────────────────
@@ -476,8 +479,8 @@
       feedGrid.innerHTML = `
         <div class="empty-state visible">
           <div class="empty-art">${isBookmarkView ? '  [ GeeksPulse Bookmarks ]\n  // folder is empty' : '  ¯\\_(ツ)_/¯\n  404: news not found'}</div>
-          <div class="empty-title">${isBookmarkView ? 'No bookmarks yet.' : 'No news found for this filter.'}</div>
-          <div class="empty-sub">${isBookmarkView ? '// hit the bookmark icon on any article to save it here' : '// try another category, or blame the algorithm'}</div>
+          <div class="empty-title">${isBookmarkView ? 'No saved stories yet.' : 'No articles for this filter.'}</div>
+          <div class="empty-sub">${isBookmarkView ? '// click the bookmark icon on any article to save it here' : '// try another category or refresh the feeds'}</div>
         </div>`;
       articleCount.style.display = 'none';
       return;
@@ -592,8 +595,10 @@
   }
 
   function setLive() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     statusDot.className = 'status-dot live';
-    statusText.textContent = `Feed live · ${allArticles.length} articles loaded`;
+    statusText.textContent = `${allArticles.length} fresh stories loaded · Updated at ${timeStr}`;
     if (navStatus) navStatus.textContent = `✓ ${allArticles.length} articles`;
     setRefreshBusy(false);
     // Animate hero stat counters
@@ -606,7 +611,7 @@
   }
 
   function setRefreshBusy(busy) {
-    [refreshBtn, refreshBtnHero].forEach(btn => { if (btn) btn.disabled = busy; });
+    [refreshBtn, refreshBtnHero].filter(Boolean).forEach(btn => { if (btn) btn.disabled = busy; });
     if (refreshIcon) refreshIcon.classList.toggle('spin', busy);
   }
 
@@ -922,7 +927,7 @@
       render();
     });
 
-    [refreshBtn, refreshBtnHero].forEach(btn => {
+    [refreshBtn, refreshBtnHero].filter(Boolean).forEach(btn => {
       if (btn) btn.addEventListener('click', fetchAll);
     });
 
