@@ -139,21 +139,34 @@ async function main() {
     // Use image only if it looks like a real hero image; otherwise use fallback
     const rawImage = (!looksLikeLogo(a.image) ? a.image : null) || a.fallbackImage;
     const imageHtml = rawImage
-      ? `<img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;margin-bottom:8px" />`
+      ? `<div class="seo-card-img-wrap"><img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" /></div>`
       : '';
     const dateStr = formatDate(a.publishedAt);
     // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
     const cleaned = cleanSnippet(a.summary || '');
     const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 160).replace(/\s+\S*$/, '…') : '';
-    const summary = plainSummary ? `<p style="font-size:13px;color:#94A3B8;margin:4px 0 8px;line-height:1.5">${esc(plainSummary)}</p>` : '';
+    const summary = plainSummary ? `<p>${esc(plainSummary)}</p>` : '';
+    // Derive a CSS category slug from the article category field (mirrors app logic)
+    const catSlug = (a.category || 'general').toLowerCase().replace(/\s+/g, '-');
     return `
-    <article style="border:1px solid #30363d;border-radius:8px;padding:16px;background:#0D1117">
+    <article class="seo-card">
       ${imageHtml}
-      <h3 style="font-size:14px;font-weight:700;margin:0 0 6px;line-height:1.4">
-        <a href="${esc(a.link)}" rel="noopener noreferrer" style="color:#F8FAFC;text-decoration:none">${esc(a.title)}</a>
-      </h3>
+      <h3><a href="${esc(a.link)}" rel="noopener noreferrer">${esc(a.title)}</a></h3>
       ${summary}
-      <small style="font-size:11px;color:#64748B">${esc(a.source)}${dateStr ? ' &middot; ' + dateStr : ''}</small>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-${esc(catSlug)}"></span>
+          <span>${esc(a.source)}${dateStr ? ' &middot; ' + dateStr : ''}</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="${esc(a.link)}" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
     </article>`;
   }).join('\n');
 
@@ -163,10 +176,10 @@ async function main() {
   const injectedHtml = `
   <!-- Latest articles from ${articles.length} of ${feedData.articleCount || articles.length} cached stories${generatedComment} -->
   <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px">
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#06B6D4;margin-bottom:16px">
+    <h2>
       Latest Developer News
     </h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+    <div class="seo-articles-grid">
 ${articleItems}
     </div>
   </section>`;
