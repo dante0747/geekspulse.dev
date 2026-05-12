@@ -72,6 +72,8 @@ It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newe
 | 🔖 **Bookmarks** | Save articles to localStorage for later reading |
 | ⌨️ **Keyboard Shortcuts** | `/` search · `j/k` navigate · `o` open · `r` refresh · `Esc` clear |
 | 🏥 **Feed Health Panel** | Live status: last updated time, online/failed feed counts |
+| ⏱️ **Reading Time** | Estimated read time displayed on every article card |
+| 🔗 **Share Articles** | Web Share API with automatic clipboard fallback |
 
 ---
 
