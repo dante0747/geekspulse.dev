@@ -381,7 +381,10 @@ function parseRssItems(parsed, feed) {
     const image   = extractBestImage(item);
 
     return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
-  }).filter(Boolean);(parsed, feed) {
+  }).filter(Boolean);
+}
+
+function parseAtomEntries(parsed, feed) {
   const root  = parsed?.feed;
   if (!root) return [];
   const rawEntries = root.entry || [];
