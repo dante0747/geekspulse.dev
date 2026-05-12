@@ -37,6 +37,24 @@ const XML_PARSER = new XMLParser({
   stopNodes: ['*.description', '*.content', '*.content:encoded', '*.summary'],
 });
 
+// ── Category fallback image paths ─────────────────────────────────────────
+const CATEGORY_FALLBACK_IMAGES = {
+  'General':     '/assets/fallbacks/general.svg',
+  'Security':    '/assets/fallbacks/security.svg',
+  'AI':          '/assets/fallbacks/ai.svg',
+  'Python':      '/assets/fallbacks/python.svg',
+  'JavaScript':  '/assets/fallbacks/javascript.svg',
+  'DevOps':      '/assets/fallbacks/devops.svg',
+  'Open Source': '/assets/fallbacks/open-source.svg',
+  'Java':        '/assets/fallbacks/java.svg',
+  'Rust':        '/assets/fallbacks/rust.svg',
+  'Go':          '/assets/fallbacks/go.svg',
+};
+
+function getFallbackImage(category) {
+  return CATEGORY_FALLBACK_IMAGES[category] || CATEGORY_FALLBACK_IMAGES['General'];
+}
+
 // ── Utilities ──────────────────────────────────────────────────────────────
 
 function hashId(input) {
@@ -362,11 +380,8 @@ function parseRssItems(parsed, feed) {
     const date    = normalizeDate(item.pubDate || item.published || item.updated);
     const image   = extractBestImage(item);
 
-    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fetchedAt: new Date().toISOString() };
-  }).filter(Boolean);
-}
-
-function parseAtomEntries(parsed, feed) {
+    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
+  }).filter(Boolean);(parsed, feed) {
   const root  = parsed?.feed;
   if (!root) return [];
   const rawEntries = root.entry || [];
@@ -389,7 +404,7 @@ function parseAtomEntries(parsed, feed) {
     const date    = normalizeDate(entry.updated || entry.published);
     const image   = extractBestImage(entry);
 
-    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fetchedAt: new Date().toISOString() };
+    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
   }).filter(Boolean);
 }
 
@@ -471,6 +486,7 @@ async function main() {
       const img = await fetchArticleImage(a.link);
       if (img) {
         a.image = img;
+        a.imageType = 'real';
         resolved++;
       }
     });

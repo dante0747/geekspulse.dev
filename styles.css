@@ -1030,7 +1030,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   border-radius: 12px;
 }
 .sk {
-  background: linear-gradient(90deg, var(--surface2) 25%, var(--surface) 50%, var(--surface2) 75%);
+  background: linear-gradient(90deg, #e2e8f0 25%, #eef2f7 50%, #e2e8f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
   border-radius: 4px;
@@ -1648,8 +1648,25 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
 }
 
 
+/* ── Back-to-top button ──────────────────────────────────────── */
+.back-to-top {
+  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+  width: 42px; height: 42px;
+  background: var(--surface2); border: 1px solid var(--cyan);
+  color: var(--cyan); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(6,182,212,0.2);
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 16px var(--cyan), 0 4px 16px rgba(0,0,0,0.4);
+}
+
 /* -----------------------------------------------------------------------
-   REDUCED MOTION � respect users who prefer less animation
+   REDUCED MOTION — respect users who prefer less animation
    ------------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1664,7 +1681,12 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
   .term-cursor,
   .pulse,
   .hero-terminal,
-  .contribute-terminal-wrap .hero-terminal {
+  .contribute-terminal-wrap .hero-terminal,
+  .glitch,
+  .floating,
+  .marquee,
+  .neon-flicker,
+  .scanline-move {
     animation: none !important;
   }
   /* Suppress scanline movement, neon flicker, glitch effects */
@@ -1677,8 +1699,27 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
   }
   /* No hover lift/scale transforms on cards */
   .card:hover,
+  .card-featured:hover,
+  .card-row:hover,
   .signal-card:hover,
-  .filter-item:hover {
+  .filter-item:hover,
+  .filter-btn:hover,
+  .btn:hover,
+  .back-to-top:hover,
+  .nav-link:hover {
+    transform: none !important;
+    box-shadow: inherit !important;
+  }
+  /* Suppress hero/section enter animations */
+  .hero,
+  .hero-content,
+  .hero-right-col,
+  .term-line,
+  .signal-card,
+  .contribute-copy,
+  .contribute-terminal-wrap {
+    animation: none !important;
+    opacity: 1 !important;
     transform: none !important;
   }
 }

@@ -2,8 +2,8 @@ name: Update Feeds
 
 on:
   schedule:
-    # Every 30 minutes
-    - cron: "*/30 * * * *"
+    # Every 1 hour
+    - cron: "0 */1 * * *"
   workflow_dispatch:
   push:
     branches:
@@ -35,11 +35,16 @@ jobs:
       - name: Fetch and build feed data
         run: npm run build-feed
 
+      - name: Generate sitemap
+        run: node scripts/generate-sitemap.mjs
+
+      - name: Generate SEO content
+        run: node scripts/generate-seo-content.mjs
+
       - name: Commit updated feed data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update feed data [skip ci]"
-          file_pattern: "public/*.json"
+          commit_message: "chore: refresh feed cache, sitemap, and SEO content [skip ci]"
+          file_pattern: "public/*.json sitemap.xml index.html README.md"
           commit_user_name: "GeeksPulse Bot"
           commit_user_email: "bot@geekspulse.dev"
-

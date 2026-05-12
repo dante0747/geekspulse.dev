@@ -995,20 +995,20 @@
 
   // Normalise a cached article to match the internal shape used by render()
   function normaliseCachedArticle(a) {
-    // Run cached image URLs through normalizeImageUrl so http URLs get upgraded
-    // to https on the production https origin (avoids silent mixed-content
-    // blocking, which made some cards appear empty on geekspulse.dev while
-    // working fine on http://localhost during dev).
     const rawImg  = a.image ? safeUrl(a.image) : null;
     const safeImg = rawImg && rawImg !== '#' ? normalizeImageUrl(rawImg, a.link) : null;
+    // Use fallbackImage from generated data if no real image available
+    const fallback = a.fallbackImage || null;
     return {
-      title:    a.title    || 'Untitled',
-      link:     safeUrl(a.link),
-      snippet:  a.summary  || '',
-      image:    safeImg,
-      date:     a.publishedAt || null,
-      source:   a.source   || '',
-      category: a.category || 'General',
+      title:         a.title    || 'Untitled',
+      link:          safeUrl(a.link),
+      snippet:       a.summary  || '',
+      image:         safeImg,
+      fallbackImage: fallback,
+      imageType:     a.imageType || (safeImg ? 'real' : 'fallback'),
+      date:          a.publishedAt || null,
+      source:        a.source   || '',
+      category:      a.category || 'General',
     };
   }
 
@@ -1130,6 +1130,10 @@
       el.style.setProperty('--i', Math.min(i, 20));
     });
 
+    // Hide the static SEO fallback — it's only needed for crawlers, not live JS users
+    const seoFallback = document.getElementById('seoLatestFallback');
+    if (seoFallback) seoFallback.style.display = 'none';
+
     if (statArticles) statArticles.textContent = allArticles.length;
 
     // Announce result to screen readers
@@ -1147,8 +1151,12 @@
     const mins = readTime(a.title, a.snippet);
     const loadingAttr  = featured ? 'eager'  : 'lazy';
     const fetchpriAttr = featured ? 'high'   : 'auto';
-    const imgHtml = a.image
-      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(a.image)}" alt="" loading="${loadingAttr}" fetchpriority="${fetchpriAttr}" decoding="async" referrerpolicy="no-referrer" width="640" height="360" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
+    const imgSrc = a.image || a.fallbackImage || null;
+    const imgAlt = a.image
+      ? `Article image for: ${a.title}`
+      : `Category illustration for ${a.category}`;
+    const imgHtml = imgSrc
+      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(imgSrc)}" alt="${esc(imgAlt)}" loading="${loadingAttr}" fetchpriority="${fetchpriAttr}" decoding="async" referrerpolicy="no-referrer" width="640" height="360" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
       : cardPlaceholder(a.category, a.link);
     return `
       <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}" data-card-idx="${i}" data-article-url="${esc(a.link)}" data-category="${esc(a.category)}">
@@ -1189,8 +1197,10 @@
     const num  = String(i + 1).padStart(2, '0');
     const bm = isBookmarked(a.link);
     const mins = readTime(a.title, a.snippet);
-    const imgHtml = a.image
-      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="240" height="180" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
+    const listImgSrc = a.image || a.fallbackImage || null;
+    const listImgAlt = a.image ? `Article image for: ${a.title}` : `Category illustration for ${a.category}`;
+    const imgHtml = listImgSrc
+      ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(listImgSrc)}" alt="${esc(listImgAlt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="240" height="180" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
       : `<span class="card-img-wrap card-img-wrap--list card-placeholder card-placeholder--list" style="--ph-color:${catMeta[a.category]?.color||'#94A3B8'}"><span class="card-placeholder__icon">${catMeta[a.category] ? catMeta[a.category].icon.replace(/width="\d+" height="\d+"/, 'width="28" height="28"') : ''}</span></span>`;
     return `
       <article class="card card-row ${catClass(a.category)}" data-card-idx="${i}" data-article-url="${esc(a.link)}" data-category="${esc(a.category)}">
