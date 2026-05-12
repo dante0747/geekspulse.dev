@@ -8,6 +8,17 @@
 (() => {
   'use strict';
 
+  // ── Google Analytics 4 event helper ─────────────────────────
+  // Safely fires a GA4 custom event. No-ops if gtag is not loaded
+  // (e.g. blocked by an ad-blocker) so it never breaks the app.
+  function gaEvent(eventName, params) {
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params || {});
+      }
+    } catch (_) { /* silent fail */ }
+  }
+
   // ── Feed loading strategy ────────────────────────────────────
   // PRIMARY PATH: load from pre-generated static cache (public/feed.json).
   // This is what runs on every normal page load — no external requests needed.
@@ -1377,6 +1388,7 @@
   function setFilter(cat) {
     activeFilter = cat;
     PREF.set('filter', cat);
+    gaEvent('filter_category', { category: cat });
     [sidebarFilters, mobileFilters].forEach(container => {
       container.querySelectorAll('[data-cat]').forEach(btn => {
         const active = btn.dataset.cat === cat;
@@ -1813,7 +1825,10 @@
     });
 
     [refreshBtn, refreshBtnHero].filter(Boolean).forEach(btn => {
-      if (btn) btn.addEventListener('click', fetchAll);
+      if (btn) btn.addEventListener('click', () => {
+        gaEvent('refresh_feeds', { trigger: btn.id || 'refresh_btn' });
+        fetchAll();
+      });
     });
 
     fetchAll().then(() => startAutoRefresh(autoRefreshMin));
@@ -1911,6 +1926,11 @@
                  || loadBookmarks().find(a => a.link === link);
       if (!article) return;
       const added = toggleBookmark(article);
+      gaEvent(added ? 'bookmark_add' : 'bookmark_remove', {
+        article_title: article.title,
+        article_source: article.source,
+        article_url: article.link,
+      });
       const svg = btn.querySelector('svg');
       if (svg) svg.setAttribute('fill', added ? 'currentColor' : 'none');
       btn.classList.toggle('bm-active', added);
@@ -1929,11 +1949,33 @@
       if (!btn) return;
       e.preventDefault();
       e.stopPropagation();
+      gaEvent('share', {
+        article_title: btn.dataset.shareTitle,
+        article_url: btn.dataset.shareUrl,
+      });
       shareArticle(btn.dataset.shareTitle, btn.dataset.shareUrl);
     });
 
-    // ── Search ─────────────────────────────────────────────────
-    const searchInput = document.getElementById('articleSearch');
+    // Outbound article link tracking
+    feedGrid.addEventListener('click', e => {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+      const card = link.closest('.card');
+      if (!card) return;
+      const url = link.href;
+      const title = card.querySelector('.card-title a')?.textContent?.trim() || '';
+      const source = card.querySelector('.card-source span:nth-child(2)')?.textContent?.trim() || '';
+      const category = card.dataset.category || '';
+      gaEvent('select_content', {
+        content_type: 'article',
+        item_id: url,
+        article_title: title,
+        article_source: source,
+        article_category: category,
+      });
+    });
+
+    // ── Search ─────────────────────────────────────────────────    const searchInput = document.getElementById('articleSearch');
     const searchKbd   = document.getElementById('searchKbd');
     if (searchInput) {
       let debounceTimer;
@@ -1941,6 +1983,9 @@
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
           searchQuery = searchInput.value.trim();
+          if (searchQuery.length >= 3) {
+            gaEvent('search', { search_term: searchQuery });
+          }
           render();
         }, 180);
       });
