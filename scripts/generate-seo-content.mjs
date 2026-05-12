@@ -32,6 +32,38 @@ function esc(str) {
     .replace(/'/g, '&#39;');
 }
 
+/** Strip HTML tags and decode common entities from a string. */
+function stripHtml(str) {
+  return String(str || '')
+    .replace(/<[^>]*>/g, '')          // remove HTML tags
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&[a-z]+;/g, '')         // strip remaining entities
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Returns true if the URL looks like a small icon/logo rather than an
+ * article hero image (so we can skip it and use the fallback instead).
+ */
+function looksLikeLogo(url) {
+  if (!url) return true;
+  const u = url.toLowerCase();
+  // Very small images, favicons, logos, corner images, avatars
+  return (
+    /lcorner|favicon|logo|icon|avatar|placeholder|blank|default/i.test(u) ||
+    // Bookface / YC logo-style S3 URLs are company logos, not hero images
+    /bookface-images\.s3\.amazonaws\.com\/logos\//i.test(u) ||
+    // Very short image paths are often icons
+    (u.split('/').pop().length < 8 && /\.(png|gif|ico)$/.test(u))
+  );
+}
+
 /** Format a date string as a human-readable date. */
 function formatDate(iso) {
   if (!iso) return '';
@@ -63,11 +95,15 @@ async function main() {
 
   // Build article HTML
   const articleItems = articles.map(a => {
-    const imageHtml = (a.image || a.fallbackImage)
-      ? `<img src="${esc(a.image || a.fallbackImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;margin-bottom:8px" />`
+    // Use image only if it looks like a real hero image; otherwise use fallback
+    const rawImage = (!looksLikeLogo(a.image) ? a.image : null) || a.fallbackImage;
+    const imageHtml = rawImage
+      ? `<img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;margin-bottom:8px" />`
       : '';
     const dateStr = formatDate(a.publishedAt);
-    const summary = a.summary ? `<p style="font-size:13px;color:#94A3B8;margin:4px 0 8px;line-height:1.5">${esc(a.summary)}</p>` : '';
+    // Strip HTML from summary and truncate to 160 characters
+    const plainSummary = stripHtml(a.summary || '').slice(0, 160).replace(/\s+\S*$/, '…') || '';
+    const summary = plainSummary ? `<p style="font-size:13px;color:#94A3B8;margin:4px 0 8px;line-height:1.5">${esc(plainSummary)}</p>` : '';
     return `
     <article style="border:1px solid #30363d;border-radius:8px;padding:16px;background:#0D1117">
       ${imageHtml}
