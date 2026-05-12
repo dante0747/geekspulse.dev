@@ -4,7 +4,9 @@
   "description": "GeeksPulse — Developer News Aggregator",
   "type": "module",
   "scripts": {
-    "build-feed": "node scripts/build-feed.mjs"
+    "build-feed": "node scripts/build-feed.mjs",
+    "fetch:feeds": "node scripts/build-feed.mjs",
+    "build:data": "node scripts/build-feed.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "^5.7.0"

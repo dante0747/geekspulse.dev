@@ -1,0 +1,45 @@
+name: Update Feeds
+
+on:
+  schedule:
+    # Every 30 minutes
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update-feeds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Fetch and build feed data
+        run: npm run build-feed
+
+      - name: Commit updated feed data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update feed data [skip ci]"
+          file_pattern: "public/*.json"
+          commit_user_name: "GeeksPulse Bot"
+          commit_user_email: "bot@geekspulse.dev"
+

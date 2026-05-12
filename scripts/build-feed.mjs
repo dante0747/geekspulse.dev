@@ -496,6 +496,26 @@ async function main() {
   await fs.writeFile(path.join(publicDir, 'feed.json'),        JSON.stringify(feedJson,  null, 2), 'utf8');
   await fs.writeFile(path.join(publicDir, 'feed-health.json'), JSON.stringify(healthJson, null, 2), 'utf8');
 
+  // ── Patch README badge so feed count stays in sync ──────────────────────
+  const readmePath = path.join(ROOT, 'README.md');
+  try {
+    let readme = await fs.readFile(readmePath, 'utf8');
+    // Replace the RSS_feeds badge count, e.g. RSS_feeds-32- → RSS_feeds-33-
+    readme = readme.replace(
+      /RSS_feeds-\d+-/,
+      `RSS_feeds-${enabled.length}-`
+    );
+    // Replace the terminal block feed count line, e.g. "# 32 feeds · ..."
+    readme = readme.replace(
+      /# \d+ feeds · 0 paywalls · 100% signal/,
+      `# ${enabled.length} feeds · 0 paywalls · 100% signal`
+    );
+    await fs.writeFile(readmePath, readme, 'utf8');
+    console.log(`[build-feed] README badge updated to ${enabled.length} feeds.`);
+  } catch (e) {
+    console.warn('[build-feed] Could not patch README badge:', e.message);
+  }
+
   console.log(`\n[build-feed] Done. ${articles.length} articles from ${successCount}/${enabled.length} feeds.`);
   console.log(`  Wrote public/feed.json and public/feed-health.json`);
 }

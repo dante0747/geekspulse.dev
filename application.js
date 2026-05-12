@@ -1044,6 +1044,8 @@
       const data = await loadFeedCache();
       allArticles = data.articles.map(normaliseCachedArticle).filter(a => a.link && a.link !== '#');
       failedFeeds = data.failedFeeds || 0;
+      // Update feed-count spans from the canonical count in the cache
+      if (data.feedCount) updateFeedCountSpans(data.feedCount);
       console.info(`[GeeksPulse] Loaded ${allArticles.length} articles from feed cache (generated ${data.generatedAt}).`);
     } catch (cacheErr) {
       console.warn('[GeeksPulse] Feed cache unavailable, fetching RSS directly…', cacheErr.message);
@@ -1713,6 +1715,16 @@
     // statFeeds is animated after fetch; seed it now so it's never stale on first paint
     const statFeedsEl = document.getElementById('statFeeds');
     if (statFeedsEl) statFeedsEl.textContent = feeds.length;
+
+    /** Update all feed-count spans from a canonical count (e.g. from the pre-built cache). */
+    function updateFeedCountSpans(count) {
+      ['heroFeedCount', 'termFeedCount'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = count;
+      });
+      const sf = document.getElementById('statFeeds');
+      if (sf) sf.textContent = count;
+    }
 
     initNav();
     initSettings();
