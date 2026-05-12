@@ -320,6 +320,21 @@ If it saves you from opening 12 tabs today, consider tossing a coffee:
 
 ---
 
+## Repository Metadata
+
+Recommended settings for the GitHub repository:
+
+**Description:**
+Developer news without the noise — a fast, open-source RSS-powered news hub for software engineers.
+
+**Website:**
+https://geekspulse.dev/
+
+**Suggested topics:**
+`developer-news` `rss` `news-aggregator` `javascript` `static-site` `open-source` `ai-news` `security-news` `programming` `software-engineering`
+
+---
+
 <div align="center">
 
 ```

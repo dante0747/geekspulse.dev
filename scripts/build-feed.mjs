@@ -82,16 +82,52 @@ function normalizeUrl(url) {
 
 function stripHtml(html) {
   if (!html) return '';
-  return String(html)
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g,  '&')
+  // Step 1: handle objects from the XML parser (e.g. { '#text': '...', '@_type': 'html' })
+  let s = typeof html === 'object' && html !== null
+    ? (html['#text'] || html['#cdata-section'] || '')
+    : String(html);
+  // Step 2: strip CDATA wrappers
+  s = s.replace(/<!\[CDATA\[|\]\]>/g, '');
+  // Step 3: decode HTML entities BEFORE stripping tags (some feeds entity-encode their HTML)
+  s = s
     .replace(/&lt;/g,   '<')
     .replace(/&gt;/g,   '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g,  "'")
+    .replace(/&amp;/g,  '&');
+  // Step 4: strip script/style blocks, then img, figure, figcaption, then all remaining tags
+  s = s
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<img[^>]*>/gi, '')
+    .replace(/<figure[\s\S]*?<\/figure>/gi, '')
+    .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, '')
+    .replace(/<[^>]+>/g, ' ');
+  // Step 5: clean up whitespace and low-value trailing noise
+  return s
     .replace(/&nbsp;/g, ' ')
+    .replace(/\bComments\b\s*$/i, '')
+    .replace(/\bRead more\b\.?\s*$/i, '')
+    .replace(/\bContinue reading\b\.?\s*$/i, '')
+    .replace(/\bView article\b\.?\s*$/i, '')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function isLowValueSnippet(value = '') {
+  const normalized = String(value || '')
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return (
+    !normalized ||
+    normalized === 'comments' ||
+    normalized === 'read more' ||
+    normalized === 'continue reading' ||
+    normalized === 'view article' ||
+    normalized === 'learn more'
+  );
 }
 
 function truncate(str, n = 220) {
@@ -112,17 +148,34 @@ function normalizeDate(raw) {
 
 // ── Image extraction ───────────────────────────────────────────────────────
 
-const BAD_URL_RE = /\b(logo|icon|favicon|avatar|sprite|pixel|tracking|badge|placeholder|spacer|1x1|blank|beacon|counter|feedburner|feedproxy|analytics|stats|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch|gravatar)\b/i;
+const BAD_PATH_PATTERNS = [
+  'rss', 'logo', 'logos', 'icon', 'icons', 'favicon', 'avatar', 'avatars',
+  'sprite', 'sprites', 'pixel', 'tracking', 'badge', 'badges',
+  'placeholder', 'spacer', '1x1', 'blank', 'beacon', 'counter',
+  'feedburner', 'feedproxy', 'analytics', 'stats', 'doubleclick',
+  'googlesyndication', 'adservice', 'adsystem', 'quantserve',
+  'chartbeat', 'scorecardresearch', 'gravatar', 'profile', 'author',
+  'apple-touch', 'android-chrome', 'mstile',
+];
+const BAD_HOSTNAME_RE = /\b(feedburner|feedproxy|gravatar|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch)\b/i;
+const TINY_SIZE_RE = /[_\-x×](?:16|32|48|64)(?:x|×|px|_|\b)/i;
 const IMG_EXT    = /\.(jpe?g|png|webp|avif)(\?|$)/i;
 
 function isBadImageUrl(url) {
   if (!url) return true;
   if (url.startsWith('data:')) return true;
   if (/\.svg(\?|$)/i.test(url)) return true;
+  if (TINY_SIZE_RE.test(url)) return true;
   try {
     const u = new URL(url);
-    if (BAD_URL_RE.test(u.hostname)) return true;
-    if (BAD_URL_RE.test(u.pathname)) return true;
+    if (BAD_HOSTNAME_RE.test(u.hostname)) return true;
+    // Split path into segments and check each segment against known bad tokens
+    const pathLower = u.pathname.toLowerCase();
+    // Check if any segment or word in the path matches a bad pattern
+    const segments = pathLower.split(/[/\-_.]+/).filter(Boolean);
+    if (segments.some(seg => BAD_PATH_PATTERNS.includes(seg))) return true;
+    // Also check for patterns as substrings in full path (catches compound names like "rss-32px")
+    if (BAD_PATH_PATTERNS.some(p => pathLower.includes('/' + p + '/') || pathLower.endsWith('/' + p))) return true;
   } catch { /* keep */ }
   return false;
 }
@@ -376,7 +429,8 @@ function parseRssItems(parsed, feed) {
 
     const title   = stripHtml(item.title || 'Untitled');
     const desc    = item['content:encoded'] || item.description || item.summary || '';
-    const summary = truncate(stripHtml(desc));
+    const rawSnippet = truncate(stripHtml(desc));
+    const summary = isLowValueSnippet(rawSnippet) ? '' : rawSnippet;
     const date    = normalizeDate(item.pubDate || item.published || item.updated);
     const image   = extractBestImage(item);
 
@@ -403,7 +457,8 @@ function parseAtomEntries(parsed, feed) {
 
     const title   = stripHtml(entry.title?.['#text'] || entry.title || 'Untitled');
     const desc    = entry.content?.['#text'] || entry.content || entry.summary?.['#text'] || entry.summary || '';
-    const summary = truncate(stripHtml(desc));
+    const rawSnippet = truncate(stripHtml(desc));
+    const summary = isLowValueSnippet(rawSnippet) ? '' : rawSnippet;
     const date    = normalizeDate(entry.updated || entry.published);
     const image   = extractBestImage(entry);
 
