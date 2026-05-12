@@ -156,9 +156,13 @@ const BAD_PATH_PATTERNS = [
   'googlesyndication', 'adservice', 'adsystem', 'quantserve',
   'chartbeat', 'scorecardresearch', 'gravatar', 'profile', 'author',
   'apple-touch', 'android-chrome', 'mstile',
+  // Decorative layout corner/border images (e.g. LWN lcorner-ss.png)
+  'lcorner', 'rcorner', 'corner', 'lcorner-ss',
 ];
 const BAD_HOSTNAME_RE = /\b(feedburner|feedproxy|gravatar|doubleclick|googlesyndication|adservice|adsystem|quantserve|chartbeat|scorecardresearch)\b/i;
 const TINY_SIZE_RE = /[_\-x×](?:16|32|48|64)(?:x|×|px|_|\b)/i;
+// Specific blocked image URL patterns (checked against full URL)
+const BAD_URL_RE = /static\.lwn\.net\/images\/l?corner/i;
 const IMG_EXT    = /\.(jpe?g|png|webp|avif)(\?|$)/i;
 
 function isBadImageUrl(url) {
@@ -166,6 +170,7 @@ function isBadImageUrl(url) {
   if (url.startsWith('data:')) return true;
   if (/\.svg(\?|$)/i.test(url)) return true;
   if (TINY_SIZE_RE.test(url)) return true;
+  if (BAD_URL_RE.test(url)) return true;
   try {
     const u = new URL(url);
     if (BAD_HOSTNAME_RE.test(u.hostname)) return true;

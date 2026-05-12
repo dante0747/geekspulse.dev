@@ -1,44 +1,8 @@
 # robots.txt — GeeksPulse (https://geekspulse.dev/)
-# Generated: 2026-05-11
+# Updated: 2026-05-12
 
 User-agent: *
 Allow: /
-# Allow filter and source query params (used for category/feed pages)
-Allow: /?filter=
-Allow: /?source=
-# Block all other query-string URLs to avoid crawl noise
-Disallow: /*?*
+Disallow: /*?
 
-# Allow major search engines to index everything
-User-agent: Googlebot
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-User-agent: Bingbot
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-User-agent: Slurp
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-User-agent: DuckDuckBot
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-User-agent: Baiduspider
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-User-agent: YandexBot
-Allow: /
-Allow: /?filter=
-Allow: /?source=
-
-# Sitemap location
 Sitemap: https://geekspulse.dev/sitemap.xml

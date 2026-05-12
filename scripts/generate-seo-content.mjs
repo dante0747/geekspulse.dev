@@ -22,7 +22,7 @@ const ROOT      = path.resolve(__dirname, '..');
 
 const SEO_ARTICLE_COUNT = 10;
 
-/** Escape a string for safe inclusion in HTML. */
+/** Escape a string for safe inclusion in HTML attribute or text content. */
 function esc(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -32,19 +32,59 @@ function esc(str) {
     .replace(/'/g, '&#39;');
 }
 
-/** Strip HTML tags and decode common entities from a string. */
-function stripHtml(str) {
-  return String(str || '')
-    .replace(/<[^>]*>/g, '')          // remove HTML tags
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+/**
+ * Fully clean a snippet value:
+ *  1. Strip CDATA wrappers
+ *  2. Remove script/style/img/figure blocks
+ *  3. Decode HTML entities (so escaped tags become real tags)
+ *  4. Strip all remaining tags
+ *  5. Remove low-value trailing noise (Comments, Read more, etc.)
+ *  6. Collapse whitespace
+ *
+ * Always sanitize BEFORE calling esc() — never escape dirty HTML.
+ */
+function cleanSnippet(value = '') {
+  return String(value || '')
+    .replace(/<!\[CDATA\[|\]\]>/g, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<img[^>]*>/gi, '')
+    .replace(/<figure[\s\S]*?<\/figure>/gi, '')
+    .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    // Decode entities so escaped tags like &lt;img...&gt; become real text we can strip
+    .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&[a-z]+;/g, '')         // strip remaining entities
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    // Strip any tags that were hiding behind entities
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\bComments\b\s*$/i, '')
+    .replace(/\bRead more\b\.?\s*$/i, '')
+    .replace(/\bContinue reading\b\.?\s*$/i, '')
+    .replace(/\bView article\b\.?\s*$/i, '')
+    .replace(/\bLearn more\b\.?\s*$/i, '')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+/** Returns true if the snippet is too low-value to display. */
+function isLowValueSnippet(value = '') {
+  const normalized = String(value || '')
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return (
+    !normalized ||
+    normalized === 'comments' ||
+    normalized === 'read more' ||
+    normalized === 'continue reading' ||
+    normalized === 'view article' ||
+    normalized === 'learn more'
+  );
 }
 
 /**
@@ -54,11 +94,12 @@ function stripHtml(str) {
 function looksLikeLogo(url) {
   if (!url) return true;
   const u = url.toLowerCase();
-  // Very small images, favicons, logos, corner images, avatars
   return (
-    /lcorner|favicon|logo|icon|avatar|placeholder|blank|default/i.test(u) ||
+    /lcorner|corner|favicon|logo|icon|avatar|placeholder|blank|default|sprite|pixel|tracking|badge/i.test(u) ||
     // Bookface / YC logo-style S3 URLs are company logos, not hero images
     /bookface-images\.s3\.amazonaws\.com\/logos\//i.test(u) ||
+    // LWN decorative layout images
+    /static\.lwn\.net\/images\//i.test(u) ||
     // Very short image paths are often icons
     (u.split('/').pop().length < 8 && /\.(png|gif|ico)$/.test(u))
   );
@@ -101,8 +142,9 @@ async function main() {
       ? `<img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;margin-bottom:8px" />`
       : '';
     const dateStr = formatDate(a.publishedAt);
-    // Strip HTML from summary and truncate to 160 characters
-    const plainSummary = stripHtml(a.summary || '').slice(0, 160).replace(/\s+\S*$/, '…') || '';
+    // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
+    const cleaned = cleanSnippet(a.summary || '');
+    const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 160).replace(/\s+\S*$/, '…') : '';
     const summary = plainSummary ? `<p style="font-size:13px;color:#94A3B8;margin:4px 0 8px;line-height:1.5">${esc(plainSummary)}</p>` : '';
     return `
     <article style="border:1px solid #30363d;border-radius:8px;padding:16px;background:#0D1117">

@@ -200,13 +200,24 @@ The `scripts/build-feed.mjs` script is a **Node 18+ server-side utility** that p
 npm install
 
 # Fetch all feeds and write public/feed.json + public/feed-health.json
-npm run build-feed
+npm run build:feed
+
+# Regenerate sitemap.xml (homepage-only canonical URLs)
+npm run build:sitemap
+
+# Inject latest articles into index.html for SEO crawlers
+npm run build:seo
+
+# Run the full pipeline in order
+npm run build
 ```
 
 | Output file | Description |
 |---|---|
 | `public/feed.json` | Up to 300 deduplicated articles, sorted newest-first |
 | `public/feed-health.json` | Per-feed health: ok/error/article count + last updated time |
+| `sitemap.xml` | Minimal canonical sitemap (homepage only) |
+| `index.html` | SEO fallback articles injected between `GENERATED_LATEST_ARTICLES_START/END` markers |
 
 ### How to add a new feed
 
@@ -215,7 +226,7 @@ npm run build-feed
    ```json
    { "id": "my-blog", "name": "My Blog", "url": "https://myblog.com/feed.xml", "category": "General", "enabled": true }
    ```
-3. Run `npm run build-feed` to regenerate the cache.
+3. Run `npm run build` to regenerate the cache.
 4. Commit both `data/feeds.json` and the updated `public/feed.json`.
 
 ---
@@ -239,7 +250,7 @@ To regenerate the feed cache with live data:
 
 ```bash
 npm install
-npm run build-feed
+npm run build
 ```
 
 ---
