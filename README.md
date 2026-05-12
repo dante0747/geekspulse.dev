@@ -43,12 +43,14 @@
 
 ## 📡 What Is GeeksPulse?
 
-**GeeksPulse** is a free, indie, no-BS developer news aggregator. It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
+GeeksPulse is a static developer-news site powered by a scheduled feed-generation pipeline. A Node.js script fetches and normalises RSS feeds into static JSON files, and the frontend renders from that cache for speed and reliability.
+
+It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
 
 - 🚫 **No ads.** No VC money. No ad trackers.
-- ⚡ **No backend.** Pure vanilla HTML, CSS & JavaScript.
+- ⚡ **Static hosting.** The site is served as plain HTML/CSS/JS — no application server required.
 - 🔓 **No paywalls.** Every article is directly accessible.
-- 🧠 **No framework bloat.** Just clean, fast, modern web.
+- 🧠 **No framework bloat.** Just clean, fast, modern vanilla web.
 
 ---
 
@@ -58,17 +60,18 @@
 |---|---|
 | 📡 **32 RSS Feeds** | Hand-curated from the best dev sources on the web |
 | 🗂️ **10 Categories** | General · Security · AI/ML · Python · JavaScript · Java · DevOps · Open Source · Rust · Go |
+| ⚡ **Static Cache** | Articles pre-built by a Node.js pipeline; browser loads JSON instantly |
 | 🔄 **Auto-Refresh** | Configurable: 1m · 5m · 10m · 15m · 30m · 1h |
 | 🃏 **Grid & List View** | Toggle between layouts, preference saved locally |
 | 💾 **localStorage Prefs** | Your filter, view mode & refresh interval persist across sessions |
-| 💀 **Skeleton Loaders** | Shimmer placeholders while feeds are fetching |
+| 💀 **Skeleton Loaders** | Shimmer placeholders while feeds are loading |
 | 🎨 **Cyberpunk UI** | Dark theme, neon glows, glitch animations, scanline overlay |
 | 🖥️ **Animated Terminal** | Hero terminal with staggered fade-in lines |
-| ♿ **Accessible** | ARIA roles, labels, `aria-pressed`, keyboard navigation |
+| ♿ **Accessible** | ARIA roles, labels, `aria-pressed`, keyboard navigation, `prefers-reduced-motion` |
 | 📱 **Responsive** | Mobile-first with chip filters on small screens |
-| 🛡️ **Dual Fetch Strategy** | CORS proxy → rss2json fallback per feed |
 | 🔖 **Bookmarks** | Save articles to localStorage for later reading |
 | ⌨️ **Keyboard Shortcuts** | `/` search · `j/k` navigate · `o` open · `r` refresh · `Esc` clear |
+| 🏥 **Feed Health Panel** | Live status: last updated time, online/failed feed counts |
 
 ---
 
@@ -168,26 +171,29 @@
 
 ---
 
-## 🏗️ Tech Stack
+## 🏗️ Architecture
 
 ```js
-const stack = {
-  markup:  "HTML5",          // semantic, accessible
-  styles:  "Vanilla CSS",    // custom properties, animations, grid
-  logic:   "Vanilla JS",     // ES2020+, IIFE, no bundler
-  fonts:   ["JetBrains Mono", "Space Grotesk", "Bangers"],
-  proxies: ["codetabs", "allorigins", "corsproxy.io (fallback)"],
-  storage: "localStorage",   // preferences & bookmarks
-  backend: null,             // 💀 doesn't exist
-  deps:    ["fast-xml-parser"], // build-time only, zero runtime deps
+const architecture = {
+  hosting:    "Static files — no application server required",
+  markup:     "HTML5",           // semantic, accessible
+  styles:     "Vanilla CSS",     // custom properties, animations, grid
+  logic:      "Vanilla JS",      // ES2020+, IIFE, no bundler
+  fonts:      ["JetBrains Mono", "Space Grotesk", "Bangers"],
+  feedPipeline: "Node.js (scripts/build-feed.mjs)",
+  storage:    "localStorage",    // preferences & bookmarks
+  deps:       ["fast-xml-parser"], // build-time only, zero runtime deps
+  analytics:  "Google Analytics (basic traffic insights)",
 };
 ```
 
+The frontend's primary data source is the pre-built `public/feed.json` file. If that file is missing or empty, the app silently falls back to fetching RSS feeds directly via browser-side CORS proxies — this is an emergency path only and is not used during normal page loads.
+
 ---
 
-## ⚙️ Build Script (Feed Cache)
+## ⚙️ Feed Pipeline
 
-The `scripts/build-feed.mjs` script is a **Node 18+ server-side utility** that pre-fetches all feeds and writes a static JSON cache to `public/`. This lets the browser load articles instantly without making 32 live RSS requests on every visit.
+The `scripts/build-feed.mjs` script is a **Node 18+ server-side utility** that pre-fetches all feeds and writes a static JSON cache to `public/`. GitHub Actions runs this on a schedule to keep the cache fresh.
 
 ```bash
 # Install the one build-time dependency
@@ -200,33 +206,41 @@ npm run build-feed
 | Output file | Description |
 |---|---|
 | `public/feed.json` | Up to 300 deduplicated articles, sorted newest-first |
-| `public/feed-health.json` | Per-feed status: ok / error / article count |
+| `public/feed-health.json` | Per-feed health: ok/error/article count + last updated time |
 
-> **Tip:** Run `npm run build-feed` in a cron job or CI pipeline (e.g. GitHub Actions) to keep the cache fresh.
+### How to add a new feed
+
+1. Open `data/feeds.json`.
+2. Add a new entry:
+   ```json
+   { "id": "my-blog", "name": "My Blog", "url": "https://myblog.com/feed.xml", "category": "General", "enabled": true }
+   ```
+3. Run `npm run build-feed` to regenerate the cache.
+4. Commit both `data/feeds.json` and the updated `public/feed.json`.
 
 ---
 
 ## 🚀 Running Locally
-
-No build step required to view the site. Just open a file.
 
 ```bash
 # Clone the repo
 git clone https://github.com/dante0747/geekspulse.dev.git
 cd geekspulse.dev
 
-# Option A — open directly
-start index.html
-
-# Option B — serve with any static server
+# Serve with any static server (required — file:// won't load /public/feed.json)
 npx serve .
 # or
 python -m http.server 8080
 ```
 
-Then open [http://localhost:8080](http://localhost:8080) and feel the pulse. 🟢
+Then open [http://localhost:8080](http://localhost:8080).
 
-> **Note:** The site ships with a pre-built `public/feed.json`. To refresh it with live data, run `npm install && npm run build-feed`.
+To regenerate the feed cache with live data:
+
+```bash
+npm install
+npm run build-feed
+```
 
 ---
 
@@ -236,7 +250,7 @@ Then open [http://localhost:8080](http://localhost:8080) and feel the pulse. �
 geekspulse.dev/
 ├── index.html           # App shell — nav, hero, sidebar, feed grid
 ├── styles.css           # Full cyberpunk design system
-├── app.js               # All logic: fetching, parsing, rendering, settings
+├── application.js       # All logic: fetching, parsing, rendering, settings
 ├── favicon.svg          # SVG favicon
 ├── og-image.png         # Open Graph image
 ├── sitemap.xml          # SEO sitemap
@@ -267,7 +281,25 @@ The UI uses a cyberpunk-inspired design language with:
 | `--bg` | `#080b12` | Page background |
 | `--font` | `JetBrains Mono` | Everything |
 
-Animations include: grid drift, scanlines, neon flicker, glitch, cursor blink, and card hover lifts.
+Animations include: grid drift, scanlines, neon flicker, glitch, cursor blink, and card hover lifts. All animations respect the `prefers-reduced-motion` media query.
+
+---
+
+## 🔒 Privacy
+
+GeeksPulse has no ads and no paywalls. It uses **Google Analytics** for basic traffic insights so the project owner can understand usage and improve the site. It does not use advertising trackers, sell user data, or personalise ads.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+Quick ways to help:
+- 📡 Suggest a new RSS feed via [Issues](https://github.com/dante0747/geekspulse.dev/issues/new)
+- 🐛 Report bugs or broken feeds
+- ⭐ Star the repo to spread the word
+- 💬 Open a PR — all skill levels welcome
 
 ---
 

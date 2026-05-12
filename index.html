@@ -428,8 +428,20 @@
           <span class="e-icon"><svg aria-hidden="true" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5L1 14h14z"/><line x1="8" y1="6.5" x2="8" y2="10"/><circle cx="8" cy="12" r=".6" fill="currentColor" stroke="none"/></svg></span>
           <span id="errorMessage"></span>
         </div>
+        <!-- Feed health bar — loaded from public/feed-health.json -->
+        <div id="feedHealthBar" class="feed-health-bar" aria-live="polite" style="display:none"></div>
         <!-- Feed grid -->
         <div id="feedGrid" class="feed-grid"></div>
+
+        <!-- Noscript fallback — visible to crawlers and users without JS -->
+        <noscript>
+          <section style="padding:2rem 0">
+            <h2 style="margin-bottom:1rem">Latest developer news</h2>
+            <p>GeeksPulse aggregates developer news from 32 curated RSS feeds across AI, security, DevOps, JavaScript, open source, Java, Rust, Go, and more.</p>
+            <p>Enable JavaScript to browse the latest articles with search, category filters, and bookmarks.</p>
+            <p>Feed sources include: Hacker News, Krebs on Security, IEEE Spectrum, GitHub Blog, Google AI Blog, Kubernetes Blog, Rust Blog, Go Blog, and many more — <a href="/#sources">see the full list</a>.</p>
+          </section>
+        </noscript>
       </main>
     </div><!-- /.app-layout -->
     <!-- SUPPORT STRIP -->

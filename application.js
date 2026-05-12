@@ -8,15 +8,19 @@
 (() => {
   'use strict';
 
-  // ── Feeds ────────────────────────────────────────────────────
-  // Public CORS proxies for browser-side fetches.
-  // IMPORTANT: corsproxy.io now returns a 200-OK JSON error blob
-  // (`{"error":"Server-side requests are not allowed on your plan..."}`)
-  // for unregistered production origins like https://geekspulse.dev — that's
-  // why images "work on local but not on the website domain". `resp.ok` is
-  // true so a naive proxy chain never falls through.
-  // Codetabs MUST use the trailing slash before `?` (without it the server
-  // returns a 301 to the slashy URL which some clients/CORS modes drop).
+  // ── Feed loading strategy ────────────────────────────────────
+  // PRIMARY PATH: load from pre-generated static cache (public/feed.json).
+  // This is what runs on every normal page load — no external requests needed.
+  //
+  // EMERGENCY FALLBACK: if the static cache is missing or empty, the app
+  // falls back to fetching RSS feeds directly via public CORS proxies.
+  // This should NOT run during normal loads; it is only a safety net.
+  //
+  // CORS proxy notes (fallback only):
+  // corsproxy.io returns a 200-OK JSON error blob for unregistered production
+  // origins like https://geekspulse.dev. `resp.ok` is true so a naive chain
+  // never falls through — hence the `looksLikeUsableBody` guard below.
+  // Codetabs MUST use the trailing slash before `?`.
   const CORS_PROXIES = [
     url => 'https://api.codetabs.com/v1/proxy/?quest='     + encodeURIComponent(url),
     url => 'https://api.allorigins.win/raw?url='           + encodeURIComponent(url),
@@ -24,7 +28,7 @@
   ];
   // Kept for backward references; first proxy is the de-facto primary.
   const CORS_PROXY   = 'https://api.codetabs.com/v1/proxy/?quest=';
-  // Fallback: rss2json (may rate-limit on free tier)
+  // rss2json — emergency fallback only, may rate-limit on free tier
   const RSS2JSON     = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
   /** True when the response body looks like real web content (not an error JSON). */
@@ -1033,38 +1037,47 @@
     return articles.slice(0, MAX_ARTICLES);
   }
 
-  // ── Primary entry point: cache-first, RSS fallback ────────────
+  // ── Primary entry point: cache-first, RSS emergency fallback ─
   async function fetchAll() {
     if (isLoading) return;
     isLoading = true;
     failedFeeds = 0;
     setLoading();
 
+    let cacheGeneratedAt = null;
+
     try {
+      // ── Step 1: load static pre-built cache (primary path) ──
       const data = await loadFeedCache();
       allArticles = data.articles.map(normaliseCachedArticle).filter(a => a.link && a.link !== '#');
       failedFeeds = data.failedFeeds || 0;
+      cacheGeneratedAt = data.generatedAt || null;
       // Update feed-count spans from the canonical count in the cache
       if (data.feedCount) updateFeedCountSpans(data.feedCount);
       console.info(`[GeeksPulse] Loaded ${allArticles.length} articles from feed cache (generated ${data.generatedAt}).`);
     } catch (cacheErr) {
-      console.warn('[GeeksPulse] Feed cache unavailable, fetching RSS directly…', cacheErr.message);
+      // ── Step 2: emergency browser-side RSS fallback ──────────
+      // Runs ONLY if the static cache is missing or empty.
+      // Uses public CORS proxies which may be rate-limited.
+      console.warn('[GeeksPulse] Feed cache unavailable, attempting emergency RSS fallback…', cacheErr.message);
       try {
         allArticles = await fetchAllFromRSS();
       } catch (rssErr) {
-        console.error('[GeeksPulse] RSS fetch also failed:', rssErr.message);
+        console.error('[GeeksPulse] Emergency RSS fallback also failed:', rssErr.message);
         allArticles = [];
+        // Show explicit user-facing error state
+        showError('Unable to load articles. Please try refreshing the page or check back later.');
       }
     }
 
     isLoading = false;
     setLive();
-    updateSidebarStats();
+    updateSidebarStats(cacheGeneratedAt);
+    loadFeedHealthBanner();
     buildFilters();
     render();
 
-    // feed errors are silently suppressed; failed count still tracked in sidebar stats
-    hideError();
+    if (allArticles.length > 0) hideError();
   }
 
   // ── Render articles ───────────────────────────────────────────
@@ -1229,7 +1242,7 @@
   function setLoading() {
     statusDot.className = 'status-dot loading';
     statusText.textContent = randomMsg();
-    if (navStatus) navStatus.textContent = 'geeksup --fetch';
+    if (navStatus) navStatus.textContent = 'geekspulse --fetch';
     articleCount.style.display = 'none';
     setRefreshBusy(true);
     showSkeletons(8);
@@ -1262,13 +1275,56 @@
     if (refreshIcon) refreshIcon.classList.toggle('spin', busy);
   }
 
-  function updateSidebarStats() {
-    const now = new Date();
+  function updateSidebarStats(cacheGeneratedAt) {
     if (sbFeeds)   sbFeeds.textContent   = feeds.length - failedFeeds;
-    if (sbUpdated) sbUpdated.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (sbUpdated) {
+      if (cacheGeneratedAt) {
+        try {
+          const d = new Date(cacheGeneratedAt);
+          sbUpdated.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          sbUpdated.title = d.toLocaleString();
+        } catch { sbUpdated.textContent = '--'; }
+      } else {
+        sbUpdated.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+    }
     if (sbFailed)  sbFailed.textContent  = failedFeeds;
     const sbBmCount = document.getElementById('sbBmCount');
     if (sbBmCount) sbBmCount.textContent = loadBookmarks().length;
+  }
+
+  /** Load feed-health.json and render the compact health banner above the feed grid. */
+  async function loadFeedHealthBanner() {
+    const bar = document.getElementById('feedHealthBar');
+    if (!bar) return;
+    try {
+      const resp = await fetch('/public/feed-health.json', { cache: 'no-cache', signal: AbortSignal.timeout(5000) });
+      if (!resp.ok) return;
+      const health = await resp.json();
+      const total   = Array.isArray(health.feeds) ? health.feeds.length : feeds.length;
+      const ok      = Array.isArray(health.feeds) ? health.feeds.filter(f => f.ok).length : (total - failedFeeds);
+      const failed  = total - ok;
+      const failed_list = Array.isArray(health.feeds) ? health.feeds.filter(f => !f.ok) : [];
+      let updatedStr = '';
+      if (health.generatedAt) {
+        try {
+          const d = new Date(health.generatedAt);
+          updatedStr = `Last updated ${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}, ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} · `;
+        } catch { /* skip */ }
+      }
+      const statusEmoji = failed === 0 ? '🟢' : '🟡';
+      const onlineStr = `${ok}/${total} feeds online`;
+      let html = `<span class="fhb-info">${statusEmoji} ${updatedStr}${onlineStr}</span>`;
+      if (failed > 0 && failed_list.length > 0) {
+        const items = failed_list.map(f => `<li>${esc(f.name)}${f.error ? ' — ' + esc(f.error.slice(0, 60)) : ''}</li>`).join('');
+        html += `<details class="fhb-details"><summary>${failed} feed${failed > 1 ? 's' : ''} need${failed === 1 ? 's' : ''} attention</summary><ul>${items}</ul></details>`;
+      }
+      bar.innerHTML = html;
+      bar.style.display = '';
+    } catch (e) {
+      // Health banner is non-critical; silently skip if unavailable
+      console.debug('[GeeksPulse] feed-health.json unavailable for health bar:', e.message);
+    }
   }
 
   function showError(msg) { errorMessage.textContent = msg; errorBanner.classList.add('visible'); }

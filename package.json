@@ -6,7 +6,9 @@
   "scripts": {
     "build-feed": "node scripts/build-feed.mjs",
     "fetch:feeds": "node scripts/build-feed.mjs",
-    "build:data": "node scripts/build-feed.mjs"
+    "build:data": "node scripts/build-feed.mjs",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "build": "node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "^5.7.0"

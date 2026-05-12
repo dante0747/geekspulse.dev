@@ -1648,3 +1648,65 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
 }
 
 
+/* -----------------------------------------------------------------------
+   REDUCED MOTION — respect users who prefer less animation
+   ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* Disable specific named animations */
+  .term-cursor,
+  .pulse,
+  .hero-terminal,
+  .contribute-terminal-wrap .hero-terminal {
+    animation: none !important;
+  }
+  /* Suppress scanline movement, neon flicker, glitch effects */
+  .site-body::before,
+  body::before,
+  .hero::before,
+  .scanline {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  /* No hover lift/scale transforms on cards */
+  .card:hover,
+  .signal-card:hover,
+  .filter-item:hover {
+    transform: none !important;
+  }
+}
+/* -- Feed health bar ------------------------------------------- */
+.feed-health-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3, #8b949e);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 7px 12px;
+  margin-bottom: 12px;
+}
+.fhb-info { flex: 1 1 auto; }
+.fhb-details summary {
+  cursor: pointer;
+  color: var(--yellow, #e3c55e);
+  list-style: none;
+}
+.fhb-details summary::-webkit-details-marker { display: none; }
+.fhb-details ul {
+  margin: 6px 0 0 12px;
+  padding: 0;
+  list-style: disc;
+  color: var(--red, #ff5555);
+}
