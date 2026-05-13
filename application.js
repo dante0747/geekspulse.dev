@@ -1295,7 +1295,7 @@
     // Animate hero stat counters
     if (statArticles) animateCounter(statArticles, allArticles.length, 900);
     const statFeedsEl = document.getElementById('statFeeds');
-    if (statFeedsEl) animateCounter(statFeedsEl, feeds.length - failedFeeds, 700);
+    if (statFeedsEl) animateCounter(statFeedsEl, feeds.length, 700);
     // Today's stories count
     const todayStart = new Date(); todayStart.setHours(0,0,0,0);
     const todayCount = allArticles.filter(a => { try { return new Date(a.date) >= todayStart; } catch { return false; } }).length;
@@ -1400,6 +1400,7 @@
     });
   }
 
+  window.__setFilter = function(cat) { setFilter(cat); };
   function setFilter(cat) {
     activeFilter = cat;
     PREF.set('filter', cat);

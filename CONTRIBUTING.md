@@ -19,7 +19,7 @@ cd geekspulse.dev
 npm install
 
 # Regenerate the feed cache
-npm run build-feed
+npm run build:feed
 
 # Serve locally (file:// won't load /public/feed.json)
 npx serve .
@@ -48,7 +48,7 @@ Open [http://localhost:3000](http://localhost:3000).
      "enabled": true
    }
    ```
-3. Run `npm run build-feed` to test it.
+3. Run `npm run build:feed` to test it.
 4. Commit `data/feeds.json` + updated `public/feed.json` + `public/feed-health.json`.
 
 ## Code style
