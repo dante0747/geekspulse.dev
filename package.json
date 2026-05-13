@@ -4,16 +4,11 @@
   "description": "GeeksPulse — Developer News Aggregator",
   "type": "module",
   "scripts": {
+    "build": "node scripts/generate-version.mjs && node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs",
     "build:feed": "node scripts/build-feed.mjs",
     "build:sitemap": "node scripts/generate-sitemap.mjs",
     "build:seo": "node scripts/generate-seo-content.mjs",
-    "build:version": "node scripts/generate-version.mjs",
-    "build": "node scripts/generate-version.mjs && node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs",
-    "build:data": "node scripts/generate-version.mjs && node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs",
-    "build-feed": "node scripts/build-feed.mjs",
-    "fetch:feeds": "node scripts/build-feed.mjs",
-    "generate:sitemap": "node scripts/generate-sitemap.mjs",
-    "generate:seo": "node scripts/generate-seo-content.mjs"
+    "build:version": "node scripts/generate-version.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "^5.7.0"

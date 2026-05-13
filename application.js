@@ -85,6 +85,7 @@
 
   const MAX_ARTICLES = 300; // enough for all categories to have articles
   const MAX_PER_FEED = 15;  // cap per feed so high-volume sources don't crowd out others
+  const DAY_MS       = 86_400_000; // one day in milliseconds
 
   // ── Persistent preferences (all in localStorage) ─────────────
   const PREF = {
@@ -368,7 +369,6 @@
   const articleCount   = $('articleCount');
   const errorBanner    = $('errorBanner');
   const errorMessage   = $('errorMessage');
-  const refreshBtn     = $('refreshBtn');
   const refreshBtnHero = $('refreshBtnHero');
   const refreshIcon    = $('refreshIcon');
   const navStatus      = $('navStatus');
@@ -1108,6 +1108,16 @@
     return articles.slice(0, MAX_ARTICLES);
   }
 
+  // ── Update all feed-count spans from a canonical count ───────
+  function updateFeedCountSpans(count) {
+    ['heroFeedCount', 'termFeedCount'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = count;
+    });
+    const sf = document.getElementById('statFeeds');
+    if (sf) sf.textContent = count;
+  }
+
   // ── Primary entry point: cache-first, RSS emergency fallback ─
   async function fetchAll() {
     if (isLoading) return;
@@ -1166,10 +1176,9 @@
       const d = new Date(a.date);
       if (isNaN(d)) return true;
       const ageMs = Date.now() - d;
-      const DAY = 86400000;
-      if (maxAge === '24h') return ageMs <= DAY;
-      if (maxAge === '7d')  return ageMs <= 7 * DAY;
-      if (maxAge === '30d') return ageMs <= 30 * DAY;
+      if (maxAge === '24h') return ageMs <= DAY_MS;
+      if (maxAge === '7d')  return ageMs <= 7  * DAY_MS;
+      if (maxAge === '30d') return ageMs <= 30 * DAY_MS;
     } catch { return true; }
     return true;
   }
@@ -1376,7 +1385,7 @@
     if (navStatus) navStatus.textContent = 'geekspulse --fetch';
     articleCount.style.display = 'none';
     setRefreshBusy(true);
-    feedGrid.innerHTML = '';
+    showSkeletons();
     hideError();
     // Show the static SEO fallback above the skeleton while live feed is fetching
     const seoFallback = document.getElementById('seoLatestFallback');
@@ -1405,7 +1414,7 @@
   }
 
   function setRefreshBusy(busy) {
-    [refreshBtn, refreshBtnHero].filter(Boolean).forEach(btn => { if (btn) btn.disabled = busy; });
+    if (refreshBtnHero) refreshBtnHero.disabled = busy;
     if (refreshIcon) refreshIcon.classList.toggle('spin', busy);
   }
 
@@ -1616,7 +1625,6 @@
     settingsBtn.title = 'Settings';
     settingsBtn.setAttribute('aria-label', 'Open settings');
     settingsBtn.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span class="btn-label"> Settings</span>';
-    settingsBtn.title = 'Settings';
     // insert before the support button (last child)
     navActions.insertBefore(settingsBtn, navActions.lastElementChild);
 
@@ -2241,15 +2249,6 @@
     const statFeedsEl = document.getElementById('statFeeds');
     if (statFeedsEl) statFeedsEl.textContent = feeds.length;
 
-    /** Update all feed-count spans from a canonical count (e.g. from the pre-built cache). */
-    function updateFeedCountSpans(count) {
-      ['heroFeedCount', 'termFeedCount'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = count;
-      });
-      const sf = document.getElementById('statFeeds');
-      if (sf) sf.textContent = count;
-    }
 
     initNav();
     initSettings();
@@ -2272,11 +2271,9 @@
       render();
     });
 
-    [refreshBtn, refreshBtnHero].filter(Boolean).forEach(btn => {
-      if (btn) btn.addEventListener('click', () => {
-        gaEvent('refresh_feeds', { trigger: btn.id || 'refresh_btn' });
-        fetchAll();
-      });
+    if (refreshBtnHero) refreshBtnHero.addEventListener('click', () => {
+      gaEvent('refresh_feeds', { trigger: 'refreshBtnHero' });
+      fetchAll();
     });
 
     fetchAll().then(() => startAutoRefresh(autoRefreshMin));
@@ -2423,7 +2420,8 @@
       });
     });
 
-    // ── Search ─────────────────────────────────────────────────    const searchInput = document.getElementById('articleSearch');
+    // ── Search ───────────────────────────────────────────────────
+    const searchInput = document.getElementById('articleSearch');
     const searchKbd   = document.getElementById('searchKbd');
     if (searchInput) {
       let debounceTimer;
@@ -2529,10 +2527,10 @@
     el.className = 'newsletter-msg ' + (type === 'ok' ? 'newsletter-msg--ok' : 'newsletter-msg--err');
   }
 
-  document.addEventListener('DOMContentLoaded', init);
-
-  // ── Back to top ───────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
+    init();
+
+    // ── Back to top ─────────────────────────────────────────────
     const btn = document.getElementById('backToTop');
     if (!btn) return;
     let visible = false;
@@ -2563,197 +2561,9 @@
     });
   });
 
-  // ── Tweet Carousel ───────────────────────────────────────────
-  (() => {
-    const track    = document.getElementById('tweetTrack');
-    const dotsWrap = document.getElementById('tweetDots');
-    const prevBtn  = document.getElementById('tweetPrev');
-    const nextBtn  = document.getElementById('tweetNext');
-    if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
-
-    const cards = Array.from(track.querySelectorAll('.tweet-card'));
-    let current = 0;
-    let autoTimer = null;
-    const AUTO_MS = 5000;
-
-    function visibleCount() {
-      const w = track.parentElement.offsetWidth;
-      if (w >= 980) return 3;
-      if (w >= 620) return 2;
-      return 1;
-    }
-
-    function cardWidth() {
-      const c = cards[0];
-      const gap = 20;
-      return c.offsetWidth + gap;
-    }
-
-    const maxIndex = () => Math.max(0, cards.length - visibleCount());
-
-    function goTo(idx, animated = true) {
-      current = Math.max(0, Math.min(idx, maxIndex()));
-      track.style.transition = animated
-        ? 'transform 0.45s cubic-bezier(0.25,0.8,0.25,1)'
-        : 'none';
-      track.style.transform = `translateX(-${current * cardWidth()}px)`;
-      updateDots();
-      updateNavBtns();
-    }
-
-    function updateDots() {
-      const total = maxIndex() + 1;
-      // Rebuild dots only if count changed
-      if (dotsWrap.children.length !== total) {
-        dotsWrap.innerHTML = '';
-        for (let i = 0; i < total; i++) {
-          const d = document.createElement('button');
-          d.className = 'tweet-dot';
-          d.setAttribute('role', 'tab');
-          d.setAttribute('aria-label', `Go to slide ${i + 1}`);
-          d.addEventListener('click', () => { goTo(i); resetAuto(); });
-          dotsWrap.appendChild(d);
-        }
-      }
-      Array.from(dotsWrap.children).forEach((d, i) => {
-        d.classList.toggle('active', i === current);
-        d.setAttribute('aria-selected', i === current ? 'true' : 'false');
-      });
-    }
-
-    function updateNavBtns() {
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current >= maxIndex();
-    }
-
-    function resetAuto() {
-      clearInterval(autoTimer);
-      autoTimer = setInterval(() => {
-        goTo(current >= maxIndex() ? 0 : current + 1);
-      }, AUTO_MS);
-    }
-
-    prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
-    nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
-
-    // ── Pointer-based swipe / drag (mouse + touch + pen) ──────────
-    let dragging      = false;
-    let pointerId     = null;
-    let startX        = 0;
-    let startY        = 0;
-    let currentDx     = 0;
-    let baseTranslate = 0;
-    let axisLocked    = false;   // becomes true once we know horizontal vs vertical
-    let isHorizontal  = false;
-    let dragStartTime = 0;
-    let suppressClick = false;
-    const DRAG_THRESHOLD = 6;     // px before we decide axis
-    const SWIPE_DISTANCE = 50;    // px to advance one slide
-    const SWIPE_VELOCITY = 0.4;   // px/ms quick-flick threshold
-
-    function onPointerDown(e) {
-      // Ignore non-primary mouse buttons
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      dragging      = true;
-      axisLocked    = false;
-      isHorizontal  = false;
-      pointerId     = e.pointerId;
-      startX        = e.clientX;
-      startY        = e.clientY;
-      currentDx     = 0;
-      dragStartTime = performance.now();
-      baseTranslate = -current * cardWidth();
-      track.style.transition = 'none';
-      clearInterval(autoTimer);
-    }
-
-    function onPointerMove(e) {
-      if (!dragging || e.pointerId !== pointerId) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-
-      if (!axisLocked) {
-        if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
-        isHorizontal = Math.abs(dx) > Math.abs(dy);
-        axisLocked   = true;
-        if (isHorizontal) {
-          track.style.cursor = 'grabbing';
-          try { track.setPointerCapture(pointerId); } catch (_) {}
-        } else {
-          // Let the page scroll vertically; abandon drag.
-          dragging = false;
-          track.style.transition = 'transform 0.45s cubic-bezier(0.25,0.8,0.25,1)';
-          track.style.transform = `translateX(${baseTranslate}px)`;
-          resetAuto();
-          return;
-        }
-      }
-
-      if (isHorizontal) {
-        e.preventDefault();
-        // Apply mild rubber-banding at the edges
-        let applied = dx;
-        const atStart = current === 0 && dx > 0;
-        const atEnd   = current >= maxIndex() && dx < 0;
-        if (atStart || atEnd) applied = dx * 0.35;
-        currentDx = applied;
-        track.style.transform = `translateX(${baseTranslate + applied}px)`;
-        suppressClick = Math.abs(dx) > DRAG_THRESHOLD;
-      }
-    }
-
-    function endDrag(e) {
-      if (!dragging || (e && e.pointerId !== pointerId)) return;
-      dragging = false;
-      track.style.cursor = '';
-      try { track.releasePointerCapture(pointerId); } catch (_) {}
-
-      if (!isHorizontal) { resetAuto(); return; }
-
-      const dt       = Math.max(1, performance.now() - dragStartTime);
-      const velocity = currentDx / dt; // px per ms (signed)
-      let target = current;
-
-      if (currentDx <= -SWIPE_DISTANCE || velocity <= -SWIPE_VELOCITY) {
-        target = current + 1;
-      } else if (currentDx >= SWIPE_DISTANCE || velocity >= SWIPE_VELOCITY) {
-        target = current - 1;
-      }
-
-      goTo(target);
-      resetAuto();
-
-      // Suppress the synthetic click that follows a drag on tweet-card links
-      if (suppressClick) {
-        const blockClick = ev => { ev.preventDefault(); ev.stopPropagation(); };
-        track.addEventListener('click', blockClick, { capture: true, once: true });
-        setTimeout(() => track.removeEventListener('click', blockClick, { capture: true }), 0);
-        suppressClick = false;
-      }
-    }
-
-    track.style.touchAction = 'pan-y';
-    track.style.cursor = 'grab';
-    track.addEventListener('pointerdown',   onPointerDown);
-    track.addEventListener('pointermove',   onPointerMove);
-    track.addEventListener('pointerup',     endDrag);
-    track.addEventListener('pointercancel', endDrag);
-    // Prevent native image/link drag from hijacking the gesture
-    track.addEventListener('dragstart', e => e.preventDefault());
-
-    // Recalc on resize
-    window.addEventListener('resize', () => goTo(Math.min(current, maxIndex()), false), { passive: true });
-
-    // Pause on hover
-    const section = track.closest('.tweet-carousel-section');
-    if (section) {
-      section.addEventListener('mouseenter', () => clearInterval(autoTimer));
-      section.addEventListener('mouseleave', () => resetAuto());
-    }
-
-    // Init
-    goTo(0, false);
-    resetAuto();
-  })();
-
 })();
+
+
+
+
+
