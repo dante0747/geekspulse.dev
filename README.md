@@ -12,7 +12,7 @@
 **`{ GeeksPulse }` — Feel the pulse of dev.**
 
 [![Live](https://img.shields.io/badge/status-live-39d353?style=flat-square&logo=statuspage&logoColor=black)](https://geekspulse.dev)
-[![Feeds](https://img.shields.io/badge/RSS_feeds-32-58c8ff?style=flat-square&logo=rss&logoColor=black)](https://geekspulse.dev)
+[![Feeds](https://img.shields.io/badge/RSS_feeds-39-58c8ff?style=flat-square&logo=rss&logoColor=black)](https://geekspulse.dev)
 [![Paywalls](https://img.shields.io/badge/paywalls-0-39d353?style=flat-square)](https://geekspulse.dev)
 [![No Ad Trackers](https://img.shields.io/badge/ad_trackers-none-ff5555?style=flat-square)](https://geekspulse.dev)
 [![No Ads](https://img.shields.io/badge/ads-nope-bc8cff?style=flat-square)](https://geekspulse.dev)
@@ -34,7 +34,7 @@
 ✓ Google AI Blog .......... 10 stories
 ✓ Rust Blog ............... 6 stories
 ✓ Go Blog ................. 5 stories
-# 32 feeds · 0 paywalls · 100% signal
+# 39 feeds · 0 paywalls · 100% signal
 ✓ Ready. No paywalls. You're welcome.
 ▮
 ```
