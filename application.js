@@ -1145,6 +1145,7 @@
     setLive();
     updateSidebarStats(cacheGeneratedAt);
     loadFeedHealthBanner();
+    loadSiteVersion();
     buildFilters();
     render();
 
@@ -1457,6 +1458,22 @@
     } catch (e) {
       // Health banner is non-critical; silently skip if unavailable
       console.debug('[GeeksPulse] feed-health.json unavailable for health bar:', e.message);
+    }
+  }
+
+  /** Load version.json and fill the footer version badge. */
+  async function loadSiteVersion() {
+    const el = document.getElementById('siteVersion');
+    if (!el) return;
+    try {
+      const resp = await fetch('/public/version.json', { cache: 'no-cache', signal: AbortSignal.timeout(4000) });
+      if (!resp.ok) return;
+      const v = await resp.json();
+      // e.g.  // v1.0.142 · a3f9c12 · 2026-05-13
+      el.textContent = `// ${v.version} · ${v.commit} · ${v.date}`;
+      el.title = `Build #${v.build} — click to view changelog`;
+    } catch {
+      el.textContent = '// version unavailable';
     }
   }
 
