@@ -1278,7 +1278,7 @@
     if (navStatus) navStatus.textContent = 'geekspulse --fetch';
     articleCount.style.display = 'none';
     setRefreshBusy(true);
-    showSkeletons(8);
+    feedGrid.innerHTML = '';
     hideError();
     // Show the static SEO fallback above the skeleton while live feed is fetching
     const seoFallback = document.getElementById('seoLatestFallback');
