@@ -32,7 +32,7 @@ Open [http://localhost:3000](http://localhost:3000).
 1. Fork the repo and create a branch: `git checkout -b feat/your-idea`
 2. Make your changes.
 3. Test locally with `npx serve .` — verify feeds load, filters work, bookmarks work.
-4. If you changed feeds, run `npm run build-feed` and commit the updated `public/` files.
+4. If you changed feeds, run `npm run build:feed` and commit the updated `public/` files.
 5. Open a PR with a clear description of what you changed and why.
 
 ## Adding a new RSS feed
@@ -53,8 +53,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Code style
 
-- Vanilla JS, no frameworks, no bundler.
-- Keep IIFE structure intact — no top-level module imports in `application.js`.
+- Vanilla JS ES modules — no frameworks, no bundler.
+- The frontend is split into **13 focused modules** under `js/`. Add new logic to the
+  most relevant module, or create a new one and import it from `js/main.js`.
+- `js/main.js` is the entry point: it owns app state, the `render()` loop, and all event wiring.
 - Prefer descriptive variable names over clever one-liners.
 - Keep accessibility in mind: ARIA labels, keyboard navigation.
 

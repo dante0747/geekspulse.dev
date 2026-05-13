@@ -1,0 +1,162 @@
+import { RSS2JSON, MAX_ARTICLES, MAX_PER_FEED, feeds } from './config.js';
+import { truncate, stripHtml, getText, safeUrl } from './utils.js';
+import {
+  normalizeImageUrl, isProbablyBadImageUrl,
+  extractImageCandidatesFromHtml, extractImageCandidatesFromFeedItem,
+  pickBestImageCandidate, extractImage,
+} from './images.js';
+import { fetchViaCorsProxy } from './http.js';
+
+// ── RSS XML parser ────────────────────────────────────────────────
+
+export function parseRssXml(xmlText, feed) {
+  const parser = new DOMParser();
+  const doc    = parser.parseFromString(xmlText, 'application/xml');
+  if (doc.querySelector('parsererror')) throw new Error('XML parse error');
+
+  const items = [];
+
+  doc.querySelectorAll('item').forEach(item => {
+    const link = getText(item, 'link') ||
+                 item.querySelector('link')?.getAttribute('href') || '#';
+    const contentEncoded = getText(item, 'content\\:encoded') || '';
+    const desc  = getText(item, 'description') || getText(item, 'summary') || contentEncoded;
+    const date  = getText(item, 'pubDate') || getText(item, 'published') || getText(item, 'updated') || '';
+    items.push({
+      title:    getText(item, 'title') || 'Untitled',
+      link,
+      snippet:  truncate(stripHtml(desc)),
+      image:    extractImage(item, desc, contentEncoded),
+      date,
+      source:   feed.name,
+      category: feed.category,
+    });
+  });
+
+  if (items.length === 0) {
+    doc.querySelectorAll('entry').forEach(entry => {
+      const linkEl = entry.querySelector('link[rel="alternate"]') || entry.querySelector('link');
+      const link   = linkEl ? (linkEl.getAttribute('href') || linkEl.textContent.trim()) : '#';
+      const contentHtml = getText(entry, 'content') || '';
+      const desc   = getText(entry, 'summary') || contentHtml;
+      const date   = getText(entry, 'updated') || getText(entry, 'published') || '';
+      items.push({
+        title:    getText(entry, 'title') || 'Untitled',
+        link,
+        snippet:  truncate(stripHtml(desc)),
+        image:    extractImage(entry, desc, contentHtml),
+        date,
+        source:   feed.name,
+        category: feed.category,
+      });
+    });
+  }
+
+  return items;
+}
+
+// ── Feed fetchers ─────────────────────────────────────────────────
+
+async function fetchFeedDirect(feed) {
+  const text = await fetchViaCorsProxy(feed.url, { timeoutMs: 10000 });
+  if (!text) throw new Error('All CORS proxies failed');
+  return parseRssXml(text, feed);
+}
+
+async function fetchFeedJson(feed) {
+  const url  = RSS2JSON + encodeURIComponent(feed.url);
+  const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const data = await resp.json();
+  if (data.status !== 'ok') throw new Error(data.message || 'rss2json error');
+  return (data.items || []).map(item => {
+    const descHtml    = item.description || '';
+    const contentHtml = item.content     || '';
+    const thumb = item.thumbnail || item.enclosure?.link || null;
+    const candidates = [];
+    if (thumb && !isProbablyBadImageUrl(thumb)) {
+      candidates.push({ url: thumb, source: 'rss-thumbnail', width: 0, height: 0, score: 20 });
+    }
+    for (const html of [contentHtml, descHtml].filter(Boolean)) {
+      candidates.push(...extractImageCandidatesFromHtml(html, location.href));
+    }
+    const best = pickBestImageCandidate(candidates);
+    return {
+      title:    item.title    || 'Untitled',
+      link:     item.link     || item.url || '#',
+      snippet:  truncate(stripHtml(descHtml || contentHtml)),
+      image:    best ? best.url : null,
+      date:     item.pubDate  || item.published || '',
+      source:   feed.name,
+      category: feed.category,
+    };
+  });
+}
+
+export async function fetchFeed(feed) {
+  try {
+    const items = await fetchFeedDirect(feed);
+    if (items.length > 0) return items;
+    return await fetchFeedJson(feed);
+  } catch (e) {
+    console.warn(`[GeeksPulse] Direct fetch failed for ${feed.name}, trying rss2json…`, e.message);
+    return await fetchFeedJson(feed);
+  }
+}
+
+// ── Static cache loader ───────────────────────────────────────────
+
+export async function loadFeedCache() {
+  const resp = await fetch('/public/feed.json', { cache: 'no-cache', signal: AbortSignal.timeout(8000) });
+  if (!resp.ok) throw new Error(`Cache ${resp.status}`);
+  const data = await resp.json();
+  if (!data.generatedAt || !Array.isArray(data.articles) || data.articles.length === 0) {
+    throw new Error('Cache empty or not yet generated');
+  }
+  return data;
+}
+
+export function normaliseCachedArticle(a) {
+  const rawImg  = a.image ? safeUrl(a.image) : null;
+  const safeImg = rawImg && rawImg !== '#' ? normalizeImageUrl(rawImg, a.link) : null;
+  const fallback = a.fallbackImage || null;
+  return {
+    title:         a.title    || 'Untitled',
+    link:          safeUrl(a.link),
+    snippet:       a.summary  || '',
+    image:         safeImg,
+    fallbackImage: fallback,
+    imageType:     a.imageType || (safeImg ? 'real' : 'fallback'),
+    date:          a.publishedAt || null,
+    source:        a.source   || '',
+    category:      a.category || 'General',
+  };
+}
+
+// ── Emergency RSS fallback ────────────────────────────────────────
+
+export async function fetchAllFromRSS() {
+  const results = await Promise.allSettled(feeds.map(fetchFeed));
+  const articles = [];
+  let failedCount = 0;
+
+  results.forEach((res, i) => {
+    if (res.status === 'fulfilled') {
+      articles.push(...res.value.slice(0, MAX_PER_FEED));
+    } else {
+      failedCount++;
+      console.warn(`[GeeksPulse] ${feeds[i].name} completely failed:`, res.reason?.message);
+    }
+  });
+
+  articles.sort((a, b) => {
+    const da = new Date(a.date), db = new Date(b.date);
+    if (isNaN(da) && isNaN(db)) return 0;
+    if (isNaN(da)) return 1;
+    if (isNaN(db)) return -1;
+    return db - da;
+  });
+
+  return { articles: articles.slice(0, MAX_ARTICLES), failedCount };
+}
+
