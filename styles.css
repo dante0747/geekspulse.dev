@@ -987,6 +987,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .card.cat-java        { --card-accent: #F97316; --card-glow: rgba(249,115,22,0.2); }
 .card.cat-rust        { --card-accent: #CE422B; --card-glow: rgba(206,66,43,0.2); }
 .card.cat-go          { --card-accent: #00ACD7; --card-glow: rgba(0,172,215,0.2); }
+.card.cat-architecture { --card-accent: #2DD4BF; --card-glow: rgba(45,212,191,0.2); }
 
 /* ── Category pill colors ────────────────────── */
 .cat-general     { color:#94A3B8; border-color:#94A3B8; background:rgba(148,163,184,0.1); }
@@ -999,6 +1000,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .cat-java        { color:#F97316; border-color:#F97316; background:rgba(249,115,22,0.1); }
 .cat-rust        { color:#CE422B; border-color:#CE422B; background:rgba(206,66,43,0.1); }
 .cat-go          { color:#00ACD7; border-color:#00ACD7; background:rgba(0,172,215,0.1); }
+.cat-architecture { color:#2DD4BF; border-color:#2DD4BF; background:rgba(45,212,191,0.1); }
 
 /* ── Src dot glow ────────────────────────────── */
 .src-dot.cat-general     { background:#94A3B8; }
@@ -1011,6 +1013,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .src-dot.cat-java        { background:#F97316; box-shadow:0 0 5px #F97316; }
 .src-dot.cat-rust        { background:#CE422B; box-shadow:0 0 5px #CE422B; }
 .src-dot.cat-go          { background:#00ACD7; box-shadow:0 0 5px #00ACD7; }
+.src-dot.cat-architecture { background:#2DD4BF; box-shadow:0 0 5px #2DD4BF; }
 
 /* Filtered: card-link uses category color */
 .feed-filtered .card.cat-security    .card-link { border-color:#F43F5E; color:#F43F5E; }
@@ -1022,6 +1025,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .feed-filtered .card.cat-java        .card-link { border-color:#F97316; color:#F97316; }
 .feed-filtered .card.cat-rust        .card-link { border-color:#CE422B; color:#CE422B; }
 .feed-filtered .card.cat-go          .card-link { border-color:#00ACD7; color:#00ACD7; }
+.feed-filtered .card.cat-architecture .card-link { border-color:#2DD4BF; color:#2DD4BF; }
 
 /* ── Skeleton ───────────────────────────────── */
 .skeleton-card {

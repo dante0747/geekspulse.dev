@@ -49,6 +49,7 @@ const CATEGORY_FALLBACK_IMAGES = {
   'Java':        '/assets/fallbacks/java.svg',
   'Rust':        '/assets/fallbacks/rust.svg',
   'Go':          '/assets/fallbacks/go.svg',
+  'Architecture': '/assets/fallbacks/architecture.svg',
 };
 
 function getFallbackImage(category) {

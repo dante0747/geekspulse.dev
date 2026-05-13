@@ -45,7 +45,7 @@
 
 GeeksPulse is a static developer-news site powered by a scheduled feed-generation pipeline. A Node.js script fetches and normalises RSS feeds into static JSON files, and the frontend renders from that cache for speed and reliability.
 
-It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
+It pulls from **39 hand-picked RSS feeds** across 11 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
 
 - 🚫 **No ads.** No VC money. No ad trackers.
 - ⚡ **Static hosting.** The site is served as plain HTML/CSS/JS — no application server required.
@@ -58,7 +58,7 @@ It pulls from **32 hand-picked RSS feeds** across 10 categories, sorts them newe
 
 | Feature | Details |
 |---|---|
-| 📡 **32 RSS Feeds** | Hand-curated from the best dev sources on the web |
+| 📡 **39 RSS Feeds** | Hand-curated from the best dev sources on the web |
 | 🗂️ **10 Categories** | General · Security · AI/ML · Python · JavaScript · Java · DevOps · Open Source · Rust · Go |
 | ⚡ **Static Cache** | Articles pre-built by a Node.js pipeline; browser loads JSON instantly |
 | 🔄 **Auto-Refresh** | Configurable: 1m · 5m · 10m · 15m · 30m · 1h |

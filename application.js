@@ -146,6 +146,14 @@
     { name: 'Go Blog',           url: 'https://go.dev/blog/feed.atom',                                   category: 'Go'          },
     { name: 'Go Weekly',         url: 'https://golangweekly.com/rss/full.xml',                           category: 'Go'          },
     { name: 'Dave Cheney',       url: 'https://dave.cheney.net/feed/atom',                               category: 'Go'          },
+    // ── Architecture & System Design ─────────────────────────
+    { name: 'Martin Fowler',          url: 'https://martinfowler.com/feed.atom',                             category: 'Architecture' },
+    { name: 'InfoQ Architecture',     url: 'https://feed.infoq.com/architecture/',                           category: 'Architecture' },
+    { name: 'AWS Architecture Blog',  url: 'https://aws.amazon.com/blogs/architecture/feed/',                category: 'Architecture' },
+    { name: 'High Scalability',       url: 'http://feeds.feedburner.com/HighScalability',                   category: 'Architecture' },
+    { name: 'Netflix Tech Blog',      url: 'https://netflixtechblog.com/feed',                               category: 'Architecture' },
+    { name: 'Meta Engineering',       url: 'https://engineering.fb.com/feed/',                               category: 'Architecture' },
+    { name: 'Uber Engineering',       url: 'https://www.uber.com/en-US/blog/engineering/rss/',               category: 'Architecture' },
   ];
 
   // SVG icons — paths sourced from Lucide Icons (lucide.dev) and Simple Icons (simpleicons.org)
@@ -183,6 +191,9 @@
     // Go — exact paths from https://go.dev/images/go-logo-white.svg (fill changed to currentColor)
     'Go':
       `<svg aria-hidden="true" viewBox="0 0 207 78" width="40" height="15" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="m16.2 24.1c-.4 0-.5-.2-.3-.5l2.1-2.7c.2-.3.7-.5 1.1-.5h35.7c.4 0 .5.3.3.6l-1.7 2.6c-.2.3-.7.6-1 .6z"/><path d="m1.1 33.3c-.4 0-.5-.2-.3-.5l2.1-2.7c.2-.3.7-.5 1.1-.5h45.6c.4 0 .6.3.5.6l-.8 2.4c-.1.4-.5.6-.9.6z"/><path d="m25.3 42.5c-.4 0-.5-.3-.3-.6l1.4-2.5c.2-.3.6-.6 1-.6h20c.4 0 .6.3.6.7l-.2 2.4c0 .4-.4.7-.7.7z"/><g transform="translate(55)"><path d="m74.1 22.3c-6.3 1.6-10.6 2.8-16.8 4.4-1.5.4-1.6.5-2.9-1-1.5-1.7-2.6-2.8-4.7-3.8-6.3-3.1-12.4-2.2-18.1 1.5-6.8 4.4-10.3 10.9-10.2 19 .1 8 5.6 14.6 13.5 15.7 6.8.9 12.5-1.5 17-6.6.9-1.1 1.7-2.3 2.7-3.7-3.6 0-8.1 0-19.3 0-2.1 0-2.6-1.3-1.9-3 1.3-3.1 3.7-8.3 5.1-10.9.3-.6 1-1.6 2.5-1.6h36.4c-.2 2.7-.2 5.4-.6 8.1-1.1 7.2-3.8 13.8-8.2 19.6-7.2 9.5-16.6 15.4-28.5 17-9.8 1.3-18.9-.6-26.9-6.6-7.4-5.6-11.6-13-12.7-22.2-1.3-10.9 1.9-20.7 8.5-29.3 7.1-9.3 16.5-15.2 28-17.3 9.4-1.7 18.4-.6 26.5 4.9 5.3 3.5 9.1 8.3 11.6 14.1.6.9.2 1.4-1 1.7z"/><path d="m107.2 77.6c-9.1-.2-17.4-2.8-24.4-8.8-5.9-5.1-9.6-11.6-10.8-19.3-1.8-11.3 1.3-21.3 8.1-30.2 7.3-9.6 16.1-14.6 28-16.7 10.2-1.8 19.8-.8 28.5 5.1 7.9 5.4 12.8 12.7 14.1 22.3 1.7 13.5-2.2 24.5-11.5 33.9-6.6 6.7-14.7 10.9-24 12.8-2.7.5-5.4.6-8 .9zm23.8-40.4c-.1-1.3-.1-2.3-.3-3.3-1.8-9.9-10.9-15.5-20.4-13.3-9.3 2.1-15.3 8-17.5 17.4-1.8 7.8 2 15.7 9.2 18.9 5.5 2.4 11 2.1 16.3-.6 7.9-4.1 12.2-10.5 12.7-19.1z" fill-rule="nonzero"/></g></g></svg>`,
+    // Lucide: network (Architecture / System Design)
+    'Architecture':
+      `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`,
   };
 
   const categories = [
@@ -196,7 +207,8 @@
     { id: 'DevOps',      label: 'DevOps',      color: '#6366F1', icon: CAT_SVG['DevOps']      },
     { id: 'Open Source', label: 'Open Source', color: '#10B981', icon: CAT_SVG['Open Source'] },
     { id: 'Rust',        label: 'Rust',        color: '#CE422B', icon: CAT_SVG['Rust']        },
-    { id: 'Go',          label: 'Go',          color: '#00ACD7', icon: CAT_SVG['Go']          },
+    { id: 'Go',          label: 'Go',           color: '#00ACD7', icon: CAT_SVG['Go']          },
+    { id: 'Architecture', label: 'Architecture', color: '#2DD4BF', icon: CAT_SVG['Architecture'] },
     { id: 'Bookmarks',   label: 'Bookmarks',   color: '#EC4899', icon: `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>` },
   ];
 
