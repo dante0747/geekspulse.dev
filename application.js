@@ -1280,6 +1280,9 @@
     setRefreshBusy(true);
     showSkeletons(8);
     hideError();
+    // Show the static SEO fallback above the skeleton while live feed is fetching
+    const seoFallback = document.getElementById('seoLatestFallback');
+    if (seoFallback) seoFallback.style.display = '';
   }
 
   function setLive() {
