@@ -92,6 +92,54 @@
     set: (k, v)    => localStorage.setItem('geeksup_' + k, v),
   };
 
+  // ── My Pulse: versioned preferences ───────────────────────────
+  const PULSE_PREF_KEY = 'geekspulse.preferences.v1';
+
+  function getDefaultPreferences() {
+    return {
+      version: 1,
+      blockedCategories: [],
+      mutedSources: [],
+      hideSponsored: false,
+      maxAge: 'any',
+    };
+  }
+
+  function loadPreferences() {
+    try {
+      const raw = localStorage.getItem(PULSE_PREF_KEY);
+      if (!raw) return getDefaultPreferences();
+      const parsed = JSON.parse(raw);
+      if (!parsed || parsed.version !== 1) return getDefaultPreferences();
+      const d = getDefaultPreferences();
+      return {
+        version: 1,
+        blockedCategories: Array.isArray(parsed.blockedCategories) ? parsed.blockedCategories : d.blockedCategories,
+        mutedSources:       Array.isArray(parsed.mutedSources)       ? parsed.mutedSources       : d.mutedSources,
+        hideSponsored:      typeof parsed.hideSponsored === 'boolean' ? parsed.hideSponsored      : d.hideSponsored,
+        maxAge:             ['any','24h','7d','30d'].includes(parsed.maxAge) ? parsed.maxAge      : d.maxAge,
+      };
+    } catch { return getDefaultPreferences(); }
+  }
+
+  function savePreferences(prefs) {
+    try { localStorage.setItem(PULSE_PREF_KEY, JSON.stringify(prefs)); } catch { /* quota */ }
+  }
+
+  function resetPreferences() {
+    localStorage.removeItem(PULSE_PREF_KEY);
+  }
+
+  function hasActivePreferences(prefs) {
+    const d = getDefaultPreferences();
+    return (
+      prefs.blockedCategories.length > 0 ||
+      prefs.mutedSources.length > 0 ||
+      prefs.hideSponsored !== d.hideSponsored ||
+      prefs.maxAge !== d.maxAge
+    );
+  }
+
   // ── Auto-refresh options (minutes; 0 = off) ───────────────────
   const REFRESH_OPTIONS = [
     { label: 'Off',  value: 0   },
@@ -151,9 +199,9 @@
     { name: 'InfoQ Architecture',     url: 'https://feed.infoq.com/architecture/',                           category: 'Architecture' },
     { name: 'AWS Architecture Blog',  url: 'https://aws.amazon.com/blogs/architecture/feed/',                category: 'Architecture' },
     { name: 'High Scalability',       url: 'http://feeds.feedburner.com/HighScalability',                   category: 'Architecture' },
-    { name: 'Netflix Tech Blog',      url: 'https://netflixtechblog.com/feed',                               category: 'Architecture' },
+    { name: 'Netflix Tech Blog',      url: 'https://medium.com/feed/netflix-techblog',                              category: 'Architecture' },
     { name: 'Meta Engineering',       url: 'https://engineering.fb.com/feed/',                               category: 'Architecture' },
-    { name: 'Uber Engineering',       url: 'https://www.uber.com/en-US/blog/engineering/rss/',               category: 'Architecture' },
+    { name: 'Cloudflare Blog',        url: 'https://blog.cloudflare.com/rss/',                                   category: 'Architecture' },
   ];
 
   // SVG icons — paths sourced from Lucide Icons (lucide.dev) and Simple Icons (simpleicons.org)
@@ -1103,6 +1151,38 @@
     if (allArticles.length > 0) hideError();
   }
 
+  // ── My Pulse: feed filtering utilities ───────────────────────
+  const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast)\b/i;
+
+  function isSponsoredItem(a) {
+    const text = [(a.title || ''), (a.snippet || ''), (a.source || '')].join(' ');
+    return SPONSORED_RE.test(text);
+  }
+
+  function isWithinAgeRange(a, maxAge) {
+    if (maxAge === 'any' || !a.date) return true;
+    try {
+      const d = new Date(a.date);
+      if (isNaN(d)) return true;
+      const ageMs = Date.now() - d;
+      const DAY = 86400000;
+      if (maxAge === '24h') return ageMs <= DAY;
+      if (maxAge === '7d')  return ageMs <= 7 * DAY;
+      if (maxAge === '30d') return ageMs <= 30 * DAY;
+    } catch { return true; }
+    return true;
+  }
+
+  function applyPreferencesFilter(articles, prefs) {
+    return articles.filter(a => {
+      if (prefs.blockedCategories.length && prefs.blockedCategories.includes(a.category)) return false;
+      if (prefs.mutedSources.length && prefs.mutedSources.includes(a.source)) return false;
+      if (prefs.hideSponsored && isSponsoredItem(a)) return false;
+      if (!isWithinAgeRange(a, prefs.maxAge)) return false;
+      return true;
+    });
+  }
+
   // ── Render articles ───────────────────────────────────────────
   function render() {
     let visible;
@@ -1124,24 +1204,38 @@
       );
     }
 
+    // Apply My Pulse preferences filter (not applied to Bookmarks view)
+    if (activeFilter !== 'Bookmarks') {
+      visible = applyPreferencesFilter(visible, loadPreferences());
+    }
+
     feedGrid.innerHTML = '';
     // Apply filtered class so CSS can color cards by category
     feedGrid.classList.toggle('feed-filtered', activeFilter !== 'All');
 
     if (visible.length === 0 && !isLoading) {
       const isBookmarkView = activeFilter === 'Bookmarks';
+      const pulseFiltered  = !isBookmarkView && allArticles.length > 0 && hasActivePreferences(loadPreferences());
       feedGrid.innerHTML = `
         <div class="empty-state visible">
-          <div class="empty-art">${isBookmarkView ? '  [ GeeksPulse Bookmarks ]\n  // folder is empty' : '  ¯\\_(ツ)_/¯\n  404: news not found'}</div>
-          <div class="empty-title">${isBookmarkView ? 'No saved stories yet.' : 'No articles for this filter.'}</div>
-          <div class="empty-sub">${isBookmarkView ? '// click the bookmark icon on any article to save it here' : '// try another category or refresh the feeds'}</div>
+          <div class="empty-art">${pulseFiltered ? '  [ My Pulse ]\n  // filtered everything' : (isBookmarkView ? '  [ GeeksPulse Bookmarks ]\n  // folder is empty' : '  ¯\\_(ツ)_/¯\n  404: news not found')}</div>
+          <div class="empty-title">${pulseFiltered ? 'No stories match your current Pulse.' : (isBookmarkView ? 'No saved stories yet.' : 'No articles for this filter.')}</div>
+          <div class="empty-sub">${pulseFiltered
+            ? `// try enabling more topics or <button class="empty-pulse-reset" onclick="window.__pulseReset()">resetting your filters</button>`
+            : (isBookmarkView ? '// click the bookmark icon on any article to save it here' : '// try another category or refresh the feeds')
+          }</div>
         </div>`;
       articleCount.style.display = 'none';
+      renderActivePulseSummary();
       return;
     }
 
     articleCount.style.display = '';
-    articleCount.innerHTML = `<strong>${visible.length}</strong> stories`;
+    const totalUnfiltered = activeFilter === 'All' ? allArticles.length : (activeFilter === 'Bookmarks' ? loadBookmarks().length : allArticles.filter(a => a.category === activeFilter).length);
+    const showingOf = (visible.length < totalUnfiltered && activeFilter !== 'Bookmarks')
+      ? `<strong>${visible.length}</strong> of ${totalUnfiltered} stories`
+      : `<strong>${visible.length}</strong> stories`;
+    articleCount.innerHTML = showingOf;
 
     const isListMode = feedGrid.classList.contains('list-view');
     feedGrid.innerHTML = visible.map((a, i) =>
@@ -1161,6 +1255,9 @@
 
     // Announce result to screen readers
     announce(`${visible.length} stories shown.`);
+
+    // Update My Pulse summary bar
+    renderActivePulseSummary();
 
     // Progressively fill in missing images from article metadata
     setTimeout(progressivelyResolveMissingImages, 100);
@@ -1401,6 +1498,10 @@
   }
 
   window.__setFilter = function(cat) { setFilter(cat); };
+  window.resetPreferences = resetPreferences;
+  window.syncMyPulsePanelIfOpen = syncMyPulsePanelIfOpen;
+  /** Used by inline onclick handlers in empty-state HTML */
+  window.__pulseReset = function() { resetPreferences(); render(); syncMyPulsePanelIfOpen(); };
   function setFilter(cat) {
     activeFilter = cat;
     PREF.set('filter', cat);
@@ -1639,7 +1740,7 @@
 
       overlay.querySelector('#cacheConfirmOk').addEventListener('click', () => {
         const siteKeys = Object.keys(localStorage).filter(k =>
-          k.startsWith('gp:') || k.startsWith('geeksup_')
+          k.startsWith('gp:') || k.startsWith('geeksup_') || k.startsWith('geekspulse.')
         );
         siteKeys.forEach(k => localStorage.removeItem(k));
         removeOverlay();
@@ -1664,6 +1765,319 @@
         );
       });
     });
+  }
+
+  // ── My Pulse summary bar renderer ────────────────────────────
+  function renderActivePulseSummary() {
+    const bar = document.getElementById('pulseSummaryBar');
+    if (!bar) return;
+    const prefs = loadPreferences();
+    if (!hasActivePreferences(prefs)) { bar.style.display = 'none'; return; }
+    bar.style.display = '';
+    const parts = [];
+    if (prefs.blockedCategories.length) parts.push(`${prefs.blockedCategories.length} topic${prefs.blockedCategories.length === 1 ? '' : 's'} hidden`);
+    if (prefs.mutedSources.length) parts.push(`${prefs.mutedSources.length} source${prefs.mutedSources.length === 1 ? '' : 's'} muted`);
+    if (prefs.hideSponsored) parts.push('Sponsored hidden');
+    if (prefs.maxAge !== 'any') {
+      const ageLabels = { '24h': 'Last 24h', '7d': 'Last 7 days', '30d': 'Last 30 days' };
+      parts.push(ageLabels[prefs.maxAge] || prefs.maxAge);
+    }
+    bar.innerHTML = `
+      <span class="psb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></span>
+      <span class="psb-label">// My Pulse:</span>
+      ${parts.map(p => `<span class="psb-pill">${esc(p)}</span>`).join('')}
+      <button class="psb-reset" id="pulseSummaryReset" aria-label="Reset My Pulse filters">Reset</button>
+      <button class="psb-edit" id="pulseSummaryEdit" aria-label="Edit My Pulse filters">Edit →</button>`;
+    document.getElementById('pulseSummaryReset')?.addEventListener('click', () => {
+      resetPreferences(); render(); syncMyPulsePanelIfOpen();
+    });
+    document.getElementById('pulseSummaryEdit')?.addEventListener('click', openMyPulsePanel);
+  }
+
+  function openMyPulsePanel() {
+    if (typeof window.__openMyPulse === 'function') window.__openMyPulse();
+  }
+
+  function syncMyPulsePanelIfOpen() {
+    if (typeof window.__syncMyPulse === 'function') window.__syncMyPulse();
+  }
+
+  // ── My Pulse panel (drawer) ───────────────────────────────────
+  function initMyPulse() {
+    const navActions = document.querySelector('.nav-actions');
+    if (!navActions) return;
+
+    // Add "My Pulse" button to nav-actions (before settings button)
+    const myPulseBtn = document.createElement('button');
+    myPulseBtn.id = 'myPulseBtn';
+    myPulseBtn.className = 'btn btn-ghost btn-sm';
+    myPulseBtn.title = 'My Pulse — customize your feed';
+    myPulseBtn.setAttribute('aria-label', 'Open My Pulse signal filters');
+    myPulseBtn.setAttribute('aria-haspopup', 'dialog');
+    myPulseBtn.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg><span class="btn-label"> My Pulse</span>`;
+    const settingsBtn = document.getElementById('settingsBtn');
+    navActions.insertBefore(myPulseBtn, settingsBtn || navActions.lastElementChild);
+
+    // Inject the summary bar before feedGrid
+    const summaryBar = document.createElement('div');
+    summaryBar.id = 'pulseSummaryBar';
+    summaryBar.className = 'pulse-summary-bar';
+    summaryBar.setAttribute('aria-live', 'polite');
+    summaryBar.style.display = 'none';
+    feedGrid.parentNode.insertBefore(summaryBar, feedGrid);
+
+    // Build backdrop + drawer
+    const backdrop = document.createElement('div');
+    backdrop.id = 'myPulseBackdrop';
+    backdrop.className = 'my-pulse-backdrop';
+    const drawer = document.createElement('div');
+    drawer.id = 'myPulseDrawer';
+    drawer.className = 'my-pulse-drawer';
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-label', 'My Pulse — Signal Filters');
+    drawer.setAttribute('aria-modal', 'true');
+    document.body.appendChild(backdrop);
+    document.body.appendChild(drawer);
+
+    const filterCategories = categories.filter(c => c.id !== 'All' && c.id !== 'Bookmarks');
+    const sourceNames = feeds.map(f => f.name);
+    const AGE_OPTIONS = [
+      { value: 'any', label: 'Any time' },
+      { value: '24h', label: 'Last 24h' },
+      { value: '7d',  label: 'Last 7 days' },
+      { value: '30d', label: 'Last 30 days' },
+    ];
+    const PRESETS = [
+      { label: 'Backend',  cats: ['General','Java','Python','Go','Rust','Architecture'] },
+      { label: 'Frontend', cats: ['JavaScript'] },
+      { label: 'DevOps',   cats: ['DevOps'] },
+      { label: 'Security', cats: ['Security'] },
+      { label: 'AI',       cats: ['AI'] },
+    ];
+
+    function buildDrawerContent() {
+      const prefs = loadPreferences();
+      drawer.innerHTML = `
+        <div class="mpd-header">
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <span class="mpd-title"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>My Pulse</span>
+            <button class="mpd-close" id="myPulseClose" aria-label="Close My Pulse panel">✕</button>
+          </div>
+          <div class="mpd-subtitle">// customize your developer signal</div>
+        </div>
+        <div class="mpd-body">
+          <div class="settings-section">
+            <div class="settings-label">Noise Filters</div>
+            <label class="mpd-toggle">
+              <input type="checkbox" id="mpHideSponsored" ${prefs.hideSponsored ? 'checked' : ''} aria-label="Hide sponsored and promotional content" />
+              <span class="mpd-toggle-track" aria-hidden="true"></span>
+              <span class="mpd-toggle-label">Hide sponsored / promotional content</span>
+            </label>
+          </div>
+          <div class="settings-section">
+            <div class="settings-label">Article Age</div>
+            <div class="settings-options" id="mpAgeOptions" role="group" aria-label="Filter by article age">
+              ${AGE_OPTIONS.map(o => `<button class="settings-opt${prefs.maxAge === o.value ? ' active' : ''}" data-age="${o.value}" aria-pressed="${prefs.maxAge === o.value}">${o.label}</button>`).join('')}
+            </div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>Topics <span class="mpd-count" id="mpCatCount">${prefs.blockedCategories.length > 0 ? `(${prefs.blockedCategories.length} hidden)` : ''}</span></span>
+              <button class="mpd-link" id="mpShowAllCats" aria-label="Show all topics">Show all</button>
+            </div>
+            <div class="mpd-chip-group" id="mpCategoryChips" role="group" aria-label="Topic filters">
+              ${filterCategories.map(c => {
+                const blocked = prefs.blockedCategories.includes(c.id);
+                return `<button class="mpd-chip${blocked ? ' mpd-chip--muted' : ''}" data-cat-chip="${esc(c.id)}" aria-pressed="${blocked}" title="${blocked ? 'Show' : 'Hide'} ${esc(c.label)} articles" style="--chip-color:${c.color}">
+                  <span aria-hidden="true" style="display:inline-flex;align-items:center;color:${blocked ? 'var(--ink3)' : c.color};margin-right:4px">${c.icon.replace(/width="\d+" height="\d+"/, 'width="11" height="11"')}</span>${esc(c.id)}
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>Sources <span class="mpd-count" id="mpSrcCount">${prefs.mutedSources.length > 0 ? `(${prefs.mutedSources.length} muted)` : ''}</span></span>
+              <button class="mpd-link" id="mpUnmuteAll" aria-label="Unmute all sources">Unmute all</button>
+            </div>
+            <div class="mpd-source-list" id="mpSourceList" role="group" aria-label="Source mute controls">
+              ${sourceNames.map(name => {
+                const muted = prefs.mutedSources.includes(name);
+                return `<button class="mpd-source${muted ? ' mpd-source--muted' : ''}" data-src-mute="${esc(name)}" aria-pressed="${muted}" title="${muted ? 'Unmute' : 'Mute'} ${esc(name)}">
+                  <span class="mpd-src-name">${esc(name)}</span>
+                  <span class="mpd-src-badge">${muted ? 'muted' : '✓ live'}</span>
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-label">Quick Presets</div>
+            <div class="settings-options" role="group" aria-label="Topic presets">
+              ${PRESETS.map(p => `<button class="settings-opt mpd-preset" data-preset='${JSON.stringify(p.cats)}' title="Show only ${p.label} topics">${p.label}</button>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="mpd-footer">
+          <button class="settings-opt settings-opt--danger mpd-reset-btn" id="mpResetBtn" aria-label="Reset all My Pulse filters to defaults">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>Reset to defaults
+          </button>
+          <span class="settings-note">// prefs saved in localStorage</span>
+        </div>`;
+      wireDrawerEvents();
+    }
+
+    function wireDrawerEvents() {
+      drawer.querySelector('#myPulseClose')?.addEventListener('click', closeDrawer);
+
+      drawer.querySelector('#mpHideSponsored')?.addEventListener('change', e => {
+        const p = loadPreferences();
+        p.hideSponsored = e.target.checked;
+        savePreferences(p);
+        render();
+      });
+
+      drawer.querySelector('#mpAgeOptions')?.addEventListener('click', e => {
+        const btn = e.target.closest('[data-age]');
+        if (!btn) return;
+        const p = loadPreferences();
+        p.maxAge = btn.dataset.age;
+        savePreferences(p);
+        drawer.querySelectorAll('[data-age]').forEach(b => {
+          b.classList.toggle('active', b.dataset.age === p.maxAge);
+          b.setAttribute('aria-pressed', String(b.dataset.age === p.maxAge));
+        });
+        render();
+      });
+
+      drawer.querySelector('#mpCategoryChips')?.addEventListener('click', e => {
+        const btn = e.target.closest('[data-cat-chip]');
+        if (!btn) return;
+        const cat = btn.dataset.catChip;
+        const p = loadPreferences();
+        const idx = p.blockedCategories.indexOf(cat);
+        if (idx === -1) p.blockedCategories.push(cat);
+        else p.blockedCategories.splice(idx, 1);
+        savePreferences(p);
+        const blocked = p.blockedCategories.includes(cat);
+        btn.classList.toggle('mpd-chip--muted', blocked);
+        btn.setAttribute('aria-pressed', String(blocked));
+        btn.title = (blocked ? 'Show' : 'Hide') + ' ' + cat + ' articles';
+        const icon = btn.querySelector('span:first-child');
+        const catObj = categories.find(c => c.id === cat);
+        if (icon && catObj) icon.style.color = blocked ? 'var(--ink3)' : catObj.color;
+        const countEl = drawer.querySelector('#mpCatCount');
+        if (countEl) countEl.textContent = p.blockedCategories.length > 0 ? `(${p.blockedCategories.length} hidden)` : '';
+        render();
+      });
+
+      drawer.querySelector('#mpShowAllCats')?.addEventListener('click', () => {
+        const p = loadPreferences();
+        p.blockedCategories = [];
+        savePreferences(p);
+        buildDrawerContent();
+        render();
+      });
+
+      drawer.querySelector('#mpSourceList')?.addEventListener('click', e => {
+        const btn = e.target.closest('[data-src-mute]');
+        if (!btn) return;
+        const src = btn.dataset.srcMute;
+        const p = loadPreferences();
+        const idx = p.mutedSources.indexOf(src);
+        if (idx === -1) p.mutedSources.push(src);
+        else p.mutedSources.splice(idx, 1);
+        savePreferences(p);
+        const muted = p.mutedSources.includes(src);
+        btn.classList.toggle('mpd-source--muted', muted);
+        btn.setAttribute('aria-pressed', String(muted));
+        btn.title = (muted ? 'Unmute' : 'Mute') + ' ' + src;
+        const badge = btn.querySelector('.mpd-src-badge');
+        if (badge) badge.textContent = muted ? 'muted' : '✓ live';
+        const countEl = drawer.querySelector('#mpSrcCount');
+        if (countEl) countEl.textContent = p.mutedSources.length > 0 ? `(${p.mutedSources.length} muted)` : '';
+        render();
+      });
+
+      drawer.querySelector('#mpUnmuteAll')?.addEventListener('click', () => {
+        const p = loadPreferences();
+        p.mutedSources = [];
+        savePreferences(p);
+        buildDrawerContent();
+        render();
+      });
+
+      drawer.querySelectorAll('.mpd-preset').forEach(btn => {
+        btn.addEventListener('click', () => {
+          try {
+            const cats = JSON.parse(btn.dataset.preset);
+            const p = loadPreferences();
+            const allCatIds = filterCategories.map(c => c.id);
+            p.blockedCategories = allCatIds.filter(id => !cats.includes(id));
+            savePreferences(p);
+            buildDrawerContent();
+            render();
+          } catch { /* ignore */ }
+        });
+      });
+
+      drawer.querySelector('#mpResetBtn')?.addEventListener('click', () => {
+        resetPreferences();
+        buildDrawerContent();
+        render();
+        showBmToast('✨ My Pulse reset to defaults');
+      });
+    }
+
+    function openDrawer() {
+      buildDrawerContent();
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      myPulseBtn.setAttribute('aria-expanded', 'true');
+      if (!localStorage.getItem('gp:pulse:seen')) localStorage.setItem('gp:pulse:seen', '1');
+      const nudge = document.getElementById('pulseNudge');
+      if (nudge) nudge.remove();
+      setTimeout(() => {
+        const firstFocus = drawer.querySelector('button,input');
+        if (firstFocus) firstFocus.focus();
+      }, 80);
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      myPulseBtn.setAttribute('aria-expanded', 'false');
+      myPulseBtn.focus();
+    }
+
+    window.__openMyPulse = openDrawer;
+    window.__syncMyPulse = () => { if (drawer.classList.contains('open')) buildDrawerContent(); };
+
+    myPulseBtn.addEventListener('click', () => {
+      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+    });
+
+    // First-time onboarding nudge (shown after 1.5s if preferences haven't been set)
+    if (!localStorage.getItem('gp:pulse:seen') && !localStorage.getItem(PULSE_PREF_KEY)) {
+      setTimeout(() => {
+        const nudge = document.createElement('div');
+        nudge.id = 'pulseNudge';
+        nudge.className = 'pulse-nudge';
+        nudge.setAttribute('role', 'status');
+        nudge.innerHTML = `
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--cyan)"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+          <span>Customize your Pulse in 30 seconds.</span>
+          <button class="pulse-nudge-btn" id="pulseNudgeOpen">Set up My Pulse →</button>
+          <button class="pulse-nudge-close" aria-label="Dismiss this message" id="pulseNudgeDismiss">✕</button>`;
+        const anchor = document.getElementById('feedHealthBar') || feedGrid;
+        if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(nudge, anchor.nextSibling || anchor);
+        document.getElementById('pulseNudgeOpen')?.addEventListener('click', () => { nudge.remove(); openDrawer(); });
+        document.getElementById('pulseNudgeDismiss')?.addEventListener('click', () => { nudge.remove(); localStorage.setItem('gp:pulse:seen', '1'); });
+        setTimeout(() => { nudge.remove(); }, 10000);
+      }, 1500);
+    }
   }
 
   // ── PayPal QR modal ──────────────────────────────────────────
@@ -1822,6 +2236,7 @@
 
     initNav();
     initSettings();
+    initMyPulse();
     initPayPalModal();
     initGiscusLazy();
     applyView();
