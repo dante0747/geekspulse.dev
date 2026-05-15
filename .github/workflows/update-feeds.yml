@@ -36,7 +36,7 @@ jobs:
           fi
 
       - name: Fetch and build feed data
-        run: npm run build-feed
+        run: npm run build:feed
 
       - name: Generate sitemap
         run: node scripts/generate-sitemap.mjs
