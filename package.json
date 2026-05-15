@@ -4,7 +4,11 @@
   "description": "GeeksPulse — Developer News Aggregator",
   "type": "module",
   "scripts": {
-    "build": "node scripts/generate-version.mjs && node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs",
+    "dev": "vite",
+    "preview": "vite preview",
+    "build:app": "vite build",
+    "build:data": "node scripts/generate-version.mjs && node scripts/build-feed.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs",
+    "build": "npm run build:data && npm run build:app",
     "build:feed": "node scripts/build-feed.mjs",
     "build:sitemap": "node scripts/generate-sitemap.mjs",
     "build:seo": "node scripts/generate-seo-content.mjs",
@@ -12,6 +16,8 @@
   },
   "dependencies": {
     "fast-xml-parser": "^5.7.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.2"
   }
 }
-

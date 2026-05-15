@@ -1,5 +1,5 @@
 import { catMeta } from './config.js';
-import { esc, catClass, relTime, readTime } from './utils.js';
+import { esc, safeUrl, catClass, relTime, readTime } from './utils.js';
 import { isBookmarked } from './storage.js';
 
 // ── Category icon helpers ─────────────────────────────────────────
@@ -53,10 +53,11 @@ export function gridCard(a, i) {
   const mins = readTime(a.title, a.snippet);
   const loadingAttr  = featured ? 'eager'  : 'lazy';
   const fetchpriAttr = featured ? 'high'   : 'auto';
-  const imgSrc = a.image || a.fallbackImage || null;
-  const imgAlt = a.image ? `Article image for: ${a.title}` : `Category illustration for ${a.category}`;
-  const imgHtml = imgSrc
-    ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(imgSrc)}" alt="${esc(imgAlt)}" loading="${loadingAttr}" fetchpriority="${fetchpriAttr}" decoding="async" referrerpolicy="no-referrer" width="640" height="360" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
+  const imgSrc = safeUrl(a.image || a.fallbackImage || null) || null;
+  const imgSrc_ = imgSrc === '#' ? null : imgSrc;
+  const imgAlt = imgSrc_ ? `Article image for: ${a.title}` : `Category illustration for ${a.category}`;
+  const imgHtml = imgSrc_
+    ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(imgSrc_)}" alt="${esc(imgAlt)}" loading="${loadingAttr}" fetchpriority="${fetchpriAttr}" decoding="async" referrerpolicy="no-referrer" width="640" height="360" sizes="(max-width:700px) 100vw,(max-width:1100px) 50vw,33vw" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
     : cardPlaceholder(a.category, a.link);
   return `
     <article class="card${featured ? ' card-featured' : ''} ${catClass(a.category)}" data-card-idx="${i}" data-article-url="${esc(a.link)}" data-category="${esc(a.category)}">
@@ -97,8 +98,9 @@ export function listCard(a, i) {
   const num  = String(i + 1).padStart(2, '0');
   const bm = isBookmarked(a.link);
   const mins = readTime(a.title, a.snippet);
-  const listImgSrc = a.image || a.fallbackImage || null;
-  const listImgAlt = a.image ? `Article image for: ${a.title}` : `Category illustration for ${a.category}`;
+  const listImgSrcRaw = safeUrl(a.image || a.fallbackImage || null) || null;
+  const listImgSrc = listImgSrcRaw === '#' ? null : listImgSrcRaw;
+  const listImgAlt = listImgSrc ? `Article image for: ${a.title}` : `Category illustration for ${a.category}`;
   const imgHtml = listImgSrc
     ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap card-img-wrap--list" tabindex="-1" aria-hidden="true"><img class="card-img card-img--list" src="${esc(listImgSrc)}" alt="${esc(listImgAlt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="240" height="180" data-category="${esc(a.category)}" data-link="${esc(a.link)}"></a>`
     : `<span class="card-img-wrap card-img-wrap--list card-placeholder card-placeholder--list" style="--ph-color:${catMeta[a.category]?.color||'#94A3B8'}"><span class="card-placeholder__icon">${catMeta[a.category] ? catMeta[a.category].icon.replace(/width="\d+" height="\d+"/, 'width="28" height="28"') : ''}</span></span>`;
