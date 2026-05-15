@@ -57,6 +57,8 @@ export function hasActivePreferences(prefs) {
 // ── Bookmarks ─────────────────────────────────────────────────────
 
 export const BOOKMARK_KEY = 'geeksup_bookmarks';
+/** Maximum number of bookmarks stored. Oldest entries are pruned when exceeded. */
+export const BOOKMARK_MAX = 200;
 
 export function loadBookmarks() {
   try { return JSON.parse(localStorage.getItem(BOOKMARK_KEY) || '[]'); }
@@ -64,7 +66,22 @@ export function loadBookmarks() {
 }
 
 export function saveBookmarks(bms) {
-  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bms));
+  // Enforce hard cap — keep the most-recent BOOKMARK_MAX entries
+  const capped = bms.length > BOOKMARK_MAX ? bms.slice(0, BOOKMARK_MAX) : bms;
+  try {
+    localStorage.setItem(BOOKMARK_KEY, JSON.stringify(capped));
+  } catch (e) {
+    // QuotaExceededError: prune the oldest half and retry once
+    if (e instanceof DOMException && (e.name === 'QuotaExceededError' || e.code === 22)) {
+      try {
+        const pruned = capped.slice(0, Math.floor(capped.length / 2));
+        localStorage.setItem(BOOKMARK_KEY, JSON.stringify(pruned));
+        console.warn(`[GeeksPulse] localStorage quota exceeded — bookmarks pruned to ${pruned.length}.`);
+      } catch {
+        console.error('[GeeksPulse] Cannot save bookmarks: storage quota full even after pruning.');
+      }
+    }
+  }
 }
 
 export function isBookmarked(link) {
@@ -76,6 +93,8 @@ export function toggleBookmark(article) {
   const idx = bms.findIndex(b => b.link === article.link);
   if (idx === -1) {
     bms.unshift({ ...article, bookmarkedAt: new Date().toISOString() });
+    // Enforce cap on add
+    if (bms.length > BOOKMARK_MAX) bms = bms.slice(0, BOOKMARK_MAX);
   } else {
     bms.splice(idx, 1);
   }

@@ -1825,6 +1825,28 @@ html[data-theme="light"] #themeToggleBtn .icon-moon { display: none; }
   padding-top: 10px; border-top: 1px solid var(--border); gap: 8px; margin-top: auto;
 }
 
+/* -- Stale cache warning bar ----------------------------------- */
+.stale-cache-bar {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--yellow, #e3c55e);
+  background: rgba(227, 197, 94, 0.07);
+  border: 1px solid rgba(227, 197, 94, 0.25);
+  border-radius: 6px;
+  padding: 7px 12px;
+  margin-bottom: 10px;
+}
+.stale-cache-bar.visible { display: flex; }
+.stale-cache-bar__refresh {
+  background: none; border: none; cursor: pointer;
+  color: var(--accent, #38bdf8); font-family: var(--mono);
+  font-size: 11px; padding: 0; text-decoration: underline;
+}
+.stale-cache-bar__refresh:hover { opacity: 0.8; }
+
 /* -- Feed health bar ------------------------------------------- */
 .feed-health-bar {
   display: flex;

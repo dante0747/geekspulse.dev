@@ -1,6 +1,6 @@
 'use strict';
 
-import { categories, catMeta, REFRESH_OPTIONS, SPONSORED_RE, DAY_MS } from './config.js';
+import { categories, catMeta, REFRESH_OPTIONS, SPONSORED_RE, DAY_MS, CACHE_STALE_MS } from './config.js';
 import { loadFeedsRegistry, getFeeds } from './feeds-registry.js';
 import { gaEvent } from './analytics.js';
 import { PREF, loadPreferences, savePreferences, resetPreferences, hasActivePreferences, loadBookmarks, saveBookmarks, isBookmarked, toggleBookmark } from './storage.js';
@@ -408,6 +408,33 @@ function syncMyPulsePanelIfOpen() {
   if (typeof window.__syncMyPulse === 'function') window.__syncMyPulse();
 }
 
+// ── Stale cache banner ────────────────────────────────────────────
+
+function showStaleCacheBanner(generatedAt) {
+  let bar = document.getElementById('staleCacheBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'staleCacheBar';
+    bar.className = 'stale-cache-bar';
+    const grid = feedGrid?.parentNode;
+    if (grid) grid.insertBefore(bar, feedGrid);
+  }
+  try {
+    const ageMs = Date.now() - new Date(generatedAt).getTime();
+    const hoursAgo = Math.round(ageMs / 3_600_000);
+    bar.innerHTML =
+      `⚠️ Feed data is <strong>${hoursAgo}h old</strong> — consider refreshing.` +
+      `<button class="stale-cache-bar__refresh" id="staleCacheRefresh">Refresh now</button>`;
+    bar.classList.add('visible');
+    document.getElementById('staleCacheRefresh')
+      ?.addEventListener('click', () => { bar.classList.remove('visible'); fetchAll(); });
+  } catch { /* bad date — skip */ }
+}
+
+function hideStaleCacheBanner() {
+  document.getElementById('staleCacheBar')?.classList.remove('visible');
+}
+
 // ── Primary data loader ───────────────────────────────────────────
 
 async function fetchAll() {
@@ -425,6 +452,15 @@ async function fetchAll() {
     cacheGeneratedAt = data.generatedAt || null;
     if (data.feedCount) updateFeedCountSpans(data.feedCount);
     console.info(`[GeeksPulse] Loaded ${allArticles.length} articles from cache (generated ${data.generatedAt}).`);
+    // Warn if the cache is older than the stale threshold
+    if (cacheGeneratedAt) {
+      const ageMs = Date.now() - new Date(cacheGeneratedAt).getTime();
+      if (ageMs > CACHE_STALE_MS) {
+        showStaleCacheBanner(cacheGeneratedAt);
+      } else {
+        hideStaleCacheBanner();
+      }
+    }
   } catch (cacheErr) {
     console.warn('[GeeksPulse] Feed cache unavailable, attempting emergency RSS fallback…', cacheErr.message);
     try {
@@ -508,6 +544,15 @@ async function init() {
   });
 
   fetchAll().then(() => startAutoRefresh(autoRefreshMin));
+
+  // Register Service Worker for offline support
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(reg => {
+      console.debug('[GeeksPulse] SW registered, scope:', reg.scope);
+    }).catch(err => {
+      console.warn('[GeeksPulse] SW registration failed:', err.message);
+    });
+  }
 
   // Clear bookmarks
   const clearBmBtn = document.getElementById('clearBookmarksBtn');

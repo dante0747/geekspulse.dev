@@ -8,6 +8,22 @@ import {
 } from './images.js';
 import { fetchViaCorsProxy } from './http.js';
 
+// ── rss2json session guard ────────────────────────────────────────
+// If rss2json returns a rate-limit or auth error, we skip it for the
+// remainder of the browser session to avoid hammering the free-tier endpoint.
+
+let _rss2jsonBannedUntil = 0;
+const RSS2JSON_RETRY_AFTER_MS = 10 * 60 * 1_000; // 10 min cool-down
+
+function isRss2JsonAvailable() {
+  return Date.now() > _rss2jsonBannedUntil;
+}
+
+function banRss2Json(reason) {
+  _rss2jsonBannedUntil = Date.now() + RSS2JSON_RETRY_AFTER_MS;
+  console.warn(`[GeeksPulse] rss2json suspended for ${RSS2JSON_RETRY_AFTER_MS / 60_000}m — ${reason}`);
+}
+
 // ── RSS XML parser ────────────────────────────────────────────────
 
 export function parseRssXml(xmlText, feed) {
@@ -65,11 +81,31 @@ async function fetchFeedDirect(feed) {
 }
 
 async function fetchFeedJson(feed) {
+  if (!isRss2JsonAvailable()) {
+    throw new Error('rss2json suspended (rate-limited this session)');
+  }
   const url  = RSS2JSON + encodeURIComponent(feed.url);
-  const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
-  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  let resp;
+  try {
+    resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
+  } catch (e) {
+    throw new Error(`rss2json network error: ${e.message}`);
+  }
+  if (resp.status === 429) {
+    banRss2Json('HTTP 429 Too Many Requests');
+    throw new Error('rss2json rate limited (429)');
+  }
+  if (!resp.ok) {
+    if (resp.status === 401 || resp.status === 403) banRss2Json(`HTTP ${resp.status}`);
+    throw new Error(`rss2json HTTP ${resp.status}`);
+  }
   const data = await resp.json();
-  if (data.status !== 'ok') throw new Error(data.message || 'rss2json error');
+  if (data.status !== 'ok') {
+    const msg = data.message || 'rss2json error';
+    // Detect free-plan quota / key errors and ban to stop hammering
+    if (/rate|limit|quota|key|upgrade|forbidden/i.test(msg)) banRss2Json(msg);
+    throw new Error(msg);
+  }
   return (data.items || []).map(item => {
     const descHtml    = item.description || '';
     const contentHtml = item.content     || '';
