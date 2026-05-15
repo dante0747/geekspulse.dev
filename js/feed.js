@@ -1,4 +1,5 @@
-import { RSS2JSON, MAX_ARTICLES, MAX_PER_FEED, feeds } from './config.js';
+import { RSS2JSON, MAX_ARTICLES, MAX_PER_FEED } from './config.js';
+import { getFeeds } from './feeds-registry.js';
 import { truncate, stripHtml, getText, safeUrl } from './utils.js';
 import {
   normalizeImageUrl, isProbablyBadImageUrl,
@@ -136,6 +137,7 @@ export function normaliseCachedArticle(a) {
 // ── Emergency RSS fallback ────────────────────────────────────────
 
 export async function fetchAllFromRSS() {
+  const feeds = getFeeds();
   const results = await Promise.allSettled(feeds.map(fetchFeed));
   const articles = [];
   let failedCount = 0;

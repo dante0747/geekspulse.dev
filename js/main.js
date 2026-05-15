@@ -1,6 +1,7 @@
 'use strict';
 
-import { feeds, categories, catMeta, REFRESH_OPTIONS, SPONSORED_RE, DAY_MS } from './config.js';
+import { categories, catMeta, REFRESH_OPTIONS, SPONSORED_RE, DAY_MS } from './config.js';
+import { loadFeedsRegistry, getFeeds } from './feeds-registry.js';
 import { gaEvent } from './analytics.js';
 import { PREF, loadPreferences, savePreferences, resetPreferences, hasActivePreferences, loadBookmarks, saveBookmarks, isBookmarked, toggleBookmark } from './storage.js';
 import { esc, randomMsg, announce, animateCounter, showBmToast, shareArticle } from './utils.js';
@@ -176,13 +177,13 @@ function setLive() {
   setRefreshBusy(false);
   if (statArticles) animateCounter(statArticles, allArticles.length, 900);
   const statFeedsEl = document.getElementById('statFeeds');
-  if (statFeedsEl) animateCounter(statFeedsEl, feeds.length, 700);
+  if (statFeedsEl) animateCounter(statFeedsEl, getFeeds().length, 700);
   const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
   const todayCount = allArticles.filter(a => { try { return new Date(a.date) >= todayStart; } catch { return false; } }).length;
   const statTodayEl = document.getElementById('statToday');
   if (statTodayEl) animateCounter(statTodayEl, todayCount, 800);
   const nlFeedCount = document.getElementById('newsletterFeedCount');
-  if (nlFeedCount) nlFeedCount.textContent = feeds.length - failedFeeds;
+  if (nlFeedCount) nlFeedCount.textContent = getFeeds().length - failedFeeds;
 }
 
 function setRefreshBusy(busy) {
@@ -205,7 +206,7 @@ function updateFeedCountSpans(count) {
 }
 
 function updateSidebarStats(cacheGeneratedAt) {
-  if (sbFeeds)   sbFeeds.textContent   = feeds.length - failedFeeds;
+  if (sbFeeds)   sbFeeds.textContent   = getFeeds().length - failedFeeds;
   if (sbUpdated) {
     if (cacheGeneratedAt) {
       try {
@@ -231,7 +232,7 @@ async function loadFeedHealthBanner() {
     const resp = await fetch('/public/feed-health.json', { cache: 'no-cache', signal: AbortSignal.timeout(5000) });
     if (!resp.ok) return;
     const health = await resp.json();
-    const total  = Array.isArray(health.feeds) ? health.feeds.length : feeds.length;
+    const total  = Array.isArray(health.feeds) ? health.feeds.length : getFeeds().length;
     const ok     = Array.isArray(health.feeds) ? health.feeds.filter(f => f.ok).length : (total - failedFeeds);
     const failed = total - ok;
     const failed_list = Array.isArray(health.feeds) ? health.feeds.filter(f => !f.ok) : [];
@@ -460,15 +461,17 @@ function showNlMsg(msg, type) {
 
 // ── Init ──────────────────────────────────────────────────────────
 
-function init() {
+async function init() {
+  await loadFeedsRegistry();
+
   initTheme();
 
   ['heroFeedCount', 'termFeedCount'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.textContent = feeds.length;
+    if (el) el.textContent = getFeeds().length;
   });
   const statFeedsEl = document.getElementById('statFeeds');
-  if (statFeedsEl) statFeedsEl.textContent = feeds.length;
+  if (statFeedsEl) statFeedsEl.textContent = getFeeds().length;
 
   initNav();
   initSettings({

@@ -22,59 +22,6 @@ export const REFRESH_OPTIONS = [
   { label: '1h',  value: 60 },
 ];
 
-export const feeds = [
-  // ── General ───────────────────────────────────────────────────
-  { name: 'Hacker News',       url: 'https://news.ycombinator.com/rss',                                 category: 'General'     },
-  { name: 'Lobsters',          url: 'https://lobste.rs/rss',                                            category: 'General'     },
-  { name: 'The Register',      url: 'https://www.theregister.com/headlines.atom',                       category: 'General'     },
-  { name: 'Ars Technica',      url: 'https://feeds.arstechnica.com/arstechnica/technology-lab',         category: 'General'     },
-  { name: 'InfoQ',             url: 'https://feed.infoq.com/',                                          category: 'General'     },
-  { name: 'IEEE Spectrum',     url: 'https://spectrum.ieee.org/feeds/feed.rss',                         category: 'General'     },
-  // ── Security ──────────────────────────────────────────────────
-  { name: 'Bleeping Computer', url: 'https://www.bleepingcomputer.com/feed/',                           category: 'Security'    },
-  { name: 'The Hacker News',   url: 'https://feeds.feedburner.com/TheHackersNews',                     category: 'Security'    },
-  { name: 'Krebs on Security', url: 'https://krebsonsecurity.com/feed/',                               category: 'Security'    },
-  { name: 'Schneier on Security', url: 'https://www.schneier.com/feed/atom/',                          category: 'Security'    },
-  { name: 'SANS Internet Storm', url: 'https://isc.sans.edu/rssfeed_full.xml',                         category: 'Security'    },
-  // ── AI / ML ───────────────────────────────────────────────────
-  { name: 'MIT AI News',       url: 'https://news.mit.edu/topic/mitartificial-intelligence2-rss.xml',  category: 'AI'          },
-  { name: 'Google AI Blog',    url: 'https://blog.google/technology/ai/rss/',                          category: 'AI'          },
-  { name: 'The Gradient',      url: 'https://thegradient.pub/rss/',                                    category: 'AI'          },
-  // ── Python ────────────────────────────────────────────────────
-  { name: 'Planet Python',     url: 'https://planetpython.org/rss20.xml',                              category: 'Python'      },
-  { name: 'Real Python',       url: 'https://realpython.com/atom.xml',                                 category: 'Python'      },
-  // ── JavaScript ────────────────────────────────────────────────
-  { name: 'JavaScript Weekly', url: 'https://javascriptweekly.com/rss/full.xml',                       category: 'JavaScript'  },
-  { name: 'Node Weekly',       url: 'https://nodeweekly.com/rss/full.xml',                             category: 'JavaScript'  },
-  { name: 'MDN Blog',          url: 'https://developer.mozilla.org/en-US/blog/rss.xml',                category: 'JavaScript'  },
-  // ── DevOps ────────────────────────────────────────────────────
-  { name: 'Docker Blog',       url: 'https://www.docker.com/blog/feed/',                               category: 'DevOps'      },
-  { name: 'Kubernetes Blog',   url: 'https://kubernetes.io/feed.xml',                                  category: 'DevOps'      },
-  { name: 'HashiCorp Blog',    url: 'https://www.hashicorp.com/blog/feed.xml',                         category: 'DevOps'      },
-  { name: 'AWS DevOps Blog',   url: 'https://aws.amazon.com/blogs/devops/feed/',                       category: 'DevOps'      },
-  // ── Open Source ───────────────────────────────────────────────
-  { name: 'LWN.net',           url: 'https://lwn.net/headlines/rss',                                   category: 'Open Source' },
-  { name: 'GitHub Blog',       url: 'https://github.blog/feed/',                                       category: 'Open Source' },
-  // ── Java & Spring ─────────────────────────────────────────────
-  { name: 'Spring Blog',       url: 'https://spring.io/blog.atom',                                     category: 'Java'        },
-  { name: 'InfoQ Java',        url: 'https://feed.infoq.com/java/',                                    category: 'Java'        },
-  // ── Rust ──────────────────────────────────────────────────────
-  { name: 'Rust Blog',         url: 'https://blog.rust-lang.org/feed.xml',                             category: 'Rust'        },
-  { name: 'This Week in Rust', url: 'https://this-week-in-rust.org/rss.xml',                           category: 'Rust'        },
-  // ── Go ────────────────────────────────────────────────────────
-  { name: 'Go Blog',           url: 'https://go.dev/blog/feed.atom',                                   category: 'Go'          },
-  { name: 'Go Weekly',         url: 'https://golangweekly.com/rss/full.xml',                           category: 'Go'          },
-  { name: 'Dave Cheney',       url: 'https://dave.cheney.net/feed/atom',                               category: 'Go'          },
-  // ── Architecture & System Design ──────────────────────────────
-  { name: 'Martin Fowler',         url: 'https://martinfowler.com/feed.atom',                          category: 'Architecture' },
-  { name: 'InfoQ Architecture',    url: 'https://feed.infoq.com/architecture/',                        category: 'Architecture' },
-  { name: 'AWS Architecture Blog', url: 'https://aws.amazon.com/blogs/architecture/feed/',             category: 'Architecture' },
-  { name: 'High Scalability',      url: 'http://feeds.feedburner.com/HighScalability',                 category: 'Architecture' },
-  { name: 'Netflix Tech Blog',     url: 'https://medium.com/feed/netflix-techblog',                   category: 'Architecture' },
-  { name: 'Meta Engineering',      url: 'https://engineering.fb.com/feed/',                            category: 'Architecture' },
-  { name: 'Cloudflare Blog',       url: 'https://blog.cloudflare.com/rss/',                            category: 'Architecture' },
-];
-
 // SVG icons — paths sourced from Lucide Icons (lucide.dev) and Simple Icons (simpleicons.org)
 export const CAT_SVG = {
   'All':

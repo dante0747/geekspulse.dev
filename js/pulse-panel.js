@@ -1,4 +1,5 @@
-import { categories, feeds } from './config.js';
+import { categories } from './config.js';
+import { getFeeds } from './feeds-registry.js';
 import { loadPreferences, savePreferences, resetPreferences, PULSE_PREF_KEY } from './storage.js';
 import { esc, showBmToast } from './utils.js';
 
@@ -43,7 +44,7 @@ export function initMyPulse({ render, buildFilters }) {
   document.body.appendChild(drawer);
 
   const filterCategories = categories.filter(c => c.id !== 'All' && c.id !== 'Bookmarks');
-  const sourceNames = feeds.map(f => f.name);
+  const sourceNames = getFeeds().map(f => f.name);
   const AGE_OPTIONS = [
     { value: 'any', label: 'Any time' },
     { value: '24h', label: 'Last 24h' },
