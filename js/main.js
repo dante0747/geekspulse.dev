@@ -46,7 +46,7 @@ const listViewBtn    = $('listViewBtn');
 const sbFeeds        = $('sbFeeds');
 const sbUpdated      = $('sbUpdated');
 const sbFailed       = $('sbFailed');
-const statArticles   = $('statArticles');
+const statArticles   = null; // stat removed from UI
 
 // ── Preference-based filtering ────────────────────────────────────
 
@@ -182,6 +182,9 @@ function setLive() {
   const todayCount = allArticles.filter(a => { try { return new Date(a.date) >= todayStart; } catch { return false; } }).length;
   const statTodayEl = document.getElementById('statToday');
   if (statTodayEl) animateCounter(statTodayEl, todayCount, 800);
+  const activeSourceCount = new Set(allArticles.map(a => a.source).filter(Boolean)).size;
+  const statSourcesEl = document.getElementById('statSources');
+  if (statSourcesEl) animateCounter(statSourcesEl, activeSourceCount, 850);
   const nlFeedCount = document.getElementById('newsletterFeedCount');
   if (nlFeedCount) nlFeedCount.textContent = getFeeds().length - failedFeeds;
 }
