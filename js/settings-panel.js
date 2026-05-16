@@ -1,6 +1,5 @@
 import { REFRESH_OPTIONS } from './config.js';
 import { PREF } from './storage.js';
-import { giscusTheme } from './theme.js';
 import { showBmToast } from './utils.js';
 
 /**
@@ -172,7 +171,6 @@ export function initSettings(ctx) {
         document.documentElement.removeAttribute('data-theme');
       }
       PREF.set('theme', newTheme);
-      giscusTheme(newTheme);
       popover.querySelectorAll('[data-theme-opt]').forEach(b =>
         b.classList.toggle('active', b.dataset.themeOpt === newTheme)
       );

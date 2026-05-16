@@ -8,7 +8,7 @@ import { esc, randomMsg, announce, animateCounter, showBmToast, shareArticle } f
 import { progressivelyResolveMissingImages, resolveArticleMetadataImage, updateCardImage, getCachedImage } from './images.js';
 import { loadFeedCache, fetchAllFromRSS, normaliseCachedArticle } from './feed.js';
 import { gridCard, listCard, buildSkeletons, cardPlaceholder } from './cards.js';
-import { initTheme, initGiscusLazy } from './theme.js';
+import { initTheme } from './theme.js';
 import { initSettings } from './settings-panel.js';
 import { initMyPulse } from './pulse-panel.js';
 import { initPayPalModal } from './paypal-modal.js';
@@ -524,7 +524,6 @@ async function init() {
   });
   initMyPulse({ render, buildFilters });
   initPayPalModal();
-  initGiscusLazy();
   applyView();
   buildFilters();
 
