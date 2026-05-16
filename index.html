@@ -56,7 +56,7 @@
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
   <!-- JSON-LD Structured Data -->
@@ -190,24 +190,18 @@
       <div class="nav-inner">
         <a href="/" class="logo" aria-label="GeeksPulse home">
           <div class="logo-mark" aria-hidden="true">GP</div>
-          <span class="logo-name"><span class="bracket">{</span> GeeksPulse <span class="bracket">}</span></span>
-          <span class="logo-sub">// stay current, ship faster</span>
+          <span class="logo-name">GeeksPulse</span>
         </a>
         <div class="nav-links" aria-label="Site sections">
-          <a href="#latest" class="nav-link">Latest</a>
+          <a href="#latest" class="nav-link">Feed</a>
           <a href="#sources" class="nav-link">Sources</a>
-          <a href="#feedback" class="nav-link">Feedback</a>
           <a href="#contribute" class="nav-link">Contribute</a>
           <a href="#about" class="nav-link">About</a>
         </div>
         <div class="nav-actions">
-          <div class="nav-prompt" aria-hidden="true">
-            <span class="prompt-sym">$</span>
-            <span id="navStatus">geekspulse --fetch</span>
-          </div>
           <!-- nav support button -->
           <button data-support class="btn btn-primary btn-sm" title="Support GeeksPulse">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg><span class="btn-label"> Donate</span>
+            <span class="btn-label">Donate</span>
           </button>
         </div>
       </div>
@@ -222,29 +216,18 @@
           Free &amp; indie developer news aggregator
         </div>
         <h1 id="hero-heading">One feed.<br /><em>Everything that matters.</em></h1>
-        <p class="hero-sub"><span id="heroFeedCount">39</span> hand-picked RSS feeds — AI, security, DevOps, JavaScript, open source, Rust, Go, Java, and architecture — aggregated into a single, distraction-free reading experience. No algorithm. No engagement bait.</p>
-        <div class="hero-tagline" aria-hidden="true">
-          <span class="comment">// Stop tab-hopping across a dozen sites.</span><br />
-          <span class="comment">// Everything you need to stay current, right here.</span><br />
-          <span class="keyword">const</span> signal = <span class="string">"high"</span>; <span class="comment">// noise === 0</span>
-        </div>
+        <p class="hero-sub"><span id="heroFeedCount">39</span> hand-picked RSS feeds — AI, security, DevOps, JavaScript, open source, Rust, Go, Java, and architecture — aggregated into one distraction-free reading experience. No algorithm. No ads.</p>
         <div class="hero-ctas">
-          <a href="#latest" class="btn btn-primary btn-lg">
-            <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>Browse today's stories
-          </a>
+          <a href="#latest" class="btn btn-primary btn-lg">Browse today's stories</a>
           <button id="refreshBtnHero" class="btn btn-ghost btn-lg" title="Refresh feeds">
-            <span id="refreshIcon"><svg aria-hidden="true" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M13.5 8a5.5 5.5 0 1 1-1.3-3.6"/><polyline points="14,2 14,6 10,6"/></svg></span>Refresh feeds
+            <span id="refreshIcon"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="M13.5 8a5.5 5.5 0 1 1-1.3-3.6"/><polyline points="14,2 14,6 10,6"/></svg></span>Refresh
           </button>
-          <button data-support class="btn btn-ghost btn-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>Keep it free
-          </button>
-        </div>
-        <div class="hero-trust">No ads &nbsp;·&nbsp; No paywalls &nbsp;·&nbsp; No tracking &nbsp;·&nbsp; <span style="color:var(--cyan)">Open source</span>
+          <button data-support class="btn btn-ghost btn-lg">Donate</button>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="val" id="statFeeds">39</span>
-            <span class="lbl">Trusted sources</span>
+            <span class="lbl">Sources</span>
           </div>
           <div class="hero-stat">
             <span class="val" id="statToday">--</span>
@@ -252,63 +235,14 @@
           </div>
           <div class="hero-stat">
             <span class="val">11</span>
-            <span class="lbl">Topics covered</span>
+            <span class="lbl">Topics</span>
           </div>
           <div class="hero-stat">
             <span class="val" id="statSources">--</span>
-            <span class="lbl">Active sources</span>
+            <span class="lbl">Active</span>
           </div>
         </div>
       </div>
-      <!-- Terminal column -->
-      <div class="hero-right-col">
-      <div class="hero-terminal" aria-hidden="true">
-        <div class="term-bar">
-          <span class="term-dot red"></span>
-          <span class="term-dot yellow"></span>
-          <span class="term-dot green"></span>
-          <div class="term-title">geekspulse ~ bash</div>
-        </div>
-        <div class="term-body">
-          <div class="term-line">
-            <span class="prompt">&#10095;</span>
-            <span class="cmd">geekspulse</span>
-            <span class="arg">fetch</span>
-            <span class="flag">--all</span>
-            <span class="flag">--dedupe</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; Hacker News ............. 30 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; Krebs on Security ....... 12 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; IEEE Spectrum ........... 18 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; GitHub Blog ............. 8 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; Google AI Blog .......... 10 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out ok">&#10003; Rust Blog ............... 5 items</span>
-          </div>
-          <div class="term-line">
-            <span class="out cmt"># <span id="termFeedCount">39</span> sources · 0 paywalls · deduped &amp; sorted</span>
-          </div>
-          <div class="term-line">
-            <span class="prompt">&#10095;</span>
-            <span class="out ok">&#10003; Ready. <span class="out cmt"># your morning briefing awaits</span></span>
-          </div>
-          <div class="term-line">
-            <span class="prompt">&#10095;</span>
-            <span class="term-cursor"></span>
-          </div>
-        </div>
-      </div><!-- /.hero-terminal -->
-      </div><!-- /.hero-right-col -->
     </section>
     <section class="signal-section" aria-labelledby="signal-heading">
       <div class="signal-header">
@@ -365,7 +299,7 @@
             <div class="sidebar-card-title"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>Support GeeksPulse</div>
             <p>Completely free. No ads, no paywalls. If it's part of your morning routine, a coffee goes a long way.</p>
             <button data-support class="btn btn-paypal">
-              Buy me a coffee
+              Donate
             </button>
           </div>
         </div>
@@ -412,9 +346,7 @@
       </aside>
       <!-- MAIN CONTENT -->
       <main class="content" aria-labelledby="latest-heading">
-        <h2 id="latest-heading" class="section-heading">
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:8px"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>Latest Pulse
-        </h2>
+        <h2 id="latest-heading" class="section-heading">Latest</h2>
         <!-- Search bar -->
         <div class="search-bar-wrap">
           <label for="articleSearch" class="sr-only">Search articles</label>
@@ -676,9 +608,7 @@
         <div class="support-title">GeeksPulse saves you time. <svg aria-hidden="true" viewBox="0 0 10 16" width="10" height="16" fill="currentColor" style="vertical-align:-3px;margin-left:2px"><path d="M6.5 0L0 9h4.5L3.5 16 10 7H5.5z"/></svg></div>
         <div class="support-desc">It's free, ad-free, and built by one developer in their spare time. If it's become part of how you stay current, consider supporting it — even a small amount keeps the lights on.</div>
       </div>
-      <button data-support class="btn btn-primary btn-lg">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>Buy me a coffee
-      </button>
+      <button data-support class="btn btn-primary btn-lg">Donate</button>
     </section>
   </div><!-- /.page-wrap -->
 
