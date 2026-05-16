@@ -12,7 +12,7 @@ assignees: ''
 |---|---|
 | **Feed name** | e.g. CSS Tricks |
 | **Feed URL** | e.g. https://css-tricks.com/feed/ |
-| **Category** | General / Security / AI / Python / JavaScript / Java / DevOps / Open Source / Rust / Go |
+| **Category** | General / Security / AI / Python / JavaScript / Java / DevOps / Open Source / Rust / Go / Architecture |
 | **Homepage** | e.g. https://css-tricks.com |
 
 ## Why should this feed be added?

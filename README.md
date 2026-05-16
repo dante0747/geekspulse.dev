@@ -194,7 +194,7 @@ const architecture = {
   markup:     "HTML5",           // semantic, accessible
   styles:     "Vanilla CSS",     // custom properties, animations, grid
   logic:      "Vanilla JS",      // ES2022+ native ES modules, no bundler
-  modules:    "js/ — 13 focused ES modules loaded via <script type=module>",
+  modules:    "js/ — 13 focused ES modules loaded via <script type=\"module\">",
   fonts:      ["JetBrains Mono", "Space Grotesk", "Bangers"],
   feedPipeline: "Node.js (scripts/build-feed.mjs)",
   storage:    "localStorage",    // preferences & bookmarks
@@ -287,7 +287,7 @@ geekspulse.dev/
 │   ├── images.js        # Image pipeline: extraction, scoring, caching, resolution
 │   ├── feed.js          # RSS/Atom parsing & feed fetching
 │   ├── cards.js         # Card HTML generators (grid, list, skeleton, placeholder)
-│   ├── theme.js         # Theme init & Giscus sync
+│   ├── feeds-registry.js # Feed registry loader — fetches & caches data/feeds.json at startup
 │   ├── settings-panel.js # Settings popover (auto-refresh, view, theme, cache)
 │   ├── pulse-panel.js   # My Pulse drawer (topic/source filters, presets)
 │   └── paypal-modal.js  # PayPal support modal
