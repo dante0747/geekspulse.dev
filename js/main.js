@@ -8,7 +8,6 @@ import { esc, randomMsg, announce, animateCounter, showBmToast, shareArticle } f
 import { progressivelyResolveMissingImages, resolveArticleMetadataImage, updateCardImage, getCachedImage } from './images.js';
 import { loadFeedCache, fetchAllFromRSS, normaliseCachedArticle } from './feed.js';
 import { gridCard, listCard, buildSkeletons, cardPlaceholder } from './cards.js';
-import { initTheme } from './theme.js';
 import { initSettings } from './settings-panel.js';
 import { initMyPulse } from './pulse-panel.js';
 import { initPayPalModal } from './paypal-modal.js';
@@ -503,7 +502,6 @@ function showNlMsg(msg, type) {
 async function init() {
   await loadFeedsRegistry();
 
-  initTheme();
 
   ['heroFeedCount', 'termFeedCount'].forEach(id => {
     const el = document.getElementById(id);

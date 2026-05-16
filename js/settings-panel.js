@@ -62,13 +62,6 @@ export function initSettings(ctx) {
       </div>
     </div>
     <div class="settings-section">
-      <div class="settings-label">Theme</div>
-      <div class="settings-options">
-        <button class="settings-opt${(PREF.get('theme') || 'dark') === 'dark'  ? ' active' : ''}" data-theme-opt="dark">Dark</button>
-        <button class="settings-opt${(PREF.get('theme') || 'dark') === 'light' ? ' active' : ''}" data-theme-opt="light">Light</button>
-      </div>
-    </div>
-    <div class="settings-section">
       <div class="settings-label">Cache</div>
       <button class="settings-opt settings-opt--danger" id="clearCacheBtn" style="width:100%;text-align:left;">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>Clear all site data
@@ -161,20 +154,5 @@ export function initSettings(ctx) {
     });
   });
 
-  // Theme toggle
-  popover.querySelectorAll('[data-theme-opt]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const newTheme = btn.dataset.themeOpt;
-      if (newTheme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
-      PREF.set('theme', newTheme);
-      popover.querySelectorAll('[data-theme-opt]').forEach(b =>
-        b.classList.toggle('active', b.dataset.themeOpt === newTheme)
-      );
-    });
-  });
 }
 
