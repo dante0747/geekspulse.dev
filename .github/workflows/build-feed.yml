@@ -67,7 +67,8 @@ jobs:
           git add .ai-category-cache.json public/feed.json public/feed-health.json public/version.json sitemap.xml || true
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
           git commit -m "chore: refresh feed + update AI classification cache [skip ci]"
-          git pull --rebase origin main
+          git fetch origin main
+          git rebase origin/main
           git push
 
       # ── Build & deploy to GitHub Pages ──────────────────────────────────
