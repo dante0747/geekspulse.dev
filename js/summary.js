@@ -35,10 +35,6 @@ function getModal() {
       </div>
       <h3 class="summary-dialog__title" id="summaryModalTitle"></h3>
       <div class="summary-dialog__body" id="summaryBody">
-        <div class="summary-loading" id="summaryLoading" hidden>
-          <span class="summary-spinner"></span>
-          <span>Generating summary…</span>
-        </div>
         <p class="summary-text" id="summaryText"></p>
         <p class="summary-error" id="summaryError" hidden></p>
       </div>
@@ -73,7 +69,6 @@ export function openSummaryModal({ title, snippet, link, source }) {
   document.getElementById('summaryText').textContent = '';
   document.getElementById('summaryError').hidden = true;
   document.getElementById('summaryError').textContent = '';
-  document.getElementById('summaryLoading').hidden = true;
   document.getElementById('summaryReadLink').href = link || '#';
   document.getElementById('summarySource').textContent = source ? `// ${source}` : '';
 
@@ -85,9 +80,7 @@ export function openSummaryModal({ title, snippet, link, source }) {
     document.getElementById('summaryText').textContent = snippet.trim();
   } else {
     // Try Ollama on-the-fly
-    document.getElementById('summaryLoading').hidden = false;
     fetchOllamaSummary(title).then(text => {
-      document.getElementById('summaryLoading').hidden = true;
       if (text) {
         document.getElementById('summaryText').textContent = text;
       } else {
