@@ -119,7 +119,7 @@ async function fetchFeedJson(feed) {
     }
     const best = pickBestImageCandidate(candidates);
     return {
-      title:    item.title    || 'Untitled',
+      title:    stripHtml(item.title || 'Untitled'),
       link:     item.link     || item.url || '#',
       snippet:  truncate(stripHtml(descHtml || contentHtml)),
       image:    best ? best.url : null,
@@ -158,7 +158,7 @@ export function normaliseCachedArticle(a) {
   const safeImg = rawImg && rawImg !== '#' ? normalizeImageUrl(rawImg, a.link) : null;
   const fallback = a.fallbackImage || null;
   return {
-    title:         a.title    || 'Untitled',
+    title:         stripHtml(a.title || 'Untitled'),
     link:          safeUrl(a.link),
     snippet:       a.summary  || '',
     image:         safeImg,
