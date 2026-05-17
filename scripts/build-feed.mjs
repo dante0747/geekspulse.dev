@@ -15,6 +15,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { XMLParser } from 'fast-xml-parser';
+import { Ollama } from 'ollama';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, '..');
@@ -54,6 +55,89 @@ const CATEGORY_FALLBACK_IMAGES = {
 
 function getFallbackImage(category) {
   return CATEGORY_FALLBACK_IMAGES[category] || CATEGORY_FALLBACK_IMAGES['General'];
+}
+
+// ── Article classifier ────────────────────────────────────────────────────
+// Tier 1: keyword rules (always works, zero dependencies)
+const CATEGORY_KEYWORDS = {
+  'Security':    /\b(CVE|vulnerability|exploit|malware|ransomware|phishing|zero.?day|breach|hack|XSS|SQL.?injection|OWASP|pentest|infosec|cybersecurity|SAST|DAST|threat|patch|firewall|authentication|OAuth|JWT)\b/i,
+  'AI':          /\b(AI\b|LLM|GPT|machine.?learning|deep.?learning|neural.?net|transformer|diffusion|ChatGPT|Gemini|Claude|Llama|Mistral|RAG|embedding|fine.?tun|artificial.?intelligence|generative|copilot|agentic|Ollama)\b/i,
+  'Python':      /\b(Python|Django|Flask|FastAPI|pip|PyPI|pandas|numpy|scipy|jupyter|pydantic|SQLAlchemy|uv\b|ruff|pytest)\b/i,
+  'JavaScript':  /\b(JavaScript|TypeScript|Node\.?js|React|Vue|Angular|Svelte|Next\.?js|Nuxt|Deno|Bun\b|npm|webpack|vite|esbuild|ESM|JSX|TSX)\b/i,
+  'Java':        /\b(Java\b|Spring|Maven|Gradle|JVM|Kotlin|Quarkus|Micronaut|Jakarta|JDK|Hibernate)\b/i,
+  'DevOps':      /\b(Docker|Kubernetes|k8s|CI\/CD|GitHub.?Actions|Jenkins|ArgoCD|Terraform|Ansible|Helm|AWS|Azure|GCP|cloud|DevOps|SRE|observability|Prometheus|Grafana|OpenTelemetry)\b/i,
+  'Rust':        /\b(Rust\b|cargo\b|crate\b|Tokio|rustup|rustc|borrow.?checker|WebAssembly|WASM)\b/i,
+  'Go':          /\b(Golang|Go lang|goroutine|gopher|pkg\.go\.dev)\b/i,
+  'Architecture':/\b(microservice|monolith|event.?driven|CQRS|DDD|domain.?driven|API.?design|GraphQL|gRPC|system.?design|distributed|serverless|hexagonal|clean.?arch)\b/i,
+  'Open Source': /\b(open.?source|OSS|FOSS|MIT license|Apache license|GPL|maintainer)\b/i,
+};
+
+function keywordClassify(title = '', summary = '', feedCategory = 'General') {
+  const text = `${title} ${summary}`;
+  for (const [cat, re] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (re.test(text)) return cat;
+  }
+  return feedCategory;
+}
+
+// Tier 2: Ollama local LLM (used in CI via GitHub Actions, optional locally)
+const OLLAMA_MODEL  = process.env.OLLAMA_MODEL || 'qwen2.5:0.5b';
+const OLLAMA_HOST   = process.env.OLLAMA_HOST  || 'http://127.0.0.1:11434';
+const USE_LLM       = process.env.USE_LLM === '1';
+const VALID_CATS    = ['General','Security','AI','Python','JavaScript','Java','DevOps','Open Source','Rust','Go','Architecture'];
+const CACHE_FILE    = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.ai-category-cache.json');
+
+let ollamaClient = null;
+let aiCache      = {};
+
+async function initClassifier() {
+  // Always load the committed cache
+  try { aiCache = JSON.parse(await fs.readFile(CACHE_FILE, 'utf8')); } catch { aiCache = {}; }
+  if (!USE_LLM) return;
+  try {
+    ollamaClient = new Ollama({ host: OLLAMA_HOST });
+    await ollamaClient.list(); // ping — throws if Ollama isn't running
+    console.log(`[classifier] Ollama online — using model ${OLLAMA_MODEL}`);
+  } catch {
+    console.warn('[classifier] Ollama not reachable — falling back to keyword classifier.');
+    ollamaClient = null;
+  }
+}
+
+async function saveCache() {
+  await fs.writeFile(CACHE_FILE, JSON.stringify(aiCache, null, 2), 'utf8');
+}
+
+async function classifyArticle(title = '', summary = '', feedCategory = 'General') {
+  // 1. Check committed cache first
+  const cacheKey = title.slice(0, 120);
+  if (aiCache[cacheKey]) return aiCache[cacheKey];
+
+  // 2. Keyword classifier (always available, instant)
+  const kwResult = keywordClassify(title, summary, feedCategory);
+
+  // 3. LLM override for ambiguous cases (only if Ollama is running)
+  if (ollamaClient) {
+    try {
+      const prompt =
+        `Classify this developer news article into EXACTLY ONE of these categories:\n` +
+        `${VALID_CATS.join(', ')}\n\n` +
+        `Title: ${title}\nSnippet: ${summary.slice(0, 200)}\n\n` +
+        `Reply with only the category name, nothing else.`;
+      const resp = await ollamaClient.generate({ model: OLLAMA_MODEL, prompt, stream: false,
+        options: { temperature: 0, num_predict: 10 } });
+      const raw = (resp.response || '').trim();
+      const match = VALID_CATS.find(c => raw.toLowerCase().startsWith(c.toLowerCase()));
+      const result = match || kwResult;
+      aiCache[cacheKey] = result;
+      return result;
+    } catch (e) {
+      console.warn(`[classifier] LLM call failed for "${title.slice(0,50)}": ${e.message}`);
+    }
+  }
+
+  // 4. Fall back to keyword result (not cached — don't pollute cache with keyword results)
+  return kwResult;
 }
 
 // ── Utilities ──────────────────────────────────────────────────────────────
@@ -502,6 +586,8 @@ async function fetchOneFeed(feed) {
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
+  await initClassifier();
+
   const feedsPath = path.join(ROOT, 'data', 'feeds.json');
   const feedDefs  = JSON.parse(await fs.readFile(feedsPath, 'utf8'));
   const enabled   = feedDefs.filter(f => f.enabled !== false);
@@ -540,6 +626,23 @@ async function main() {
   });
 
   const articles = unique.slice(0, MAX_ARTICLES);
+
+  // ── AI / keyword article classification ───────────────────────────────────
+  if (ollamaClient || true) { // keyword classifier always runs
+    console.log(`[build-feed] Classifying ${articles.length} articles…`);
+    let llmHits = 0;
+    await runLimited(articles, 4, async a => {
+      const prev = a.category;
+      a.category = await classifyArticle(a.title, a.summary || '', a.category);
+      a.fallbackImage = getFallbackImage(a.category);
+      if (ollamaClient && a.category !== prev) llmHits++;
+    });
+    if (ollamaClient) {
+      console.log(`[build-feed]   ↳ LLM reclassified ${llmHits}/${articles.length} articles`);
+      await saveCache();
+      console.log(`[build-feed]   ↳ Cache saved to .ai-category-cache.json`);
+    }
+  }
 
   // ── Resolve missing images by fetching the article page (Node has no CORS) ──
   const needImage = articles.filter(a => !a.image && a.link);

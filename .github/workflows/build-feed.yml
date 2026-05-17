@@ -1,0 +1,81 @@
+name: Build Feed
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'   # every 2 hours
+  workflow_dispatch:          # manual trigger from GitHub UI
+  push:
+    paths:
+      - 'data/feeds.json'     # re-run whenever feeds list changes
+
+permissions:
+  contents: write             # needed to commit cache + push to Pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ── Install & start Ollama ───────────────────────────────────────────
+      - name: Install Ollama
+        run: curl -fsSL https://ollama.com/install.sh | sh
+
+      - name: Start Ollama service
+        run: ollama serve &
+        # Give it a moment to bind the port
+      
+      - name: Wait for Ollama to be ready
+        run: |
+          for i in $(seq 1 15); do
+            curl -sf http://127.0.0.1:11434/api/tags && break
+            echo "Waiting for Ollama... ($i)"
+            sleep 2
+          done
+
+      - name: Pull model
+        run: ollama pull ${{ vars.OLLAMA_MODEL || 'qwen2.5:0.5b' }}
+
+      # ── Build feed with LLM classification ──────────────────────────────
+      - name: Build feed data
+        env:
+          USE_LLM: '1'
+          OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'qwen2.5:0.5b' }}
+        run: node scripts/generate-version.mjs && node scripts/build-feed.mjs
+
+      - name: Generate sitemap & SEO content
+        run: node scripts/generate-sitemap.mjs && node scripts/generate-seo-content.mjs
+
+      # ── Commit updated AI cache back to repo ────────────────────────────
+      - name: Commit AI classification cache
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .ai-category-cache.json public/feed.json public/feed-health.json public/version.json sitemap.xml || true
+          git diff --cached --quiet || git commit -m "chore: refresh feed + update AI classification cache [skip ci]"
+          git push
+
+      # ── Build & deploy to GitHub Pages ──────────────────────────────────
+      - name: Build Vite app
+        run: npm run build:app
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: geekspulse.dev
+

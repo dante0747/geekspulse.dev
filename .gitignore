@@ -8,3 +8,12 @@ Thumbs.db
 
 # Dependencies
 node_modules/
+
+# Environment variables — never commit API keys
+.env
+.env.local
+.env.*.local
+
+# NOTE: .ai-category-cache.json is intentionally committed to the repo
+# so contributors can build without needing an API key.
+
