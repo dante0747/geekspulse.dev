@@ -111,8 +111,72 @@ async function saveCache() {
 // ── Article summarizer ────────────────────────────────────────────────────
 // Used when the RSS feed provides no snippet or a very short one (<40 chars).
 const MIN_SUMMARY_LEN = 40;
+const ARTICLE_TEXT_MAX_BYTES = 512 * 1024; // 512 KB cap when fetching article body
+const ARTICLE_TEXT_MAX_CHARS = 3000;       // chars of body text fed to the LLM
 
-async function summarizeArticle(title = '', existingSummary = '') {
+/** Fetch an article page and return plain-text body content (best-effort). */
+async function fetchArticleText(articleUrl) {
+  const controller = new AbortController();
+  const timeout    = setTimeout(() => controller.abort(), ARTICLE_TIMEOUT_MS);
+  try {
+    const resp = await fetch(articleUrl, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      },
+    });
+    if (!resp.ok) return null;
+
+    const reader  = resp.body?.getReader?.();
+    let html = '';
+    if (reader) {
+      const decoder = new TextDecoder('utf-8');
+      let bytes = 0;
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        bytes += value.length;
+        html += decoder.decode(value, { stream: true });
+        if (bytes >= ARTICLE_TEXT_MAX_BYTES) {
+          try { reader.cancel(); } catch { /* ignore */ }
+          break;
+        }
+      }
+      html += decoder.decode();
+    } else {
+      html = await resp.text();
+    }
+
+    if (!html) return null;
+
+    // Extract <body> if present, otherwise use the full HTML
+    const bodyMatch = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
+    const bodyHtml  = bodyMatch ? bodyMatch[1] : html;
+
+    // Strip scripts, styles, nav, footer, aside, then all tags → plain text
+    const text = bodyHtml
+      .replace(/<(script|style|nav|footer|aside|header)[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g,  '&')
+      .replace(/&lt;/g,   '<')
+      .replace(/&gt;/g,   '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g,  "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    return text.slice(0, ARTICLE_TEXT_MAX_CHARS) || null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function summarizeArticle(title = '', existingSummary = '', articleUrl = '') {
   if (!ollamaClient) return existingSummary;
   if (existingSummary.length >= MIN_SUMMARY_LEN) return existingSummary;
 
@@ -120,13 +184,25 @@ async function summarizeArticle(title = '', existingSummary = '') {
   if (aiCache[cacheKey]) return aiCache[cacheKey];
 
   try {
+    // Try to fetch the full article text; fall back to the RSS snippet
+    let bodyText = articleUrl ? await fetchArticleText(articleUrl) : null;
+    if (!bodyText && existingSummary) bodyText = existingSummary;
+
+    const articleText = bodyText
+      ? `Title: ${title}\n\nArticle content:\n${bodyText}`
+      : `Title: ${title}`;
+
     const prompt =
-      `Write a single sentence (max 30 words) summarising this developer news article.\n` +
-      `Title: ${title}\n` +
-      `Reply with only the sentence, no quotes, no prefix.`;
+      `You are a technical news editor writing for a developer audience.\n` +
+      `Write a concise 2–3 sentence summary (max 60 words) of the article below.\n` +
+      `Focus on: the core topic, the key technology or finding, and why it matters to developers.\n` +
+      `Do NOT start with "This article", "The article", or simply restate the title.\n` +
+      `Reply with only the summary text — no quotes, no bullet points, no labels.\n\n` +
+      `${articleText}`;
+
     const resp = await ollamaClient.generate({
       model: OLLAMA_MODEL, prompt, stream: false,
-      options: { temperature: 0.3, num_predict: 60 },
+      options: { temperature: 0.3, num_predict: 120 },
     });
     const summary = (resp.response || '').trim().replace(/^["']|["']$/g, '');
     if (summary.length > 10) {
@@ -681,7 +757,7 @@ async function main() {
     console.log(`[build-feed] Summarizing ${needSummary.length} articles with missing/short snippets…`);
     let summarized = 0;
     await runLimited(needSummary, 4, async a => {
-      const result = await summarizeArticle(a.title, a.summary || '');
+      const result = await summarizeArticle(a.title, a.summary || '', a.link);
       if (result && result !== a.summary) { a.summary = result; summarized++; }
     });
     console.log(`[build-feed]   ↳ Generated ${summarized} new summaries`);
