@@ -202,9 +202,28 @@ async function summarizeArticle(title = '', existingSummary = '', articleUrl = '
 
     const resp = await ollamaClient.generate({
       model: OLLAMA_MODEL, prompt, stream: false,
-      options: { temperature: 0.3, num_predict: 120 },
+      options: { temperature: 0.3, num_predict: 200 },
     });
-    const summary = (resp.response || '').trim().replace(/^["']|["']$/g, '');
+    let summary = (resp.response || '').trim().replace(/^["']|["']$/g, '');
+
+    // Reject summaries that violate the prompt instructions
+    if (/^(this article|the article)\b/i.test(summary)) {
+      console.warn(`[classifier] summary starts with forbidden phrase for "${title.slice(0,50)}", discarding`);
+      return existingSummary;
+    }
+
+    // If truncated mid-sentence (no sentence-ending punctuation at end), trim to last complete sentence
+    if (summary.length > 10 && !/[.!?…]$/.test(summary)) {
+      const lastSentence = summary.match(/^([\s\S]*[.!?…])\s/);
+      if (lastSentence) {
+        summary = lastSentence[1].trim();
+      } else {
+        // No complete sentence found — discard to avoid publishing a cut-off snippet
+        console.warn(`[classifier] summary truncated with no complete sentence for "${title.slice(0,50)}", discarding`);
+        return existingSummary;
+      }
+    }
+
     if (summary.length > 10) {
       aiCache[cacheKey] = summary;
       return summary;
