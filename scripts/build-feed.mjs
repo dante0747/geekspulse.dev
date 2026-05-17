@@ -108,6 +108,37 @@ async function saveCache() {
   await fs.writeFile(CACHE_FILE, JSON.stringify(aiCache, null, 2), 'utf8');
 }
 
+// ── Article summarizer ────────────────────────────────────────────────────
+// Used when the RSS feed provides no snippet or a very short one (<40 chars).
+const MIN_SUMMARY_LEN = 40;
+
+async function summarizeArticle(title = '', existingSummary = '') {
+  if (!ollamaClient) return existingSummary;
+  if (existingSummary.length >= MIN_SUMMARY_LEN) return existingSummary;
+
+  const cacheKey = `summary::${title.slice(0, 120)}`;
+  if (aiCache[cacheKey]) return aiCache[cacheKey];
+
+  try {
+    const prompt =
+      `Write a single sentence (max 30 words) summarising this developer news article.\n` +
+      `Title: ${title}\n` +
+      `Reply with only the sentence, no quotes, no prefix.`;
+    const resp = await ollamaClient.generate({
+      model: OLLAMA_MODEL, prompt, stream: false,
+      options: { temperature: 0.3, num_predict: 60 },
+    });
+    const summary = (resp.response || '').trim().replace(/^["']|["']$/g, '');
+    if (summary.length > 10) {
+      aiCache[cacheKey] = summary;
+      return summary;
+    }
+  } catch (e) {
+    console.warn(`[classifier] summarize failed for "${title.slice(0, 50)}": ${e.message}`);
+  }
+  return existingSummary;
+}
+
 async function classifyArticle(title = '', summary = '', feedCategory = 'General') {
   // 1. Check committed cache first
   const cacheKey = title.slice(0, 120);
@@ -642,6 +673,19 @@ async function main() {
       await saveCache();
       console.log(`[build-feed]   ↳ Cache saved to .ai-category-cache.json`);
     }
+  }
+
+  // ── AI article summarization (fills missing/short snippets) ──────────────
+  if (ollamaClient) {
+    const needSummary = articles.filter(a => (a.summary || '').length < MIN_SUMMARY_LEN);
+    console.log(`[build-feed] Summarizing ${needSummary.length} articles with missing/short snippets…`);
+    let summarized = 0;
+    await runLimited(needSummary, 4, async a => {
+      const result = await summarizeArticle(a.title, a.summary || '');
+      if (result && result !== a.summary) { a.summary = result; summarized++; }
+    });
+    console.log(`[build-feed]   ↳ Generated ${summarized} new summaries`);
+    await saveCache();
   }
 
   // ── Resolve missing images by fetching the article page (Node has no CORS) ──
