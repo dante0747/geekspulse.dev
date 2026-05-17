@@ -194,7 +194,7 @@ async function summarizeArticle(title = '', existingSummary = '', articleUrl = '
 
     const prompt =
       `You are a technical news editor writing for a developer audience.\n` +
-      `Write a concise 2–3 sentence summary (max 60 words) of the article below.\n` +
+      `Write a concise summary (max 120 words) of the article below.\n` +
       `Focus on: the core topic, the key technology or finding, and why it matters to developers.\n` +
       `Do NOT start with "This article", "The article", or simply restate the title.\n` +
       `Reply with only the summary text — no quotes, no bullet points, no labels.\n\n` +
