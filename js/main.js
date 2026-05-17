@@ -11,6 +11,7 @@ import { gridCard, listCard, buildSkeletons, cardPlaceholder } from './cards.js'
 import { initSettings } from './settings-panel.js';
 import { initMyPulse } from './pulse-panel.js';
 import { initPayPalModal } from './paypal-modal.js';
+import { initSummaryModal, openSummaryModal } from './summary.js';
 
 // ── State ─────────────────────────────────────────────────────────
 
@@ -522,6 +523,7 @@ async function init() {
   });
   initMyPulse({ render, buildFilters });
   initPayPalModal();
+  initSummaryModal();
   applyView();
   buildFilters();
 
@@ -640,6 +642,20 @@ async function init() {
     e.preventDefault(); e.stopPropagation();
     gaEvent('share', { article_title: btn.dataset.shareTitle, article_url: btn.dataset.shareUrl });
     shareArticle(btn.dataset.shareTitle, btn.dataset.shareUrl);
+  });
+
+  // Summary delegation
+  feedGrid.addEventListener('click', e => {
+    const btn = e.target.closest('.card-summary-btn');
+    if (!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    gaEvent('summary_open', { article_title: btn.dataset.summaryTitle, article_url: btn.dataset.summaryLink });
+    openSummaryModal({
+      title:   btn.dataset.summaryTitle,
+      snippet: btn.dataset.summarySnippet,
+      link:    btn.dataset.summaryLink,
+      source:  btn.dataset.summarySource,
+    });
   });
 
   // Outbound link tracking

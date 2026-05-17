@@ -145,7 +145,9 @@ async function main() {
     // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
     const cleaned = cleanSnippet(a.summary || '');
     const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 160).replace(/\s+\S*$/, '…') : '';
-    const summary = plainSummary ? `<p>${esc(plainSummary)}</p>` : '';
+    const summary = plainSummary
+      ? `<div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>${esc(plainSummary)}</p></div>`
+      : '';
     // Derive a CSS category slug from the article category field (mirrors app logic)
     const catSlug = (a.category || 'general').toLowerCase().replace(/\s+/g, '-');
     return `
