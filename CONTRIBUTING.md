@@ -54,7 +54,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Code style
 
 - Vanilla JS ES modules — no frameworks, no bundler.
-- The frontend is split into **13 focused modules** under `js/`. Add new logic to the
+- The frontend is split into **14 focused modules** under `js/`. Add new logic to the
   most relevant module, or create a new one and import it from `js/main.js`.
 - `js/main.js` is the entry point: it owns app state, the `render()` loop, and all event wiring.
 - Prefer descriptive variable names over clever one-liners.

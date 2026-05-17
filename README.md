@@ -60,6 +60,7 @@ It pulls from **39 hand-picked RSS feeds** across 11 categories, sorts them newe
 |---|---|
 | 📡 **39 RSS Feeds** | Hand-curated from the best dev sources on the web |
 | 🗂️ **11 Categories** | General · Security · AI/ML · Python · JavaScript · Java · DevOps · Open Source · Rust · Go · Architecture |
+| 🤖 **AI Summaries** | On-demand article summaries via pre-cached snippets or local Ollama fallback |
 | ⚡ **Static Cache** | Articles pre-built by a Node.js pipeline; browser loads JSON instantly |
 | 🔄 **Auto-Refresh** | Configurable: 1m · 5m · 10m · 15m · 30m · 1h |
 | 🃏 **Grid & List View** | Toggle between layouts, preference saved locally |
@@ -194,7 +195,7 @@ const architecture = {
   markup:     "HTML5",           // semantic, accessible
   styles:     "Vanilla CSS",     // custom properties, animations, grid
   logic:      "Vanilla JS",      // ES2022+ native ES modules, no bundler
-  modules:    "js/ — 13 focused ES modules loaded via <script type=\"module\">",
+  modules:    "js/ — 14 focused ES modules loaded via <script type=\"module\">",
   fonts:      ["JetBrains Mono", "Space Grotesk", "Bangers"],
   feedPipeline: "Node.js (scripts/build-feed.mjs)",
   storage:    "localStorage",    // preferences & bookmarks
@@ -290,6 +291,7 @@ geekspulse.dev/
 │   ├── feeds-registry.js # Feed registry loader — fetches & caches data/feeds.json at startup
 │   ├── settings-panel.js # Settings popover (auto-refresh, view, theme, cache)
 │   ├── pulse-panel.js   # My Pulse drawer (topic/source filters, presets)
+│   ├── summary.js       # AI Summary modal — pre-cached snippets or Ollama fallback
 │   └── paypal-modal.js  # PayPal support modal
 ├── favicon.svg          # SVG favicon
 ├── og-image.png         # Open Graph image
