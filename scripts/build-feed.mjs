@@ -244,14 +244,20 @@ async function summarizeArticle(title = '', existingSummary = '', articleUrl = '
 }
 
 async function classifyArticle(title = '', summary = '', feedCategory = 'General') {
-  // 1. Check committed cache first
+  // 1. For articles from dedicated (non-General) feeds, trust the feed's own
+  //    category — keyword matching and cached LLM results often pull Python/Java/
+  //    Rust/Go articles into AI/DevOps/Security because those patterns appear first.
+  if (feedCategory !== 'General') return feedCategory;
+
+  // 2. Check committed cache
   const cacheKey = title.slice(0, 120);
   if (aiCache[cacheKey]) return aiCache[cacheKey];
 
-  // 2. Keyword classifier (always available, instant)
+
+  // 3. Keyword classifier (always available, instant)
   const kwResult = keywordClassify(title, summary, feedCategory);
 
-  // 3. LLM override for ambiguous cases (only if Ollama is running)
+  // 4. LLM override for ambiguous cases (only if Ollama is running)
   if (ollamaClient) {
     try {
       const prompt =
@@ -271,7 +277,7 @@ async function classifyArticle(title = '', summary = '', feedCategory = 'General
     }
   }
 
-  // 4. Fall back to keyword result (not cached — don't pollute cache with keyword results)
+  // 5. Fall back to keyword result
   return kwResult;
 }
 
@@ -742,13 +748,24 @@ async function main() {
     console.log(`  ${ok ? '✓' : '✗'} ${feed.name} — ${articles.length} articles${ok ? '' : ` (${error})`}`);
   }
 
-  // Deduplicate by link
-  const seen = new Set();
-  const unique = allArticles.filter(a => {
-    if (seen.has(a.link)) return false;
-    seen.add(a.link);
-    return true;
-  });
+  // Deduplicate by link — when the same URL appears in multiple feeds, keep the
+  // version with the most specific category (non-General beats General) so that
+  // articles aggregated by Planet Python / This Week in Rust / etc. aren't lost
+  // just because they also appeared on Hacker News or Lobsters.
+  const seenLinks = new Map(); // link → index in deduped array
+  const unique = [];
+  for (const a of allArticles) {
+    if (!seenLinks.has(a.link)) {
+      seenLinks.set(a.link, unique.length);
+      unique.push(a);
+    } else if (a.category !== 'General') {
+      // Replace the existing General entry with this more-specific one
+      const idx = seenLinks.get(a.link);
+      if (unique[idx].category === 'General') {
+        unique[idx] = a;
+      }
+    }
+  }
 
   // Sort newest-first; undated go last
   unique.sort((a, b) => {
