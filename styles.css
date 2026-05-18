@@ -391,7 +391,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 36px 0 80px;
 }
 @media(max-width:960px){ .app-layout { grid-template-columns: 190px 1fr; gap: 20px; } }
-@media(max-width:860px){ .app-layout { grid-template-columns: 1fr; gap: 0; } .sidebar { display: none; } .mobile-filters { display: flex !important; } }
+@media(max-width:860px){ .app-layout { grid-template-columns: 1fr; gap: 0; } .sidebar { display: none; } .mobile-filters { display: flex !important; } .signal-section { display: none; } }
 
 /* ── SIDEBAR ─────────────────────────── */
 .sidebar { position: sticky; top: 66px; align-self: start; display: flex; flex-direction: column; gap: 24px; }
