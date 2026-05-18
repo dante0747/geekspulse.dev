@@ -659,7 +659,7 @@ function parseRssItems(parsed, feed) {
     const date    = normalizeDate(item.pubDate || item.published || item.updated);
     const image   = extractBestImage(item);
 
-    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
+    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, summaryType: summary ? 'snippet' : '', image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
   }).filter(Boolean);
 }
 
@@ -687,7 +687,7 @@ function parseAtomEntries(parsed, feed) {
     const date    = normalizeDate(entry.updated || entry.published);
     const image   = extractBestImage(entry);
 
-    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
+    return { id: hashId(link), title, link, source: feed.name, sourceId: feed.id, category: feed.category, publishedAt: date, summary, summaryType: summary ? 'snippet' : '', image, fallbackImage: getFallbackImage(feed.category), imageType: image ? 'real' : 'fallback', fetchedAt: new Date().toISOString() };
   }).filter(Boolean);
 }
 
@@ -817,7 +817,7 @@ async function main() {
     let summarized = 0;
     await runLimited(needSummary, 4, async a => {
       const result = await summarizeArticle(a.title, a.summary || '', a.link);
-      if (result && result !== a.summary) { a.summary = result; summarized++; }
+      if (result && result !== a.summary) { a.summary = result; a.summaryType = 'ai'; summarized++; }
     });
     console.log(`[build-feed]   ↳ Generated ${summarized} new summaries`);
     await saveCache();

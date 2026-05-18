@@ -160,7 +160,8 @@ export function normaliseCachedArticle(a) {
   return {
     title:         stripHtml(a.title || 'Untitled'),
     link:          safeUrl(a.link),
-    snippet:       a.summary  || '',
+    snippet:       a.summary      || '',
+    summaryType:   a.summaryType  || '',
     image:         safeImg,
     fallbackImage: fallback,
     imageType:     a.imageType || (safeImg ? 'real' : 'fallback'),

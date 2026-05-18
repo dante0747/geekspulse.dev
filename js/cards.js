@@ -82,7 +82,7 @@ export function gridCard(a, i) {
           <span class="card-read-time">${mins} min read</span>
         </div>
         <div class="card-actions">
-          <button class="card-summary-btn" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}" title="AI Summary" aria-label="Show AI summary">
+          <button class="card-summary-btn" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-type="${esc(a.summaryType || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}" title="AI Summary" aria-label="Show AI summary">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
           </button>
           <button class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">
@@ -131,7 +131,7 @@ export function listCard(a, i) {
         </div>
       </div>
       <div class="card-actions" style="flex-direction:column;gap:6px;">
-        <button class="card-summary-btn" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}" title="AI Summary" aria-label="Show AI summary">
+        <button class="card-summary-btn" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-type="${esc(a.summaryType || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}" title="AI Summary" aria-label="Show AI summary">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
         </button>
         <button class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">
@@ -156,4 +156,3 @@ export function buildSkeletons(n = 8) {
       <div class="sk sk-foot"></div>
     </div>`).join('');
 }
-

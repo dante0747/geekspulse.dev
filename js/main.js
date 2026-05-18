@@ -651,10 +651,11 @@ async function init() {
     e.preventDefault(); e.stopPropagation();
     gaEvent('summary_open', { article_title: btn.dataset.summaryTitle, article_url: btn.dataset.summaryLink });
     openSummaryModal({
-      title:   btn.dataset.summaryTitle,
-      snippet: btn.dataset.summarySnippet,
-      link:    btn.dataset.summaryLink,
-      source:  btn.dataset.summarySource,
+      title:       btn.dataset.summaryTitle,
+      snippet:     btn.dataset.summarySnippet,
+      summaryType: btn.dataset.summaryType,
+      link:        btn.dataset.summaryLink,
+      source:      btn.dataset.summarySource,
     });
   });
 

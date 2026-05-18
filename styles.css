@@ -1025,6 +1025,12 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   border: 1px solid rgba(188,140,255,.3); padding: 3px 8px; border-radius: 99px;
 }
 
+/* Article Snippet variant — muted teal instead of purple */
+.summary-ai-badge--snippet {
+  color: var(--teal, #2DD4BF); background: rgba(45,212,191,.08);
+  border-color: rgba(45,212,191,.3);
+}
+
 .summary-close {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border: 1px solid var(--border2);
