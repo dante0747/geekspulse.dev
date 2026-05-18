@@ -59,7 +59,7 @@
 
 /* ── Reset ────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+html { scroll-behavior: smooth; max-width: 100%; }
 body {
   font-family: var(--font);
   background: var(--bg);
@@ -394,7 +394,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 @media(max-width:860px){ .app-layout { grid-template-columns: 1fr; gap: 0; } .sidebar { display: none; } .mobile-filters { display: flex !important; } .signal-section { display: none; } }
 
 /* ── SIDEBAR ─────────────────────────── */
-.sidebar { position: sticky; top: 66px; align-self: start; display: flex; flex-direction: column; gap: 24px; }
+.sidebar { position: static; align-self: start; display: flex; flex-direction: column; gap: 24px; }
 @media(max-width:860px){ .sidebar { display: none !important; } }
 .sidebar-section { display: flex; flex-direction: column; gap: 6px; }
 .sidebar-label {
