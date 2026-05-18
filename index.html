@@ -201,8 +201,8 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="/assets/index-C4UTvCOk.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CVkfnWEX.css">
+  <script type="module" crossorigin src="/assets/index-Bti1czJ0.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DX2NWXSk.css">
 </head>
 <body>
   <!-- Skip to main content (accessibility) -->
@@ -227,12 +227,30 @@
         <div class="nav-actions">
           <!-- nav support button -->
           <button data-support class="btn btn-primary btn-sm" title="Support GeeksPulse">
+            <svg class="btn-icon" aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             <span class="btn-label">Donate</span>
+          </button>
+          <!-- hamburger menu button (mobile only) -->
+          <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navDrawer">
+            <span class="nav-hamburger-bar"></span>
+            <span class="nav-hamburger-bar"></span>
+            <span class="nav-hamburger-bar"></span>
           </button>
         </div>
       </div>
     </div>
   </nav>
+  <!-- Mobile nav drawer -->
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true" role="dialog" aria-label="Site navigation">
+    <nav class="nav-drawer-links">
+      <a href="#latest"     class="nav-drawer-link">Feed</a>
+      <a href="#sources"    class="nav-drawer-link">Sources</a>
+      <a href="#contribute" class="nav-drawer-link">Contribute</a>
+      <a href="#about"      class="nav-drawer-link">About</a>
+      <a href="#feedback"   class="nav-drawer-link">Feedback</a>
+    </nav>
+  </div>
+  <div class="nav-drawer-backdrop" id="navDrawerBackdrop"></div>
   <div class="page-wrap">
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-heading">
@@ -392,8 +410,8 @@
             <span id="articleCount" class="article-count" style="display:none"></span>
           </div>
           <div class="view-toggle" role="group" aria-label="View mode">
-            <button class="view-btn active" id="gridViewBtn" title="Grid view" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5"/><rect x="8" y="1" width="5" height="5"/><rect x="1" y="8" width="5" height="5"/><rect x="8" y="8" width="5" height="5"/></svg></button>
-            <button class="view-btn" id="listViewBtn" title="List view" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="1" y1="3.5" x2="13" y2="3.5"/><line x1="1" y1="7" x2="13" y2="7"/><line x1="1" y1="10.5" x2="13" y2="10.5"/></svg></button>
+            <button class="view-btn active" id="gridViewBtn" title="Grid view" aria-label="Grid view" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5"/><rect x="8" y="1" width="5" height="5"/><rect x="1" y="8" width="5" height="5"/><rect x="8" y="8" width="5" height="5"/></svg></button>
+            <button class="view-btn" id="listViewBtn" title="List view" aria-label="List view" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="1" y1="3.5" x2="13" y2="3.5"/><line x1="1" y1="7" x2="13" y2="7"/><line x1="1" y1="10.5" x2="13" y2="10.5"/></svg></button>
           </div>
         </div>
         <!-- Error banner -->
@@ -416,12 +434,132 @@
         <!-- SEO static article fallback — injected by scripts/generate-seo-content.mjs -->
         <!-- GENERATED_LATEST_ARTICLES_START -->
 
-  <!-- Latest articles from 10 of 448 cached stories (generated May 18, 2026) -->
+  <!-- Latest articles from 10 of 449 cached stories (generated May 18, 2026) -->
   <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px">
     <h2>
       Latest Developer News
     </h2>
     <div class="seo-articles-grid">
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=261796&amp;width=800" alt="Article image for: TanStack weighs invitation-only pull requests after supply chain attack" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.theregister.com/security/2026/05/18/tanstack-weighs-invitation-only-pull-requests-after-supply-chain-attack/5241899" rel="noopener noreferrer">TanStack weighs invitation-only pull requests after supply chain attack</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>The TanStack team has documented security measures and proposals following a damaging breach last week, including the possibility of making pull requests (PRs)…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Register &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.theregister.com/security/2026/05/18/tanstack-weighs-invitation-only-pull-requests-after-supply-chain-attack/5241899" data-share-title="TanStack weighs invitation-only pull requests after supply chain attack" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.theregister.com/security/2026/05/18/tanstack-weighs-invitation-only-pull-requests-after-supply-chain-attack/5241899" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://www.bleepstatic.com/content/hl-images/2026/05/18/Grafana.jpg" alt="Article image for: Grafana says stolen GitHub token let hackers steal codebase" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.bleepingcomputer.com/news/security/grafana-says-stolen-github-token-let-hackers-steal-codebase/" rel="noopener noreferrer">Grafana says stolen GitHub token let hackers steal codebase</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Grafana Labs disclosed that hackers have downloaded its source code after breaching its GitHub environment using a stolen access token.…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>Bleeping Computer &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.bleepingcomputer.com/news/security/grafana-says-stolen-github-token-let-hackers-steal-codebase/" data-share-title="Grafana says stolen GitHub token let hackers steal codebase" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.bleepingcomputer.com/news/security/grafana-says-stolen-github-token-let-hackers-steal-codebase/" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=4094209&amp;width=800" alt="Article image for: Microsoft remembers that taskbars used to move" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.theregister.com/personal-tech/2026/05/18/microsoft-remembers-that-taskbars-used-to-move/5241875" rel="noopener noreferrer">Microsoft remembers that taskbars used to move</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Microsoft has begun rolling out tweaks to the Windows 11 experience to make good on its promise to &quot;fix&quot; the operating system, starting with the ability to…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Register &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.theregister.com/personal-tech/2026/05/18/microsoft-remembers-that-taskbars-used-to-move/5241875" data-share-title="Microsoft remembers that taskbars used to move" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.theregister.com/personal-tech/2026/05/18/microsoft-remembers-that-taskbars-used-to-move/5241875" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://opengraph.githubassets.com/4d39561ee715047624d826714688f0fa816b00bed388925811e65aae6cf00f2b/zakirullin/files.md" alt="Article image for: Show HN: Files.md – open-source alternative to Obsidian" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://github.com/zakirullin/files.md" rel="noopener noreferrer">Show HN: Files.md – open-source alternative to Obsidian</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Files.md is a simple application for storing whole life experiences in plain .md files. It allows users to store notes, documents, projects, journals, habits,…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://github.com/zakirullin/files.md" data-share-title="Show HN: Files.md – open-source alternative to Obsidian" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://github.com/zakirullin/files.md" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMzYwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjM2MCI+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzNjAiIGZpbGw9IiMwRDExMTciLz4KICA8ZyBzdHJva2U9InJnYmEoMTYsMTg1LDEyOSwwLjA3KSIgc3Ryb2tlLXdpZHRoPSIxIj4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNzIiIHgyPSI2NDAiIHkyPSI3MiIvPjxsaW5lIHgxPSIwIiB5MT0iMTQ0IiB4Mj0iNjQwIiB5Mj0iMTQ0Ii8+CiAgICA8bGluZSB4MT0iMCIgeTE9IjIxNiIgeDI9IjY0MCIgeTI9IjIxNiIvPjxsaW5lIHgxPSIwIiB5MT0iMjg4IiB4Mj0iNjQwIiB5Mj0iMjg4Ii8+CiAgICA8bGluZSB4MT0iMTI4IiB5MT0iMCIgeDI9IjEyOCIgeTI9IjM2MCIvPjxsaW5lIHgxPSIyNTYiIHkxPSIwIiB4Mj0iMjU2IiB5Mj0iMzYwIi8+CiAgICA8bGluZSB4MT0iMzg0IiB5MT0iMCIgeDI9IjM4NCIgeTI9IjM2MCIvPjxsaW5lIHgxPSI1MTIiIHkxPSIwIiB4Mj0iNTEyIiB5Mj0iMzYwIi8+CiAgPC9nPgogIDwhLS0gZ2xvYmUgaWNvbiBzY2FsZWQgdG8gNzJweCwgY2VudHJlZCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAsMTc1KSBzY2FsZSgzKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTBCOTgxIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyLC0xMikiLz4KICAgIDxsaW5lIHgxPSIyIiB4Mj0iMjIiIHkxPSIxMiIgeTI9IjEyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogICAgPHBhdGggZD0iTTEyIDJhMTUuMyAxNS4zIDAgMCAxIDQgMTAgMTUuMyAxNS4zIDAgMCAxLTQgMTAgMTUuMyAxNS4zIDAgMCAxLTQtMTAgMTUuMyAxNS4zIDAgMCAxIDQtMTB6IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogIDwvZz4KICA8dGV4dCB4PSIzMjAiIHk9IjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkpldEJyYWlucyBNb25vLG1vbm9zcGFjZSIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzEwQjk4MSIgb3BhY2l0eT0iMC40NSI+Z2l0IHB1bGwgb3JpZ2luPC90ZXh0Pgo8L3N2Zz4K" alt="Article image for: [$] Swap tables, flash-friendly swap, swap_ops, and more" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://lwn.net/Articles/1072657/" rel="noopener noreferrer">[$] Swap tables, flash-friendly swap, swap_ops, and more</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>The kernel&#39;s swap subsystem is charged with managing anonymous pages in secondary storage when those pages are (hopefully) not being used and the memory they…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-open-source"></span>
+          <span>LWN.net &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://lwn.net/Articles/1072657/" data-share-title="[$] Swap tables, flash-friendly swap, swap_ops, and more" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://lwn.net/Articles/1072657/" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://res.infoq.com/news/2026/05/code-with-claude/en/headerimage/codewithclaude-1779025768208.jpeg" alt="Article image for: Anthropic&#39;s Code With Claude Announces Managed Agents, Proactive Workflows, Capability Curve" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.infoq.com/news/2026/05/code-with-claude/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer">Anthropic&#39;s Code With Claude Announces Managed Agents, Proactive Workflows, Capability Curve</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Anthropic hosted &quot;Code with Claude 2026&quot; in San Francisco, featuring livestream sessions focused on Claude Code, the Claude API platform, and other projects.…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-ai"></span>
+          <span>InfoQ &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.infoq.com/news/2026/05/code-with-claude/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" data-share-title="Anthropic&#39;s Code With Claude Announces Managed Agents, Proactive Workflows, Capability Curve" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.infoq.com/news/2026/05/code-with-claude/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
 
     <article class="seo-card">
       <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=5241871&amp;width=800" alt="Article image for: NGINX Rift attackers waste no time targeting exposed servers" loading="lazy" decoding="async" width="640" height="360" /></div>
@@ -444,6 +582,46 @@
     </article>
 
     <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/69ee/live/22052400-52b0-11f1-8b8c-6d33e1d5abb6.jpg" alt="Article image for: &amp;#x27;We mould trees to grow into the shape of chairs&amp;#x27;" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.bbc.co.uk/news/articles/cvg0yy3gp71o" rel="noopener noreferrer">&amp;#x27;We mould trees to grow into the shape of chairs&amp;#x27;</a></h3>
+      
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.bbc.co.uk/news/articles/cvg0yy3gp71o" data-share-title="&amp;#x27;We mould trees to grow into the shape of chairs&amp;#x27;" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.bbc.co.uk/news/articles/cvg0yy3gp71o" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu4cbMji6f7O37Q6sBOEkOEXWMs7Eg4ixA0RdW8AiO6cIPai9yYqLTvVVkUH9ApXP8XycVeezSCvDMXhldVsCiaA-_kr5SwWJ4EjTfkyX0RdUacOUF3plBO9C6PHCLsUGM-L-ZthpQA7mhdPmH4nLgPPQIVBWK9BZUNQf7V17Y_5jVVvZ0FNaiOsG7mvs/s1600/anyrun-main.jpg" alt="Article image for: How to Reduce Phishing Exposure Before It Turns into Business Disruption" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://thehackernews.com/2026/05/how-to-reduce-phishing-exposure-before.html" rel="noopener noreferrer">How to Reduce Phishing Exposure Before It Turns into Business Disruption</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>What happens when a phishing email looks clean enough to pass through security, but dangerous enough to expose the business after one click? That is the gap…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://thehackernews.com/2026/05/how-to-reduce-phishing-exposure-before.html" data-share-title="How to Reduce Phishing Exposure Before It Turns into Business Disruption" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://thehackernews.com/2026/05/how-to-reduce-phishing-exposure-before.html" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
       <div class="seo-card-img-wrap"><img src="https://www.docker.com/app/uploads/2026/05/image2-1.png" alt="Article image for: Coding Agent Horror Stories: The Security Crisis Threatening Developer Infrastructure" loading="lazy" decoding="async" width="640" height="360" /></div>
       <h3><a href="https://www.docker.com/blog/ai-coding-agent-horror-stories-security-risks/" rel="noopener noreferrer">Coding Agent Horror Stories: The Security Crisis Threatening Developer Infrastructure</a></h3>
       <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This is issue 1 of a new series called Coding Agent Horror Stories where we examine critical security failures in the AI coding agent ecosystem and how Docker…</p></div>
@@ -457,166 +635,6 @@
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <a href="https://www.docker.com/blog/ai-coding-agent-horror-stories-security-risks/" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMzYwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjM2MCI+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzNjAiIGZpbGw9IiMwRDExMTciLz4KICA8ZyBzdHJva2U9InJnYmEoMTYsMTg1LDEyOSwwLjA3KSIgc3Ryb2tlLXdpZHRoPSIxIj4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNzIiIHgyPSI2NDAiIHkyPSI3MiIvPjxsaW5lIHgxPSIwIiB5MT0iMTQ0IiB4Mj0iNjQwIiB5Mj0iMTQ0Ii8+CiAgICA8bGluZSB4MT0iMCIgeTE9IjIxNiIgeDI9IjY0MCIgeTI9IjIxNiIvPjxsaW5lIHgxPSIwIiB5MT0iMjg4IiB4Mj0iNjQwIiB5Mj0iMjg4Ii8+CiAgICA8bGluZSB4MT0iMTI4IiB5MT0iMCIgeDI9IjEyOCIgeTI9IjM2MCIvPjxsaW5lIHgxPSIyNTYiIHkxPSIwIiB4Mj0iMjU2IiB5Mj0iMzYwIi8+CiAgICA8bGluZSB4MT0iMzg0IiB5MT0iMCIgeDI9IjM4NCIgeTI9IjM2MCIvPjxsaW5lIHgxPSI1MTIiIHkxPSIwIiB4Mj0iNTEyIiB5Mj0iMzYwIi8+CiAgPC9nPgogIDwhLS0gZ2xvYmUgaWNvbiBzY2FsZWQgdG8gNzJweCwgY2VudHJlZCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAsMTc1KSBzY2FsZSgzKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTBCOTgxIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyLC0xMikiLz4KICAgIDxsaW5lIHgxPSIyIiB4Mj0iMjIiIHkxPSIxMiIgeTI9IjEyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogICAgPHBhdGggZD0iTTEyIDJhMTUuMyAxNS4zIDAgMCAxIDQgMTAgMTUuMyAxNS4zIDAgMCAxLTQgMTAgMTUuMyAxNS4zIDAgMCAxLTQtMTAgMTUuMyAxNS4zIDAgMCAxIDQtMTB6IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogIDwvZz4KICA8dGV4dCB4PSIzMjAiIHk9IjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkpldEJyYWlucyBNb25vLG1vbm9zcGFjZSIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzEwQjk4MSIgb3BhY2l0eT0iMC40NSI+Z2l0IHB1bGwgb3JpZ2luPC90ZXh0Pgo8L3N2Zz4K" alt="Article image for: Security updates for Monday" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://lwn.net/Articles/1073356/" rel="noopener noreferrer">Security updates for Monday</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Security updates have been issued by AlmaLinux (freerdp, gimp:2.8, jq, kernel, and rsync), Debian (chromium, ffmpeg, firewalld, kernel, nginx, openjpeg2,…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-open-source"></span>
-          <span>LWN.net &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://lwn.net/Articles/1073356/" data-share-title="Security updates for Monday" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://lwn.net/Articles/1073356/" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://d2908q01vomqb2.cloudfront.net/7719a1c782a1ba91c031a682a0a2f8658209adbf/2026/05/11/cdk-mixins-ga-featured-1120x630.png" alt="Article image for: Announcing AWS CDK Mixins: Composable Abstractions for AWS Resources" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://aws.amazon.com/blogs/devops/announcing-aws-cdk-mixins-composable-abstractions-for-aws-resources/" rel="noopener noreferrer">Announcing AWS CDK Mixins: Composable Abstractions for AWS Resources</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>We are excited to announce CDK Mixins , a feature of the AWS Cloud Development Kit (CDK) that fundamentally changes how you compose and reuse infrastructure…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-devops"></span>
-          <span>AWS DevOps Blog &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://aws.amazon.com/blogs/devops/announcing-aws-cdk-mixins-composable-abstractions-for-aws-resources/" data-share-title="Announcing AWS CDK Mixins: Composable Abstractions for AWS Resources" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://aws.amazon.com/blogs/devops/announcing-aws-cdk-mixins-composable-abstractions-for-aws-resources/" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://d2908q01vomqb2.cloudfront.net/7719a1c782a1ba91c031a682a0a2f8658209adbf/2026/05/12/strandsthumbnail-1206x630.png" alt="Article image for: Building Self-Extending CLI Tools with Strands Agent" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://aws.amazon.com/blogs/devops/building-self-extending-cli-tools-with-aws-strands/" rel="noopener noreferrer">Building Self-Extending CLI Tools with Strands Agent</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>I. Introduction Engineering teams build internal command-line interface (CLI) tools because repetitive operational tasks such as generating reports, auditing…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-devops"></span>
-          <span>AWS DevOps Blog &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://aws.amazon.com/blogs/devops/building-self-extending-cli-tools-with-aws-strands/" data-share-title="Building Self-Extending CLI Tools with Strands Agent" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://aws.amazon.com/blogs/devops/building-self-extending-cli-tools-with-aws-strands/" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/2940761.jpg?imageId=2940761&amp;x=0&amp;y=7.2&amp;cropw=100&amp;croph=85.61&amp;panox=0&amp;panoy=7.2&amp;panow=100&amp;panoh=85.61&amp;width=1200&amp;height=683" alt="Article image for: Enough with the AI FOMO, go slow-mo, says Domo CDO" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.theregister.com/ai-ml/2026/05/17/enough-with-the-ai-fomo-go-slow-mo-says-domo-cdo/5240840" rel="noopener noreferrer">Enough with the AI FOMO, go slow-mo, says Domo CDO</a></h3>
-      
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-general"></span>
-          <span>Hacker News &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.theregister.com/ai-ml/2026/05/17/enough-with-the-ai-fomo-go-slow-mo-says-domo-cdo/5240840" data-share-title="Enough with the AI FOMO, go slow-mo, says Domo CDO" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.theregister.com/ai-ml/2026/05/17/enough-with-the-ai-fomo-go-slow-mo-says-domo-cdo/5240840" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://d2908q01vomqb2.cloudfront.net/7719a1c782a1ba91c031a682a0a2f8658209adbf/2026/05/18/Modernizing-Excel-VBA-to-Python-at-Scale-with-AWS-Transform-Custom-1120x630.png" alt="Article image for: Modernizing Excel VBA to Python at Scale with AWS Transform custom" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://aws.amazon.com/blogs/devops/modernizing-excel-vba-to-python-at-scale-with-aws-transform-custom/" rel="noopener noreferrer">Modernizing Excel VBA to Python at Scale with AWS Transform custom</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Learn how AWS Transform custom can help migrate Excel VBA applications to modern Python code while overcoming context window limitations, preserving functional…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-devops"></span>
-          <span>AWS DevOps Blog &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://aws.amazon.com/blogs/devops/modernizing-excel-vba-to-python-at-scale-with-aws-transform-custom/" data-share-title="Modernizing Excel VBA to Python at Scale with AWS Transform custom" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://aws.amazon.com/blogs/devops/modernizing-excel-vba-to-python-at-scale-with-aws-transform-custom/" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://res.infoq.com/news/2026/05/java-news-roundup-may11-2026/en/headerimage/java-news-roundup-image-1779108213136.jpg" alt="Article image for: Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer">Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This week&#39;s Java roundup for May 11th, 2026, features news highlighting: three OpenJDK JEPs targeted for JDK 27; introducting Azul Payara Community and the…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-security"></span>
-          <span>InfoQ &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" data-share-title="Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://res.infoq.com/news/2026/05/java-news-roundup-may11-2026/en/headerimage/java-news-roundup-image-1779108213136.jpg" alt="Article image for: Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java" rel="noopener noreferrer">Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This week&#39;s Java roundup for May 11th, 2026, features news highlighting: three OpenJDK JEPs targeted for JDK 27; introducting Azul Payara Community and the…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-java"></span>
-          <span>InfoQ Java &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java" data-share-title="Java News Roundup: OpenJDK JEPs, Azul Payara, WildFly, LangChain4j, OpenXava, Google ADK" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.infoq.com/news/2026/05/java-news-roundup-may11-2026/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/234872.jpg?imageId=234872&amp;x=0&amp;y=0&amp;cropw=100&amp;croph=100&amp;panox=0&amp;panoy=0&amp;panow=100&amp;panoh=100&amp;width=1200&amp;height=683" alt="Article image for: Linux security mailing list &amp;#x27;almost unmanageable&amp;#x27;" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633" rel="noopener noreferrer">Linux security mailing list &amp;#x27;almost unmanageable&amp;#x27;</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Linux security mailing list &quot;almost unmanageable&quot; due to AI-powered bug hunters, leading to significant duplication and unnecessary pain. REG AD highlights the…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-security"></span>
-          <span>Hacker News &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633" data-share-title="Linux security mailing list &amp;#x27;almost unmanageable&amp;#x27;" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633" rel="noopener noreferrer" class="card-link">
             Read →
           </a>
         </div>
@@ -911,11 +929,26 @@
           </p>
           <!-- GitHub stars badge -->
           <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count">
-              <img src="https://img.shields.io/github/stars/dante0747/geekspulse.dev?style=social" alt="GitHub stars for GeeksPulse" width="90" height="20" loading="lazy" />
+            <a id="githubStarsBadge" href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count" class="gh-stars-badge">
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+              <span>Star on GitHub</span>
+              <span class="gh-stars-count" id="ghStarCount" aria-label="star count"></span>
             </a>
             <span id="aboutLastUpdated" style="font-family:var(--mono);font-size:11px;color:var(--ink3)"></span>
           </div>
+          <script>
+            (function(){
+              fetch('https://api.github.com/repos/dante0747/geekspulse.dev')
+                .then(function(r){return r.json();})
+                .then(function(d){
+                  var el = document.getElementById('ghStarCount');
+                  if(el && d && d.stargazers_count != null){
+                    var n = d.stargazers_count;
+                    el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'k' : n;
+                  }
+                }).catch(function(){});
+            })();
+          </script>
           <ul class="contribute-ways" style="margin-bottom:1.25rem">
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 7l6 4 6-4"/></svg>
