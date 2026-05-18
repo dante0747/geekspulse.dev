@@ -1195,6 +1195,26 @@
               <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3s" begin="2s" repeatCount="indefinite"/>
             </circle>
             <path id="path-rust" d="M88,322 L192,228" fill="none"/>
+            <circle r="3.5" fill="rgba(167,139,250,0.9)" filter="url(#blur-sm)">
+              <animateMotion dur="2.6s" repeatCount="indefinite" begin="1.1s"><mpath href="#path-sec"/></animateMotion>
+              <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="2.6s" begin="1.1s" repeatCount="indefinite"/>
+            </circle>
+            <path id="path-sec" d="M55,200 L186,200" fill="none"/>
+            <circle r="3.5" fill="rgba(167,139,250,0.9)" filter="url(#blur-sm)">
+              <animateMotion dur="2.9s" repeatCount="indefinite" begin="0.4s"><mpath href="#path-gh"/></animateMotion>
+              <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="2.9s" begin="0.4s" repeatCount="indefinite"/>
+            </circle>
+            <path id="path-gh" d="M385,200 L254,200" fill="none"/>
+            <circle r="3" fill="rgba(6,182,212,0.8)" filter="url(#blur-sm)">
+              <animateMotion dur="3.1s" repeatCount="indefinite" begin="2.5s"><mpath href="#path-go"/></animateMotion>
+              <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.1s" begin="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <path id="path-go" d="M352,322 L248,228" fill="none"/>
+            <circle r="3.5" fill="rgba(129,140,248,0.9)" filter="url(#blur-sm)">
+              <animateMotion dur="2.7s" repeatCount="indefinite" begin="1.8s"><mpath href="#path-infoq"/></animateMotion>
+              <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="2.7s" begin="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <path id="path-infoq" d="M220,375 L220,236" fill="none"/>
 
             <!-- Central GP node -->
             <circle cx="220" cy="200" r="90" fill="url(#gp-glow)" filter="url(#blur-md)"/>
