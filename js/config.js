@@ -85,5 +85,8 @@ export const loadingMessages = [
   'curl -s https://dev.news | jq .',
 ];
 
-export const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast)\b/i;
+// Runtime sponsored-content regex — used for live-fetched articles that bypass
+// the build-time LLM check. Pre-built articles use the article.sponsored flag
+// stamped by build-feed.mjs (which runs both this regex and an Ollama LLM pass).
+export const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast|brought[ -]to[ -]you[ -]by|in[ -]partnership[ -]with|paid[ -]post|native[ -]ad|content[ -]marketing)\b/i;
 

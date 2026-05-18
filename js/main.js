@@ -52,6 +52,11 @@ const statArticles   = null; // stat removed from UI
 // ── Preference-based filtering ────────────────────────────────────
 
 function isSponsoredItem(a) {
+  // Pre-built articles carry a `sponsored` flag stamped by build-feed.mjs
+  // (regex + optional Ollama LLM pass). Trust it when present.
+  if (a.sponsored === true) return true;
+  // Live-fetched articles (loaded via CORS proxies at runtime) have no flag —
+  // fall back to the regex which covers the obvious keyword signals.
   return SPONSORED_RE.test([(a.title || ''), (a.snippet || ''), (a.source || '')].join(' '));
 }
 

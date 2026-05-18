@@ -23,10 +23,13 @@ const ROOT      = path.resolve(__dirname, '..');
 const SEO_ARTICLE_COUNT = 10;
 
 /** Same sponsored-content regex used in js/config.js — applied at build time too. */
-const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast)\b/i;
+const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast|brought[ -]to[ -]you[ -]by|in[ -]partnership[ -]with|paid[ -]post|native[ -]ad|content[ -]marketing)\b/i;
 
-/** Returns true if an article looks like sponsored/promotional content. */
+/** Returns true if an article looks like sponsored/promotional content.
+ *  Checks the pre-computed `sponsored` flag from build-feed.mjs first,
+ *  then falls back to the regex for articles that lack it. */
 function isSponsored(article) {
+  if (article.sponsored === true) return true;
   return SPONSORED_RE.test(article.title || '') || SPONSORED_RE.test(article.summary || '');
 }
 
