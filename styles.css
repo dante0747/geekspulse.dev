@@ -811,6 +811,44 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .giscus-wrap iframe { border-radius: 0 !important; }
 @media(max-width:600px){ .feedback-section { padding: 40px 0 48px; } }
 
+/* ── About network art ───────────────── */
+.about-art {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; min-height: 300px;
+}
+.about-network-svg {
+  width: 100%; max-width: 420px; height: auto;
+  filter: drop-shadow(0 0 24px rgba(91,94,234,0.18));
+}
+@media(max-width:860px) { .about-art { display: none; } }
+
+/* ── Contribute art ──────────────────── */
+.contribute-art-wrap {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; min-height: 320px;
+}
+.contribute-art-svg {
+  width: 100%; max-width: 400px; height: auto;
+  filter: drop-shadow(0 0 20px rgba(6,182,212,0.12));
+}
+
+/* ── Feedback art col ────────────────── */
+.feedback-art-col {
+  display: flex; align-items: center; justify-content: center; min-width: 0;
+}
+.feedback-art-svg {
+  width: 100%; max-width: 400px; height: auto;
+  filter: drop-shadow(0 0 20px rgba(91,94,234,0.14));
+}
+@media(max-width:860px) { .feedback-art-col { display: none !important; } }
+
+/* feedback title gradient matches contribute style */
+.feedback-section .contribute-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent) 0%, #9B9EFF 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
 /* ── Contribute section ──────────────── */
 .contribute-section {
   background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
