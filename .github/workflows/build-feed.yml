@@ -2,7 +2,7 @@ name: Build Feed
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # every 30 minutes
+    - cron: '0 * * * *'   # every hour
   workflow_dispatch:          # manual trigger from GitHub UI
   push:
     paths:
