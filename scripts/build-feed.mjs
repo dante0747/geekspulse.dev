@@ -764,7 +764,8 @@ async function main() {
   // High-volume categories (General, Security, DevOps…) can otherwise consume
   // all MAX_ARTICLES slots before slower categories (Java, Rust, Go,
   // Architecture…) appear, leaving them with 0 articles in the feed.
-  const MIN_PER_CATEGORY = 5; // guarantee at least this many articles per category
+  const MIN_PER_CATEGORY = 10;  // guarantee at least this many articles per category
+  const MAX_PER_CATEGORY = 100; // cap any single category so it can't crowd out others
   const categoryBuckets  = {};
   for (const a of unique) {
     (categoryBuckets[a.category] = categoryBuckets[a.category] || []).push(a);
@@ -777,9 +778,10 @@ async function main() {
 
   // Fill remaining slots from the already-sorted pool (newest-first), skipping
   // articles already added via the guarantee pass.
+  // No hard total cap — MAX_PER_CATEGORY (applied after classification) keeps
+  // any single category from dominating, but the overall total can exceed 300.
   const articles = [...guaranteed];
   for (const a of unique) {
-    if (articles.length >= MAX_ARTICLES) break;
     if (!guaranteed.has(a)) articles.push(a);
   }
 
@@ -808,6 +810,26 @@ async function main() {
       await saveCache();
       console.log(`[build-feed]   ↳ Cache saved to .ai-category-cache.json`);
     }
+  }
+
+  // ── Cap over-represented categories after classification ─────────────────
+  // Classification has now finalised each article's category. Apply a hard
+  // per-category cap (MAX_PER_CATEGORY) so high-volume feeds (e.g. Security)
+  // cannot push other categories to 0.  Articles are already sorted newest-
+  // first, so we simply take the first MAX_PER_CATEGORY per category.
+  {
+    const catCount = {};
+    const capped   = [];
+    for (const a of articles) {
+      const n = (catCount[a.category] = (catCount[a.category] || 0) + 1);
+      if (n <= MAX_PER_CATEGORY) capped.push(a);
+    }
+    const dropped = articles.length - capped.length;
+    if (dropped > 0) {
+      console.log(`[build-feed] Category cap: dropped ${dropped} over-represented articles (max ${MAX_PER_CATEGORY} per category).`);
+    }
+    articles.length = 0;
+    articles.push(...capped);
   }
 
   // ── AI article summarization (fills missing/short snippets) ──────────────

@@ -1,4 +1,4 @@
-import { RSS2JSON, MAX_ARTICLES, MAX_PER_FEED } from './config.js';
+import { RSS2JSON, MAX_PER_FEED } from './config.js';
 import { getFeeds } from './feeds-registry.js';
 import { truncate, stripHtml, getText, safeUrl } from './utils.js';
 import {
@@ -196,6 +196,6 @@ export async function fetchAllFromRSS() {
     return db - da;
   });
 
-  return { articles: articles.slice(0, MAX_ARTICLES), failedCount };
+  return { articles, failedCount };
 }
 

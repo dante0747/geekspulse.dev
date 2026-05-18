@@ -10,7 +10,6 @@ export const CORS_PROXIES = [
 export const CORS_PROXY = 'https://api.codetabs.com/v1/proxy/?quest=';
 export const RSS2JSON   = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
-export const MAX_ARTICLES   = 300;
 export const MAX_PER_FEED   = 15;
 export const DAY_MS         = 86_400_000;
 // Feed cache is considered stale after this many ms (default: 2 hours)
