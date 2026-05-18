@@ -3,6 +3,7 @@
 import { categories, catMeta, REFRESH_OPTIONS, SPONSORED_RE, DAY_MS, CACHE_STALE_MS } from './config.js';
 import { loadFeedsRegistry, getFeeds } from './feeds-registry.js';
 import { gaEvent } from './analytics.js';
+import { initConsent } from './consent.js';
 import { PREF, loadPreferences, savePreferences, resetPreferences, hasActivePreferences, loadBookmarks, saveBookmarks, isBookmarked, toggleBookmark } from './storage.js';
 import { esc, randomMsg, announce, animateCounter, showBmToast, shareArticle } from './utils.js';
 import { progressivelyResolveMissingImages, resolveArticleMetadataImage, updateCardImage, getCachedImage } from './images.js';
@@ -751,7 +752,22 @@ async function init() {
 // ── Bootstrap ─────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialise cookie/analytics consent (GDPR)
+  initConsent();
+
   init();
+
+  // Populate "last updated" in About section from version.json
+  const aboutUpdated = document.getElementById('aboutLastUpdated');
+  if (aboutUpdated) {
+    fetch('/version.json').then(r => r.ok ? r.json() : null).then(v => {
+      if (v && v.buildDate) {
+        const d = new Date(v.buildDate);
+        const label = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        aboutUpdated.textContent = `// last updated ${label}`;
+      }
+    }).catch(() => {});
+  }
 
   // Back to top button
   const btn = document.getElementById('backToTop');

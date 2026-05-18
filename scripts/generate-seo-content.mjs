@@ -22,6 +22,14 @@ const ROOT      = path.resolve(__dirname, '..');
 
 const SEO_ARTICLE_COUNT = 10;
 
+/** Same sponsored-content regex used in js/config.js — applied at build time too. */
+const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast)\b/i;
+
+/** Returns true if an article looks like sponsored/promotional content. */
+function isSponsored(article) {
+  return SPONSORED_RE.test(article.title || '') || SPONSORED_RE.test(article.summary || '');
+}
+
 /** Escape a string for safe inclusion in HTML attribute or text content. */
 function esc(str) {
   return String(str || '')
@@ -128,7 +136,9 @@ async function main() {
     process.exit(0);
   }
 
-  const articles = (feedData.articles || []).slice(0, SEO_ARTICLE_COUNT);
+  const articles = (feedData.articles || [])
+    .filter(a => !isSponsored(a))
+    .slice(0, SEO_ARTICLE_COUNT);
   if (articles.length === 0) {
     console.warn('[generate-seo-content] No articles found in feed.json — skipping.');
     process.exit(0);
@@ -212,6 +222,13 @@ ${articleItems}
   const updated = before + '\n' + injectedHtml + '\n  ' + after;
 
   await fs.writeFile(indexPath, updated, 'utf8');
+
+  // Also update the hardcoded dateModified in the JSON-LD to today's date
+  const today = new Date().toISOString().slice(0, 10);
+  const withDate = (await fs.readFile(indexPath, 'utf8'))
+    .replace(/"dateModified":\s*"\d{4}-\d{2}-\d{2}"/, `"dateModified": "${today}"`);
+  await fs.writeFile(indexPath, withDate, 'utf8');
+
   console.log(`[generate-seo-content] ✓ Injected ${articles.length} latest articles into index.html.`);
 }
 

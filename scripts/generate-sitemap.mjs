@@ -37,6 +37,22 @@ async function main() {
     </image:image>
   </url>
 
+  <!-- Privacy Policy -->
+  <url>
+    <loc>${BASE_URL}/privacy.html</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Terms of Use -->
+  <url>
+    <loc>${BASE_URL}/terms.html</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
 `;
 

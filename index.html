@@ -4,23 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M63R1H30X2"></script>
+  <!-- Google Analytics — loaded only after user consent (see js/consent.js) -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-M63R1H30X2');
+    // If consent was already given on a previous visit, load GA4 immediately
+    // to avoid losing the first pageview. js/consent.js handles new visitors.
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('gp:analytics:consent') === 'yes') {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){window.dataLayer.push(arguments);};
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-M63R1H30X2', {anonymize_ip: true});
+      var _s = document.createElement('script');
+      _s.async = true;
+      _s.src = 'https://www.googletagmanager.com/gtag/js?id=G-M63R1H30X2';
+      document.head.appendChild(_s);
+    }
   </script>
 
   <!-- Primary SEO -->
   <title>GeeksPulse — Developer News, One Feed</title>
   <meta name="description" content="GeeksPulse aggregates 39 hand-picked RSS feeds — AI, security, DevOps, JavaScript, Rust, Go, Java, open source, and architecture — into one clean, ad-free, paywall-free reading experience." />
-  <meta name="author" content="GeeksPulse" />
+  <meta name="author" content="Majid Abarghooei" />
   <meta name="copyright" content="GeeksPulse 2026" />
   <meta name="language" content="English" />
   <meta name="rating" content="general" />
+  <meta name="application-name" content="GeeksPulse" />
+  <meta name="generator" content="" />
   <link rel="canonical" href="https://geekspulse.dev/" />
+  <link rel="author" href="/#about" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -30,6 +40,7 @@
   <meta property="og:image" content="https://geekspulse.dev/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="GeeksPulse — Developer News Aggregator" />
   <meta property="og:site_name" content="GeeksPulse" />
   <meta property="og:locale" content="en_US" />
@@ -49,11 +60,17 @@
 
   <!-- Theme / PWA -->
   <meta name="theme-color" content="#060B15" />
+  <link rel="manifest" href="/manifest.json" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.svg" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <!-- DNS prefetch for key third-party origins -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="dns-prefetch" href="https://api.codetabs.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -98,6 +115,12 @@
           "contactType": "customer support",
           "email": "abarghooeimajid@gmail.com",
           "availableLanguage": "English"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Majid Abarghooei",
+          "email": "abarghooeimajid@gmail.com",
+          "sameAs": ["https://github.com/dante0747"]
         }
       }
     },
@@ -112,7 +135,8 @@
         "@type": "Thing",
         "name": "Developer News Aggregation"
       },
-      "dateModified": "2026-05-12",
+      "privacyPolicy": "https://geekspulse.dev/privacy.html",
+      "dateModified": "2026-05-18",
       "breadcrumb": {
         "@type": "BreadcrumbList",
         "itemListElement": [
@@ -390,7 +414,7 @@
         <!-- SEO static article fallback — injected by scripts/generate-seo-content.mjs -->
         <!-- GENERATED_LATEST_ARTICLES_START -->
 
-  <!-- Latest articles from 10 of 365 cached stories (generated May 18, 2026) -->
+  <!-- Latest articles from 10 of 449 cached stories (generated May 18, 2026) -->
   <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px">
     <h2>
       Latest Developer News
@@ -411,26 +435,6 @@
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <a href="https://www.infoq.com/presentations/product-cloud-native/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://spectrum.ieee.org/media-library/hot-air-balloons-over-a-riverside-city-skyline-at-sunrise-with-parks-in-the-foreground.jpg?id=66723254&amp;width=1245&amp;height=700&amp;coordinates=0%2C62%2C0%2C63" alt="Article image for: How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" rel="noopener noreferrer">How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This sponsored article is brought to you by Melbourne Convention Bureau (MCB) supported by Business Events Australia . Melbourne’s reputation as a global…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-ai"></span>
-          <span>IEEE Spectrum &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" data-share-title="How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" rel="noopener noreferrer" class="card-link">
             Read →
           </a>
         </div>
@@ -480,7 +484,7 @@
     <article class="seo-card">
       <div class="seo-card-img-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuMUxcVvbSdJaR0YzeyXB2GovnBhB4mq49IuJotpi1MoDTZfz9AxOV2Fzvl8mygHbPzVc3iV7hdO0SqLYb0ACT9p3gIyjBK7L1F-yn1CQU0VSzTBx0jqsxv6rjOU7nTOjAQGC_DBcsvfYCx51xkCuxopaxTbYMQcAVzQfDaLwsJx9ZFr6eNNHQ7yW2WJA/w1200-h630-p-k-no-nu/archi-llm.png" alt="Article image for: Find bugs in YOUR code using OpenCode, Llama.cpp and Qwen3.6" loading="lazy" decoding="async" width="640" height="360" /></div>
       <h3><a href="http://wtarreau.blogspot.com/2026/05/find-bugs-in-your-code-using-opencode.html" rel="noopener noreferrer">Find bugs in YOUR code using OpenCode, Llama.cpp and Qwen3.6</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>The core topic of this article is how OpenCode and Llama.cpp can be used for automated testing and analysis in a developer&#39;s codebase. The key technology or…</p></div>
+      
       <div class="seo-card-footer">
         <div class="card-source">
           <span class="src-dot cat-devops"></span>
@@ -538,12 +542,12 @@
     </article>
 
     <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="/assets/fallbacks/security.svg" alt="Article image for: Where Are the Vibecoded Photoshops?" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <div class="seo-card-img-wrap"><img src="/assets/fallbacks/general.svg" alt="Article image for: Where Are the Vibecoded Photoshops?" loading="lazy" decoding="async" width="640" height="360" /></div>
       <h3><a href="https://indiepixel.de/blog/posts/where-are-the-vibecoded-photoshops/" rel="noopener noreferrer">Where Are the Vibecoded Photoshops?</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Vibecoded, a startup that specializes in photo editing software and services, has been making waves in the tech world with its innovative approach to image…</p></div>
+      
       <div class="seo-card-footer">
         <div class="card-source">
-          <span class="src-dot cat-security"></span>
+          <span class="src-dot cat-general"></span>
           <span>Hacker News &middot; May 18, 2026</span>
         </div>
         <div class="card-actions">
@@ -580,7 +584,7 @@
     <article class="seo-card">
       <div class="seo-card-img-wrap"><img src="https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/mpx/2704722219/2026_05/1779059495883_wnn_vca_commencment_speakers_booed_260517_S3_1920x1080-i60agb.jpg" alt="Article image for: Multiple commencement speakers booed for AI comments during graduation speeches" loading="lazy" decoding="async" width="640" height="360" /></div>
       <h3><a href="https://www.nbcnews.com/video/multiple-commencement-speakers-booed-for-ai-comments-during-graduation-speeches-263486021518" rel="noopener noreferrer">Multiple commencement speakers booed for AI comments during graduation speeches</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Multiple commencement speakers booed for AI comments during graduation speeches, highlighting the ongoing challenges in the job market and the high stakes of…</p></div>
+      
       <div class="seo-card-footer">
         <div class="card-source">
           <span class="src-dot cat-ai"></span>
@@ -591,6 +595,26 @@
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <a href="https://www.nbcnews.com/video/multiple-commencement-speakers-booed-for-ai-comments-during-graduation-speeches-263486021518" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="/assets/fallbacks/ai.svg" alt="Article image for: Germany goes from labour shortages to hiring freezes" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.ft.com/content/2a6c1cb9-6c11-41c8-a8ea-a367b8799126" rel="noopener noreferrer">Germany goes from labour shortages to hiring freezes</a></h3>
+      
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-ai"></span>
+          <span>Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.ft.com/content/2a6c1cb9-6c11-41c8-a8ea-a367b8799126" data-share-title="Germany goes from labour shortages to hiring freezes" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.ft.com/content/2a6c1cb9-6c11-41c8-a8ea-a367b8799126" rel="noopener noreferrer" class="card-link">
             Read →
           </a>
         </div>
@@ -765,25 +789,40 @@
           </div>
           <h2 id="about-heading" class="contribute-title">Behind<br /><em>GeeksPulse.</em></h2>
           <p class="contribute-desc">
-            GeeksPulse is an indie project — designed, built, and maintained by a solo developer. It exists because keeping up with software engineering shouldn't require 12 browser tabs and a news algorithm optimised for rage. It aggregates 39 hand-picked RSS feeds with no ads, no paywalls, and no outside pressure.
+            GeeksPulse is an indie project — designed, built, and maintained by <strong>Majid Abarghooei</strong>, a solo developer. It exists because keeping up with software engineering shouldn't require 12 browser tabs and a news algorithm optimised for rage. It aggregates 39 hand-picked RSS feeds with no ads, no paywalls, and no outside pressure.
           </p>
+          <!-- GitHub stars badge -->
+          <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count">
+              <img src="https://img.shields.io/github/stars/dante0747/geekspulse.dev?style=social" alt="GitHub stars for GeeksPulse" width="90" height="20" loading="lazy" />
+            </a>
+            <span id="aboutLastUpdated" style="font-family:var(--mono);font-size:11px;color:var(--ink3)"></span>
+          </div>
           <ul class="contribute-ways" style="margin-bottom:1.25rem">
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 7l6 4 6-4"/></svg>
-              <span>Email: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan)">abarghooeimajid@gmail.com</a></span>
+              <span>Email: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan)" aria-label="Send email to Majid Abarghooei">abarghooeimajid@gmail.com</a></span>
             </li>
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span>GitHub: <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">github.com/dante0747/geekspulse.dev</a></span>
+              <span>GitHub: <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="GeeksPulse source code on GitHub">github.com/dante0747/geekspulse.dev</a></span>
             </li>
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM1 6h14"/></svg>
-              <span>Support: <a href="https://paypal.me/MajidAbarghooei" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">paypal.me/MajidAbarghooei</a></span>
+              <span>Support: <a href="https://paypal.me/MajidAbarghooei" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="Support GeeksPulse via PayPal">paypal.me/MajidAbarghooei</a></span>
+            </li>
+            <li>
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="1" y="3" width="14" height="10" rx="2"/></svg>
+              <span>Editorial policy: <a href="https://github.com/dante0747/geekspulse.dev/blob/main/docs/feed-selection-criteria.md" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="Read the GeeksPulse feed selection criteria">Feed selection criteria</a></span>
             </li>
           </ul>
           <p style="font-size:0.82rem;color:var(--ink3);font-family:var(--mono)">
             // Launched 2026 · Open source · No ads · No paywalls · No tracking
           </p>
+          <div style="margin-top:1rem;font-size:0.82rem;display:flex;gap:1rem;flex-wrap:wrap">
+            <a href="/privacy.html" style="color:var(--ink3);font-family:var(--mono);font-size:11px" aria-label="GeeksPulse Privacy Policy">// Privacy Policy</a>
+            <a href="/terms.html" style="color:var(--ink3);font-family:var(--mono);font-size:11px" aria-label="GeeksPulse Terms of Use">// Terms of Use</a>
+          </div>
         </div>
       </div>
     </div>
@@ -822,11 +861,15 @@
           </div>
           <div class="footer-copy">&#169; 2026 GeeksPulse &mdash; Free to use. No ads. No tracking. No paywalls.</div>
           <div class="footer-copy" style="margin-top:6px;font-size:0.75rem">
-            Contact: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan);text-decoration:none">abarghooeimajid@gmail.com</a>
+            Contact: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan);text-decoration:none" aria-label="Email Majid Abarghooei">abarghooeimajid@gmail.com</a>
             &nbsp;&middot;&nbsp;
-            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:none">GitHub</a>
+            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:none" aria-label="GeeksPulse on GitHub">GitHub</a>
             &nbsp;&middot;&nbsp;
             <a href="#about" style="color:var(--cyan);text-decoration:none">About</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/privacy.html" style="color:var(--cyan);text-decoration:none">Privacy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/terms.html" style="color:var(--cyan);text-decoration:none">Terms</a>
           </div>
           <div class="footer-copy" style="margin-top:8px;font-size:0.72rem;font-family:var(--mono);color:var(--ink3)">
             <a id="siteVersion" href="https://github.com/dante0747/geekspulse.dev/commits/main" target="_blank" rel="noopener noreferrer" title="View changelog on GitHub" class="site-version-badge">// loading version…</a>
