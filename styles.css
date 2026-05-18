@@ -932,7 +932,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 /* ── Back-to-top ─────────────────────── */
 .back-to-top {
-  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+  position: fixed; bottom: calc(24px + var(--cookie-h, 0px)); right: 24px; z-index: 200;
   width: 40px; height: 40px;
   background: var(--surface2); border: 1px solid var(--border);
   color: var(--ink2); display: flex; align-items: center; justify-content: center;
@@ -957,7 +957,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 /* ── Bookmark toast ──────────────────── */
 .bm-toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(10px);
+  position: fixed; bottom: calc(24px + var(--cookie-h, 0px)); left: 50%; transform: translateX(-50%) translateY(10px);
   background: var(--surface2); border: 1px solid var(--border2);
   color: var(--ink2); font-family: var(--mono); font-size: 12px; font-weight: 600;
   padding: 8px 18px; z-index: 9999; box-shadow: var(--shadow-lg);
@@ -1192,6 +1192,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   box-shadow: -4px 0 32px rgba(0,0,0,0.5);
   display: flex; flex-direction: column;
   transform: translateX(100%); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 .my-pulse-drawer.open { transform: translateX(0); }
 .mpd-header {
@@ -1212,6 +1213,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .mpd-footer {
   padding: 10px 14px; border-top: 1px solid var(--border); background: var(--surface2);
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
 }
 .mpd-toggle {
   display: flex; align-items: center; gap: 10px; cursor: pointer;
@@ -1365,6 +1367,104 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     width: 100% !important; border-left: none; border-right: none;
     box-shadow: var(--shadow-lg); border-radius: 0;
   }
+}
+
+/* ── Mobile UX improvements ──────────── */
+
+/* #1 — Touch targets ≥ 44×44 px */
+@media (max-width: 860px) {
+  .bm-btn, .card-share-btn, .card-summary-btn, .summary-close,
+  .mpd-close, .pp-close, .view-btn { min-width: 44px; min-height: 44px; }
+  .chip { min-height: 40px; padding: 8px 16px; }
+}
+
+/* #2 — Hero H1 too large on very narrow screens */
+@media (max-width: 400px) {
+  .hero h1 { font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.12; }
+  .hero-sub { font-size: 14px; }
+}
+
+/* #3 — Newsletter form stacks on narrow screens */
+@media (max-width: 480px) {
+  .newsletter-field-wrap { flex-direction: column; border-radius: var(--radius); }
+  .newsletter-input { border-right: 1px solid var(--border2); border-radius: var(--radius); }
+  .newsletter-btn { border-radius: var(--radius); width: 100%; justify-content: center; }
+}
+
+/* #4 — Hide keyboard shortcut hint on mobile */
+@media (max-width: 860px) { .search-kbd { display: none; } }
+
+/* #5 — Sticky filter chips with scroll affordance fade */
+@media (max-width: 860px) {
+  .mobile-filters {
+    position: sticky;
+    top: 58px;
+    z-index: 90;
+    background: var(--bg);
+    padding: 10px 16px;
+    margin: 0 -16px;
+    border-bottom: 1px solid var(--border);
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  }
+}
+
+/* #8 — Summary dialog too tall in landscape */
+@media (max-width: 860px) and (max-height: 600px) {
+  .summary-dialog { max-height: 80vh; }
+  .summary-dialog__title { padding: 10px 14px 6px; font-size: 13px; }
+  .summary-dialog__body  { padding: 0 14px 12px; }
+}
+
+/* #9 — Card images too tall on mobile */
+@media (max-width: 640px) {
+  .card-img-wrap { aspect-ratio: 21 / 9; }
+}
+
+/* #10 — Toolbar wraps cleanly at 600px */
+@media (max-width: 600px) {
+  .toolbar-left  { width: 100%; }
+  .toolbar-right { width: 100%; justify-content: space-between; }
+  .article-count { flex: 1; text-align: right; }
+}
+
+/* #11 — Hide footer keyboard shortcuts on mobile */
+@media (max-width: 860px) { .footer-shortcuts { display: none; } }
+
+/* #12 — Settings popover max-height + scroll on mobile */
+@media (max-width: 480px) {
+  .settings-popover {
+    max-height: calc(100vh - 58px - env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+  }
+}
+
+/* #13 — PayPal modal as bottom sheet on small phones */
+@media (max-width: 480px) {
+  .pp-modal-backdrop { align-items: flex-end; }
+  .pp-modal {
+    width: 100%; max-width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    animation: slide-up-sheet .22s ease;
+  }
+}
+@keyframes slide-up-sheet {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* #14 — Nav overflow at 360px */
+@media (max-width: 400px) {
+  .auto-countdown { display: none !important; }
+  .nav-actions { gap: 4px; }
+  .nav-actions .btn-sm { padding: 5px 7px; }
+}
+
+/* #15 — Scroll snap for filter chips */
+@media (max-width: 860px) {
+  .mobile-filters { scroll-snap-type: x mandatory; }
+  .chip { scroll-snap-align: start; }
 }
 
 /* ── Reduced motion ──────────────────── */

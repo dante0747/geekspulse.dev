@@ -42,6 +42,7 @@ export function declineConsent() {
 
 function removeBanner() {
   document.getElementById('cookieBanner')?.remove();
+  document.body.style.setProperty('--cookie-h', '0px');
 }
 
 /** Show the consent banner. */
@@ -66,6 +67,10 @@ function showBanner() {
       </div>
     </div>`;
   document.body.appendChild(banner);
+  // Push back-to-top and toast above the banner
+  requestAnimationFrame(() => {
+    document.body.style.setProperty('--cookie-h', banner.offsetHeight + 'px');
+  });
   document.getElementById('cookieAccept')?.addEventListener('click', acceptConsent);
   document.getElementById('cookieDecline')?.addEventListener('click', declineConsent);
 }
