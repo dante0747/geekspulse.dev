@@ -50,6 +50,30 @@ function getModal() {
     if (e.key === 'Escape' && _modal.classList.contains('open')) closeSummaryModal();
   });
 
+  // Swipe-down-to-close (mobile bottom sheet)
+  const dialog = _modal.querySelector('.summary-dialog');
+  let touchStartY = 0;
+  let touchDeltaY = 0;
+  dialog.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
+    touchDeltaY = 0;
+    dialog.style.transition = 'none';
+  }, { passive: true });
+  dialog.addEventListener('touchmove', e => {
+    touchDeltaY = e.touches[0].clientY - touchStartY;
+    if (touchDeltaY > 0) {
+      dialog.style.transform = `translateY(${touchDeltaY}px)`;
+    }
+  }, { passive: true });
+  dialog.addEventListener('touchend', () => {
+    dialog.style.transition = '';
+    dialog.style.transform = '';
+    if (touchDeltaY > 80) {
+      closeSummaryModal();
+    }
+    touchDeltaY = 0;
+  }, { passive: true });
+
   return _modal;
 }
 

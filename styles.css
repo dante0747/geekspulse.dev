@@ -1456,7 +1456,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 /* #14 — Nav overflow at 360px */
 @media (max-width: 400px) {
-  .auto-countdown { display: none !important; }
   .nav-actions { gap: 4px; }
   .nav-actions .btn-sm { padding: 5px 7px; }
 }
@@ -1523,6 +1522,243 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   display: flex;
   gap: 8px;
   flex-shrink: 0;
+}
+
+
+/* ══════════════════════════════════════════
+   MOBILE VIEW IMPROVEMENTS — all sections
+   ══════════════════════════════════════════ */
+
+/* Clear filter chip */
+.chip.chip-clear {
+  border-color: rgba(248,81,73,0.4); color: var(--red); background: rgba(248,81,73,0.06);
+}
+.chip.chip-clear:hover { border-color: var(--red); background: rgba(248,81,73,0.1); }
+
+/* ── §1: Navigation — hamburger + drawer ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; width: 44px; height: 44px;
+  background: transparent; border: 1px solid var(--border2); color: var(--ink2);
+  border-radius: var(--radius-sm); flex-shrink: 0;
+  transition: color var(--ease), border-color var(--ease), background var(--ease);
+}
+.nav-hamburger:hover { color: var(--ink); border-color: var(--border2); background: rgba(255,255,255,0.06); }
+.nav-hamburger-bar {
+  display: block; width: 16px; height: 2px; background: currentColor;
+  border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-hamburger.open .nav-hamburger-bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-hamburger.open .nav-hamburger-bar:nth-child(2) { opacity: 0; }
+.nav-hamburger.open .nav-hamburger-bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav-drawer {
+  position: fixed; top: 58px; left: 0; right: 0; z-index: 95;
+  background: var(--bg2); border-bottom: 1px solid var(--border2);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transform: translateY(-110%);
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1);
+  display: none;
+}
+.nav-drawer.open { transform: translateY(0); display: block; }
+.nav-drawer-links { display: flex; flex-direction: column; padding: 8px 0; }
+.nav-drawer-link {
+  display: block; padding: 14px 24px; font-size: 15px; font-weight: 500;
+  color: var(--ink2); border-bottom: 1px solid var(--border);
+  transition: color var(--ease), background var(--ease);
+}
+.nav-drawer-link:last-child { border-bottom: none; }
+.nav-drawer-link:hover { color: var(--ink); background: rgba(255,255,255,0.04); }
+
+.nav-drawer-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 94;
+  background: rgba(0,0,0,0.5);
+}
+.nav-drawer-backdrop.open { display: block; animation: fade-in 0.15s ease; }
+
+/* Hide auto-countdown and btn-label below 860px */
+@media (max-width: 860px) {
+  .nav-hamburger { display: flex; }
+  .nav-actions .btn-label { display: none; }
+  .auto-countdown { display: none !important; }
+}
+
+/* ── §2: Hero section ── */
+@media (max-width: 480px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  .hero-stat .val { font-size: 20px; }
+  .hero-stats { gap: 16px; }
+  .hero-sub { font-size: 14px; }
+  .hero::after {
+    content: ''; display: block; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40px; pointer-events: none;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+  }
+}
+@media (max-width: 360px) {
+  .hero-stats { gap: 12px; }
+}
+
+/* ── §3: Filter chips dynamic mask ── */
+.mobile-filters.mask-right {
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+.mobile-filters.mask-left {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%);
+}
+.mobile-filters.mask-both {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%);
+}
+@media (max-width: 860px) {
+  .mobile-filters {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .chip { padding: 8px 12px; }
+}
+
+/* ── §4: Toolbar / Search ── */
+@media (max-width: 860px) {
+  .search-input { font-size: 16px; }
+  input, textarea, select { font-size: max(16px, 1em); }
+}
+@media (max-width: 600px) {
+  .toolbar-right { gap: 12px; justify-content: flex-end; }
+}
+
+/* ── §5: Article cards ── */
+@media (max-width: 860px) {
+  .card-img-wrap { aspect-ratio: 3 / 2; }
+  .card-link { padding: 7px 12px; min-height: 36px; }
+}
+@media (max-width: 640px) {
+  .card-snippet { -webkit-line-clamp: 3; }
+  .card-featured { padding: 12px 14px; }
+  .feed-grid .card-featured { grid-column: auto; }
+}
+@media (max-width: 380px) {
+  .card-img-wrap--list { width: 64px; min-width: 64px; }
+}
+
+/* ── §6: Settings popover ── */
+@media (max-width: 480px) {
+  .settings-popover::before {
+    content: ''; display: block; width: 32px; height: 4px;
+    background: var(--border2); border-radius: 2px;
+    margin: 10px auto 4px; flex-shrink: 0;
+  }
+  .settings-popover {
+    max-height: calc(100dvh - 58px - env(safe-area-inset-bottom, 0px));
+    max-height: calc(100vh - 58px - env(safe-area-inset-bottom, 0px));
+  }
+}
+@media (max-width: 860px) {
+  .settings-opt { min-height: 44px; }
+}
+
+/* ── §7: Summary modal → bottom sheet on mobile ── */
+@keyframes slide-up-sheet-summary {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@media (max-width: 640px) {
+  #summaryModal { align-items: flex-end; }
+  .summary-dialog {
+    width: 100%; max-width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 80dvh;
+    max-height: 80vh;
+    animation: slide-up-sheet-summary .22s ease;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .summary-dialog::before {
+    content: ''; display: block; width: 32px; height: 4px;
+    background: var(--border2); border-radius: 2px;
+    margin: 10px auto 0; flex-shrink: 0;
+  }
+}
+
+/* ── §8: My Pulse Drawer ── */
+@media (max-width: 400px) {
+  .mpd-section { padding: 10px 12px; }
+}
+@media (max-width: 600px) {
+  .mpd-source-list { max-height: 180px; }
+}
+@media (max-width: 860px) {
+  .mpd-chip { min-height: 36px; padding: 6px 12px; }
+}
+
+/* ── §9: Cookie consent banner ── */
+@media (max-width: 480px) {
+  .cookie-banner { padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .cookie-banner-inner { flex-direction: column; align-items: stretch; }
+  .cookie-banner-actions { width: 100%; flex-direction: column; }
+  .cookie-banner-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ── §10: Footer ── */
+@media (max-width: 600px) {
+  .footer-sources-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;
+  }
+}
+@media (max-width: 480px) {
+  .footer-sources-list li { font-size: 12px; }
+}
+.site-footer { padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px)); }
+
+/* ── §11: Back-to-top button ── */
+@media (max-width: 860px) {
+  .back-to-top {
+    width: 44px; height: 44px;
+    bottom: calc(72px + var(--cookie-h, 0px)); right: 16px;
+  }
+}
+
+/* ── §12: Contribute / Feedback ── */
+@media (max-width: 600px) {
+  .contribute-section { padding: 40px 0 48px; }
+}
+@media (hover: none) {
+  .contribute-ways li:hover { transform: none; }
+}
+@media (min-width: 600px) and (max-width: 860px) {
+  .contribute-title, .feedback-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  }
+}
+
+/* ── §13: Cross-cutting ── */
+@media (max-width: 860px) {
+  .mobile-filters, .mpd-body, .mpd-source-list, .summary-dialog__body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+.my-pulse-drawer, .summary-dialog, .settings-popover {
+  overscroll-behavior: contain;
+}
+/* Safe-area insets */
+.top-nav { padding-top: env(safe-area-inset-top, 0px); }
+.back-to-top, .bm-toast {
+  bottom: calc(24px + var(--cookie-h, 0px) + env(safe-area-inset-bottom, 0px));
+}
+@media (max-width: 860px) {
+  .back-to-top {
+    bottom: calc(72px + var(--cookie-h, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+}
+/* Reduced data — skip Google Fonts */
+@media (prefers-reduced-data: reduce) {
+  :root {
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: ui-monospace, 'Cascadia Code', 'Fira Mono', monospace;
+  }
 }
 
 

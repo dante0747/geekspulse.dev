@@ -302,6 +302,20 @@ function buildFilters() {
       <span style="color:${c.color};display:inline-flex;vertical-align:middle;margin-right:4px">${c.icon}</span>${esc(c.id)}
     </button>`).join('');
 
+  // Add "✕ Clear" chip when a non-All filter is active
+  if (activeFilter !== 'All') {
+    const clearChip = document.createElement('button');
+    clearChip.className = 'chip chip-clear';
+    clearChip.textContent = '✕ Clear';
+    clearChip.setAttribute('aria-label', 'Clear filter');
+    clearChip.addEventListener('click', () => setFilter('All'));
+    mobileFilters.appendChild(clearChip);
+  }
+
+  if (typeof window.__updateFiltersMask === 'function') {
+    setTimeout(window.__updateFiltersMask, 50);
+  }
+
   [sidebarFilters, mobileFilters].forEach(el => {
     el.addEventListener('click', e => {
       const btn = e.target.closest('[data-cat]');
@@ -335,7 +349,7 @@ function applyView() {
   listViewBtn.setAttribute('aria-pressed', String(viewMode === 'list'));
 }
 
-// ── Nav scroll effect ─────────────────────────────────────────────
+// ── Nav scroll effect + hamburger menu ───────────────────────────
 
 function initNav() {
   const nav = document.querySelector('.top-nav');
@@ -343,6 +357,84 @@ function initNav() {
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Hamburger menu
+  const hamburger = document.getElementById('navHamburger');
+  const drawer    = document.getElementById('navDrawer');
+  const backdrop  = document.getElementById('navDrawerBackdrop');
+  if (!hamburger || !drawer || !backdrop) return;
+
+  function openDrawer() {
+    hamburger.classList.add('open');
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.removeAttribute('aria-hidden');
+    // Focus trap: focus first link
+    const firstLink = drawer.querySelector('.nav-drawer-link');
+    if (firstLink) setTimeout(() => firstLink.focus(), 50);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    hamburger.focus();
+  }
+
+  hamburger.addEventListener('click', () => {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+
+  backdrop.addEventListener('click', closeDrawer);
+
+  // Close when a link is tapped
+  drawer.querySelectorAll('.nav-drawer-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+  });
+
+  // Focus trap within drawer
+  drawer.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const focusable = Array.from(drawer.querySelectorAll('.nav-drawer-link'));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+}
+
+// ── Mobile filter chip mask ───────────────────────────────────────
+
+function initMobileFiltersMask() {
+  const el = document.getElementById('mobileFilters');
+  if (!el) return;
+  function updateMask() {
+    const atLeft  = el.scrollLeft <= 2;
+    const atRight = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+    el.classList.remove('mask-left', 'mask-right', 'mask-both');
+    if (!atLeft && !atRight) el.classList.add('mask-both');
+    else if (!atLeft) el.classList.add('mask-left');
+    else if (!atRight) el.classList.add('mask-right');
+  }
+  el.addEventListener('scroll', updateMask, { passive: true });
+  // re-check after filters build
+  window.addEventListener('resize', updateMask, { passive: true });
+  setTimeout(updateMask, 100);
+  window.__updateFiltersMask = updateMask;
 }
 
 // ── Auto-refresh ──────────────────────────────────────────────────
@@ -513,6 +605,7 @@ async function init() {
   if (statFeedsEl) statFeedsEl.textContent = getFeeds().length;
 
   initNav();
+  initMobileFiltersMask();
   initSettings({
     getAutoRefreshMin: ()  => autoRefreshMin,
     setAutoRefreshMin: v   => { autoRefreshMin = v; },
