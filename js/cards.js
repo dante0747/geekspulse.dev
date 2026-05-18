@@ -10,7 +10,7 @@ function summaryBtn(a, extraStyle = '') {
   const icon = isAi
     ? `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`
     : `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`;
-  return `<button class="card-summary-btn" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-type="${esc(a.summaryType || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}"${extraStyle ? ` style="${extraStyle}"` : ''} title="${label}" aria-label="Show ${label}">${icon}</button>`;
+  return `<button class="card-summary-btn${isAi ? '' : ' card-summary-btn--snippet'}" data-summary-title="${esc(a.title)}" data-summary-snippet="${esc(a.snippet || '')}" data-summary-type="${esc(a.summaryType || '')}" data-summary-link="${esc(a.link)}" data-summary-source="${esc(a.source || '')}"${extraStyle ? ` style="${extraStyle}"` : ''} title="${label}" aria-label="Show ${label}">${icon}</button>`;
 }
 
 // ── Category icon helpers ─────────────────────────────────────────

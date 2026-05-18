@@ -987,6 +987,9 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   padding: 0; border-radius: var(--radius-sm);
 }
 .card-summary-btn:hover { color: var(--purple); border-color: rgba(188,140,255,.5); background: rgba(188,140,255,.08); box-shadow: none; }
+/* Snippet variant — teal, matching modal badge */
+.card-summary-btn--snippet { color: var(--teal, #2DD4BF); }
+.card-summary-btn--snippet:hover { color: var(--teal, #2DD4BF); border-color: rgba(45,212,191,.3); background: rgba(45,212,191,.08); }
 
 /* ── Summary modal ───────────────────────────────────────────────── */
 #summaryModal {
