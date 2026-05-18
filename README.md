@@ -212,7 +212,7 @@ The frontend's primary data source is the pre-built `public/feed.json` file. If 
 
 ## ⚙️ Feed Pipeline
 
-The `scripts/build-feed.mjs` script is a **Node 18+ server-side utility** that pre-fetches all feeds and writes a static JSON cache to `public/`. GitHub Actions runs this on a schedule to keep the cache fresh.
+The `scripts/build-feed.mjs` script is a **Node 18+ server-side utility** that pre-fetches all feeds and writes a static JSON cache to `public/`. GitHub Actions runs this **every 30 minutes** on a schedule to keep the cache fresh.
 
 ```bash
 # Install dependencies (build-time + dev)
