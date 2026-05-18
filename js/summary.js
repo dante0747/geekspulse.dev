@@ -75,7 +75,7 @@ export function openSummaryModal({ title, snippet, link, source }) {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  if (snippet && snippet.trim().length > 20) {
+  if (snippet && snippet.trim().length >= 40) {
     // We already have a good summary from the feed cache
     document.getElementById('summaryText').textContent = snippet.trim();
   } else {

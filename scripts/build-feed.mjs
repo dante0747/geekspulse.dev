@@ -194,10 +194,13 @@ async function summarizeArticle(title = '', existingSummary = '', articleUrl = '
 
     const prompt =
       `You are a technical news editor writing for a developer audience.\n` +
-      `Write a concise summary (max 120 words) of the article below.\n` +
+      `Write a concise summary (2-4 sentences, max 80 words) of the article below.\n` +
       `Focus on: the core topic, the key technology or finding, and why it matters to developers.\n` +
-      `Do NOT start with "This article", "The article", or simply restate the title.\n` +
-      `Reply with only the summary text — no quotes, no bullet points, no labels.\n\n` +
+      `Rules:\n` +
+      `- Plain prose only. No markdown, no headers, no bullet points, no numbered lists, no bold, no italics.\n` +
+      `- Do NOT start with "This article", "The article", or a restatement of the title.\n` +
+      `- Do NOT include section labels like "Summary:", "Key Technology:", "Why it matters:", etc.\n` +
+      `- Output only the summary paragraph — nothing else.\n\n` +
       `${articleText}`;
 
     const resp = await ollamaClient.generate({
@@ -209,6 +212,12 @@ async function summarizeArticle(title = '', existingSummary = '', articleUrl = '
     // Reject summaries that violate the prompt instructions
     if (/^(this article|the article)\b/i.test(summary)) {
       console.warn(`[classifier] summary starts with forbidden phrase for "${title.slice(0,50)}", discarding`);
+      return existingSummary;
+    }
+
+    // Reject summaries with markdown formatting (headers, bold, bullets, numbered lists)
+    if (/#{1,6} /.test(summary) || /\*\*[^*]+\*\*/.test(summary) || /^\s*[-*+] /m.test(summary) || /^\s*\d+\. /m.test(summary) || /^(Summary|Title|Key Technology|Why it matters)[:\s]/im.test(summary)) {
+      console.warn(`[classifier] summary contains markdown/labels for "${title.slice(0,50)}", discarding`);
       return existingSummary;
     }
 
