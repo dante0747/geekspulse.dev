@@ -760,7 +760,38 @@ async function main() {
     return db - da;
   });
 
-  const articles = unique.slice(0, MAX_ARTICLES);
+  // ── Ensure every category is represented before the final cap ──────────────
+  // High-volume categories (General, Security, DevOps…) can otherwise consume
+  // all MAX_ARTICLES slots before slower categories (Java, Rust, Go,
+  // Architecture…) appear, leaving them with 0 articles in the feed.
+  const MIN_PER_CATEGORY = 5; // guarantee at least this many articles per category
+  const categoryBuckets  = {};
+  for (const a of unique) {
+    (categoryBuckets[a.category] = categoryBuckets[a.category] || []).push(a);
+  }
+
+  const guaranteed = new Set();
+  for (const bucket of Object.values(categoryBuckets)) {
+    for (const a of bucket.slice(0, MIN_PER_CATEGORY)) guaranteed.add(a);
+  }
+
+  // Fill remaining slots from the already-sorted pool (newest-first), skipping
+  // articles already added via the guarantee pass.
+  const articles = [...guaranteed];
+  for (const a of unique) {
+    if (articles.length >= MAX_ARTICLES) break;
+    if (!guaranteed.has(a)) articles.push(a);
+  }
+
+  // Re-sort the final set newest-first (guarantee pass may have disrupted order)
+  articles.sort((a, b) => {
+    const da = a.publishedAt ? new Date(a.publishedAt) : null;
+    const db = b.publishedAt ? new Date(b.publishedAt) : null;
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return db - da;
+  });
 
   // ── AI / keyword article classification ───────────────────────────────────
   if (ollamaClient || true) { // keyword classifier always runs
