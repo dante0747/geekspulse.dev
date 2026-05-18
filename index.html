@@ -4,23 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M63R1H30X2"></script>
+  <!-- Google Analytics — loaded only after user consent (see js/consent.js) -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-M63R1H30X2');
+    // If consent was already given on a previous visit, load GA4 immediately
+    // to avoid losing the first pageview. js/consent.js handles new visitors.
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('gp:analytics:consent') === 'yes') {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){window.dataLayer.push(arguments);};
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-M63R1H30X2', {anonymize_ip: true});
+      var _s = document.createElement('script');
+      _s.async = true;
+      _s.src = 'https://www.googletagmanager.com/gtag/js?id=G-M63R1H30X2';
+      document.head.appendChild(_s);
+    }
   </script>
 
   <!-- Primary SEO -->
   <title>GeeksPulse — Developer News, One Feed</title>
   <meta name="description" content="GeeksPulse aggregates 39 hand-picked RSS feeds — AI, security, DevOps, JavaScript, Rust, Go, Java, open source, and architecture — into one clean, ad-free, paywall-free reading experience." />
-  <meta name="author" content="GeeksPulse" />
+  <meta name="author" content="Majid Abarghooei" />
   <meta name="copyright" content="GeeksPulse 2026" />
   <meta name="language" content="English" />
   <meta name="rating" content="general" />
+  <meta name="application-name" content="GeeksPulse" />
+  <meta name="generator" content="" />
   <link rel="canonical" href="https://geekspulse.dev/" />
+  <link rel="author" href="/#about" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -30,6 +40,7 @@
   <meta property="og:image" content="https://geekspulse.dev/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="GeeksPulse — Developer News Aggregator" />
   <meta property="og:site_name" content="GeeksPulse" />
   <meta property="og:locale" content="en_US" />
@@ -49,11 +60,17 @@
 
   <!-- Theme / PWA -->
   <meta name="theme-color" content="#060B15" />
+  <link rel="manifest" href="/manifest.json" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/assets/favicon-eB4uGud4.svg" />
   <link rel="shortcut icon" href="/assets/favicon-eB4uGud4.svg" />
-  <link rel="sitemap" type="application/xml" href="data:text/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHVybHNldCB4bWxucz0iaHR0cDovL3d3dy5zaXRlbWFwcy5vcmcvc2NoZW1hcy9zaXRlbWFwLzAuOSIKICAgICAgICB4bWxuczppbWFnZT0iaHR0cDovL3d3dy5nb29nbGUuY29tL3NjaGVtYXMvc2l0ZW1hcC1pbWFnZS8xLjEiPgoKICA8IS0tIEhvbWVwYWdlIOKAlCBhZ2dyZWdhdGVzIGFsbCBjdXJhdGVkIFJTUyBmZWVkcyAtLT4KICA8dXJsPgogICAgPGxvYz5odHRwczovL2dlZWtzcHVsc2UuZGV2LzwvbG9jPgogICAgPGxhc3Rtb2Q+MjAyNi0wNS0xODwvbGFzdG1vZD4KICAgIDxjaGFuZ2VmcmVxPmhvdXJseTwvY2hhbmdlZnJlcT4KICAgIDxwcmlvcml0eT4xLjA8L3ByaW9yaXR5PgogICAgPGltYWdlOmltYWdlPgogICAgICA8aW1hZ2U6bG9jPmh0dHBzOi8vZ2Vla3NwdWxzZS5kZXYvb2ctaW1hZ2UucG5nPC9pbWFnZTpsb2M+CiAgICAgIDxpbWFnZTp0aXRsZT5HZWVrc1B1bHNlIOKAlCBEZXZlbG9wZXIgTmV3cyBBZ2dyZWdhdG9yPC9pbWFnZTp0aXRsZT4KICAgICAgPGltYWdlOmNhcHRpb24+RGV2ZWxvcGVyIG5ld3MgZnJvbSBjdXJhdGVkIFJTUyBmZWVkcy4gTm8gYWRzLCBubyBwYXl3YWxscywgbm8gYWQgdHJhY2tlcnMuPC9pbWFnZTpjYXB0aW9uPgogICAgPC9pbWFnZTppbWFnZT4KICA8L3VybD4KCjwvdXJsc2V0Pgo=" />
+  <link rel="sitemap" type="application/xml" href="data:text/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHVybHNldCB4bWxucz0iaHR0cDovL3d3dy5zaXRlbWFwcy5vcmcvc2NoZW1hcy9zaXRlbWFwLzAuOSIKICAgICAgICB4bWxuczppbWFnZT0iaHR0cDovL3d3dy5nb29nbGUuY29tL3NjaGVtYXMvc2l0ZW1hcC1pbWFnZS8xLjEiPgoKICA8IS0tIEhvbWVwYWdlIOKAlCBhZ2dyZWdhdGVzIGFsbCBjdXJhdGVkIFJTUyBmZWVkcyAtLT4KICA8dXJsPgogICAgPGxvYz5odHRwczovL2dlZWtzcHVsc2UuZGV2LzwvbG9jPgogICAgPGxhc3Rtb2Q+MjAyNi0wNS0xODwvbGFzdG1vZD4KICAgIDxjaGFuZ2VmcmVxPmhvdXJseTwvY2hhbmdlZnJlcT4KICAgIDxwcmlvcml0eT4xLjA8L3ByaW9yaXR5PgogICAgPGltYWdlOmltYWdlPgogICAgICA8aW1hZ2U6bG9jPmh0dHBzOi8vZ2Vla3NwdWxzZS5kZXYvb2ctaW1hZ2UucG5nPC9pbWFnZTpsb2M+CiAgICAgIDxpbWFnZTp0aXRsZT5HZWVrc1B1bHNlIOKAlCBEZXZlbG9wZXIgTmV3cyBBZ2dyZWdhdG9yPC9pbWFnZTp0aXRsZT4KICAgICAgPGltYWdlOmNhcHRpb24+RGV2ZWxvcGVyIG5ld3MgZnJvbSBjdXJhdGVkIFJTUyBmZWVkcy4gTm8gYWRzLCBubyBwYXl3YWxscywgbm8gYWQgdHJhY2tlcnMuPC9pbWFnZTpjYXB0aW9uPgogICAgPC9pbWFnZTppbWFnZT4KICA8L3VybD4KCiAgPCEtLSBQcml2YWN5IFBvbGljeSAtLT4KICA8dXJsPgogICAgPGxvYz5odHRwczovL2dlZWtzcHVsc2UuZGV2L3ByaXZhY3kuaHRtbDwvbG9jPgogICAgPGxhc3Rtb2Q+MjAyNi0wNS0xODwvbGFzdG1vZD4KICAgIDxjaGFuZ2VmcmVxPm1vbnRobHk8L2NoYW5nZWZyZXE+CiAgICA8cHJpb3JpdHk+MC4zPC9wcmlvcml0eT4KICA8L3VybD4KCiAgPCEtLSBUZXJtcyBvZiBVc2UgLS0+CiAgPHVybD4KICAgIDxsb2M+aHR0cHM6Ly9nZWVrc3B1bHNlLmRldi90ZXJtcy5odG1sPC9sb2M+CiAgICA8bGFzdG1vZD4yMDI2LTA1LTE4PC9sYXN0bW9kPgogICAgPGNoYW5nZWZyZXE+bW9udGhseTwvY2hhbmdlZnJlcT4KICAgIDxwcmlvcml0eT4wLjM8L3ByaW9yaXR5PgogIDwvdXJsPgoKPC91cmxzZXQ+Cg==" />
+  <!-- DNS prefetch for key third-party origins -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="dns-prefetch" href="https://api.codetabs.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -97,6 +114,12 @@
           "contactType": "customer support",
           "email": "abarghooeimajid@gmail.com",
           "availableLanguage": "English"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Majid Abarghooei",
+          "email": "abarghooeimajid@gmail.com",
+          "sameAs": ["https://github.com/dante0747"]
         }
       }
     },
@@ -111,7 +134,8 @@
         "@type": "Thing",
         "name": "Developer News Aggregation"
       },
-      "dateModified": "2026-05-12",
+      "privacyPolicy": "https://geekspulse.dev/privacy.html",
+      "dateModified": "2026-05-18",
       "breadcrumb": {
         "@type": "BreadcrumbList",
         "itemListElement": [
@@ -177,8 +201,8 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="/assets/index-DrkKZICj.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-B8OUOaWK.css">
+  <script type="module" crossorigin src="/assets/index-CmeFhLwc.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DXhMKPh8.css">
 </head>
 <body>
   <!-- Skip to main content (accessibility) -->
@@ -399,6 +423,126 @@
     <div class="seo-articles-grid">
 
     <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=227546&amp;width=800" alt="Article image for: Poland directs officials to ditch Signal in favor of &#39;secure&#39; state-developed alternative" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.theregister.com/security/2026/05/18/poland-builds-its-own-signal-amid-security-concerns/5241824" rel="noopener noreferrer">Poland directs officials to ditch Signal in favor of &#39;secure&#39; state-developed alternative</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>The Polish government is urging public officials and &quot;entities within the National Cybersecurity System&quot; to stop using Signal, directing them to instead use an…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Register &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.theregister.com/security/2026/05/18/poland-builds-its-own-signal-amid-security-concerns/5241824" data-share-title="Poland directs officials to ditch Signal in favor of &#39;secure&#39; state-developed alternative" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.theregister.com/security/2026/05/18/poland-builds-its-own-signal-amid-security-concerns/5241824" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://d2908q01vomqb2.cloudfront.net/7719a1c782a1ba91c031a682a0a2f8658209adbf/2026/05/11/devops-19765-featured-image.png" alt="Article image for: Ensure Code Integrity for AWS Lambda Functions with Automated Code Signing Using Terraform" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://aws.amazon.com/blogs/devops/ensure-code-integrity-for-aws-lambda-functions-with-automated-code-signing-using-terraform/" rel="noopener noreferrer">Ensure Code Integrity for AWS Lambda Functions with Automated Code Signing Using Terraform</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Authors: Sourav Kundu and Joyson Neville Lewis. In today’s cloud-native landscape, ensuring the integrity and authenticity of your serverless functions is…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-devops"></span>
+          <span>AWS DevOps Blog &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://aws.amazon.com/blogs/devops/ensure-code-integrity-for-aws-lambda-functions-with-automated-code-signing-using-terraform/" data-share-title="Ensure Code Integrity for AWS Lambda Functions with Automated Code Signing Using Terraform" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://aws.amazon.com/blogs/devops/ensure-code-integrity-for-aws-lambda-functions-with-automated-code-signing-using-terraform/" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://opengraph.githubassets.com/7dd76eb4bfc6d99d48d14e7bbfdd37b993c17a52fc418b265c967199b538a619/stephenlthorn/auto-identity-remove" alt="Article image for: I automated opt-outs for 500 data broker sites (open source)" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://github.com/stephenlthorn/auto-identity-remove" rel="noopener noreferrer">I automated opt-outs for 500 data broker sites (open source)</a></h3>
+      
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://github.com/stephenlthorn/auto-identity-remove" data-share-title="I automated opt-outs for 500 data broker sites (open source)" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://github.com/stephenlthorn/auto-identity-remove" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=4093838&amp;width=800" alt="Article image for: Windows boot partition runs out of space for Microsoft&#39;s May security update" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.theregister.com/oses/2026/05/18/windows-boot-partition-runs-out-of-space-for-microsofts-may-security-update/5241799" rel="noopener noreferrer">Windows boot partition runs out of space for Microsoft&#39;s May security update</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Microsoft has admitted that the May 2026 security update might fail to install with a &quot;Something didn&#39;t go as planned. Undoing changes&quot; message. The problem is…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Register &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.theregister.com/oses/2026/05/18/windows-boot-partition-runs-out-of-space-for-microsofts-may-security-update/5241799" data-share-title="Windows boot partition runs out of space for Microsoft&#39;s May security update" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.theregister.com/oses/2026/05/18/windows-boot-partition-runs-out-of-space-for-microsofts-may-security-update/5241799" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMzYwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjM2MCI+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzNjAiIGZpbGw9IiMwRDExMTciLz4KICA8ZyBzdHJva2U9InJnYmEoMjQ0LDYzLDk0LDAuMDcpIiBzdHJva2Utd2lkdGg9IjEiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI3MiIgeDI9IjY0MCIgeTI9IjcyIi8+PGxpbmUgeDE9IjAiIHkxPSIxNDQiIHgyPSI2NDAiIHkyPSIxNDQiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMjE2IiB4Mj0iNjQwIiB5Mj0iMjE2Ii8+PGxpbmUgeDE9IjAiIHkxPSIyODgiIHgyPSI2NDAiIHkyPSIyODgiLz4KICAgIDxsaW5lIHgxPSIxMjgiIHkxPSIwIiB4Mj0iMTI4IiB5Mj0iMzYwIi8+PGxpbmUgeDE9IjI1NiIgeTE9IjAiIHgyPSIyNTYiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIzODQiIHkxPSIwIiB4Mj0iMzg0IiB5Mj0iMzYwIi8+PGxpbmUgeDE9IjUxMiIgeTE9IjAiIHgyPSI1MTIiIHkyPSIzNjAiLz4KICA8L2c+CiAgPCEtLSBzaGllbGQtY2hlY2sgaWNvbiBzY2FsZWQgdG8gNzJweCwgY2VudHJlZCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAsMTc1KSBzY2FsZSgzKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjQzRjVFIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMTIgMjJzOC00IDgtMTBWNWwtOC0zLTggM3Y3YzAgNiA4IDEwIDggMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMiwtMTIpIi8+CiAgICA8cGF0aCBkPSJtOSAxMiAyIDIgNC00IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogIDwvZz4KICA8dGV4dCB4PSIzMjAiIHk9IjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkpldEJyYWlucyBNb25vLG1vbm9zcGFjZSIgZm9udC1zaXplPSIxMyIgZmlsbD0iI0Y0M0Y1RSIgb3BhY2l0eT0iMC40NSI+c3VkbyBjYXQgbmV3czwvdGV4dD4KPC9zdmc+Cg==" alt="Article image for: Developer Workstations Are Now Part of the Software Supply Chain" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://thehackernews.com/2026/05/developer-workstations-are-now-part-of.html" rel="noopener noreferrer">Developer Workstations Are Now Part of the Software Supply Chain</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Supply chain attackers are not only trying to slip malicious code into trusted software. They are trying to steal the access that makes trusted software…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>The Hacker News &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://thehackernews.com/2026/05/developer-workstations-are-now-part-of.html" data-share-title="Developer Workstations Are Now Part of the Software Supply Chain" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://thehackernews.com/2026/05/developer-workstations-are-now-part-of.html" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
+      <div class="seo-card-img-wrap"><img src="https://www.bleepstatic.com/content/hl-images/2026/04/01/Windows-11.jpg" alt="Article image for: Microsoft testing adjustable taskbar, Start menu in Windows 11" loading="lazy" decoding="async" width="640" height="360" /></div>
+      <h3><a href="https://www.bleepingcomputer.com/news/microsoft/windows-11-finally-gets-a-resizable-taskbar-and-start-menu/" rel="noopener noreferrer">Microsoft testing adjustable taskbar, Start menu in Windows 11</a></h3>
+      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Microsoft has finally brought back the resizable taskbar and Start menu to Windows 11 in the latest preview version rolling out to Insiders in the Experimental…</p></div>
+      <div class="seo-card-footer">
+        <div class="card-source">
+          <span class="src-dot cat-security"></span>
+          <span>Bleeping Computer &middot; May 18, 2026</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-share-btn" data-share-url="https://www.bleepingcomputer.com/news/microsoft/windows-11-finally-gets-a-resizable-taskbar-and-start-menu/" data-share-title="Microsoft testing adjustable taskbar, Start menu in Windows 11" title="Share" aria-label="Share article">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <a href="https://www.bleepingcomputer.com/news/microsoft/windows-11-finally-gets-a-resizable-taskbar-and-start-menu/" rel="noopener noreferrer" class="card-link">
+            Read →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="seo-card">
       <div class="seo-card-img-wrap"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMzYwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjM2MCI+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzNjAiIGZpbGw9IiMwRDExMTciLz4KICA8ZyBzdHJva2U9InJnYmEoMjQ0LDYzLDk0LDAuMDcpIiBzdHJva2Utd2lkdGg9IjEiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI3MiIgeDI9IjY0MCIgeTI9IjcyIi8+PGxpbmUgeDE9IjAiIHkxPSIxNDQiIHgyPSI2NDAiIHkyPSIxNDQiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMjE2IiB4Mj0iNjQwIiB5Mj0iMjE2Ii8+PGxpbmUgeDE9IjAiIHkxPSIyODgiIHgyPSI2NDAiIHkyPSIyODgiLz4KICAgIDxsaW5lIHgxPSIxMjgiIHkxPSIwIiB4Mj0iMTI4IiB5Mj0iMzYwIi8+PGxpbmUgeDE9IjI1NiIgeTE9IjAiIHgyPSIyNTYiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIzODQiIHkxPSIwIiB4Mj0iMzg0IiB5Mj0iMzYwIi8+PGxpbmUgeDE9IjUxMiIgeTE9IjAiIHgyPSI1MTIiIHkyPSIzNjAiLz4KICA8L2c+CiAgPCEtLSBzaGllbGQtY2hlY2sgaWNvbiBzY2FsZWQgdG8gNzJweCwgY2VudHJlZCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAsMTc1KSBzY2FsZSgzKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjQzRjVFIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMTIgMjJzOC00IDgtMTBWNWwtOC0zLTggM3Y3YzAgNiA4IDEwIDggMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMiwtMTIpIi8+CiAgICA8cGF0aCBkPSJtOSAxMiAyIDIgNC00IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEyKSIvPgogIDwvZz4KICA8dGV4dCB4PSIzMjAiIHk9IjI3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkpldEJyYWlucyBNb25vLG1vbm9zcGFjZSIgZm9udC1zaXplPSIxMyIgZmlsbD0iI0Y0M0Y1RSIgb3BhY2l0eT0iMC40NSI+c3VkbyBjYXQgbmV3czwvdGV4dD4KPC9zdmc+Cg==" alt="Article image for: Zero-Day Exploit Against Windows BitLocker" loading="lazy" decoding="async" width="640" height="360" /></div>
       <h3><a href="https://www.schneier.com/blog/archives/2026/05/zero-day-exploit-against-windows-bitlocker.html" rel="noopener noreferrer">Zero-Day Exploit Against Windows BitLocker</a></h3>
       <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>It&amp;#8217;s nasty , but it requires physical access to the computer: The exploit, named YellowKey, was published earlier this week by a researcher who goes by…</p></div>
@@ -472,126 +616,6 @@
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <a href="https://www.infoq.com/podcasts/context-key-agentic-architecture-revolution/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Architecture" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=5241759&amp;width=800" alt="Article image for: F-35 software delays leave UK buying time with US glide bombs" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.theregister.com/security/2026/05/18/f-35-software-delays-leave-uk-buying-time-with-us-glide-bombs/5241737" rel="noopener noreferrer">F-35 software delays leave UK buying time with US glide bombs</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Britain&#39;s F-35 fighter fleet is set to carry US-made glide bombs as an interim measure until delayed F-35 software updates from Lockheed Martin add support for…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-security"></span>
-          <span>The Register &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.theregister.com/security/2026/05/18/f-35-software-delays-leave-uk-buying-time-with-us-glide-bombs/5241737" data-share-title="F-35 software delays leave UK buying time with US glide bombs" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.theregister.com/security/2026/05/18/f-35-software-delays-leave-uk-buying-time-with-us-glide-bombs/5241737" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://res.infoq.com/presentations/product-cloud-native/en/card_header_image/CatMorrisStephaneDiCesare-twitter-card-1778661429675.jpg" alt="Article image for: Presentation: Product Thinking for Cloud Native Engineers" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.infoq.com/presentations/product-cloud-native/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer">Presentation: Product Thinking for Cloud Native Engineers</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Stéphane Di Cesare and Cat Morris share how engineers can move from being a &quot;cost center&quot; to a value driver using product discovery. They explain the &quot;Double…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-general"></span>
-          <span>InfoQ &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.infoq.com/presentations/product-cloud-native/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" data-share-title="Presentation: Product Thinking for Cloud Native Engineers" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.infoq.com/presentations/product-cloud-native/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://spectrum.ieee.org/media-library/hot-air-balloons-over-a-riverside-city-skyline-at-sunrise-with-parks-in-the-foreground.jpg?id=66723254&amp;width=1245&amp;height=700&amp;coordinates=0%2C62%2C0%2C63" alt="Article image for: How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" rel="noopener noreferrer">How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This sponsored article is brought to you by Melbourne Convention Bureau (MCB) supported by Business Events Australia . Melbourne’s reputation as a global…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-ai"></span>
-          <span>IEEE Spectrum &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" data-share-title="How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://spectrum.ieee.org/melbourne-ai-data-center-innovation" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://assets.rbl.ms/66700256/origin.png" alt="Article image for: Agentic AI for Robot Teams" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://events.bizzabo.com/867156" rel="noopener noreferrer">Agentic AI for Robot Teams</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>This presentation highlights recent efforts at the Johns Hopkins Applied Physics Laboratory to advance agentic AI for collaborative robotic teams. It begins by…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-ai"></span>
-          <span>IEEE Spectrum &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://events.bizzabo.com/867156" data-share-title="Agentic AI for Robot Teams" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://events.bizzabo.com/867156" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://image.theregister.com/?imageId=4094224&amp;width=800" alt="Article image for: Mozilla warns UK: Breaking VPNs will not magically fix Britain&#39;s age-check mess" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="https://www.theregister.com/security/2026/05/18/mozilla-warns-uk-breaking-vpns-will-not-magically-fix-britains-age-check-mess/5241770" rel="noopener noreferrer">Mozilla warns UK: Breaking VPNs will not magically fix Britain&#39;s age-check mess</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>Mozilla has warned Britain not to turn VPNs into collateral damage in the government&#39;s increasingly desperate hunt for ways to stop kids dodging Online Safety…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-security"></span>
-          <span>The Register &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="https://www.theregister.com/security/2026/05/18/mozilla-warns-uk-breaking-vpns-will-not-magically-fix-britains-age-check-mess/5241770" data-share-title="Mozilla warns UK: Breaking VPNs will not magically fix Britain&#39;s age-check mess" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="https://www.theregister.com/security/2026/05/18/mozilla-warns-uk-breaking-vpns-will-not-magically-fix-britains-age-check-mess/5241770" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="seo-card">
-      <div class="seo-card-img-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuMUxcVvbSdJaR0YzeyXB2GovnBhB4mq49IuJotpi1MoDTZfz9AxOV2Fzvl8mygHbPzVc3iV7hdO0SqLYb0ACT9p3gIyjBK7L1F-yn1CQU0VSzTBx0jqsxv6rjOU7nTOjAQGC_DBcsvfYCx51xkCuxopaxTbYMQcAVzQfDaLwsJx9ZFr6eNNHQ7yW2WJA/w1200-h630-p-k-no-nu/archi-llm.png" alt="Article image for: Find bugs in YOUR code using OpenCode, Llama.cpp and Qwen3.6" loading="lazy" decoding="async" width="640" height="360" /></div>
-      <h3><a href="http://wtarreau.blogspot.com/2026/05/find-bugs-in-your-code-using-opencode.html" rel="noopener noreferrer">Find bugs in YOUR code using OpenCode, Llama.cpp and Qwen3.6</a></h3>
-      <div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>The core topic of this article is how OpenCode and Llama.cpp can be used for automated testing and analysis in a developer&#39;s codebase. The key technology or…</p></div>
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-devops"></span>
-          <span>Lobsters &middot; May 18, 2026</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="http://wtarreau.blogspot.com/2026/05/find-bugs-in-your-code-using-opencode.html" data-share-title="Find bugs in YOUR code using OpenCode, Llama.cpp and Qwen3.6" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="http://wtarreau.blogspot.com/2026/05/find-bugs-in-your-code-using-opencode.html" rel="noopener noreferrer" class="card-link">
             Read →
           </a>
         </div>
@@ -766,25 +790,40 @@
           </div>
           <h2 id="about-heading" class="contribute-title">Behind<br /><em>GeeksPulse.</em></h2>
           <p class="contribute-desc">
-            GeeksPulse is an indie project — designed, built, and maintained by a solo developer. It exists because keeping up with software engineering shouldn't require 12 browser tabs and a news algorithm optimised for rage. It aggregates 39 hand-picked RSS feeds with no ads, no paywalls, and no outside pressure.
+            GeeksPulse is an indie project — designed, built, and maintained by <strong>Majid Abarghooei</strong>, a solo developer. It exists because keeping up with software engineering shouldn't require 12 browser tabs and a news algorithm optimised for rage. It aggregates 39 hand-picked RSS feeds with no ads, no paywalls, and no outside pressure.
           </p>
+          <!-- GitHub stars badge -->
+          <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count">
+              <img src="https://img.shields.io/github/stars/dante0747/geekspulse.dev?style=social" alt="GitHub stars for GeeksPulse" width="90" height="20" loading="lazy" />
+            </a>
+            <span id="aboutLastUpdated" style="font-family:var(--mono);font-size:11px;color:var(--ink3)"></span>
+          </div>
           <ul class="contribute-ways" style="margin-bottom:1.25rem">
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 7l6 4 6-4"/></svg>
-              <span>Email: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan)">abarghooeimajid@gmail.com</a></span>
+              <span>Email: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan)" aria-label="Send email to Majid Abarghooei">abarghooeimajid@gmail.com</a></span>
             </li>
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span>GitHub: <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">github.com/dante0747/geekspulse.dev</a></span>
+              <span>GitHub: <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="GeeksPulse source code on GitHub">github.com/dante0747/geekspulse.dev</a></span>
             </li>
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM1 6h14"/></svg>
-              <span>Support: <a href="https://paypal.me/MajidAbarghooei" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">paypal.me/MajidAbarghooei</a></span>
+              <span>Support: <a href="https://paypal.me/MajidAbarghooei" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="Support GeeksPulse via PayPal">paypal.me/MajidAbarghooei</a></span>
+            </li>
+            <li>
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="1" y="3" width="14" height="10" rx="2"/></svg>
+              <span>Editorial policy: <a href="https://github.com/dante0747/geekspulse.dev/blob/main/docs/feed-selection-criteria.md" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)" aria-label="Read the GeeksPulse feed selection criteria">Feed selection criteria</a></span>
             </li>
           </ul>
           <p style="font-size:0.82rem;color:var(--ink3);font-family:var(--mono)">
             // Launched 2026 · Open source · No ads · No paywalls · No tracking
           </p>
+          <div style="margin-top:1rem;font-size:0.82rem;display:flex;gap:1rem;flex-wrap:wrap">
+            <a href="/privacy.html" style="color:var(--ink3);font-family:var(--mono);font-size:11px" aria-label="GeeksPulse Privacy Policy">// Privacy Policy</a>
+            <a href="/terms.html" style="color:var(--ink3);font-family:var(--mono);font-size:11px" aria-label="GeeksPulse Terms of Use">// Terms of Use</a>
+          </div>
         </div>
       </div>
     </div>
@@ -823,11 +862,15 @@
           </div>
           <div class="footer-copy">&#169; 2026 GeeksPulse &mdash; Free to use. No ads. No tracking. No paywalls.</div>
           <div class="footer-copy" style="margin-top:6px;font-size:0.75rem">
-            Contact: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan);text-decoration:none">abarghooeimajid@gmail.com</a>
+            Contact: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan);text-decoration:none" aria-label="Email Majid Abarghooei">abarghooeimajid@gmail.com</a>
             &nbsp;&middot;&nbsp;
-            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:none">GitHub</a>
+            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:none" aria-label="GeeksPulse on GitHub">GitHub</a>
             &nbsp;&middot;&nbsp;
             <a href="#about" style="color:var(--cyan);text-decoration:none">About</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/privacy.html" style="color:var(--cyan);text-decoration:none">Privacy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/terms.html" style="color:var(--cyan);text-decoration:none">Terms</a>
           </div>
           <div class="footer-copy" style="margin-top:8px;font-size:0.72rem;font-family:var(--mono);color:var(--ink3)">
             <a id="siteVersion" href="https://github.com/dante0747/geekspulse.dev/commits/main" target="_blank" rel="noopener noreferrer" title="View changelog on GitHub" class="site-version-badge">// loading version…</a>

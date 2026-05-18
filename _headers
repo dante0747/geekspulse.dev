@@ -1,0 +1,41 @@
+/*
+ * Cloudflare Pages / Netlify _headers
+ *
+ * These security headers apply to all responses from geekspulse.dev.
+ * GitHub Pages does NOT support custom headers — to use these, either:
+ *   1. Deploy to Cloudflare Pages (recommended — free tier, supports _headers)
+ *   2. Deploy to Netlify (free tier, supports _headers)
+ *   3. Use a Cloudflare Worker/Transform Rule in front of GitHub Pages
+ *
+ * See: https://developers.cloudflare.com/pages/platform/headers/
+ */
+
+/*
+ * Apply to all routes
+ */
+https://geekspulse.dev/*
+  # Prevent MIME-type sniffing attacks
+  X-Content-Type-Options: nosniff
+
+  # Deny framing by other origins (clickjacking protection)
+  X-Frame-Options: DENY
+
+  # Enable HSTS — 2 years, include subdomains, request HSTS preloading
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # Reduce referrer information sent to third-party sites
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Disable hardware API access not needed by this site
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+  # Content Security Policy
+  # - default-src 'self': only load resources from same origin by default
+  # - script-src: allow self + GA4 (googletagmanager.com)
+  # - style-src: allow self + Google Fonts CSS
+  # - font-src: allow Google Fonts static files
+  # - connect-src: allow self + CORS proxies used to fetch RSS feeds
+  # - img-src: allow self + any https origin (article hero images from any publisher CDN)
+  # - frame-src/object-src: none
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.codetabs.com https://api.allorigins.win https://corsproxy.io https://proxy.cors.sh https://thingproxy.freeboard.io https://api.rss2json.com; img-src 'self' https: data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+
