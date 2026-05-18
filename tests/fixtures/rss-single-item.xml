@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Single Item Feed</title>
+    <link>https://example.com</link>
+    <description>Feed with exactly one item (non-array regression test)</description>
+    <item>
+      <title>The Only Article</title>
+      <link>https://example.com/only-article</link>
+      <description>This is the only article in the feed. The parser must wrap this single object in an array.</description>
+      <pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
+

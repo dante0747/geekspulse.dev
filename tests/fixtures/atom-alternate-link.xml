@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Alternate Link Feed</title>
+  <id>https://example.com/feed</id>
+  <updated>2024-01-01T12:00:00Z</updated>
+  <entry>
+    <title>Entry with alternate link array</title>
+    <link rel="self" href="https://example.com/self-link"/>
+    <link rel="alternate" href="https://example.com/actual-article"/>
+    <id>https://example.com/actual-article</id>
+    <updated>2024-01-01T12:00:00Z</updated>
+    <summary>This entry has multiple link elements, one of which is rel=alternate and should be used as the canonical URL.</summary>
+  </entry>
+</feed>
+

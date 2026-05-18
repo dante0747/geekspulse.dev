@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   // Serve from project root; index.html at root is the entry point
@@ -38,6 +38,20 @@ export default defineConfig({
 
   preview: {
     port: 4173,
+  },
+
+  test: {
+    include: ['tests/**/*.test.{js,mjs}'],
+    environment: 'node',
+    environmentMatchGlobs: [
+      ['**/tests/unit/browser-utils.test.js', 'happy-dom'],
+      ['**/tests/unit/storage.test.js',        'happy-dom'],
+      ['**/tests/dom/**',                      'happy-dom'],
+    ],
+    coverage: {
+      reporter: ['text', 'html'],
+      include: ['js/**', 'scripts/lib/**'],
+    },
   },
 });
 

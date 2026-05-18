@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Encoded Content Feed</title>
+    <link>https://example.com</link>
+    <description>Feed with content:encoded</description>
+    <item>
+      <title>&lt;b&gt;HTML Title&lt;/b&gt; with &amp; entities</title>
+      <link>https://example.com/encoded-1</link>
+      <content:encoded><![CDATA[<p>This is <strong>rich</strong> HTML content with &amp; entities and <a href="https://example.com">links</a>. It has enough words to be a real snippet not filtered out.</p>]]></content:encoded>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Article with Read more snippet</title>
+      <link>https://example.com/encoded-2</link>
+      <description>Read more</description>
+      <pubDate>Tue, 16 Jan 2024 10:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
+

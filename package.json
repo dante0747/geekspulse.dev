@@ -12,13 +12,19 @@
     "build:feed": "node scripts/build-feed.mjs",
     "build:sitemap": "node scripts/generate-sitemap.mjs",
     "build:seo": "node scripts/generate-seo-content.mjs",
-    "build:version": "node scripts/generate-version.mjs"
+    "build:version": "node scripts/generate-version.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "fast-xml-parser": "^5.7.0",
     "ollama": "^0.6.3"
   },
   "devDependencies": {
-    "vite": "^6.4.2"
+    "happy-dom": "^20.9.0",
+    "msw": "^2.14.6",
+    "vite": "^6.4.2",
+    "vitest": "^4.1.6"
   }
 }
