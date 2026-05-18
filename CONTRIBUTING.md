@@ -18,14 +18,15 @@ git clone https://github.com/dante0747/geekspulse.dev.git
 cd geekspulse.dev
 npm install
 
-# Regenerate the feed cache
-npm run build:feed
+# Start the Vite dev server
+npm run dev
 
-# Serve locally (file:// won't load /public/feed.json)
+# Or regenerate the feed cache first, then serve
+npm run build:feed
 npx serve .
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:5173](http://localhost:5173) (Vite) or [http://localhost:3000](http://localhost:3000) (npx serve).
 
 ## Submitting a pull request
 
@@ -53,7 +54,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Code style
 
-- Vanilla JS ES modules — no frameworks, no bundler.
+- Vanilla JS ES modules — no frontend frameworks.
+- Vite is used as the dev server and production bundler (`npm run dev` / `npm run build`).
 - The frontend is split into **14 focused modules** under `js/`. Add new logic to the
   most relevant module, or create a new one and import it from `js/main.js`.
 - `js/main.js` is the entry point: it owns app state, the `render()` loop, and all event wiring.
