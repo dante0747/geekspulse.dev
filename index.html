@@ -928,11 +928,26 @@
           </p>
           <!-- GitHub stars badge -->
           <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count">
-              <img src="https://img.shields.io/github/stars/dante0747/geekspulse.dev?style=social" alt="GitHub stars for GeeksPulse" width="90" height="20" loading="lazy" />
+            <a id="githubStarsBadge" href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" aria-label="View GeeksPulse on GitHub and see star count" class="gh-stars-badge">
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+              <span>Star on GitHub</span>
+              <span class="gh-stars-count" id="ghStarCount" aria-label="star count"></span>
             </a>
             <span id="aboutLastUpdated" style="font-family:var(--mono);font-size:11px;color:var(--ink3)"></span>
           </div>
+          <script>
+            (function(){
+              fetch('https://api.github.com/repos/dante0747/geekspulse.dev')
+                .then(function(r){return r.json();})
+                .then(function(d){
+                  var el = document.getElementById('ghStarCount');
+                  if(el && d && d.stargazers_count != null){
+                    var n = d.stargazers_count;
+                    el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'k' : n;
+                  }
+                }).catch(function(){});
+            })();
+          </script>
           <ul class="contribute-ways" style="margin-bottom:1.25rem">
             <li>
               <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 7l6 4 6-4"/></svg>

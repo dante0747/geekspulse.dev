@@ -1535,11 +1535,43 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 .chip.chip-clear:hover { border-color: var(--red); background: rgba(248,81,73,0.1); }
 
+/* ── GitHub stars badge ── */
+.gh-stars-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; font-family: var(--font);
+  color: var(--ink2);
+  transition: color var(--ease), border-color var(--ease), background var(--ease), transform var(--ease);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.gh-stars-badge:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+  background: rgba(91,94,234,0.08);
+  transform: translateY(-1px);
+}
+.gh-stars-badge svg { color: #e3b341; flex-shrink: 0; }
+.gh-stars-count {
+  display: inline-flex; align-items: center;
+  padding: 1px 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  font-size: 11px; font-weight: 600; font-family: var(--mono);
+  color: var(--ink3);
+  min-width: 24px; justify-content: center;
+}
+.gh-stars-count:empty { display: none; }
+
 /* ── §1: Navigation — hamburger + drawer ── */
 .nav-hamburger {
   display: none;
   flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; width: 44px; height: 44px;
+  gap: 4px; padding: 5px 10px;
   background: transparent; border: 1px solid var(--border2); color: var(--ink2);
   border-radius: var(--radius-sm); flex-shrink: 0;
   transition: color var(--ease), border-color var(--ease), background var(--ease);
