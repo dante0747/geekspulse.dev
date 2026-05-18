@@ -17,6 +17,7 @@
 [![No Ad Trackers](https://img.shields.io/badge/ad_trackers-none-ff5555?style=flat-square)](https://geekspulse.dev)
 [![No Ads](https://img.shields.io/badge/ads-nope-bc8cff?style=flat-square)](https://geekspulse.dev)
 [![Indie](https://img.shields.io/badge/built_by-one_dev_with_coffee-e3c55e?style=flat-square)](https://geekspulse.dev)
+[![Tests](https://img.shields.io/badge/tests-171_passing-39d353?style=flat-square&logo=vitest&logoColor=black)](./tests)
 
 > *Your daily dev briefing, minus the noise.*
 
@@ -187,6 +188,80 @@ It pulls from **39 hand-picked RSS feeds** across 11 categories, sorts them newe
 
 ---
 
+## 🧪 Testing
+
+GeeksPulse has a full layered test suite — **181 tests** that run in CI on every push before any deploy can happen.
+
+### Stack
+
+| Tool | Role |
+|---|---|
+| [Vitest](https://vitest.dev) | Unit, integration & DOM component tests |
+| [happy-dom](https://github.com/capricorn86/happy-dom) | Lightweight DOM environment for browser-side tests |
+| [Playwright](https://playwright.dev) | End-to-end smoke tests (Chromium) |
+| [@vitest/coverage-v8](https://vitest.dev/guide/coverage) | V8-based coverage with per-file thresholds |
+
+### Commands
+
+```bash
+# Run all unit, integration & DOM tests (171 tests, ~800ms)
+npm test
+
+# Run in watch mode during development
+npm run test:watch
+
+# Run with coverage report (outputs to coverage/)
+npm run test:coverage
+
+# Run end-to-end smoke tests (10 tests, ~25s — starts Vite dev server automatically)
+npm run test:e2e
+
+# Open Playwright UI runner
+npm run test:e2e:ui
+```
+
+### Test layout
+
+```
+tests/
+  unit/
+    utils.test.mjs           ← scripts/lib/utils.mjs       (46 tests)
+    browser-utils.test.js    ← js/utils.js                 (32 tests)
+    storage.test.js          ← js/storage.js               (22 tests)
+    classifier.test.mjs      ← scripts/lib/classifier.mjs  (12 tests)
+    sponsored.test.mjs       ← scripts/lib/sponsored.mjs   (13 tests)
+  integration/
+    parser.test.mjs          ← scripts/lib/parser.mjs      (22 tests)
+    build-feed.test.mjs      ← pipeline dedup, sort, cap    (5 tests)
+  dom/
+    cards.test.js            ← js/cards.js  (happy-dom)    (19 tests)
+  e2e/
+    smoke.spec.js            ← Playwright full-browser     (10 tests)
+  fixtures/
+    rss-valid.xml / rss-encoded-content.xml / rss-single-item.xml / rss-empty.xml
+    atom-valid.xml / atom-alternate-link.xml
+```
+
+### CI pipeline
+
+```
+push / schedule
+    │
+    ▼
+ test job  — npm test (171 Vitest tests)
+    │  needs: test
+    ▼
+ build job — Ollama + feed data + GitHub Pages deploy
+    │  needs: build  (main branch only)
+    ▼
+ e2e job   — npm run test:e2e (10 Playwright tests)
+             └─ report uploaded as CI artifact (7-day retention)
+```
+
+A failing unit or integration test **blocks the entire pipeline** — no bad code can reach production.
+
+---
+
 ## 🏗️ Architecture
 
 ```js
@@ -195,13 +270,13 @@ const architecture = {
   markup:     "HTML5",           // semantic, accessible
   styles:     "Vanilla CSS",     // custom properties, animations, grid
   logic:      "Vanilla JS",      // ES2022+ native ES modules, no bundler
-  modules:    "js/ — 14 focused ES modules loaded via <script type=\"module\">",
+  modules:    "js/ — 15 focused ES modules loaded via <script type=\"module\">",
   fonts:      ["JetBrains Mono", "Space Grotesk", "Bangers"],
   feedPipeline: "Node.js (scripts/build-feed.mjs + scripts/lib/*.mjs)",
   bundler:    "Vite 6",          // dev server + production build
   storage:    "localStorage",    // preferences & bookmarks
   deps:       ["fast-xml-parser", "ollama"], // build-time; ollama for local AI summaries
-  devDeps:    ["vite"],
+  devDeps:    ["vite", "vitest", "happy-dom", "@playwright/test", "@vitest/coverage-v8", "msw"],
   analytics:  "Google Analytics (basic traffic insights)",
 };
 ```
@@ -291,6 +366,8 @@ npm run build
 geekspulse.dev/
 ├── index.html           # App shell — nav, hero, sidebar, feed grid
 ├── styles.css           # Full cyberpunk design system
+├── playwright.config.js # Playwright E2E configuration
+├── vite.config.js       # Vite + Vitest configuration (test, coverage thresholds)
 ├── js/                  # ES module source (loaded via <script type="module">)
 │   ├── main.js          # Entry point — app state, render loop, event wiring
 │   ├── config.js        # Static data: feeds list, categories, SVG icons, constants
@@ -299,6 +376,7 @@ geekspulse.dev/
 │   ├── utils.js         # Pure utilities: esc, relTime, truncate, toast, etc.
 │   ├── http.js          # CORS proxy chain (fetchViaCorsProxy)
 │   ├── images.js        # Image pipeline: extraction, scoring, caching, resolution
+│   ├── consent.js       # Cookie consent banner logic
 │   ├── feed.js          # RSS/Atom parsing & feed fetching
 │   ├── cards.js         # Card HTML generators (grid, list, skeleton, placeholder)
 │   ├── feeds-registry.js # Feed registry loader — fetches & caches data/feeds.json at startup
@@ -319,21 +397,27 @@ geekspulse.dev/
 │   ├── feed-health.json # Per-feed health report (generated by build script)
 │   ├── version.json     # Build version info (generated by build script)
 │   └── sw.js            # Service worker
-└── scripts/
-    ├── build-feed.mjs          # Entry point — orchestrates the feed build pipeline
-    ├── generate-sitemap.mjs    # Generates sitemap.xml from data/feeds.json
-    ├── generate-seo-content.mjs # Injects latest articles into index.html for SEO
-    ├── generate-version.mjs    # Writes public/version.json
-    └── lib/                    # Build pipeline modules (imported by build-feed.mjs)
-        ├── config.mjs          # All constants, regex patterns, XML parser instance
-        ├── utils.mjs           # Pure helpers (normalizeUrl, stripHtml, …) + streamHtml
-        ├── ai.mjs              # Ollama client + shared AI cache (live ESM bindings)
-        ├── classifier.mjs      # Keyword + LLM article category classification
-        ├── sponsored.mjs       # Regex + LLM sponsored/promotional content detection
-        ├── summarizer.mjs      # LLM article summarization (fills missing snippets)
-        ├── images.mjs          # Image scoring/extraction + og:image resolver
-        ├── parser.mjs          # RSS/Atom XML parsing + per-feed HTTP fetcher
-        └── pipeline.mjs        # Article set helpers + named pipeline pass functions
+├── scripts/
+│   ├── build-feed.mjs          # Entry point — orchestrates the feed build pipeline
+│   ├── generate-sitemap.mjs    # Generates sitemap.xml from data/feeds.json
+│   ├── generate-seo-content.mjs # Injects latest articles into index.html for SEO
+│   ├── generate-version.mjs    # Writes public/version.json
+│   └── lib/                    # Build pipeline modules (imported by build-feed.mjs)
+│       ├── config.mjs          # All constants, regex patterns, XML parser instance
+│       ├── utils.mjs           # Pure helpers (normalizeUrl, stripHtml, …) + streamHtml
+│       ├── ai.mjs              # Ollama client + shared AI cache (live ESM bindings)
+│       ├── classifier.mjs      # Keyword + LLM article category classification
+│       ├── sponsored.mjs       # Regex + LLM sponsored/promotional content detection
+│       ├── summarizer.mjs      # LLM article summarization (fills missing snippets)
+│       ├── images.mjs          # Image scoring/extraction + og:image resolver
+│       ├── parser.mjs          # RSS/Atom XML parsing + per-feed HTTP fetcher
+│       └── pipeline.mjs        # Article set helpers + named pipeline pass functions
+└── tests/
+    ├── unit/                   # Pure-logic tests (Vitest, Node + happy-dom)
+    ├── integration/            # Build-pipeline integration tests (Vitest, Node)
+    ├── dom/                    # Browser component tests (Vitest, happy-dom)
+    ├── e2e/                    # Full-browser smoke tests (Playwright, Chromium)
+    └── fixtures/               # RSS/Atom XML fixtures for parser tests
 ```
 
 ---

@@ -1,0 +1,34 @@
+{
+  "name": "GeeksPulse",
+  "short_name": "GeeksPulse",
+  "description": "Free developer news aggregator. 39 hand-picked RSS feeds, zero ads, no paywalls.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080B10",
+  "theme_color": "#060B15",
+  "lang": "en-US",
+  "categories": ["news", "developer tools"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "GeeksPulse developer news feed"
+    }
+  ]
+}
+
