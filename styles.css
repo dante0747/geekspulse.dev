@@ -351,47 +351,13 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   margin-bottom: 4px; letter-spacing: 0.04em; text-transform: uppercase;
 }
 
-/* ── Signal Section ──────────────────── */
-.signal-section {
-  padding: 64px 0 56px;
-  border-top: 1px solid var(--border);
-}
-.signal-header { text-align: center; margin-bottom: 40px; }
-.signal-eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 12px;
-}
-.signal-title {
-  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
-  font-weight: 800; letter-spacing: -0.03em; color: var(--ink); margin: 0;
-}
-.signal-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-.signal-card {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 24px 22px; border-radius: var(--radius-lg);
-  transition: background var(--ease), border-color var(--ease), box-shadow var(--ease), transform var(--ease);
-  position: relative; overflow: hidden;
-}
-.signal-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  opacity: 0; transition: opacity var(--ease);
-}
-.signal-card:hover { background: var(--surface2); border-color: var(--border2); box-shadow: var(--shadow); transform: translateY(-2px); }
-.signal-card:hover::before { opacity: 1; }
-.signal-icon { color: var(--accent); margin-bottom: 14px; opacity: 0.85; }
-.signal-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em; }
-.signal-card-desc  { font-size: 13px; color: var(--ink3); line-height: 1.65; }
 
 /* ── APP LAYOUT ──────────────────────── */
 .app-layout {
   display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 36px 0 80px;
 }
 @media(max-width:960px){ .app-layout { grid-template-columns: 190px 1fr; gap: 20px; } }
-@media(max-width:860px){ .app-layout { grid-template-columns: 1fr; gap: 0; } .sidebar { display: none; } .mobile-filters { display: flex !important; } .signal-section { display: none; } }
+@media(max-width:860px){ .app-layout { grid-template-columns: 1fr; gap: 0; } .sidebar { display: none; } .mobile-filters { display: flex !important; } }
 
 /* ── SIDEBAR ─────────────────────────── */
 .sidebar { position: static; align-self: start; display: flex; flex-direction: column; gap: 24px; }
