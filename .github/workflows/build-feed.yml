@@ -51,6 +51,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # ── Cache Ollama model ────────────────────────────────────────────────
+      - name: Cache Ollama model
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-llama3.2-1b
+          restore-keys: |
+            ollama-llama3.2-1b
+
       # ── Install & start Ollama ───────────────────────────────────────────
       - name: Install Ollama
         run: curl -fsSL https://ollama.com/install.sh | sh
@@ -68,13 +77,13 @@ jobs:
           done
 
       - name: Pull model
-        run: ollama pull ${{ vars.OLLAMA_MODEL || 'qwen2.5:0.5b' }}
+        run: ollama pull ${{ vars.OLLAMA_MODEL || 'llama3.2:1b' }}
 
       # ── Build feed with LLM classification ──────────────────────────────
       - name: Build feed data
         env:
           USE_LLM: '1'
-          OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'qwen2.5:0.5b' }}
+          OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'llama3.2:1b' }}
         run: node scripts/generate-version.mjs && node scripts/build-feed.mjs
 
       - name: Generate sitemap & SEO content
@@ -88,7 +97,7 @@ jobs:
           git add -A
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
           git commit -m "chore: refresh feed + update AI classification cache [skip ci]"
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           git push
 
       # ── Build & deploy to GitHub Pages ──────────────────────────────────
@@ -125,6 +134,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
 
+      # Wait for GitHub Pages to propagate before running E2E tests
+      - name: Wait for Pages deployment to propagate
+        run: sleep 30
 
       - name: Run E2E smoke tests
         run: npm run test:e2e
