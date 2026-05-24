@@ -4764,5 +4764,15 @@
   "sponsored::Graham Dumpleton: Lazy monkey patching with wrapt": "yes",
   "sponsored::Why is Vivado 2026.1 dropping Linux support for free tier?": "yes",
   "summary::A Network Allow-List Won't Stop Exfiltration": "A Network Allow-List Won't Stop Exfiltration is a technical article discussing how network allow-lists can fail to prevent exfiltration, specifically when it comes to DNS lookups and data flowing through authorized channels. The problem lies in the fact that many sandbox solutions rely on domain allow-lists, which are not specific to each application or service, but rather a general policy that allows all domains. This means that even if an application is running within a sandbox with a network policy, it can still exfiltrate sensitive data through authorized channels such as DNS lookups.",
-  "summary::Why is Vivado 2026.1 dropping Linux support for free tier?": "Vivado 2026.1, a popular design automation tool, has dropped its free tier's Linux support, prompting developers to explore alternative options. The decision may impact projects that rely heavily on the free tier, which was previously available for Linux and other platforms. As a result, developers will need to upgrade or switch to paid plans to continue using Vivado. This change may require significant investment in new tools or workflows."
+  "summary::Why is Vivado 2026.1 dropping Linux support for free tier?": "Vivado 2026.1, a popular design automation tool, has dropped its free tier's Linux support, prompting developers to explore alternative options. The decision may impact projects that rely heavily on the free tier, which was previously available for Linux and other platforms. As a result, developers will need to upgrade or switch to paid plans to continue using Vivado. This change may require significant investment in new tools or workflows.",
+  "14 New Tools for Taking on the Great Outdoors Properly": "DevOps",
+  "Why Garlic Repels Mosquitoes and Keeps Them From Breeding": "Security",
+  "Declarative partial updates": "DevOps",
+  "Dyson's cheapest floor cleaner just got a $100 price cut — and it'll keep your hard floors looking spotless": "DevOps",
+  "Silk: Open-source cooperative fiber scheduler": "DevOps",
+  "sponsored::Why Garlic Repels Mosquitoes and Keeps Them From Breeding": "yes",
+  "sponsored::14 New Tools for Taking on the Great Outdoors Properly": "yes",
+  "sponsored::Dyson's cheapest floor cleaner just got a $100 price cut — and it'll keep your hard floors looking spotless": "yes",
+  "sponsored::Declarative partial updates": "yes",
+  "summary::Declarative partial updates": "The Chrome team has developed Declarative Partial Updates, which aim to improve the performance of web applications by delivering content out-of-order, reducing the need for heavy frameworks and asynchronous delivery methods. These updates introduce two new sets of APIs that make it easier to dynamically insert HTML into existing documents using JavaScript, allowing developers to break free from the rigid document mental model of the web's origins. The changes are being standardized with positive feedback from other browser vendors and will likely be rolled out in Chrome 148."
 }
