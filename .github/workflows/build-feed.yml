@@ -11,9 +11,6 @@ on:
 permissions:
   contents: write             # needed to commit cache + push to Pages
 
-env:
-  OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'llama3.1:8b' }}
-
 jobs:
   # ── Unit + integration tests ─────────────────────────────────────────────────
   test:
@@ -59,9 +56,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama/models
-          key: ollama-${{ env.OLLAMA_MODEL }}
+          key: ollama-llama3.2-1b
           restore-keys: |
-            ollama-${{ env.OLLAMA_MODEL }}
+            ollama-llama3.2-1b
 
       # ── Install & start Ollama ───────────────────────────────────────────
       - name: Install Ollama
@@ -80,13 +77,13 @@ jobs:
           done
 
       - name: Pull model
-        run: ollama pull ${{ env.OLLAMA_MODEL }}
+        run: ollama pull ${{ vars.OLLAMA_MODEL || 'llama3.2:1b' }}
 
       # ── Build feed with LLM classification ──────────────────────────────
       - name: Build feed data
         env:
           USE_LLM: '1'
-          OLLAMA_MODEL: ${{ env.OLLAMA_MODEL }}
+          OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'llama3.2:1b' }}
         run: node scripts/generate-version.mjs && node scripts/build-feed.mjs
 
       - name: Generate sitemap & SEO content
