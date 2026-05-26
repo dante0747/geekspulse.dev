@@ -39,7 +39,6 @@
   --purple:    #8B6CFF;
 
   /* ── Legacy compat aliases (avoid breaking existing JS/CSS references) ── */
-  --accent-h:  #B4FF63;
   --green-l:   var(--green);
   --pink:      #E879F9;
   --cyan-glow: rgba(36,214,255,0.12);
@@ -1533,6 +1532,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .page-wrap { padding: 0 16px; }
   .hero      { padding: 32px 0 32px; }
   .hero-stats { flex-wrap: wrap; }
+  /* Stacked layout: restore left borders, remove top border between rows */
   .hero-stat:first-child { border-radius: var(--radius) var(--radius) 0 0; }
   .hero-stat:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
   .hero-stat + .hero-stat { border-left: 1px solid var(--border); border-top: none; }
