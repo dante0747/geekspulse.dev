@@ -1,7 +1,54 @@
 # robots.txt — GeeksPulse (https://geekspulse.dev/)
-# Updated: 2026-05-18
+# Updated: 2026-05-26
 
 User-agent: *
+Allow: /
+
+# === AI Search & LLM Crawlers ===
+# Allowing all major AI search engines and LLM training crawlers
+# so the site surfaces in AI-powered searches (Perplexity, ChatGPT, Gemini, Claude, etc.)
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Google AI / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic / Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+# Common SEO & indexing bots — explicitly allowed
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
 Allow: /
 
 Sitemap: https://geekspulse.dev/sitemap.xml

@@ -1746,7 +1746,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 @media (max-width: 860px) {
   .back-to-top {
     width: 44px; height: 44px;
-    bottom: calc(72px + var(--cookie-h, 0px)); right: 16px;
+    bottom: calc(72px + var(--cookie-h, 0px) + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -1790,4 +1790,54 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   }
 }
 
-
+/* ── Topics browse strip ── */
+.topics-strip {
+  padding: 8px 0 4px;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.07));
+  overflow: hidden;
+}
+.topics-strip-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  padding: 4px 0;
+}
+.topics-strip-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink3, #6e7681);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.topic-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border, rgba(255,255,255,0.1));
+  background: transparent;
+  color: var(--ink2, #adbac7);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  text-decoration: none;
+}
+.topic-chip:hover {
+  border-color: var(--cyan, #06b6d4);
+  color: var(--cyan, #06b6d4);
+  background: rgba(6,182,212,0.06);
+}
+@media (max-width: 860px) {
+  .topics-strip-inner {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .topics-strip-inner::-webkit-scrollbar { display: none; }
+}

@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, '..');
 
-const SEO_ARTICLE_COUNT = 10;
+const SEO_ARTICLE_COUNT = 20;
 
 /** Same sponsored-content regex used in js/config.js — applied at build time too. */
 const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast|brought[ -]to[ -]you[ -]by|in[ -]partnership[ -]with|paid[ -]post|native[ -]ad|content[ -]marketing)\b/i;
@@ -155,23 +155,33 @@ async function main() {
       ? `<div class="seo-card-img-wrap"><img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" /></div>`
       : '';
     const dateStr = formatDate(a.publishedAt);
+    const dateIso = a.publishedAt ? new Date(a.publishedAt).toISOString().slice(0, 10) : '';
     // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
     const cleaned = cleanSnippet(a.summary || '');
-    const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 160).replace(/\s+\S*$/, '…') : '';
+    const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 200).replace(/\s+\S*$/, '…') : '';
     const summary = plainSummary
       ? `<div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>${esc(plainSummary)}</p></div>`
       : '';
     // Derive a CSS category slug from the article category field (mirrors app logic)
     const catSlug = (a.category || 'general').toLowerCase().replace(/\s+/g, '-');
+    const catLabel = esc(a.category || 'General');
+    const timeElem = dateIso
+      ? `<time datetime="${esc(dateIso)}">${esc(dateStr)}</time>`
+      : `<span>${esc(dateStr)}</span>`;
     return `
-    <article class="seo-card">
+    <article class="seo-card" itemscope itemtype="https://schema.org/NewsArticle">
+      <meta itemprop="headline" content="${esc(a.title)}" />
+      <meta itemprop="url" content="${esc(a.link)}" />
+      ${dateIso ? `<meta itemprop="datePublished" content="${esc(dateIso)}" />` : ''}
+      <meta itemprop="author" content="${esc(a.source)}" />
+      <meta itemprop="articleSection" content="${catLabel}" />
       ${imageHtml}
-      <h3><a href="${esc(a.link)}" rel="noopener noreferrer">${esc(a.title)}</a></h3>
+      <h3 itemprop="name"><a href="${esc(a.link)}" rel="noopener noreferrer">${esc(a.title)}</a></h3>
       ${summary}
       <div class="seo-card-footer">
         <div class="card-source">
           <span class="src-dot cat-${esc(catSlug)}"></span>
-          <span>${esc(a.source)}${dateStr ? ' &middot; ' + dateStr : ''}</span>
+          <span>${esc(a.source)}${dateStr ? ' &middot; ' + timeElem : ''}</span>
         </div>
         <div class="card-actions">
           <button class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">
@@ -190,10 +200,11 @@ async function main() {
 
   const injectedHtml = `
   <!-- Latest articles from ${articles.length} of ${feedData.articleCount || articles.length} cached stories${generatedComment} -->
-  <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px">
-    <h2>
-      Latest Developer News
+  <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px" itemscope itemtype="https://schema.org/CollectionPage">
+    <h2 itemprop="name">
+      Latest Developer &amp; Programming News
     </h2>
+    <p class="sr-only" itemprop="description">The latest developer news aggregated from ${feedData.articleCount || articles.length}+ curated RSS feeds covering AI, cybersecurity, DevOps, JavaScript, Python, Rust, Go, Java, open source software, and software architecture.</p>
     <div class="seo-articles-grid">
 ${articleItems}
     </div>
