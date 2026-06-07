@@ -14405,5 +14405,21 @@
   "summary::Why Queues Don’t Fix Overload (And What To Do Instead)": "Queues don't fix overload because they absorb variance rather than sustained load and are only useful when arrival rate exceeds processing rate, delaying the inevitable with an overfilled bathtub of a queue.",
   "summary::Thoughts on starting new projects with LLM agents": "Eli Bendersky's website About Projects Archives The rewrite has been successful by all reasonable measures; I've been able to continue maintaining this project since then without an issue. This project uses a different programming language Go and is a from-scratch project rather than a rewrite, with extensive design required. To work on the project, I used LLM agents to write CLs in a logical order that made sense to me, keeping them small and reviewable. The process involves iterating on the design, asking the agent to modify or refactor code, and reviewing and cleaning up the output.",
   "summary::Show HN: Kyushu – A self-hostable WASM sandbox for JavaScript workers": "Kyushu is an open source CLI that allows users to write a JavaScript or TypeScript handler, build it into a self-contained WebAssembly binary, and run it anywhere with one command. This enables developers to create isolated environments for their applications without relying on Node.js, Bun, or Docker. The sandboxed environment provides a secure space for testing and development purposes.",
-  "summary::Show HN: Lathe – Use LLMs to learn a new domain, not skip past it": "Lathe generates hands-on technical tutorials from any prompt, allowing developers to learn new domains without skipping over them. It uses Large Language Models to create interactive, multi-part tutorials that work through by hand in a purpose-built local UI. The tutorial is then stored and managed using the Golang CLI, making it easy to extend or verify with additional parts."
+  "summary::Show HN: Lathe – Use LLMs to learn a new domain, not skip past it": "Lathe generates hands-on technical tutorials from any prompt, allowing developers to learn new domains without skipping over them. It uses Large Language Models to create interactive, multi-part tutorials that work through by hand in a purpose-built local UI. The tutorial is then stored and managed using the Golang CLI, making it easy to extend or verify with additional parts.",
+  "Netlify CTO Dana Lawson: Writing code is no longer the job": "DevOps",
+  "Inside the early 2025 senior exec meeting where Apple admitted its AI failures; Tim Cook became intimately involved in A": "DevOps",
+  "Firefox Merges Support For Vulkan Video Decoding": "General",
+  "The OnlyFans Economy of American AI": "DevOps",
+  "Podman 6: machine usability improvements": "General",
+  "mold-desktop": "DevOps",
+  "Japanese Gothic is a gorgeously grotesque ghost story": "DevOps",
+  "sponsored::The OnlyFans Economy of American AI": "yes",
+  "sponsored::Inside the early 2025 senior exec meeting where Apple admitted its AI failures; Tim Cook became intimately involved in A": "yes",
+  "sponsored::Netlify CTO Dana Lawson: Writing code is no longer the job": "yes",
+  "sponsored::Firefox Merges Support For Vulkan Video Decoding": "yes",
+  "sponsored::Podman 6: machine usability improvements": "yes",
+  "sponsored::mold-desktop": "yes",
+  "summary::Netlify CTO Dana Lawson: Writing code is no longer the job": "Netlify's CTO Dana Lawson is saying that writing code is no longer the primary job for many developers, and that the focus should shift to other aspects of software development. This change is driven by advancements in technology such as asynchronous programming and async generators, which allow developers to write more efficient and scalable code.",
+  "summary::Podman 6: machine usability improvements": "Podman 6 introduces significant changes to its machine function, making it easier for users to manage and interact with virtual machines without being limited by the default provider. The new approach allows users to specify the provider when creating or stopping a machine, regardless of the underlying technology used. This change is part of Podman's broader effort to improve usability and provide more flexibility in managing containers.",
+  "summary::mold-desktop": "Mariano Montone's fork of the mold-desktop project has gained significant traction, with over 1,000 commits and a 90.2% common-lisp score on GitHub. The desktop application is designed to be programmable using Common Lisp, and its CSS and JavaScript files are also included in the repository."
 }
