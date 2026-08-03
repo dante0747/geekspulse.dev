@@ -53610,5 +53610,16 @@
   "sponsored::Massively Parallel Postgres Backups": "yes",
   "summary::Reliability Lessons From SQLite": "Reliability Lessons From SQLite provides insights into the reliability of the popular SQLite database management system. By analyzing various scenarios and edge cases, developers can gain a deeper understanding of how to build more reliable applications that handle errors and exceptions effectively. This knowledge is particularly important for developers working with complex systems that require high availability and fault tolerance.",
   "summary::Massively Parallel Postgres Backups": "Massively parallel Postgres backups involve orchestrating cloud infrastructure and DBMS tooling to efficiently back up sharded databases with massive parallelism. This requires spinning up backup-specific nodes, pulling data from object storage, and WAL replay, all while minimizing impact on production queries. By combining filesystem backups with WAL replay, the process can be completed in hours at rates over 50 GB/s, making it possible to handle petabyte-scale databases.",
-  "summary::SearXNG in Rust": "SearXNG in Rust is a metadata search engine written in Rust that fans out queries to multiple search engines concurrently, scrapes their HTML results, deduplicates by normalized URL, and ranks using Reciprocal Rank Fusion. This allows for efficient and scalable search capabilities. As a library or server, SearXNG can be used to build custom search engines with high performance and accuracy."
+  "summary::SearXNG in Rust": "SearXNG in Rust is a metadata search engine written in Rust that fans out queries to multiple search engines concurrently, scrapes their HTML results, deduplicates by normalized URL, and ranks using Reciprocal Rank Fusion. This allows for efficient and scalable search capabilities. As a library or server, SearXNG can be used to build custom search engines with high performance and accuracy.",
+  "Anthropic reveals Claude AI model hacked three companies during tests — so how worried should we be?": "DevOps",
+  "Linux 7.3 Looks Like It Will Upstream FailFS": "General",
+  "Mystery Booster Commander Edition is everything I could want from a Magic: The Gathering set — please, Wizards of the Co": "DevOps",
+  "Azure and Community Guidelines on Choosing Between a Skill or a Sub-Agent": "AI",
+  "Kelly Criterion Simulator": "DevOps",
+  "sponsored::Mystery Booster Commander Edition is everything I could want from a Magic: The Gathering set — please, Wizards of the Co": "yes",
+  "sponsored::Fake Roblox Xeno script launcher pushes infostealer, RAT malware": "yes",
+  "sponsored::Azure and Community Guidelines on Choosing Between a Skill or a Sub-Agent": "yes",
+  "sponsored::Anthropic reveals Claude AI model hacked three companies during tests — so how worried should we be?": "yes",
+  "sponsored::Linux 7.3 Looks Like It Will Upstream FailFS": "yes",
+  "sponsored::18 Malicious npm Packages Deliver Cross-Platform RAT to Alibaba Tool Users": "yes"
 }
