@@ -62,8 +62,7 @@
   <!-- Robots -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
-  <!-- Theme / PWA -->
-  <meta name="theme-color" content="#060B15" />
+  <meta name="theme-color" content="#090B11" />
   <link rel="manifest" href="/manifest.json" />
 
   <!-- Favicon -->
@@ -77,7 +76,7 @@
   <link rel="dns-prefetch" href="https://api.codetabs.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
   <!-- JSON-LD Structured Data -->
@@ -337,7 +336,13 @@
     <div class="page-wrap">
       <div class="nav-inner">
         <a href="/" class="logo" aria-label="GeeksPulse home">
-          <div class="logo-mark" aria-hidden="true">GP</div>
+          <div class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="32" height="32" rx="7" fill="#090B11" stroke="#273145" stroke-width="1"/>
+              <polyline points="4,16 8,16 11,9 14,23 17,13 20,19 23,16 28,16" stroke="#A3FF3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="28" cy="16" r="2" fill="#24D6FF"/>
+            </svg>
+          </div>
           <span class="logo-name">GeeksPulse</span>
         </a>
         <div class="nav-links" aria-label="Site sections">
@@ -380,16 +385,24 @@
       <div class="hero-content">
         <div class="hero-eyebrow">
           <span class="pulse" aria-hidden="true"></span>
-          Free &amp; indie developer news aggregator
+          Developer-First Technology Signal
         </div>
-        <h1 id="hero-heading">One feed.<br /><em>Everything that matters.</em></h1>
-        <p class="hero-sub"><span id="heroFeedCount">50</span>+ hand-picked RSS feeds — AI &amp; machine learning, cybersecurity, DevOps, JavaScript &amp; TypeScript, Python, Rust, Go, Java, open source, and software architecture — aggregated into one distraction-free programming news feed. No algorithm. No ads. No paywalls.</p>
+        <h1 id="hero-heading">Stay ahead of<br /><em>what developers build next.</em></h1>
+        <p class="hero-sub">AI, security, DevOps, JavaScript, Python, Rust, Go, open source and architecture — curated from trusted engineering sources into one clean, distraction-free feed.</p>
+        <div class="hero-trust" aria-label="Key features">
+          <span class="hero-trust-item"><span class="hero-trust-dot" aria-hidden="true"></span><span id="heroFeedCount">50</span>+ curated sources</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span class="hero-trust-item">No ads</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span class="hero-trust-item">No paywalls</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span class="hero-trust-item">Open source</span>
+        </div>
         <div class="hero-ctas">
-          <a href="#latest" class="btn btn-primary btn-lg">Browse today's stories</a>
+          <a href="#latest" class="btn btn-primary btn-lg">Explore the Feed</a>
           <button id="refreshBtnHero" class="btn btn-ghost btn-lg" title="Refresh feeds">
-            <span id="refreshIcon"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="M13.5 8a5.5 5.5 0 1 1-1.3-3.6"/><polyline points="14,2 14,6 10,6"/></svg></span>Refresh
+            <span id="refreshIcon"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="M13.5 8a5.5 5.5 0 1 1-1.3-3.6"/><polyline points="14,2 14,6 10,6"/></svg></span>Refresh Signal
           </button>
-          <button data-support class="btn btn-ghost btn-lg">Donate</button>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -398,7 +411,7 @@
           </div>
           <div class="hero-stat">
             <span class="val" id="statToday">--</span>
-            <span class="lbl">New today</span>
+            <span class="lbl">New Today</span>
           </div>
           <div class="hero-stat">
             <span class="val">11</span>
@@ -406,7 +419,7 @@
           </div>
           <div class="hero-stat">
             <span class="val" id="statSources">--</span>
-            <span class="lbl">Active</span>
+            <span class="lbl">Active Sources</span>
           </div>
         </div>
       </div>
@@ -440,58 +453,58 @@
           <nav id="sidebarFilters" class="filter-nav" aria-label="Category filters"></nav>
         </div>
         <div class="sidebar-section">
-          <div class="sidebar-card">
-            <div class="sidebar-card-title"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>Support GeeksPulse</div>
-            <p>Completely free. No ads, no paywalls. If it's part of your morning routine, a coffee goes a long way.</p>
-            <button data-support class="btn btn-paypal">
-              Donate
-            </button>
+        <div class="sidebar-label">// my saved signal</div>
+        <div class="sidebar-card">
+          <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-3);">
+            <div style="display:flex;align-items:center;gap:7px;color:var(--ink2);">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <span style="color:var(--ink2);font-weight:700;">Saved Stories</span>
+              <span style="margin-left:auto;color:var(--accent)" id="sbBmCount">0</span>
+            </div>
+            <div style="color:var(--ink3);font-size:10px;line-height:1.6;">Save stories to build your personal reading signal.</div>
+            <button id="clearBookmarksBtn" class="btn btn-ghost btn-sm" style="font-size:10px;padding:4px 8px;color:var(--red);border-color:var(--red);opacity:0.7;" title="Clear all bookmarks">Clear all</button>
           </div>
         </div>
-        <div class="sidebar-section">
-          <div class="sidebar-quote">
-            <span class="q-mark">"</span>It works on my machine.<span class="q-mark">"</span><br />
-            <br />
-            — Every developer, at least once
-          </div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-label">// bookmarks</div>
-          <div class="sidebar-card">
-            <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-3);">
-              <div style="display:flex;align-items:center;gap:7px;color:var(--ink2);">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#6e7681" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-                <span style="color:#6e7681;font-weight:700;">GeeksPulse</span>
-                <span style="margin-left:auto;color:var(--ink3)" id="sbBmCount">0</span>
-              </div>
-              <div style="color:var(--ink3);font-size:10px;line-height:1.6;">// click <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> on any card to save</div>
-              <button id="clearBookmarksBtn" class="btn btn-ghost btn-sm" style="font-size:10px;padding:4px 8px;color:var(--red);border-color:var(--red);opacity:0.7;" title="Clear all bookmarks">Clear all</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">// pulse status</div>
+        <div class="sidebar-card">
+          <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--ink3)">sources online</span>
+              <span id="sbFeeds" style="color:var(--green)">--</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--ink3)">last refresh</span>
+              <span id="sbUpdated" style="color:var(--cyan)">--</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--ink3)">failed feeds</span>
+              <span id="sbFailed" style="color:var(--yellow)">0</span>
             </div>
           </div>
         </div>
-        <div class="sidebar-section">
-          <div class="sidebar-label">// stats</div>
-          <div class="sidebar-card">
-            <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-3);">
-              <div style="display:flex;justify-content:space-between;">
-                <span>feeds online</span>
-                <span id="sbFeeds" style="color:var(--green)">--</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;">
-                <span>last refresh</span>
-                <span id="sbUpdated" style="color:var(--cyan)">--</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;">
-                <span>failed feeds</span>
-                <span id="sbFailed" style="color:var(--yellow)">0</span>
-              </div>
-            </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Support GeeksPulse</div>
+          <p>Free, open source and independent. Support the signal.</p>
+          <button data-support class="btn btn-paypal">
+            Donate
+          </button>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-quote">
+          <span class="q-mark">"</span>Curated, not algorithmic.<span class="q-mark">"</span><br />
+          <br />
+          Developer news filtered for signal, not engagement.
           </div>
         </div>
       </aside>
       <!-- MAIN CONTENT -->
       <main class="content" aria-labelledby="latest-heading">
-        <h2 id="latest-heading" class="section-heading">Latest</h2>
+        <h2 id="latest-heading" class="section-heading">Latest Developer Signal</h2>
         <!-- Search bar -->
         <div class="search-bar-wrap">
           <label for="articleSearch" class="sr-only">Search articles</label>
@@ -1091,6 +1104,61 @@
     </section>
   </div><!-- /.page-wrap -->
 
+  <!-- VALUE PROPOSITION SECTION -->
+  <section class="value-section" aria-labelledby="value-heading">
+    <div class="page-wrap">
+      <div class="value-header">
+        <div class="value-eyebrow">Why GeeksPulse</div>
+        <h2 id="value-heading" class="value-title">A cleaner way to follow <em>engineering.</em></h2>
+        <p class="value-desc">Built for developers, not advertisers. GeeksPulse is curated, transparent, open source, and completely free.</p>
+      </div>
+      <div class="value-grid">
+        <div class="value-card value-card--lime">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3 class="value-card-title">No Ads</h3>
+          <p class="value-card-desc">Zero advertising and zero promoted stories interrupting your reading flow.</p>
+        </div>
+        <div class="value-card value-card--lime">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="value-card-title">No Paywalls</h3>
+          <p class="value-card-desc">Follow the most useful engineering stories without artificial product friction.</p>
+        </div>
+        <div class="value-card value-card--cyan">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="value-card-title">Trusted Sources</h3>
+          <p class="value-card-desc">Hand-picked publishers covering software development, infrastructure, security and AI.</p>
+        </div>
+        <div class="value-card value-card--cyan">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </div>
+          <h3 class="value-card-title">Curated, Not Algorithmic</h3>
+          <p class="value-card-desc">Chronological developer news without engagement manipulation or rage-driven ranking.</p>
+        </div>
+        <div class="value-card value-card--violet">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <h3 class="value-card-title">Open Source</h3>
+          <p class="value-card-desc">Inspect the project, contribute sources, report issues and improve the experience.</p>
+        </div>
+        <div class="value-card value-card--violet">
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="value-card-title">Privacy First</h3>
+          <p class="value-card-desc">No unnecessary tracking. Analytics only where consent and current implementation allow it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTRIBUTE SECTION -->
   <section class="contribute-section" id="contribute" aria-labelledby="contribute-heading">
     <div class="page-wrap">
@@ -1101,10 +1169,10 @@
             <span class="pulse" aria-hidden="true"></span>
             open source
           </div>
-          <h2 id="contribute-heading" class="contribute-title">Make it<br /><em>even better.</em></h2>
+          <h2 id="contribute-heading" class="contribute-title">Help shape the<br /><em>developer signal.</em></h2>
           <p class="contribute-desc">
-            GeeksPulse is open source and the feed list grows through community pull requests.
-            Whether you write code, spot bugs, or just know a great RSS source that's missing — there's a way for you to contribute.
+            GeeksPulse grows through thoughtful source suggestions, issue reports and open-source contributions.
+            Whether you write code, spot bugs, or know a great engineering source that's missing — there's a way for you to contribute.
           </p>
           <ul class="contribute-ways">
             <li>
@@ -1290,10 +1358,9 @@
             <span class="pulse" aria-hidden="true"></span>
             <span>your feedback shapes this</span>
           </div>
-          <h2 id="feedback-heading" class="contribute-title">Something broken?<br /><em>Tell us.</em></h2>
+          <h2 id="feedback-heading" class="contribute-title">Something missing?<br /><em>Tell us.</em></h2>
           <p class="contribute-desc">
-            Found a broken feed? Know a source worth adding? Have a UI suggestion?
-            GitHub Issues is the fastest path to a fix — every report gets read.
+            Found a broken feed, a valuable engineering source, or a usability issue? Every useful report helps improve the signal.
           </p>
           <ul class="contribute-ways">
             <li>
@@ -1472,7 +1539,7 @@
           </div>
           <h2 id="about-heading" class="contribute-title">Behind<br /><em>GeeksPulse.</em></h2>
           <p class="contribute-desc">
-            GeeksPulse is an indie project — designed, built, and maintained by <strong>Majid Abarghooei</strong>, a solo developer. It exists because keeping up with software engineering shouldn't require 12 browser tabs and a news algorithm optimised for rage. It aggregates 39 hand-picked RSS feeds with no ads, no paywalls, and no outside pressure.
+            GeeksPulse is an independent, open-source developer news aggregator built to help software engineers stay current without dozens of browser tabs, noisy social feeds, or algorithmic distraction. It brings trusted engineering sources into one fast, focused reading experience.
           </p>
           <!-- GitHub stars badge -->
           <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -1701,33 +1768,73 @@
         </ul>
       </section>
       <div class="footer-inner">
-        <div class="footer-left">
-          <div class="footer-tagline">Developer news — curated, not algorithmically sorted.</div>
-          <div class="footer-shortcuts" aria-label="Keyboard shortcuts">
-            <span class="footer-kbd-label">// keyboard shortcuts:</span>
-            <kbd class="footer-kbd">/</kbd><span> search</span>
-            <kbd class="footer-kbd">j</kbd><kbd class="footer-kbd">k</kbd><span> navigate</span>
-            <kbd class="footer-kbd">o</kbd><span> open</span>
-            <kbd class="footer-kbd">r</kbd><span> refresh</span>
-            <kbd class="footer-kbd">Esc</kbd><span> clear</span>
+        <div class="footer-grid">
+          <!-- Column 1: Brand -->
+          <div class="footer-col footer-brand-col">
+            <a href="/" class="footer-brand" aria-label="GeeksPulse home">
+              <svg viewBox="0 0 32 32" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="32" height="32" rx="7" fill="#090B11" stroke="#273145" stroke-width="1"/>
+                <polyline points="4,16 8,16 11,9 14,23 17,13 20,19 23,16 28,16" stroke="#A3FF3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="28" cy="16" r="2" fill="#24D6FF"/>
+              </svg>
+              <span class="footer-brand-name">GeeksPulse</span>
+            </a>
+            <p class="footer-mission">Trusted developer stories in one clean signal. Independent. Open source. No ads. No paywalls.</p>
           </div>
-          <div class="footer-copy">&#169; 2026 GeeksPulse &mdash; Free to use. No ads. No tracking. No paywalls.</div>
-          <div class="footer-copy" style="margin-top:6px;font-size:0.75rem">
-            Contact: <a href="mailto:abarghooeimajid@gmail.com" style="color:var(--cyan);text-decoration:none" aria-label="Email Majid Abarghooei">abarghooeimajid@gmail.com</a>
-            &nbsp;&middot;&nbsp;
-            <a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:none" aria-label="GeeksPulse on GitHub">GitHub</a>
-            &nbsp;&middot;&nbsp;
-            <a href="#about" style="color:var(--cyan);text-decoration:none">About</a>
-            &nbsp;&middot;&nbsp;
-            <a href="/privacy.html" style="color:var(--cyan);text-decoration:none">Privacy</a>
-            &nbsp;&middot;&nbsp;
-            <a href="/terms.html" style="color:var(--cyan);text-decoration:none">Terms</a>
+
+          <!-- Column 2: Feed -->
+          <div class="footer-col">
+            <div class="footer-col-heading">Feed</div>
+            <ul class="footer-links">
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('All')">All News</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('AI')">AI</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('Security')">Security</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('DevOps')">DevOps</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('JavaScript')">JavaScript</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('Python')">Python</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('Rust')">Rust</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('Go')">Go</a></li>
+              <li><a href="#latest" onclick="window.__setFilter&&window.__setFilter('Architecture')">Architecture</a></li>
+            </ul>
           </div>
-          <div class="footer-copy" style="margin-top:8px;font-size:0.72rem;font-family:var(--mono);color:var(--ink3)">
-            <a id="siteVersion" href="https://github.com/dante0747/geekspulse.dev/commits/main" target="_blank" rel="noopener noreferrer" title="View changelog on GitHub" class="site-version-badge">// loading version—</a>
+
+          <!-- Column 3: Project -->
+          <div class="footer-col">
+            <div class="footer-col-heading">Project</div>
+            <ul class="footer-links">
+              <li><a href="#sources">Sources</a></li>
+              <li><a href="#contribute">Contribute</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#feedback">Feedback</a></li>
+              <li><a href="https://github.com/dante0747/geekspulse.dev" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="https://github.com/dante0747/geekspulse.dev/blob/main/docs/feed-selection-criteria.md" target="_blank" rel="noopener noreferrer">Editorial Policy</a></li>
+              <li><a href="https://paypal.me/MajidAbarghooei" target="_blank" rel="noopener noreferrer">Donate</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Legal -->
+          <div class="footer-col">
+            <div class="footer-col-heading">Legal</div>
+            <ul class="footer-links">
+              <li><a href="/privacy.html">Privacy Policy</a></li>
+              <li><a href="/terms.html">Terms of Use</a></li>
+            </ul>
           </div>
         </div>
 
+        <div class="footer-shortcuts" aria-label="Keyboard shortcuts">
+          <span class="footer-kbd-label">// keyboard shortcuts:</span>
+          <kbd class="footer-kbd">/</kbd><span> search</span>
+          <kbd class="footer-kbd">j</kbd><kbd class="footer-kbd">k</kbd><span> navigate</span>
+          <kbd class="footer-kbd">o</kbd><span> open</span>
+          <kbd class="footer-kbd">r</kbd><span> refresh</span>
+          <kbd class="footer-kbd">Esc</kbd><span> clear</span>
+        </div>
+        <div class="footer-copy">
+          &#169; 2026 GeeksPulse &mdash; Independent &middot; Open source &middot; No ads &middot; No paywalls
+          &nbsp;&middot;&nbsp;
+          <a id="siteVersion" href="https://github.com/dante0747/geekspulse.dev/commits/main" target="_blank" rel="noopener noreferrer" title="View changelog on GitHub" class="site-version-badge">// loading version—</a>
+        </div>
       </div>
     </div>
   </footer>
