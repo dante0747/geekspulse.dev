@@ -62539,5 +62539,16 @@
   "sponsored::A quick look at zero-knowledge proofs": "yes",
   "summary::A quick look at zero-knowledge proofs": "A quick look at zero-knowledge proofs involves two parties, the prover and the verifier, who agree on a shared graph and a problem to be solved. The prover asserts that a solution exists without revealing the solution, while the verifier checks the solution without knowing the answer. Graph coloring is a classic example, where the prover wants to convince the verifier of a valid 3-coloring without revealing the colors.",
   "summary::Anthropic&#x27;s &#x27;Watermark&#x27; Text Adulteration in Claude Is a Perversion of Writing": "Anthropic's 'Watermark' Text Adulteration in Claude Is a Perversion of Writing, where the company's 'Watermark' text adulteration in Claude models, worldwide, will soon begin to comply with EU regulation by applying a form of steganography, where the choice of words at inference time will leave fingerprints that can later be detected probabilistically.",
-  "summary::Nvidia dramatically reduces amount of OpenAI infra financing it may guarantee": "Nvidia has significantly scaled back its investment in OpenAI, a company that develops and trains artificial intelligence models. The company's decision to reduce its financing commitment to OpenAI may have implications for the development of AI models that rely on the company's technology. Nvidia's decision to scale back its investment could impact the availability of its hardware and software for AI model development. The reduced investment may also affect the broader adoption of Nvidia's technology in the AI industry."
+  "summary::Nvidia dramatically reduces amount of OpenAI infra financing it may guarantee": "Nvidia has significantly scaled back its investment in OpenAI, a company that develops and trains artificial intelligence models. The company's decision to reduce its financing commitment to OpenAI may have implications for the development of AI models that rely on the company's technology. Nvidia's decision to scale back its investment could impact the availability of its hardware and software for AI model development. The reduced investment may also affect the broader adoption of Nvidia's technology in the AI industry.",
+  "Pony's Arena Allocator": "DevOps",
+  "Hackaday Links: August 16, 2026": "DevOps",
+  "Linux 7.2 Released With Faster I/O, New AMD & Intel Driver Improvements": "DevOps",
+  "The US Army is opening up its training centers for private firms to test out new drones": "DevOps",
+  "sponsored::Pony's Arena Allocator": "yes",
+  "sponsored::Linux 7.2 Released With Faster I/O, New AMD & Intel Driver Improvements": "yes",
+  "sponsored::The US Army is opening up its training centers for private firms to test out new drones": "yes",
+  "sponsored::SafePal data breach impacts 39,798 customers, stolen info for sale": "yes",
+  "sponsored::The 7.2 kernel has been released": "yes",
+  "sponsored::Hackaday Links: August 16, 2026": "yes",
+  "summary::Pony's Arena Allocator": "Pony's Arena Allocator was improved by adding tracking of memory allocation and deallocation by each thread, allowing the allocator to merge freed memory, return empty regions to the OS, and reuse memory across threads. This change enabled the allocator to handle edge cases and memory growth without bound, resulting in significant performance improvements."
 }
