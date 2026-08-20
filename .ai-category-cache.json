@@ -64968,5 +64968,13 @@
   "sponsored::OpenAI confirms ChatGPT is down as logins and signups fail": "yes",
   "sponsored::Universality of Gradient Descent Neural Network Training": "yes",
   "sponsored::Manabu Kosaka&#x27;s Handmade Paper Sculptures": "yes",
-  "summary::Manabu Kosaka&#x27;s Handmade Paper Sculptures": "Manabu Kosaka's handmade paper sculptures are a unique form of artistic expression that transforms everyday objects into precise sculptural forms. Each work is entirely handmade, built through a process of cutting, assembling, and refining paper into highly detailed objects. The process involves cutting, shaping, and assembling small components over an extended period of time, resulting in a gradual transformation of the material into a solid and detailed object."
+  "summary::Manabu Kosaka&#x27;s Handmade Paper Sculptures": "Manabu Kosaka's handmade paper sculptures are a unique form of artistic expression that transforms everyday objects into precise sculptural forms. Each work is entirely handmade, built through a process of cutting, assembling, and refining paper into highly detailed objects. The process involves cutting, shaping, and assembling small components over an extended period of time, resulting in a gradual transformation of the material into a solid and detailed object.",
+  "NASA Tests Featherweight Radar Antenna for SkyFall Mars Helicopters": "DevOps",
+  "The US Army is phasing out its drone assault battalion, as part of a \"back-to-basics\" approach; it was created in Januar": "DevOps",
+  "X.Org Server 26.1 RC1 Prepares For First Feature Release In Five Years": "DevOps",
+  "sponsored::The US Army is phasing out its drone assault battalion, as part of a \"back-to-basics\" approach; it was created in Januar": "yes",
+  "sponsored::X.Org Server 26.1 RC1 Prepares For First Feature Release In Five Years": "yes",
+  "sponsored::ISC Stormcast For Thursday, August 20th, 2026 https://isc.sans.edu/podcastdetail/10060, (Thu, Aug 20th)": "yes",
+  "sponsored::NASA Tests Featherweight Radar Antenna for SkyFall Mars Helicopters": "yes",
+  "summary::Reclaim the terminal": "The terminal is not always the same, even when a program is piping input to it. The terminal's fd 0 and fd 1 are connected to different processes, and the shell only launches the whole pipeline at once. This means that each stage of the pipeline can read from its own stdin, and the next stage can start reading from the previous stage's pipe. This is possible because the binary itself is piping input to itself, and the shell only needs to know which stage is currently reading from stdin."
 }
