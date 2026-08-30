@@ -1,24 +1,104 @@
 {
-  "generatedAt": "2026-08-30T15:16:20.276Z",
+  "generatedAt": "2026-08-30T16:16:47.274Z",
   "feedCount": 51,
   "articleCount": 484,
   "successFeeds": 51,
   "failedFeeds": 0,
   "articles": [
     {
-      "id": "4719bdabc53b",
-      "title": "Debugging Type-Based Alias Analysis optimizations in BPF",
-      "link": "https://loshz.com/debugging-bpf-tbaa/",
-      "source": "Lobsters",
-      "sourceId": "lobsters",
-      "category": "General",
-      "publishedAt": "2026-08-30T15:10:39.000Z",
-      "summary": "The update to the program to use BTF generated vmlinux.h definitions instead of depending on specific kernel headers introduced a bug in the Type-Based Alias Analysis optimizations, specifically in the calculation of the L3 checksum of the IP header. The bug occurs when the ToS field is updated, but the checksum is not recalculated immediately after, instead being assigned to a new variable and then used to compute the checksum. This causes the checksum to be calculated incorrectly, leading to packet drops in internal integration tests.",
+      "id": "4538153b570f",
+      "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
+      "source": "The Verge",
+      "sourceId": "the-verge",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T16:14:46.000Z",
+      "summary": "As backlash grows over Flock's AI surveillance cameras, Texas Governor Greg Abbott has frozen state spending on them. The move came just ahead of the publication of a Texas Tribune investigation that revealed the state s…",
+      "summaryType": "snippet",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/268713_Americans_seem_to_agree_that_destroy_Flock_cameras_is_good_CVirginia.jpg?quality=90&",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
+      "sponsored": true
+    },
+    {
+      "id": "e3b8bb2b25ab",
+      "title": "Haiku R1&#x2F;beta6 has been released",
+      "link": "https://www.haiku-os.org/news/2026-08-26_haiku_r1_beta6",
+      "source": "Hacker News",
+      "sourceId": "hacker-news",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T16:01:10.000Z",
+      "summary": "Haiku R1/beta6 has been released, marking a significant milestone for the company. The release is a culmination of two years of development and a week since Haiku's 25th birthday. The new version includes various updates and improvements.",
       "summaryType": "ai",
       "image": null,
-      "fallbackImage": "/assets/fallbacks/general.svg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
+      "sponsored": true
+    },
+    {
+      "id": "a8ce1edfc172",
+      "title": "The cheapest NFL streaming options to stay locked in all season",
+      "link": "https://www.engadget.com/2246400/cheapest-nfl-streaming-options-stay-locked-in-all-season/",
+      "source": "Engadget",
+      "sourceId": "engadget",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T16:00:00.000Z",
+      "summary": "Watching NFL games life can get expensive in a hurry, but there are a few corners you can cut to keep the cost down.",
+      "summaryType": "snippet",
+      "image": "https://www.engadget.com/img/gallery/the-cheapest-nfl-streaming-options-to-stay-locked-in-all-season/l-intro-1787849807.jpg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
+      "sponsored": true
+    },
+    {
+      "id": "57c09f170118",
+      "title": "Is 4K just marketing? Here's where the name really came from",
+      "link": "https://www.engadget.com/2242779/how-4k-tv-got-its-name/",
+      "source": "Engadget",
+      "sourceId": "engadget",
+      "category": "General",
+      "publishedAt": "2026-08-30T15:30:00.000Z",
+      "summary": "4K is a catchier marketing term than 2160p, but the resolution also has this name for a reason.",
+      "summaryType": "snippet",
+      "image": "https://www.engadget.com/img/gallery/is-4k-just-marketing-heres-where-the-name-really-came-from/l-intro-1786133597.jpg",
+      "fallbackImage": "/assets/fallbacks/general.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
+      "sponsored": true
+    },
+    {
+      "id": "00d8be1ed5b5",
+      "title": "The Lowe's Labor Day sale has everything you need for fall, football season, and Halloween — here's what I'm buying",
+      "link": "https://www.techradar.com/seasonal-sales/the-lowes-labor-day-sale-has-everything-you-need-for-fall-football-season-and-halloween-heres-everything-im-buying",
+      "source": "TechRadar",
+      "sourceId": "techradar",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T15:15:00.000Z",
+      "summary": "The 2026 Lowe's Labor Day sale is live, and it's arrived at the right time. The retailer has seasonal deals for the upcoming fall and football season, plus discounts on its popular Halloween decor. You can also save up t…",
+      "summaryType": "snippet",
+      "image": "https://cdn.mos.cms.futurecdn.net/oWuizjZ7Q6PYXSoeE4GFWK.jpg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.677Z",
+      "sponsored": true
+    },
+    {
+      "id": "2de30eebda32",
+      "title": "European Commission Revives Push for Encryption Backdoors in ProtectEU Strategy",
+      "link": "https://reclaimthenet.org/eu-protecteu-strategy-encryption-backdoor-law-enforcement",
+      "source": "Hacker News",
+      "sourceId": "hacker-news",
+      "category": "General",
+      "publishedAt": "2026-08-30T15:12:40.000Z",
+      "summary": "The European Commission is reviving its push for encryption backdoors in its ProtectEU strategy, citing growing threats from hostile states and online crime. The strategy focuses on six areas, including \"more effective tools for law enforcement\", which could lead to mandating encryption backdoors. However, this move is met with warnings from tech companies and civil rights advocates, who argue that encryption provides both private communications and technical security.",
+      "summaryType": "ai",
+      "image": "https://media.reclaimthenet.org/2025/04/eu-encrpt-scaled.jpg",
+      "fallbackImage": "/assets/fallbacks/general.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
       "sponsored": true
     },
     {
@@ -34,7 +114,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=m_audio_veom",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -50,7 +130,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2025/09/24/Airport_flight_schedule.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -66,7 +146,7 @@
       "image": "http://www.techmeme.com/260830/i7.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.007Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -82,23 +162,7 @@
       "image": "https://www.phoronix.net/image.php?id=freebsd-15-amd-epyc&image=freebsd_15_2",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
-      "sponsored": true
-    },
-    {
-      "id": "bba452852b74",
-      "title": "Emacs vs. Vim 2026: 24.3% vs. 8% Usage, 20x Memory Gap",
-      "link": "https://tech-insider.org/emacs-vs-vim-2026/",
-      "source": "Hacker News",
-      "sourceId": "hacker-news",
-      "category": "DevOps",
-      "publishedAt": "2026-08-30T14:36:34.000Z",
-      "summary": "Emacs and Vim are two of the most popular text editors among developers, but a recent survey reveals a significant gap in usage between the two. According to the study, Emacs has a 24.3% usage rate, while Vim has a 8% rate. This disparity is largely due to the fact that Vim is more memory-intensive, requiring significantly more RAM to run. As a result, developers who prefer Vim may need to upgrade their hardware to run it smoothly, highlighting the importance of memory management in text editors.",
-      "summaryType": "ai",
-      "image": null,
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -114,7 +178,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/02/13/Claude_chats.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -130,7 +194,23 @@
       "image": "https://www.engadget.com/img/gallery/things-to-know-before-using-your-macbook-outside/l-intro-1786646118.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.979Z",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
+      "sponsored": true
+    },
+    {
+      "id": "bb588c772743",
+      "title": "Europe&#x27;s summer drought is so extreme that desertification is a growing threat",
+      "link": "https://fortune.com/2026/08/29/europe-summer-drought-desertification-threat-rivers-fish/",
+      "source": "Hacker News",
+      "sourceId": "hacker-news",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T14:29:25.000Z",
+      "summary": "Europe's summer drought is so extreme that desertification is a growing threat, with water levels dropping on the Danube River in Serbia and fish farms in several countries being hit hard by damage estimated in millions of euros. The fish industry has been particularly affected, with damage to crops, energy supplies, and river traffic adding to the already high toll caused by problems with water and energy supplies. As the region continues to face extreme weather events linked to human-induced climate change, countries and businesses are now looking for ways to minimize the effects of future extreme weather events.",
+      "summaryType": "ai",
+      "image": "https://fortune.com/img-assets/wp-content/uploads/2026/08/AP26240395440798-e1788040359606.jpg?resize=1200,600",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -146,7 +226,7 @@
       "image": "https://www.engadget.com/img/gallery/google-maps-has-changed-lake-ontario-to-lake-america-for-us-users/l-intro-1788099757.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
       "sponsored": true
     },
     {
@@ -162,7 +242,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2023/11/28/Google_Chrome.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -178,23 +258,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/berkeley-humaonid-lite-cover-banner.png?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.695Z",
-      "sponsored": true
-    },
-    {
-      "id": "d1a50561c6a3",
-      "title": "Spotify, I owe you an apology — my smart TV finally got Spotify after years of waiting, and now I love its roster of music videos",
-      "link": "https://www.techradar.com/audio/spotify/spotify-i-owe-you-an-apology-my-smart-tv-finally-got-spotify-after-years-of-waiting-and-now-i-suddenly-love-its-roster-of-music-videos",
-      "source": "TechRadar",
-      "sourceId": "techradar",
-      "category": "DevOps",
-      "publishedAt": "2026-08-30T14:00:00.000Z",
-      "summary": "Spotify , I’m I owe you a huge apology. For the past decade you’ve been my loyal music companion, but despite my tumultuous relationships with some of your features, your unmatched ubiquity means I can freely use you acr…",
-      "summaryType": "snippet",
-      "image": "https://cdn.mos.cms.futurecdn.net/8EjX3ZzUPZFLfETzyyowiX.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.078Z",
+      "fetchedAt": "2026-08-30T16:15:49.286Z",
       "sponsored": true
     },
     {
@@ -210,7 +274,23 @@
       "image": "https://cdn.mos.cms.futurecdn.net/6zB2vcssaDLmnZsESVY4XN.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.078Z",
+      "fetchedAt": "2026-08-30T16:15:49.677Z",
+      "sponsored": true
+    },
+    {
+      "id": "d1a50561c6a3",
+      "title": "Spotify, I owe you an apology — my smart TV finally got Spotify after years of waiting, and now I love its roster of music videos",
+      "link": "https://www.techradar.com/audio/spotify/spotify-i-owe-you-an-apology-my-smart-tv-finally-got-spotify-after-years-of-waiting-and-now-i-suddenly-love-its-roster-of-music-videos",
+      "source": "TechRadar",
+      "sourceId": "techradar",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T14:00:00.000Z",
+      "summary": "Spotify , I’m I owe you a huge apology. For the past decade you’ve been my loyal music companion, but despite my tumultuous relationships with some of your features, your unmatched ubiquity means I can freely use you acr…",
+      "summaryType": "snippet",
+      "image": "https://cdn.mos.cms.futurecdn.net/8EjX3ZzUPZFLfETzyyowiX.jpg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.677Z",
       "sponsored": true
     },
     {
@@ -226,7 +306,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=ryzen_ai_halo_lighting",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -242,7 +322,23 @@
       "image": "https://www.engadget.com/img/gallery/improve-your-android-auto-experience-by-doing-these-simple-things/l-intro-1787319995.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
+      "sponsored": true
+    },
+    {
+      "id": "3172840cab72",
+      "title": "But where does taste come from?",
+      "link": "https://dustycloud.org/blog/but-where-does-taste-come-from/",
+      "source": "Lobsters",
+      "sourceId": "lobsters",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T13:27:41.000Z",
+      "summary": "Taste is a complex sense that involves experience, intuition, and aesthetics, but it's not something that can be easily replicated or developed through technology. Unlike AI, which can generate content with high precision, taste is a subjective experience that requires human judgment and creativity. Developing taste requires a significant amount of time and effort, as it involves trying new things, failing, and learning from mistakes. This process is often hindered by the use of generative AI tools, which can lead to a lack of authenticity and nuance in creative work.",
+      "summaryType": "ai",
+      "image": "http://i.creativecommons.org/l/by-sa/4.0/80x15.png",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -258,23 +354,7 @@
       "image": "http://www.techmeme.com/260830/i6.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.007Z",
-      "sponsored": true
-    },
-    {
-      "id": "faba80201f25",
-      "title": "OpenWrt: Monitor your IPv6 Status",
-      "link": "https://bergs.biz/blog/2026/08/30/openwrt-monitor-your-ipv6-status/",
-      "source": "Lobsters",
-      "sourceId": "lobsters",
-      "category": "General",
-      "publishedAt": "2026-08-30T13:24:45.000Z",
-      "summary": "OpenWrt-based routers and internet gateways can send event messages to an MQTT broker when their WAN interface changes, including the IPv6-specific interface wan6. This allows for the automation of monitoring and notification of IPv6 status changes.",
-      "summaryType": "ai",
-      "image": "https://bergs.biz/blog/wp-content/uploads/2026/08/ipv6.png",
-      "fallbackImage": "/assets/fallbacks/general.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -290,7 +370,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.739Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -306,7 +386,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK269_ANTHROPIC_2_A.jpg?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -322,7 +402,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/Gn9nWawP4WKKK6YZpH2sKm.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.079Z",
+      "fetchedAt": "2026-08-30T16:15:49.677Z",
       "sponsored": true
     },
     {
@@ -338,7 +418,7 @@
       "image": "https://www.engadget.com/img/gallery/how-much-storage-does-a-smart-tv-typically-have/l-intro-1787324309.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.525Z",
       "sponsored": true
     },
     {
@@ -354,7 +434,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/yS8KQAAuq3NZDpRyit65bd.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.079Z",
+      "fetchedAt": "2026-08-30T16:15:49.678Z",
       "sponsored": true
     },
     {
@@ -370,7 +450,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.569Z",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
       "sponsored": true
     },
     {
@@ -386,7 +466,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/NUsMEie24uN7zsRWeCK7x.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.079Z",
+      "fetchedAt": "2026-08-30T16:15:49.678Z",
       "sponsored": true
     },
     {
@@ -402,7 +482,7 @@
       "image": "https://www.engadget.com/img/gallery/apple-arcade-just-got-this-retro-inspired-gem/l-intro-1787341192.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -418,23 +498,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/Thi6y93AMWrCXJAEiHDQbL-1280-80.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.079Z",
-      "sponsored": true
-    },
-    {
-      "id": "de5edf944ee5",
-      "title": "monty-go: Pure-Go wrapper for Pydantic&#x27;s Monty Python Interpreter",
-      "link": "https://github.com/fugue-labs/monty-go",
-      "source": "Hacker News",
-      "sourceId": "hacker-news",
-      "category": "Python",
-      "publishedAt": "2026-08-30T12:02:09.000Z",
-      "summary": "Monty-go is a pure-Go wrapper for Pydantic's Monty Python interpreter, compiled to WebAssembly and loaded via wazero, allowing for safe and efficient execution of Python code in a sandboxed WASM instance.",
-      "summaryType": "ai",
-      "image": "https://opengraph.githubassets.com/7becdfa0572ad40b84614e640fb865ed1eab4b9d114746228f5775a968197373/fugue-labs/monty-go",
-      "fallbackImage": "/assets/fallbacks/python.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.571Z",
+      "fetchedAt": "2026-08-30T16:15:49.678Z",
       "sponsored": true
     },
     {
@@ -450,7 +514,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/fP22YguSfcZARidYASwmXj.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.080Z",
+      "fetchedAt": "2026-08-30T16:15:49.678Z",
       "sponsored": true
     },
     {
@@ -466,7 +530,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/LPbSTPpGZeSbJpYYbgd8bh.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.080Z",
+      "fetchedAt": "2026-08-30T16:15:49.679Z",
       "sponsored": true
     },
     {
@@ -482,23 +546,23 @@
       "image": "https://www.engadget.com/img/gallery/how-to-check-if-your-tv-is-playing-in-4k-or-not/l-intro-1786659438.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
       "id": "1482aaa525c2",
-      "title": "Automating Immersive Reading",
+      "title": "Automating immersive reading",
       "link": "https://smoores.dev/post/automating_immersive_reading/",
-      "source": "Hacker News",
-      "sourceId": "hacker-news",
+      "source": "Lobsters",
+      "sourceId": "lobsters",
       "category": "DevOps",
-      "publishedAt": "2026-08-30T11:46:23.000Z",
-      "summary": "Storyteller's forced alignment algorithm works by taking an ebook and an audiobook and aligning them automatically, using the EPUB specification's built-in audio synchronization system to embed the audio and synchronization info into the EPUB file. This allows for immersive reading experiences, with the reader's app highlighting each sentence as it's narrated by the narrator. The algorithm was initially developed as a single Python script, but has since been expanded to include native apps for Android and iOS, and is now in alpha and beta testing for macOS, watchOS, and tvOS.",
+      "publishedAt": "2026-08-30T11:54:38.000Z",
+      "summary": "Storyteller's forced alignment algorithm works by taking an ebook and an audiobook and aligning them automatically, using the EPUB specification's built-in audio synchronization system to embed audio and synchronization information into the EPUB file. This allows for immersive reading experiences with highlighted sentences as they are narrated. The algorithm was initially developed as a single Python script that took a single audiobook file and ebook file and output a new ebook file with audio synchronization metadata.",
       "summaryType": "ai",
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.571Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -514,7 +578,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -530,7 +594,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.569Z",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
       "sponsored": true
     },
     {
@@ -546,7 +610,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/08/data-center-server-room-1152x648.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.614Z",
+      "fetchedAt": "2026-08-30T16:15:47.080Z",
       "sponsored": true
     },
     {
@@ -562,7 +626,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/nes_cd-addon_internals_throaty_mumbo_youtube.jpg?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.696Z",
+      "fetchedAt": "2026-08-30T16:15:49.287Z",
       "sponsored": true
     },
     {
@@ -578,7 +642,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=nvidia_fruc",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -594,7 +658,7 @@
       "image": "https://media.wired.com/photos/69d41d1bf10fbfdc2dc2e429/master/pass/The-Best-Mesh-Wi-Fi-Systems-for-WFH,-Gaming,-and-Streaming.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.648Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -610,7 +674,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/jf8yreF9aidjNLx2knUaqm-1280-80.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.080Z",
+      "fetchedAt": "2026-08-30T16:15:49.679Z",
       "sponsored": true
     },
     {
@@ -626,7 +690,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=kvm_chainsaw",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -642,7 +706,7 @@
       "image": "https://media.wired.com/photos/6a8f1c5ba84e455f12fd962b/master/pass/NoScreenWearable.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.648Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -658,7 +722,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=moxa_pcie",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -674,7 +738,7 @@
       "image": "http://www.techmeme.com/260830/i5.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -690,7 +754,7 @@
       "image": "https://media.wired.com/photos/6a92449dd4d21b6cfa34c3e7/master/pass/The-Best-Label-Makers-for-an-Organized-Home.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.648Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -706,39 +770,7 @@
       "image": "https://media.wired.com/photos/6a921f44cd8b286be7911fec/master/pass/How-to-Escape-from-Group-Chat-Hell-Gear.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.648Z",
-      "sponsored": true
-    },
-    {
-      "id": "330dc62986f0",
-      "title": "Why the first Chinese mirrorless cameras will massively disrupt the market — and why that's a good thing",
-      "link": "https://www.techradar.com/cameras/mirrorless-cameras/why-the-first-chinese-mirrorless-camera-will-completely-disrupt-the-market-and-why-thats-a-good-thing",
-      "source": "TechRadar",
-      "sourceId": "techradar",
-      "category": "DevOps",
-      "publishedAt": "2026-08-30T10:00:00.000Z",
-      "summary": "Almost all of the big names in cameras — Canon, Sony, Nikon, Fujifilm, Panasonic, OM System, Sigma, Ricoh, Pentax and others — hail from Japan, the birthplace of digital photography. Want one of the best mirrorless camer…",
-      "summaryType": "snippet",
-      "image": "https://cdn.mos.cms.futurecdn.net/iUwzMGgbSoKtqBVknakHqd-1280-80.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.081Z",
-      "sponsored": true
-    },
-    {
-      "id": "47bcee384803",
-      "title": "The Terra Kaffe Aero froths any milk, hot or cold, and makes matcha at the touch of a button",
-      "link": "https://www.techradar.com/home/small-appliances/terra-kaffe-aero-review",
-      "source": "TechRadar",
-      "sourceId": "techradar",
-      "category": "DevOps",
-      "publishedAt": "2026-08-30T10:00:00.000Z",
-      "summary": "Terra Kaffe Aero: two-minute review The Terra Kaffe Aero does what it does well. There are four settings: Cold Foam, Hot Froth, Hot Milk, and Matcha. Just spin the dial and press it to make your selection. In just a few …",
-      "summaryType": "snippet",
-      "image": "https://cdn.mos.cms.futurecdn.net/aP9qmdEbmg9fZbx7GYMSLD.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.082Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -754,7 +786,39 @@
       "image": "https://cdn.mos.cms.futurecdn.net/yS8KQAAuq3NZDpRyit65bd.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.082Z",
+      "fetchedAt": "2026-08-30T16:15:49.679Z",
+      "sponsored": true
+    },
+    {
+      "id": "47bcee384803",
+      "title": "The Terra Kaffe Aero froths any milk, hot or cold, and makes matcha at the touch of a button",
+      "link": "https://www.techradar.com/home/small-appliances/terra-kaffe-aero-review",
+      "source": "TechRadar",
+      "sourceId": "techradar",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T10:00:00.000Z",
+      "summary": "Terra Kaffe Aero: two-minute review The Terra Kaffe Aero does what it does well. There are four settings: Cold Foam, Hot Froth, Hot Milk, and Matcha. Just spin the dial and press it to make your selection. In just a few …",
+      "summaryType": "snippet",
+      "image": "https://cdn.mos.cms.futurecdn.net/aP9qmdEbmg9fZbx7GYMSLD.jpg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.680Z",
+      "sponsored": true
+    },
+    {
+      "id": "330dc62986f0",
+      "title": "Why the first Chinese mirrorless cameras will massively disrupt the market — and why that's a good thing",
+      "link": "https://www.techradar.com/cameras/mirrorless-cameras/why-the-first-chinese-mirrorless-camera-will-completely-disrupt-the-market-and-why-thats-a-good-thing",
+      "source": "TechRadar",
+      "sourceId": "techradar",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T10:00:00.000Z",
+      "summary": "Almost all of the big names in cameras — Canon, Sony, Nikon, Fujifilm, Panasonic, OM System, Sigma, Ricoh, Pentax and others — hail from Japan, the birthplace of digital photography. Want one of the best mirrorless camer…",
+      "summaryType": "snippet",
+      "image": "https://cdn.mos.cms.futurecdn.net/iUwzMGgbSoKtqBVknakHqd-1280-80.jpg",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:49.680Z",
       "sponsored": true
     },
     {
@@ -770,7 +834,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.739Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -786,7 +850,7 @@
       "image": "https://image.theregister.com/255047.jpg?imageId=255047&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.571Z",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -802,7 +866,7 @@
       "image": "https://media.wired.com/photos/6a91cdabbb3a85e785f50a72/master/pass/2191305242",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.648Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -818,7 +882,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
       "sponsored": true
     },
     {
@@ -834,7 +898,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.739Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -850,7 +914,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:47.020Z",
       "sponsored": true
     },
     {
@@ -866,7 +930,7 @@
       "image": "https://res.infoq.com/news/2026/08/kiro-crew-coding-agents/en/headerimage/generatedHeaderImage-1786904775247.jpg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.487Z",
       "sponsored": true
     },
     {
@@ -882,7 +946,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/remote-woodstove-main.png?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.696Z",
+      "fetchedAt": "2026-08-30T16:15:49.287Z",
       "sponsored": true
     },
     {
@@ -898,7 +962,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/gkmdRXeMm3J7VF9tLBwxJg.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.083Z",
+      "fetchedAt": "2026-08-30T16:15:49.682Z",
       "sponsored": true
     },
     {
@@ -914,7 +978,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhpxriybAzLw0daA0mtL3sZd04fy8Sal4s0mrBAz2-ksjwfP2V08YK_KbCJY57hKG28Kt6gn2mKq4HFSpkG2MNvA3Oz6MhNUe77_1Nvpahn2nnCFHPpxIlp5Ix4DvAZw08qXtxt1M-4zCtSENbBkODQyP_WDp9j3PXACc0XKYk1BK1K-2Xabho1cBPqerW9/s1600/cf-clickfix.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.135Z",
+      "fetchedAt": "2026-08-30T16:15:47.993Z",
       "sponsored": true
     },
     {
@@ -930,7 +994,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.143Z",
+      "fetchedAt": "2026-08-30T16:15:47.734Z",
       "sponsored": true
     },
     {
@@ -946,7 +1010,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=ab_1856_passes",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -962,7 +1026,7 @@
       "image": "https://cdn.mos.cms.futurecdn.net/mrTuwGHAjVCKiumb2UskAD.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.083Z",
+      "fetchedAt": "2026-08-30T16:15:49.682Z",
       "sponsored": true
     },
     {
@@ -978,7 +1042,7 @@
       "image": "http://www.techmeme.com/260830/i4.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -994,7 +1058,23 @@
       "image": "http://www.techmeme.com/260830/i3.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
+      "sponsored": true
+    },
+    {
+      "id": "e4fb3a34de49",
+      "title": "Prompt Injection in Claude Code Opus 5 Auto Mode",
+      "link": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "source": "Lobsters",
+      "sourceId": "lobsters",
+      "category": "DevOps",
+      "publishedAt": "2026-08-30T05:36:51.000Z",
+      "summary": "A simple website summary request hijacks Claude Code Opus 5 in Auto Mode, achieving code execution with a 60-80% attack success rate using a small sample size. This is in contrast to a third-party evaluation commissioned by Anthropic, which showed a 0.00% prompt injection attack success rate for Opus 5 in Auto Mode. Auto Mode is now the default in Claude Code Auto Mode, replacing human approval prompts with a safety classifier. This highlights the importance of using isolated environments and monitoring agent activity to mitigate prompt injection risks.",
+      "summaryType": "ai",
+      "image": "https://embracethered.com/blog/images/2026/claude-automode/claude-auto-mode-rce.png",
+      "fallbackImage": "/assets/fallbacks/devops.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1010,7 +1090,7 @@
       "image": "http://www.techmeme.com/260830/i2.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1026,7 +1106,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/laser-layer-3d-print.jpg?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.696Z",
+      "fetchedAt": "2026-08-30T16:15:49.287Z",
       "sponsored": true
     },
     {
@@ -1042,23 +1122,7 @@
       "image": "http://www.techmeme.com/260830/i1.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
-      "sponsored": true
-    },
-    {
-      "id": "66e8fdb6433e",
-      "title": "How to watch Vigil season 3 online from anywhere – it's *FREE*",
-      "link": "https://www.techradar.com/how-to-watch-vigil-season-3-free",
-      "source": "TechRadar",
-      "sourceId": "techradar",
-      "category": "DevOps",
-      "publishedAt": "2026-08-30T05:00:00.000Z",
-      "summary": "Watch Vigil season 3 for free on BBC iPlayer (UK) Use NordVPN to watch BBC iPlayer when abroad The first two of the six episodes arrive on Sunday, August 30 After uncovering the dark secrets of drone warfare technology i…",
-      "summaryType": "snippet",
-      "image": "https://cdn.mos.cms.futurecdn.net/dF6u7F8e28GQTV2TyRPtYb.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.083Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1074,7 +1138,7 @@
       "image": "https://deadsimpletech.com/_og/s/o_td4ocu.png",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.739Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1090,7 +1154,7 @@
       "image": "http://www.techmeme.com/260829/i18.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1106,7 +1170,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/wireless-brakes-main.png?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.696Z",
+      "fetchedAt": "2026-08-30T16:15:49.287Z",
       "sponsored": true
     },
     {
@@ -1122,7 +1186,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1138,7 +1202,7 @@
       "image": "http://www.techmeme.com/260829/i17.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1154,7 +1218,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=linux_73_staging",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1170,7 +1234,7 @@
       "image": "http://www.techmeme.com/260829/i16.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1186,7 +1250,7 @@
       "image": "https://www.engadget.com/img/gallery/android-auto-not-working-heres-what-to-check-first/l-intro-1787158524.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.980Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1202,7 +1266,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/05/07/ClaudeChats.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -1218,7 +1282,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/solder-station-DIY-reconfigurable.png?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.697Z",
+      "fetchedAt": "2026-08-30T16:15:49.287Z",
       "sponsored": true
     },
     {
@@ -1234,7 +1298,7 @@
       "image": "https://www.engadget.com/img/gallery/how-to-save-money-on-your-phone-bill-with-an-mvno/l-intro-1787851564.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1250,7 +1314,7 @@
       "image": "https://www.engadget.com/img/gallery/the-wildest-video-game-budgets-cant-hold-a-candle-to-gta-6/l-intro-1787978932.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1266,7 +1330,7 @@
       "image": "https://www.engadget.com/img/gallery/why-does-your-kindle-even-have-bluetooth/l-intro-1787161033.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1282,7 +1346,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1298,7 +1362,7 @@
       "image": "http://www.techmeme.com/260829/i15.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1314,7 +1378,23 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/Screenshot-2026-08-29-at-4.57.57-PM.png?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
+      "sponsored": true
+    },
+    {
+      "id": "32c61d0587b1",
+      "title": "What GLM-5.3 Flash running on Chinese hardware actually means",
+      "link": "https://martinalderson.com/posts/glm-5-3-flash-chinese-hardware/",
+      "source": "Lobsters",
+      "sourceId": "lobsters",
+      "category": "General",
+      "publishedAt": "2026-08-29T20:44:36.000Z",
+      "summary": "Z.AI's GLM-5.3 flash is running on Chinese hardware, a feat that is impressive but unlikely to change quickly. Western companies have a significant advantage in AI hardware, with many manufacturers building competitive chips, but Chinese hardware is still lagging behind. The HiSilicon 910c series, released in 2020, pairs 96GB of HBM 2e memory with two compute dies, achieving 1.6PFLOP/s of INT8 compute and 3TB/sec of memory bandwidth, behind even the H100 from Nvidia. The next generation 950-series also uses domestically produced HiZQ/HiBL HBM memory, but the two variants are similar, with the prefill variant using slower memory. This suggests that Chinese hardware is limited by its inability to produce viable EUV fabrication, the next generation silicon manufacturing process.",
+      "summaryType": "ai",
+      "image": "https://martinalderson.com/img/og/what-glm-5-3-flash-running-on-chinese-hardware-actually-means.png",
+      "fallbackImage": "/assets/fallbacks/general.svg",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1330,7 +1410,7 @@
       "image": "https://reactos.org/sites/default/files/Mizu-Desktop.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1346,7 +1426,7 @@
       "image": "http://www.techmeme.com/260829/i14.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1362,7 +1442,7 @@
       "image": "https://hackaday.com/wp-content/uploads/2026/08/cyd-wikipedia-featured.jpg?w=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.697Z",
+      "fetchedAt": "2026-08-30T16:15:49.288Z",
       "sponsored": true
     },
     {
@@ -1378,7 +1458,7 @@
       "image": "https://www.engadget.com/img/gallery/how-to-watch-the-2026-us-open-tennis-championships/l-intro-1787944923.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1394,7 +1474,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/13604714/milopatreon.jpeg?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -1410,7 +1490,7 @@
       "image": "https://www.phoronix.net/image.php?id=freebsd-141-benchmarks&image=freebsd_141",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1426,7 +1506,7 @@
       "image": "https://www.engadget.com/img/gallery/sony-and-warner-sue-anthropic-for-blatant-violation-of-copyright-law/l-intro-1788029514.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.526Z",
       "sponsored": true
     },
     {
@@ -1442,23 +1522,7 @@
       "image": "https://www.engadget.com/img/gallery/why-would-you-pay-359-for-the-most-expensive-whoop-membership/l-intro-1787317096.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
-      "sponsored": true
-    },
-    {
-      "id": "13ae586e2db0",
-      "title": "Does Computer Science Need Computers?",
-      "link": "https://www.quantamagazine.org/does-computer-science-need-computers-20260828/",
-      "source": "Lobsters",
-      "sourceId": "lobsters",
-      "category": "DevOps",
-      "publishedAt": "2026-08-29T18:10:46.000Z",
-      "summary": "Computer science is not inherently tied to computers, but rather its theoretical side, which was pioneered by Edsger Dijkstra, has been shaped by the development of computers. The analogy that computer science is about computers, as often used, may not have originated with Dijkstra, but he likely would have endorsed it. Researchers have been developing a mathematical theory of computation since the 1930s, and engineers have built the first general-purpose electronic computers since the 1940s. The field's emergence as a distinct academic discipline was influenced by the convergence of math and engineering research traditions.",
-      "summaryType": "ai",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia_TheoreticalCS-crKristinaArmitage-Social.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:49.527Z",
       "sponsored": true
     },
     {
@@ -1474,39 +1538,7 @@
       "image": "http://www.techmeme.com/img/pml.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
-      "sponsored": true
-    },
-    {
-      "id": "5cab5e4bbd38",
-      "title": "Why 1080p movies can look better than 4K movies on your TV",
-      "link": "https://www.engadget.com/2242760/why-1080p-movies-look-better-on-4k-screen/",
-      "source": "Engadget",
-      "sourceId": "engadget",
-      "category": "DevOps",
-      "publishedAt": "2026-08-29T18:00:00.000Z",
-      "summary": "Resolution isn't the only thing that matters for a quality picture.",
-      "summaryType": "snippet",
-      "image": "https://www.engadget.com/img/gallery/why-1080p-movies-can-look-better-than-4k-movies-on-your-tv/l-intro-1787251270.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
-      "sponsored": true
-    },
-    {
-      "id": "5c4d3f7c13d3",
-      "title": "US appeals court sides with Nevada in legal fight with Kalshi",
-      "link": "https://www.engadget.com/2246988/us-appeals-court-sides-with-nevada-in-legal-fight-with-kalshi/",
-      "source": "Engadget",
-      "sourceId": "engadget",
-      "category": "DevOps",
-      "publishedAt": "2026-08-29T17:55:00.000Z",
-      "summary": "The ruling shoots down Kalshi's attempt to block the state from regulating its platform.",
-      "summaryType": "snippet",
-      "image": "https://www.engadget.com/img/gallery/us-appeals-court-sides-with-nevada-in-legal-fight-with-kalshi/l-intro-1788025747.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.981Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1522,7 +1554,7 @@
       "image": "https://daringfireball.net/graphics/df-wide-card.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -1538,7 +1570,7 @@
       "image": "https://kaoti.ca/graphs/fig6-cpu-crawl-vs-clone.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.568Z",
+      "fetchedAt": "2026-08-30T16:15:47.019Z",
       "sponsored": true
     },
     {
@@ -1554,7 +1586,7 @@
       "image": "http://www.techmeme.com/260829/i12.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1570,7 +1602,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiROOqCRPV4u9cWfJL8nvCYKi4Ake-ki3_uh8Qn8RJ0P20h3Mz_qxVfF856pJ9DQZMHy922CeLwOHDc37Gpb4p1UCTMx6cMT5HeeAP_w4RitCuQficYcGDDkqpDVfW_nA3M7qWT-WyM6A5Adk3J2e8kMWSG1GSUOatrcVBmc7fmb2-ovadVS3fOdkd1ubFx/s1600/wordpress-themes.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.135Z",
+      "fetchedAt": "2026-08-30T16:15:47.993Z",
       "sponsored": true
     },
     {
@@ -1586,7 +1618,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=new_skip_hints",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1602,7 +1634,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/268605_BYOK_TOBrien_0016.jpg?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -1618,7 +1650,23 @@
       "image": "https://spectrum.ieee.org/media-library/hand-drawn-schematic-of-turbine-powered-heat-pipe-system-with-labeled-components.png?id=67675201&width=1200&height=800&coordinates=0%2C64%2C0%2C65",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.775Z",
+      "fetchedAt": "2026-08-30T16:15:47.426Z",
+      "sponsored": true
+    },
+    {
+      "id": "ee18628ec466",
+      "title": "Debian and the sirens",
+      "link": "https://joeyh.name/blog/entry/Debian_and_the_sirens/",
+      "source": "Lobsters",
+      "sourceId": "lobsters",
+      "category": "Security",
+      "publishedAt": "2026-08-29T15:33:38.000Z",
+      "summary": "Debian's decision to allow Large Language Models (LLMs) to be used in Debian development is a significant shift in the project's approach, potentially eliminating the need for complex boilerplate and reducing the amount of manual effort required for package development. This change could make Debian even more entrenched in its current state, making it less likely to explore new possibilities and potentially leading to a loss of innovation and flexibility. The introduction of LLMs could also have unintended consequences, such as making Debian dependent on proprietary software for development, which could be detrimental to the project's long-term viability.",
+      "summaryType": "ai",
+      "image": null,
+      "fallbackImage": "/assets/fallbacks/security.svg",
+      "imageType": "fallback",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1634,7 +1682,7 @@
       "image": "http://www.techmeme.com/260829/i11.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.008Z",
+      "fetchedAt": "2026-08-30T16:15:49.585Z",
       "sponsored": true
     },
     {
@@ -1650,7 +1698,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=kde_trash",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1666,7 +1714,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2022/06/22/Brave.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -1682,7 +1730,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.880Z",
+      "fetchedAt": "2026-08-30T16:15:48.272Z",
       "sponsored": true
     },
     {
@@ -1698,7 +1746,7 @@
       "image": "https://image.theregister.com/?imageId=5293383&width=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -1714,7 +1762,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=reactos_0416_1",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1730,7 +1778,7 @@
       "image": "https://th-thumbnailer.cdn-si-edu.com/x9ZOL3oIxuMkd9w6RBFVTSRCiGc=/fit-in/1600x0/filters:focal(1936x1309:1937x1310)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/09/db/09dba898-5ce8-4705-a26f-94aa75051dc6/capuchin_birdprey.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -1746,7 +1794,7 @@
       "image": "https://www.phoronix.net/image.php?id=f2fs-multi-drive&image=f2fs_multi_1",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1762,7 +1810,7 @@
       "image": "https://www.phoronix.net/image.php?id=2026&image=gnome_aug_1",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1778,7 +1826,7 @@
       "image": "https://res.infoq.com/presentations/enterprise-data-architecture-ai-agents/en/card_header_image/fabiane-nardon-twitter-card-1787218382028.jpg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.487Z",
       "sponsored": true
     },
     {
@@ -1794,7 +1842,7 @@
       "image": "https://media.wired.com/photos/6a925150bb3a85e785f50cc3/master/pass/Review--Soundcore-Liberty-5-Pro.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -1810,7 +1858,7 @@
       "image": "https://www.phoronix.net/image.php?id=steamos-35-benchmarks&image=steamos_35_1",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.751Z",
+      "fetchedAt": "2026-08-30T16:15:49.364Z",
       "sponsored": true
     },
     {
@@ -1826,7 +1874,7 @@
       "image": "https://media.wired.com/photos/6a90143f13ea49f13acf54b5/master/pass/Nasa.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -1842,7 +1890,7 @@
       "image": "https://media.wired.com/photos/6a921e363b3f20c2f80986f3/master/pass/Security-News-This-Week-The-AI-Cybersecurity-Apocalypse-Is-Coming.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -1858,7 +1906,7 @@
       "image": "https://image.theregister.com/?imageId=5293180&width=800",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -1874,7 +1922,7 @@
       "image": "https://media.wired.com/photos/6a915ae02fa9a47ca7d480c1/master/pass/RunAChatbot.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -1890,7 +1938,7 @@
       "image": "https://res.infoq.com/news/2026/08/workers-inbound-tcp-grpc/en/headerimage/generatedHeaderImage-1787654507205.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -1906,7 +1954,7 @@
       "image": "https://res.infoq.com/news/2026/08/workers-inbound-tcp-grpc/en/headerimage/generatedHeaderImage-1787654507205.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.487Z",
       "sponsored": true
     },
     {
@@ -1922,7 +1970,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.880Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -1938,7 +1986,7 @@
       "image": "https://media.wired.com/photos/6a919be132e307274e3f30e1/master/pass/1398820822",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -1954,23 +2002,7 @@
       "image": "https://www.jacky.wtf/og-images/4ee7b829.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.739Z",
-      "sponsored": true
-    },
-    {
-      "id": "c96e805ba2ca",
-      "title": "Parsing the Infamous Japanese Postal CSV (2020)",
-      "link": "https://www.dampfkraft.com/posuto.html",
-      "source": "Lobsters",
-      "sourceId": "lobsters",
-      "category": "General",
-      "publishedAt": "2026-08-29T08:10:10.000Z",
-      "summary": "The Japanese Postal CSV file contains parenthetical notes that reference the order of rows, causing problems when parsing the data. The notes are usually meaningless and can lead to errors. This issue is not unique to the file, as it is a common problem in field-delimited formats. The developers of the file, including the creator of posuto, have noted that the formatting choice is not explained, and it may be a result of a fixed-width buffer from a previous implementation.",
-      "summaryType": "ai",
-      "image": "https://dampfkraft.com/by-id/806ae69c/img/postcharacter.l.png",
-      "fallbackImage": "/assets/fallbacks/general.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.740Z",
+      "fetchedAt": "2026-08-30T16:15:47.377Z",
       "sponsored": true
     },
     {
@@ -1986,7 +2018,7 @@
       "image": "https://image.theregister.com/?imageId=5292935&width=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -2002,7 +2034,7 @@
       "image": "https://res.infoq.com/news/2026/08/freetoken-local-inference/en/card_header_image/generatedCard-1787979486485.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.487Z",
       "sponsored": true
     },
     {
@@ -2018,7 +2050,7 @@
       "image": "https://media.wired.com/photos/67b63b9a4816461befb48207/master/pass/WIRED-Coupons-R2_12.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -2034,7 +2066,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Maps_SocialShare.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.805Z",
+      "fetchedAt": "2026-08-30T16:15:47.532Z",
       "sponsored": true
     },
     {
@@ -2050,7 +2082,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/08/28/mckesson.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2066,7 +2098,7 @@
       "image": "https://media.wired.com/photos/6a9205e11fef496705b5c9f7/master/pass/Jensen-Took-Call-From-Trump-Business-2212801537.jpg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -2082,7 +2114,7 @@
       "image": "https://9to5mac.com/wp-content/uploads/sites/6/2026/05/apple-tv-sunset-mountains.jpg?quality=82&strip=all&resize=1200,628",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -2098,7 +2130,7 @@
       "image": "https://tendency-prod.nyc3.cdn.digitaloceanspaces.com/j12quem72h27mvu6s91vkgn80zdw",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -2114,7 +2146,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRLS8X8abAbJ9p1f1jp9VIUeKfRa4l4gAIgmCWsw1eXZuJ7SY201P6w6V8NYVf1CHpaN_pyAuLg-6h-e9RYFBlBFsl3k5egiOnoj8ZiXScxu8El1jZExmlyNYfunp0Z4j5F0PYSg4Ltu0yldY-wKmI2TC5UU-7mrasEsZ_SyEso7dGFvLIpcA8hdHqVdw/s1600/berlin.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.135Z",
+      "fetchedAt": "2026-08-30T16:15:47.993Z",
       "sponsored": true
     },
     {
@@ -2130,7 +2162,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -2146,7 +2178,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/chess-com-gambit-launch-bot-match.png?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.528Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -2162,7 +2194,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -2178,7 +2210,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -2194,7 +2226,7 @@
       "image": "https://image.theregister.com/?imageId=5222549&width=800",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -2210,7 +2242,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRHWwlkIrD4ix8P1j7FGJW7pl0e6W600w61mPcVBRsL7BqK_8SNTLSSk-4498ZuyThNbHG8FmtGoMlR9B9ujcXUlHnRb9NTpBhImouOWrQK2WaxVVd5rjjL62kXl1fW9U5YyDN1Uc-M6OriHc7nQNzCbJAC3kRIsRgAnY5q2SSTL2TjLzix05DAoSa7jQ/s1600/cosmos-evm-hack.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.135Z",
+      "fetchedAt": "2026-08-30T16:15:47.993Z",
       "sponsored": true
     },
     {
@@ -2226,7 +2258,7 @@
       "image": "https://image.theregister.com/?imageId=230908&width=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -2242,7 +2274,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -2258,7 +2290,7 @@
       "image": "https://image.theregister.com/?imageId=5293361&width=800",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.683Z",
+      "fetchedAt": "2026-08-30T16:15:49.784Z",
       "sponsored": true
     },
     {
@@ -2274,7 +2306,7 @@
       "image": "https://media.wired.com/photos/6a91cfbdbb3a85e785f50a77/master/pass/IMG_5395.jpeg",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -2290,7 +2322,7 @@
       "image": "https://daringfireball.net/graphics/df-wide-card.png",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.596Z",
       "sponsored": true
     },
     {
@@ -2306,23 +2338,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/installer_c1a629.jpg?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
-      "sponsored": true
-    },
-    {
-      "id": "143903ddbe91",
-      "title": "Musicians-turned-detectives are hunting for AI grifters",
-      "link": "https://www.theverge.com/entertainment/985866/h4rris-nihil-young-edm-suno-ai",
-      "source": "The Verge",
-      "sourceId": "the-verge",
-      "category": "DevOps",
-      "publishedAt": "2026-08-28T19:10:32.000Z",
-      "summary": "As audio-focused generative tools and platforms have gotten more sophisticated , the internet has become increasingly filled with AI-generated music whose melodies and vocals are algorithmically derived from the work of …",
-      "summaryType": "snippet",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/268714_finding_and_shaming_AI_grifters_CVirginia.jpg?quality=90&",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -2338,7 +2354,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2023/04/19/papercut-jeader.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2354,7 +2370,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.693Z",
+      "fetchedAt": "2026-08-30T16:15:48.177Z",
       "sponsored": true
     },
     {
@@ -2370,7 +2386,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -2386,7 +2402,7 @@
       "image": "https://media.wired.com/photos/6a909d8a06c510ef6758e71c/master/pass/Made-In-China-Microsoft-Teams-Hidden-Scams-Business.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.240Z",
       "sponsored": true
     },
     {
@@ -2402,7 +2418,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2023/12/07/back-2.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2418,7 +2434,7 @@
       "image": "https://spectrum.ieee.org/media-library/a-white-man-in-business-casual-attire-seated-at-his-desk-with-a-laptop-and-desktop-computer-each-playing-a-different-movie-on-t.jpg?id=67690500&width=1200&height=800&coordinates=156%2C0%2C156%2C0",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.776Z",
+      "fetchedAt": "2026-08-30T16:15:47.427Z",
       "sponsored": true
     },
     {
@@ -2434,7 +2450,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/4rxwoj8uimKN2C4ILufEfb/66acf62e05aa0c55d3dddda68bc7efca/Nutanix_layers.png?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.040Z",
+      "fetchedAt": "2026-08-30T16:15:49.737Z",
       "sponsored": true
     },
     {
@@ -2450,23 +2466,7 @@
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/gettyimages-2292163504.jpg?quality=90&",
       "fallbackImage": "/assets/fallbacks/devops.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.529Z",
-      "sponsored": true
-    },
-    {
-      "id": "a7a301daea65",
-      "title": "Mice, a Caved-In Ceiling, and Cloudy Water: The GSA’s New Office Is Falling Apart",
-      "link": "https://www.wired.com/story/mice-a-caved-in-ceiling-and-cloudy-water-the-gsas-new-office-is-falling-apart/",
-      "source": "Wired",
-      "sourceId": "wired",
-      "category": "DevOps",
-      "publishedAt": "2026-08-28T17:14:19.000Z",
-      "summary": "“Do we need to look at the ceiling before going to the bathroom? Can we actually trust the water is safe to drink?” asks one GSA worker.",
-      "summaryType": "snippet",
-      "image": "https://media.wired.com/photos/6a91b7ad58aada50855472df/master/pass/IMG_9724.jpg",
-      "fallbackImage": "/assets/fallbacks/devops.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.649Z",
+      "fetchedAt": "2026-08-30T16:15:49.114Z",
       "sponsored": true
     },
     {
@@ -2482,7 +2482,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdtPabCvuR_F2UFdCw8LS5eoXtD-jOpbuCy8WZYRycSP2vu_6yQK45qTehHimhoS-eXFPMTwg5jNM3m_X7ma5ELVz60Rjt3rlQhrqE4iTz8ggysLCt388GyaBVQbT28sGDv9a6drKNZooBiQNy0L3v8Gc3vxB9JILUD-eTtj5LZAlBbA3EyLlp5SkgIKPG/s1600/1000103914.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.993Z",
       "sponsored": true
     },
     {
@@ -2498,7 +2498,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2023/10/27/pirate-on-a-laptop.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2514,7 +2514,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/74qlOTYyXbU8te5ugdb5DX/f6696a755ed1db9f3a43cdb5ec9219c8/AI_harness.jpg?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.040Z",
+      "fetchedAt": "2026-08-30T16:15:49.737Z",
       "sponsored": true
     },
     {
@@ -2530,7 +2530,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHdeGqGafTZXNtGvV_-qR7K3QId_-DpEfOzetKbhVQvNdNyTMAy-6gLXVFlkMHsGDN2wKK8v1ZMeOKe9_3XVYAY5TVkqH2heesi0c_QmJzLpDX1M-XfOtI_W4Qe8OM8Yhin40QWvN0XHvU9cqDlZH3eeZY_18euIxiBdcbhWMVnXct-x84k2gvchQYSiuN/s1600/1000103901.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2546,7 +2546,7 @@
       "image": "https://cdn-images-1.medium.com/max/332/1*Tm2AJHCkMfTwtedhfmIAwA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.637Z",
+      "fetchedAt": "2026-08-30T16:15:49.100Z",
       "sponsored": true
     },
     {
@@ -2562,7 +2562,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZPm0X6hW-nz0AFZIB6eOBMEssN6dF5qeh2EOIBm1-ftaBEqcvJC5M0r_g3j-6Sp9x4sUnxVeOToWN_bFbr6T9flaScRcze4DRga0nqNe3LeQSvZaNPTiZC2C8GUeWWxMmIF1mybwuDaq5ZZummYiynDkf_1evTLKPicf4f2UUUb2d-0MMG6Ix-00ImwFN/s1600/1000103895.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2578,7 +2578,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/4TjUlY3MRMwpmf1ws6gLXB/37ddd10b337d50ad97e92ba8900cd831/ai-parsing-smk1.jpeg?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.041Z",
+      "fetchedAt": "2026-08-30T16:15:49.737Z",
       "sponsored": true
     },
     {
@@ -2594,7 +2594,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_QtvF-9M9imh55UP7qeyFUNhKknBwEcmcbIa34vndzIHinEk754vasbvTqILRNrtp6BDpuR8VzAyk0_Wt1tJB4hjUlgaO5Rb6Wru-WoXlrCPIXLr0I_oBhA7BwQDoO3MH82uloaG-qXyHAloI7r2zuWNfygFNeiSYAZeWyDn8_smuzrgvsvk0eQEX5klW/s1600/1000103889.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2610,7 +2610,7 @@
       "image": "https://media.djangoproject.com/blog/images/2026/05/1200x675_Twitter_and_Facebook.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.662Z",
+      "fetchedAt": "2026-08-30T16:15:48.154Z",
       "sponsored": true
     },
     {
@@ -2626,7 +2626,7 @@
       "image": "https://blog.jetbrains.com/wp-content/uploads/2026/08/Django_Preview_1280x720.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.662Z",
+      "fetchedAt": "2026-08-30T16:15:48.155Z",
       "sponsored": true
     },
     {
@@ -2642,7 +2642,7 @@
       "image": "https://www.bleepstatic.com/content/posts/2026/08/27/ai-pressing-button-header.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2658,7 +2658,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -2674,7 +2674,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z"
+      "fetchedAt": "2026-08-30T16:15:48.273Z"
     },
     {
       "id": "729237127098",
@@ -2689,7 +2689,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M0GDDRDD6CY3JE6JJQGJM761.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.482Z",
+      "fetchedAt": "2026-08-30T16:15:49.143Z",
       "sponsored": true
     },
     {
@@ -2705,7 +2705,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/08/28/Gitea.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2721,7 +2721,7 @@
       "image": "https://image.theregister.com/?imageId=5223935&width=800",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.684Z",
+      "fetchedAt": "2026-08-30T16:15:49.785Z",
       "sponsored": true
     },
     {
@@ -2737,7 +2737,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKqNVrCXSaUDXfrGPJkoRoXBPQW4qwhdYqm2SMVaunZNwBrQ4FbURK-gtVawzaje20fK_m9q2dKepfj-dxmkvfKL4se3ZQ1YAI3iogqCft1UjVadJa_uBoQxFuoBpWfx2Dh3S4-jQLa7c4E9OOyQfVAT5BVKVShPykiPWEuYcchIPHFC4e5GduyW4iBio/s1600/Humanoid.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2753,7 +2753,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.360Z",
+      "fetchedAt": "2026-08-30T16:15:48.055Z",
       "sponsored": true
     },
     {
@@ -2769,7 +2769,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.360Z",
+      "fetchedAt": "2026-08-30T16:15:48.055Z",
       "sponsored": true
     },
     {
@@ -2785,7 +2785,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/08/28/Hasbro.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2801,7 +2801,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjtiQiqrq5S2ip1c5QHUZaJADW3_fskqNx6rhLXi2mGqOH5NGwuTwmFXPtqLpFKXDLVMtG-rZTTVlRh8ZVJON5DFBxdE7RwCN8_Fh0Y_mypooHEo4yZeYB-FoGinET6wHzTwgYWDMeZxVT9b-uCQSJ7bLEZdzRUglWWuOY5ItZyGC94Xo85iFck6FMmUmY/s1600/orchid-main.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2817,7 +2817,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitiido-BqtV-H4U0qEAovU_m3NGb3PHF5O3IEh53W_rllGDplhA8aluEKIUULFq3L7iNQue-NLxQDR3wSF7PaaAhGg14rWdqHoB6jBZC1YfslM0wyj5xhESZKTbIxgjO_lnZqVOrKx_E2hK-wXtE85EPJW-pV8D3eMv9CWgMF8eXzsJgq3xevdBY9hCs0/s1600/servicenow.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.136Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2833,7 +2833,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/08/teampcp-member-arrest-1152x648.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.614Z",
+      "fetchedAt": "2026-08-30T16:15:47.080Z",
       "sponsored": true
     },
     {
@@ -2849,7 +2849,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -2865,7 +2865,7 @@
       "image": "https://res.infoq.com/presentations/netflix-commerce-architecture-evolution/en/card_header_image/kasia-trapszo-twitter-card-1787217920531.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -2881,7 +2881,7 @@
       "image": "https://res.infoq.com/presentations/netflix-commerce-architecture-evolution/en/card_header_image/kasia-trapszo-twitter-card-1787217920531.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.487Z",
       "sponsored": true
     },
     {
@@ -2897,7 +2897,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0i2viN2zKBeSxzTqoxZkPNq_6lPMDBLb18zbLPwufsY4mFm494ydDDAWi6gGwy6PsmRGublHFmdmcEiGKViLuUgaJwWux_YUW7HQHuGbbf04HGNpoZa6QLmvf1IHE04TeTT89Yc1_jo0z6mptCbX-fIhVEVQzg5GnfU2Uya4HHASHbttTBGMxl7KMkbM/s1600/router-malware.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.137Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2913,7 +2913,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2026/07/20/servicenow-headpic.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2929,7 +2929,7 @@
       "image": "https://blog.jetbrains.com/wp-content/uploads/2026/08/JB-social-BlogSocialShare-1280x720-1-11.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.662Z",
+      "fetchedAt": "2026-08-30T16:15:48.155Z",
       "sponsored": true
     },
     {
@@ -2945,7 +2945,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjtKp2lGcxPfp8ymA88FIBXB0Bn9fcUSaU_UIl1pfAjDSC2usRwUE73vhQEeP6jar9U9k10yotgyYl_tIk6dQA-MFIr2bJ3LN_azGt9kDU6hpW448HgmBuJbc6TWSo1vfpmhoK0J3_5rhF6VIpWd7NYf0G1YSYHdqKubWgQwa1yU6KRAL-bnDGd8HmCmPk/s1600/cpanel-root.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.137Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -2961,7 +2961,7 @@
       "image": "https://www.bleepstatic.com/content/hl-images/2025/10/27/Windows_11.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -2977,7 +2977,7 @@
       "image": "https://res.infoq.com/articles/pqc-in-spring-boot/en/headerimage/pqc-in-spring-boot-header-1787646727709.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -2993,7 +2993,7 @@
       "image": "https://res.infoq.com/articles/pqc-in-spring-boot/en/headerimage/pqc-in-spring-boot-header-1787646727709.jpg",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.084Z",
+      "fetchedAt": "2026-08-30T16:15:48.557Z",
       "sponsored": true
     },
     {
@@ -3009,7 +3009,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrpX5v7vO-OUtX-lzQ81sfxw7Qk-CMsLtK4xlsWQW2mYJj5Z63jISDCOtzpx644pbtXdDNCpr9FRcMIdBUN0Q6xP8lka5tIG7qfrunaBHQDqYFXATpX8FYPXJg8qZOA38aiG-j7ib_ZJA538DG6YEAH5EO6sURsSWGzUvKPAOAokUYZH-_IQ/s320/GeorgiKer_2026PSFBoardElection.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.662Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3025,7 +3025,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3avAnoYOOKqF8JpZv9Lng1lKE0AqmHOqM-Mq2T297NQrtDBM90yMYIzzVMHgzqytcCvFz7LuBXoPp-d9mRh0_dywBaM8NxZaiKPG0gDuYbSt2oRJdxSkHG5tWjxAMKvWUYZe6YINf_-7i5zUS7xGrDcaXulRvT5jVihWDJzAHSlaXQ6UYlHa6cPMpxbDC/s1600/papercut.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.137Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -3041,7 +3041,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhjJnzm1UIfq8P7glIadtS8dGFvdsASot4sviMtZtFwpKL5B_2upZBcjMdYEBDcSnGmxpKP5LPUQ4XTpao-qCCbe6hQYF9qQBF7bhcPcZJkaz8KY9CCaKBRe-iu3ovbkZWjjtWEs_XJ9hl7D9ZRdKK9LqJynEh9XQ_7o8HZGi572pfnKyt3Yznk1QA311_/s1600/eu-meeting.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.137Z",
+      "fetchedAt": "2026-08-30T16:15:47.994Z",
       "sponsored": true
     },
     {
@@ -3057,7 +3057,7 @@
       "image": "https://res.infoq.com/news/2026/08/alibaba-audio-fingerprinting/en/card_header_image/headerFingerprint-1787896930494.jpg",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.488Z",
       "sponsored": true
     },
     {
@@ -3073,7 +3073,7 @@
       "image": "https://isc.sans.edu/diaryimages/images/isc-20260828-1.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.143Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -3089,7 +3089,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.597Z",
       "sponsored": true
     },
     {
@@ -3105,7 +3105,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.143Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -3121,7 +3121,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.392Z",
+      "fetchedAt": "2026-08-30T16:15:48.872Z",
       "sponsored": true
     },
     {
@@ -3137,7 +3137,7 @@
       "image": "https://pythonmorsels.s3.amazonaws.com/screencast_images/2194688607-133ce96fdb5268e41a80febe64c1eef8ebae405d26bc8242e6e63d3a0388b004-d_.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3153,7 +3153,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.877Z",
+      "fetchedAt": "2026-08-30T16:15:47.523Z",
       "sponsored": true
     },
     {
@@ -3169,7 +3169,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:19.090Z",
+      "fetchedAt": "2026-08-30T16:15:49.597Z",
       "sponsored": true
     },
     {
@@ -3185,7 +3185,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Expert_Intelligence_Hero.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.805Z",
+      "fetchedAt": "2026-08-30T16:15:47.532Z",
       "sponsored": true
     },
     {
@@ -3201,7 +3201,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/mit-biology-Keating-Lab-proteins.jpg?itok=OZhh3B-X",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.197Z",
+      "fetchedAt": "2026-08-30T16:15:47.754Z",
       "sponsored": true
     },
     {
@@ -3217,7 +3217,7 @@
       "image": "https://blog.rtwilson.com/wp-content/uploads/2026/08/image-1787852896012.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3233,7 +3233,7 @@
       "image": "https://substackcdn.com/image/fetch/$s_!dy5u!,w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-video.s3.amazonaws.com%2Fvideo_upload%2Fpost%2F213000992%2F738ca10d-d74f-465e-b756-2941f3da5455%2Ftranscoded-1787839958.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3249,7 +3249,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M117Y6R8CDGVT4K2XX6VQ2YX.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.483Z",
+      "fetchedAt": "2026-08-30T16:15:49.143Z",
       "sponsored": true
     },
     {
@@ -3265,7 +3265,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/02/header.jpg?resize=1024%2C538",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.799Z",
+      "fetchedAt": "2026-08-30T16:15:48.346Z",
       "sponsored": true
     },
     {
@@ -3281,7 +3281,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Search_Travel_Blog_Hero_8.27.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.231Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -3297,7 +3297,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Omni_1-1_Flash_hero.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.805Z",
+      "fetchedAt": "2026-08-30T16:15:47.532Z",
       "sponsored": true
     },
     {
@@ -3313,7 +3313,7 @@
       "image": "https://res.infoq.com/news/2026/08/spring-news-roundup-aug17-2026/en/headerimage/spring-news-roundup-image-1787845727439.jpg",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.084Z",
+      "fetchedAt": "2026-08-30T16:15:48.557Z",
       "sponsored": true
     },
     {
@@ -3329,7 +3329,7 @@
       "image": "https://res.infoq.com/news/2026/08/spring-news-roundup-aug17-2026/en/headerimage/spring-news-roundup-image-1787845727439.jpg",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.488Z",
       "sponsored": true
     },
     {
@@ -3345,7 +3345,7 @@
       "image": "https://res.infoq.com/news/2026/08/google-database-operation-agents/en/headerimage/google-database-operations-agents-1787842474177.jpeg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.488Z",
       "sponsored": true
     },
     {
@@ -3361,7 +3361,7 @@
       "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBGUudyb_kNO5hqkqN2Fdqez0R3Cs1UDXL-ZsM0xaWNCW2uiEggYUKpKzjUI3a48WgwPAoCea6WyzXoOrElU0SEx7fE7UWlR4gDFtdqRGdgGKmD4gOPNDtWnmTKroBJp9ULk_Rr81WWM9FIK2g_051RQw0J2jEIco6Q5qlO5RF1dF_H3As3g/s320/JeremyTanner_2026PSFBoardElection.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3377,7 +3377,7 @@
       "image": "https://spectrum.ieee.org/media-library/a-pocket-sized-drum-shaped-device-displaying-a-strip-of-frames-from-the-steamboat-willy-cartoon.png?id=67675118&width=1200&height=800&coordinates=130%2C0%2C131%2C0",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.777Z",
+      "fetchedAt": "2026-08-30T16:15:47.427Z",
       "sponsored": true
     },
     {
@@ -3393,7 +3393,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3409,7 +3409,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/5ScHW6mZ2rQr3EvsxrwooK/43df8725b6e12cd4bcf550bb7b3b1cb4/Gravitee_hero.jpg?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.041Z",
+      "fetchedAt": "2026-08-30T16:15:49.737Z",
       "sponsored": true
     },
     {
@@ -3425,7 +3425,7 @@
       "image": "https://martinfowler.com/articles/making-data-ready-for-agentic-ai/card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.557Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -3441,7 +3441,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3457,7 +3457,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z"
+      "fetchedAt": "2026-08-30T16:15:48.273Z"
     },
     {
       "id": "34efd2c8c139",
@@ -3472,7 +3472,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/2Qd3YPdmbB6m2oc9gxJFIi/48e956112cccfef51a45907ba39c2840/VISA_VVAH_HERO.png?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.041Z",
+      "fetchedAt": "2026-08-30T16:15:49.738Z",
       "sponsored": true
     },
     {
@@ -3488,7 +3488,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/9VRh8KJhBqcFviSV8ClXc/feea8ec8fe76ffa0bc5cdb3dd95e1492/EDB_hero.jpeg?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.042Z",
+      "fetchedAt": "2026-08-30T16:15:49.738Z",
       "sponsored": true
     },
     {
@@ -3501,10 +3501,10 @@
       "publishedAt": "2026-08-27T12:00:00.000Z",
       "summary": "In this quiz, you&rsquo;ll test your understanding of Getting Started With Claude Code . By working through this quiz, you&rsquo;ll revisit how Claude Code differs from Claude Chat, how to install and set it up, what bel…",
       "summaryType": "snippet",
-      "image": null,
+      "image": "https://files.realpython.com/media/Getting-Started-With-Claude-Code.b132de7e9a31.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
-      "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.360Z",
+      "imageType": "real",
+      "fetchedAt": "2026-08-30T16:15:48.055Z",
       "sponsored": true
     },
     {
@@ -3520,7 +3520,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/08/fulcrumsec-dls.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.915Z",
+      "fetchedAt": "2026-08-30T16:15:47.566Z",
       "sponsored": true
     },
     {
@@ -3536,7 +3536,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -3552,7 +3552,7 @@
       "image": "https://isc.sans.edu/diaryimages/images/26-08-27-page.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -3568,7 +3568,7 @@
       "image": "https://res.infoq.com/presentations/numba/en/card_header_image/chad-schuster-twitter-card-1787217755995.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.973Z",
+      "fetchedAt": "2026-08-30T16:15:47.488Z",
       "sponsored": true
     },
     {
@@ -3584,7 +3584,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -3600,7 +3600,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3616,7 +3616,7 @@
       "image": "https://images.ctfassets.net/jdtwqhzvc2n1/4032PIHdBJBW2kqNHAOME0/53c12ae6fbb334fab937a4dcc1065c33/Gemini_Generated_Image_3lw7jd3lw7jd3lw7.jpeg?w=300&q=30",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:19.042Z",
+      "fetchedAt": "2026-08-30T16:15:49.738Z",
       "sponsored": true
     },
     {
@@ -3632,7 +3632,7 @@
       "image": "https://spring.io/img/og-spring.png",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.796Z",
+      "fetchedAt": "2026-08-30T16:15:48.256Z",
       "sponsored": true
     },
     {
@@ -3648,7 +3648,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.669Z",
+      "fetchedAt": "2026-08-30T16:15:48.161Z",
       "sponsored": true
     },
     {
@@ -3664,7 +3664,7 @@
       "image": "https://main--pycon-ireland-2026.netlify.app/img/og-image.webp",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.156Z",
       "sponsored": true
     },
     {
@@ -3680,7 +3680,7 @@
       "image": "https://coredispatch.xyz/og.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.663Z",
+      "fetchedAt": "2026-08-30T16:15:48.157Z",
       "sponsored": true
     },
     {
@@ -3696,7 +3696,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/08/GettyImages-2171717886-1152x648.jpg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.615Z",
+      "fetchedAt": "2026-08-30T16:15:47.080Z",
       "sponsored": true
     },
     {
@@ -3712,7 +3712,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/Screenshot-2026-08-26-at-12.57.57-PM.png",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.800Z",
+      "fetchedAt": "2026-08-30T16:15:48.346Z",
       "sponsored": true
     },
     {
@@ -3728,7 +3728,7 @@
       "image": "https://cdn-podcast.talkpython.fm/episodes/youtube_image/zwL1-VQMUo0/building-a-research-os-from-django-to-30-000-samples.jpg?v=1",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.664Z",
+      "fetchedAt": "2026-08-30T16:15:48.157Z",
       "sponsored": true
     },
     {
@@ -3744,7 +3744,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/22/ARCHBLOG-1630-featured-image-3.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.409Z",
+      "fetchedAt": "2026-08-30T16:15:48.941Z",
       "sponsored": true
     },
     {
@@ -3760,7 +3760,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/25/ARCHBLOG-1524-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.409Z",
+      "fetchedAt": "2026-08-30T16:15:48.941Z",
       "sponsored": true
     },
     {
@@ -3776,7 +3776,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/28_startups_Hero_2784x1566.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.806Z",
+      "fetchedAt": "2026-08-30T16:15:47.533Z",
       "sponsored": true
     },
     {
@@ -3792,7 +3792,7 @@
       "image": "https://isc.sans.edu/diaryimages/images/adminslist.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -3808,7 +3808,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3824,7 +3824,7 @@
       "image": "https://res.infoq.com/news/2026/08/aws-spec-driven-data-workflow/en/headerimage/generatedHeaderImage-1786944784495.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -3840,7 +3840,7 @@
       "image": "https://mathspp.com/blog/why-oop-exists/thumbnail.webp",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.664Z",
+      "fetchedAt": "2026-08-30T16:15:48.157Z",
       "sponsored": true
     },
     {
@@ -3856,7 +3856,7 @@
       "image": "https://files.realpython.com/media/Python-3.15-Preview-New-Profiling-Module_Watermarked.27cdafb337e4.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.360Z",
+      "fetchedAt": "2026-08-30T16:15:48.056Z",
       "sponsored": true
     },
     {
@@ -3872,7 +3872,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3888,7 +3888,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z"
+      "fetchedAt": "2026-08-30T16:15:48.273Z"
     },
     {
       "id": "742571f6dd97",
@@ -3903,7 +3903,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -3919,7 +3919,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.664Z",
+      "fetchedAt": "2026-08-30T16:15:48.157Z",
       "sponsored": true
     },
     {
@@ -3935,7 +3935,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -3948,10 +3948,10 @@
       "publishedAt": "2026-08-26T12:00:00.000Z",
       "summary": "In this quiz, you&rsquo;ll test your understanding of Python 3.15 Preview: Sampling Profiler . By working through this quiz, you&rsquo;ll revisit how a sampling profiler differs from a tracing one, how to split wall-cloc…",
       "summaryType": "snippet",
-      "image": "https://files.realpython.com/media/Python-3.15-Preview-New-Profiling-Module_Watermarked.27cdafb337e4.jpg",
+      "image": null,
       "fallbackImage": "/assets/fallbacks/python.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.360Z",
+      "imageType": "fallback",
+      "fetchedAt": "2026-08-30T16:15:48.056Z",
       "sponsored": true
     },
     {
@@ -3967,7 +3967,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/MIT-Valence-01-press.jpg?itok=OJTlsBvb",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.198Z",
+      "fetchedAt": "2026-08-30T16:15:47.754Z",
       "sponsored": true
     },
     {
@@ -3983,7 +3983,7 @@
       "image": "https://res.infoq.com/articles/beyond-offset-lag-kafka-apache-hudi/en/headerimage/beyond-offset-lag-kafka-apache-hudi-header-1787577734265.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -3999,7 +3999,7 @@
       "image": "https://blog.jetbrains.com/wp-content/uploads/2026/08/JB-social-BlogSocialShare-1280x720-1-8.png",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.664Z",
+      "fetchedAt": "2026-08-30T16:15:48.157Z",
       "sponsored": true
     },
     {
@@ -4015,7 +4015,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.118Z",
+      "fetchedAt": "2026-08-30T16:15:48.747Z",
       "sponsored": true
     },
     {
@@ -4031,7 +4031,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -4047,7 +4047,7 @@
       "image": "https://spring.io/img/og-spring.png",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.796Z",
+      "fetchedAt": "2026-08-30T16:15:48.256Z",
       "sponsored": true
     },
     {
@@ -4063,7 +4063,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.246Z",
+      "fetchedAt": "2026-08-30T16:15:48.701Z",
       "sponsored": true
     },
     {
@@ -4079,7 +4079,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.832Z",
+      "fetchedAt": "2026-08-30T16:15:48.368Z",
       "sponsored": true
     },
     {
@@ -4095,7 +4095,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/633087173-78b05bce-4a6d-4730-a35a-968bc56ec8a8.png?resize=1024%2C692",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.800Z",
+      "fetchedAt": "2026-08-30T16:15:48.347Z",
       "sponsored": true
     },
     {
@@ -4111,7 +4111,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.881Z",
+      "fetchedAt": "2026-08-30T16:15:48.273Z",
       "sponsored": true
     },
     {
@@ -4127,7 +4127,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Home_Decor.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -4143,7 +4143,7 @@
       "image": "https://res.infoq.com/news/2026/08/java-news-roundup-aug17-2026/en/headerimage/java-news-roundup-image-1787671034283.jpg",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.084Z",
+      "fetchedAt": "2026-08-30T16:15:48.557Z",
       "sponsored": true
     },
     {
@@ -4159,7 +4159,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -4172,10 +4172,10 @@
       "publishedAt": "2026-08-25T14:00:00.000Z",
       "summary": "If you&rsquo;re like most Python users, including us, then you probably started your Python journey by learning about print() . It helped you write your very own Hello World one-liner. You can use it to display formatted…",
       "summaryType": "snippet",
-      "image": "https://files.realpython.com/media/The-Python-Print-Function_Watermarked.26066d64ad82.jpg",
+      "image": null,
       "fallbackImage": "/assets/fallbacks/python.svg",
-      "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.361Z",
+      "imageType": "fallback",
+      "fetchedAt": "2026-08-30T16:15:48.056Z",
       "sponsored": true
     },
     {
@@ -4191,7 +4191,7 @@
       "image": "https://spectrum.ieee.org/media-library/two-men-stand-at-1960s-computer-consoles-containing-many-buttons-knobs-dials-and-lights.jpg?id=67651870&width=1200&height=800&coordinates=0%2C83%2C0%2C84",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.779Z",
+      "fetchedAt": "2026-08-30T16:15:47.430Z",
       "sponsored": true
     },
     {
@@ -4207,7 +4207,7 @@
       "image": "https://files.realpython.com/media/Python-3.12-Preview-5-Typing_Watermarked.2ffca19645a9.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.361Z",
+      "fetchedAt": "2026-08-30T16:15:48.056Z",
       "sponsored": true
     },
     {
@@ -4223,7 +4223,7 @@
       "image": "https://files.realpython.com/media/The-Python-Print-Function_Watermarked.26066d64ad82.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.361Z",
+      "fetchedAt": "2026-08-30T16:15:48.056Z",
       "sponsored": true
     },
     {
@@ -4239,7 +4239,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4255,7 +4255,7 @@
       "image": "https://spectrum.ieee.org/media-library/cute-home-robot-on-carpet-in-cozy-living-room-with-beige-sofa-and-warm-lighting.jpg?id=67154308&width=1200&height=800&coordinates=0%2C0%2C0%2C0",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.780Z",
+      "fetchedAt": "2026-08-30T16:15:47.431Z",
       "sponsored": true
     },
     {
@@ -4271,7 +4271,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -4287,7 +4287,7 @@
       "image": "https://spring.io/img/og-spring.png",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.796Z",
+      "fetchedAt": "2026-08-30T16:15:48.256Z",
       "sponsored": true
     },
     {
@@ -4303,7 +4303,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.568Z",
+      "fetchedAt": "2026-08-30T16:15:48.094Z",
       "sponsored": true
     },
     {
@@ -4319,7 +4319,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/header-1.png",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.801Z",
+      "fetchedAt": "2026-08-30T16:15:48.347Z",
       "sponsored": true
     },
     {
@@ -4335,7 +4335,7 @@
       "image": "https://blog.python.org/og/riscv-now-officially-supported.png",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.571Z",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -4351,7 +4351,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M0TDC1Q5KWFS3GWEG7SHYMEP.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.483Z",
+      "fetchedAt": "2026-08-30T16:15:49.143Z",
       "sponsored": true
     },
     {
@@ -4367,7 +4367,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/08/MetaRoCE-image-1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.495Z",
+      "fetchedAt": "2026-08-30T16:15:49.027Z",
       "sponsored": true
     },
     {
@@ -4383,7 +4383,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/MIT-ExtremeLearning-01-press.jpg?itok=145vyyEe",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.198Z",
+      "fetchedAt": "2026-08-30T16:15:47.754Z",
       "sponsored": true
     },
     {
@@ -4399,7 +4399,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/08/Meta-MTIA-300-Figure-1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.496Z",
+      "fetchedAt": "2026-08-30T16:15:49.028Z",
       "sponsored": true
     },
     {
@@ -4415,7 +4415,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.557Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -4431,7 +4431,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/20/ARCHBLOG-1650-featured-image-1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.410Z",
+      "fetchedAt": "2026-08-30T16:15:48.941Z",
       "sponsored": true
     },
     {
@@ -4447,7 +4447,7 @@
       "image": "https://files.realpython.com/media/How-to-Write-an-AGENTS.md-File-for-a-Python-Project_Watermarked.48cd85ac2760.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.361Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -4463,7 +4463,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.570Z",
+      "fetchedAt": "2026-08-30T16:15:47.021Z",
       "sponsored": true
     },
     {
@@ -4479,7 +4479,7 @@
       "image": "https://files.realpython.com/media/How-to-Write-an-AGENTS.md-File-for-a-Python-Project_Watermarked.48cd85ac2760.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -4495,7 +4495,7 @@
       "image": "https://spectrum.ieee.org/media-library/stacked-green-printed-circuit-boards-with-electronic-components-on-a-work-surface.jpg?id=67598440&width=1200&height=800&coordinates=0%2C0%2C0%2C0",
       "fallbackImage": "/assets/fallbacks/general.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.782Z",
+      "fetchedAt": "2026-08-30T16:15:47.432Z",
       "sponsored": true
     },
     {
@@ -4511,7 +4511,7 @@
       "image": "https://res.infoq.com/articles/rightsizing-platform-engineering/en/card_header_image/rightsizing-platform-engineering-twittercard-1787296955801.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4527,7 +4527,7 @@
       "image": "https://res.infoq.com/presentations/autonomous-ai-software-development-roblox/en/card_header_image/andrew-swerdlow-twitter-card-1787218240356.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4543,7 +4543,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4559,7 +4559,7 @@
       "image": "https://isc.sans.edu/diaryimages/images/2026-08-23_10-01-09.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.144Z",
+      "fetchedAt": "2026-08-30T16:15:47.735Z",
       "sponsored": true
     },
     {
@@ -4575,7 +4575,7 @@
       "image": "https://res.infoq.com/news/2026/08/java-27-so-far/en/headerimage/java-istock-image-01-1787482494699.jpg",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.084Z",
+      "fetchedAt": "2026-08-30T16:15:48.557Z",
       "sponsored": true
     },
     {
@@ -4591,7 +4591,7 @@
       "image": "https://res.infoq.com/presentations/doordash-llm-ai-moderation-platform/en/card_header_image/bruna-pereira-twitter-card-1786539036040.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4607,7 +4607,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M0GECYRV44NP1WR229SCRK7E.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.483Z",
+      "fetchedAt": "2026-08-30T16:15:49.143Z",
       "sponsored": true
     },
     {
@@ -4623,7 +4623,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4639,7 +4639,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/21/ARCHBLOG-1687-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.410Z",
+      "fetchedAt": "2026-08-30T16:15:48.942Z",
       "sponsored": true
     },
     {
@@ -4655,7 +4655,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4671,7 +4671,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*Rn81hdaUHY94Sf8S-GOHZA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.637Z",
+      "fetchedAt": "2026-08-30T16:15:49.100Z",
       "sponsored": true
     },
     {
@@ -4687,7 +4687,7 @@
       "image": "https://assets.rbl.ms/67657308/origin.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.782Z",
+      "fetchedAt": "2026-08-30T16:15:47.433Z",
       "sponsored": true
     },
     {
@@ -4703,7 +4703,7 @@
       "image": "https://files.realpython.com/media/E_308_Podcast_Title.3fe1d657ca2b.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -4719,7 +4719,7 @@
       "image": "https://files.realpython.com/media/Introduction-to-Git-and-GitHub-for-Python-Developers_Watermarked.bac76b62671a.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -4735,7 +4735,7 @@
       "image": "https://res.infoq.com/minibooks/architect-sociotechnical-craft/en/card_header_image/generatedCard-1786541438804.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4751,7 +4751,7 @@
       "image": "https://res.infoq.com/presentations/ebpf-ai-gateway-kubernetes-security/en/card_header_image/dan-finneran-twitter-card-1786539181222.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4767,7 +4767,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/11/ARCHBLOG-1672-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.411Z",
+      "fetchedAt": "2026-08-30T16:15:48.942Z",
       "sponsored": true
     },
     {
@@ -4783,7 +4783,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4799,7 +4799,7 @@
       "image": "https://spring.io/img/og-spring.png",
       "fallbackImage": "/assets/fallbacks/java.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.796Z",
+      "fetchedAt": "2026-08-30T16:15:48.257Z",
       "sponsored": true
     },
     {
@@ -4815,7 +4815,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.832Z",
+      "fetchedAt": "2026-08-30T16:15:48.368Z",
       "sponsored": true
     },
     {
@@ -4831,7 +4831,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/mit-dmse-ammonia-facility.jpg?itok=JxRn8ST5",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.199Z",
+      "fetchedAt": "2026-08-30T16:15:47.754Z",
       "sponsored": true
     },
     {
@@ -4847,7 +4847,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/blog-post-aug-17-outage-1.png?resize=1024%2C576",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.801Z",
+      "fetchedAt": "2026-08-30T16:15:48.347Z",
       "sponsored": true
     },
     {
@@ -4863,7 +4863,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.171Z",
+      "fetchedAt": "2026-08-30T16:15:47.634Z",
       "sponsored": true
     },
     {
@@ -4879,7 +4879,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M0E2VFX1WXFF6TK51VFNP5V3.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.483Z",
+      "fetchedAt": "2026-08-30T16:15:49.144Z",
       "sponsored": true
     },
     {
@@ -4895,7 +4895,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/06/xai-grok-1152x648.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.616Z",
+      "fetchedAt": "2026-08-30T16:15:47.081Z",
       "sponsored": true
     },
     {
@@ -4911,7 +4911,7 @@
       "image": "https://files.realpython.com/media/A-Tourist-Guide-to-the-CPython-Source-Code_Watermarked.5f05a87331ac.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -4927,7 +4927,7 @@
       "image": "https://res.infoq.com/news/2026/08/ai-assisted-engineering/en/headerimage/infoq-ai-assisted-cohort-1787145000301.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.117Z",
       "sponsored": true
     },
     {
@@ -4943,7 +4943,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/13/ARCHBLOG-1465-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.411Z",
+      "fetchedAt": "2026-08-30T16:15:48.943Z",
       "sponsored": true
     },
     {
@@ -4959,7 +4959,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.832Z",
+      "fetchedAt": "2026-08-30T16:15:48.368Z",
       "sponsored": true
     },
     {
@@ -4975,7 +4975,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.833Z",
+      "fetchedAt": "2026-08-30T16:15:48.368Z",
       "sponsored": true
     },
     {
@@ -4991,7 +4991,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Blog_header_2_JwwDb02.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5007,7 +5007,7 @@
       "image": "https://martinfowler.com/rachels-ramblings/card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.558Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -5023,7 +5023,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.558Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -5039,7 +5039,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/Screenshot-2026-08-17-at-5.41.11-PM.png",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.801Z",
+      "fetchedAt": "2026-08-30T16:15:48.347Z",
       "sponsored": true
     },
     {
@@ -5055,7 +5055,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M00XZZC7473CXRW6EF1Z69ZW.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.484Z",
+      "fetchedAt": "2026-08-30T16:15:49.144Z",
       "sponsored": true
     },
     {
@@ -5071,7 +5071,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/16/ARCHBLOG-1466-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.412Z",
+      "fetchedAt": "2026-08-30T16:15:48.943Z",
       "sponsored": true
     },
     {
@@ -5087,7 +5087,7 @@
       "image": "https://files.realpython.com/media/How-to-Use-Claude-Code-Your-Terminal-AI-Coding-Assistant_Watermarked.2916c96a3049.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -5103,7 +5103,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/13/ARCHBLOG-1395-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.413Z",
+      "fetchedAt": "2026-08-30T16:15:48.944Z",
       "sponsored": true
     },
     {
@@ -5119,7 +5119,7 @@
       "image": "https://files.realpython.com/media/Reviewing-AI-Generated-Code-Efficiently_Watermarked.8c62ca1e6824.jpg",
       "fallbackImage": "/assets/fallbacks/python.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.362Z",
+      "fetchedAt": "2026-08-30T16:15:48.057Z",
       "sponsored": true
     },
     {
@@ -5135,7 +5135,7 @@
       "image": "https://res.infoq.com/presentations/progressive-collapse-system-resilience/en/card_header_image/sam-newman-twitter-card-1785845419904.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.522Z",
+      "fetchedAt": "2026-08-30T16:15:49.118Z",
       "sponsored": true
     },
     {
@@ -5151,7 +5151,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.119Z",
+      "fetchedAt": "2026-08-30T16:15:48.748Z",
       "sponsored": true
     },
     {
@@ -5167,7 +5167,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.247Z",
+      "fetchedAt": "2026-08-30T16:15:48.702Z",
       "sponsored": true
     },
     {
@@ -5183,7 +5183,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/dai-gifford-ai-image-training-data-00_0.png?itok=BM5jagA4",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.199Z",
+      "fetchedAt": "2026-08-30T16:15:47.754Z",
       "sponsored": true
     },
     {
@@ -5199,7 +5199,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M0AP04HK7ZM02ZWP3G59W4DP.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.485Z",
+      "fetchedAt": "2026-08-30T16:15:49.145Z",
       "sponsored": true
     },
     {
@@ -5215,7 +5215,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.558Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -5231,7 +5231,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/17/ARCHBLOG-1404-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.413Z",
+      "fetchedAt": "2026-08-30T16:15:48.944Z",
       "sponsored": true
     },
     {
@@ -5247,7 +5247,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/MIT-Fitzgerald-Innovation-Book-01-press.jpg?itok=Pl-hiOMe",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.200Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -5263,7 +5263,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/623375232-cbf590d3-74d6-471d-be21-76add276959b.png?resize=2200%2C2494",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.801Z",
+      "fetchedAt": "2026-08-30T16:15:48.348Z",
       "sponsored": true
     },
     {
@@ -5279,7 +5279,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/football_multi-club_hero_nphU3P.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5295,7 +5295,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/08/macbook-pro-1152x648.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.616Z",
+      "fetchedAt": "2026-08-30T16:15:47.081Z",
       "sponsored": true
     },
     {
@@ -5311,7 +5311,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.802Z",
+      "fetchedAt": "2026-08-30T16:15:48.348Z",
       "sponsored": true
     },
     {
@@ -5327,7 +5327,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M005HG1H0K802B4Y17SX9NQ5.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.485Z",
+      "fetchedAt": "2026-08-30T16:15:49.145Z",
       "sponsored": true
     },
     {
@@ -5343,7 +5343,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZW0HXCQS1KX2QJ1MD5YT1JP.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.485Z",
+      "fetchedAt": "2026-08-30T16:15:49.145Z",
       "sponsored": true
     },
     {
@@ -5359,7 +5359,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/08/quietremovalsfeed.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.917Z",
+      "fetchedAt": "2026-08-30T16:15:47.567Z",
       "sponsored": true
     },
     {
@@ -5375,7 +5375,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/13/ARCHBLOG-1243-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.413Z",
+      "fetchedAt": "2026-08-30T16:15:48.945Z",
       "sponsored": true
     },
     {
@@ -5391,7 +5391,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.393Z",
+      "fetchedAt": "2026-08-30T16:15:48.872Z",
       "sponsored": true
     },
     {
@@ -5407,7 +5407,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZY9E03GZQKFZPVFDA5EKNGP.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.486Z",
+      "fetchedAt": "2026-08-30T16:15:49.145Z",
       "sponsored": true
     },
     {
@@ -5423,7 +5423,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/07/security-illustration-skull-1152x648-1783710141.jpg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.617Z",
+      "fetchedAt": "2026-08-30T16:15:47.082Z",
       "sponsored": true
     },
     {
@@ -5439,7 +5439,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/06/1200x630-U25-Blog-Hero_x2.png?fit=2400%2C1260",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.802Z",
+      "fetchedAt": "2026-08-30T16:15:48.348Z",
       "sponsored": true
     },
     {
@@ -5455,7 +5455,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Sheets_canvas-blog-header-2784x.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5471,7 +5471,7 @@
       "image": "https://github.blog/wp-content/uploads/2026/08/image-8.png?resize=1920%2C1080",
       "fallbackImage": "/assets/fallbacks/open-source.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.803Z",
+      "fetchedAt": "2026-08-30T16:15:48.350Z",
       "sponsored": true
     },
     {
@@ -5487,7 +5487,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/03/track-genai-costs-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.414Z",
+      "fetchedAt": "2026-08-30T16:15:48.945Z",
       "sponsored": true
     },
     {
@@ -5503,7 +5503,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/12/ARCHBLOG-1530-featured-image-2.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.414Z",
+      "fetchedAt": "2026-08-30T16:15:48.946Z",
       "sponsored": true
     },
     {
@@ -5519,7 +5519,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZQPYFA4V0A6ZGSYZDJGASME.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.486Z",
+      "fetchedAt": "2026-08-30T16:15:49.146Z",
       "sponsored": true
     },
     {
@@ -5535,7 +5535,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/03/reduce-text2sql-latency-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.415Z",
+      "fetchedAt": "2026-08-30T16:15:48.946Z",
       "sponsored": true
     },
     {
@@ -5551,7 +5551,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/12/ARCHBLOG-1401-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.415Z",
+      "fetchedAt": "2026-08-30T16:15:48.946Z",
       "sponsored": true
     },
     {
@@ -5567,7 +5567,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.669Z",
+      "fetchedAt": "2026-08-30T16:15:48.162Z",
       "sponsored": true
     },
     {
@@ -5583,7 +5583,7 @@
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2021/07/data-breach.jpeg",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.617Z",
+      "fetchedAt": "2026-08-30T16:15:47.082Z",
       "sponsored": true
     },
     {
@@ -5599,7 +5599,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/07/WhatsApp-Scam-Alert-Ledger-Verification-Model-Download-Flow_1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.497Z",
+      "fetchedAt": "2026-08-30T16:15:49.029Z",
       "sponsored": true
     },
     {
@@ -5615,7 +5615,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.120Z",
+      "fetchedAt": "2026-08-30T16:15:48.748Z",
       "sponsored": true
     },
     {
@@ -5631,7 +5631,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/08/workingonpc.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.917Z",
+      "fetchedAt": "2026-08-30T16:15:47.568Z",
       "sponsored": true
     },
     {
@@ -5647,7 +5647,7 @@
       "image": "https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2026/08/11/ARCHBLOG-1576-featured-image.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.416Z",
+      "fetchedAt": "2026-08-30T16:15:48.947Z",
       "sponsored": true
     },
     {
@@ -5663,7 +5663,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AIME_SIZZLE_THUMBNAIL.Aug10.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5679,7 +5679,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZQNQBJ1WH5E5QSQP8KFDVJV.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.486Z",
+      "fetchedAt": "2026-08-30T16:15:49.146Z",
       "sponsored": true
     },
     {
@@ -5695,7 +5695,7 @@
       "image": "https://martinfowler.com/articles/exploring-gen-ai/donkey-card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.558Z",
+      "fetchedAt": "2026-08-30T16:15:49.056Z",
       "sponsored": true
     },
     {
@@ -5711,7 +5711,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.569Z",
+      "fetchedAt": "2026-08-30T16:15:48.094Z",
       "sponsored": true
     },
     {
@@ -5727,7 +5727,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/mit-csail-geopt.jpg?itok=QbX1i1qV",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.200Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -5743,7 +5743,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZEF2H4G3BD74C5TP4BWMS76.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.486Z",
+      "fetchedAt": "2026-08-30T16:15:49.146Z",
       "sponsored": true
     },
     {
@@ -5759,7 +5759,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Advisor_Header.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5775,7 +5775,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KWJ8S81EFDW5RYDPNZEQSX7A.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.487Z",
+      "fetchedAt": "2026-08-30T16:15:49.146Z",
       "sponsored": true
     },
     {
@@ -5791,7 +5791,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*X_O1wdMIVfm9upb2tLXD9A.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.638Z",
+      "fetchedAt": "2026-08-30T16:15:49.101Z",
       "sponsored": true
     },
     {
@@ -5807,7 +5807,7 @@
       "image": "https://blog.cloudflare.com/_emdash/api/media/file/01KZCHB9VT6PFY8DZNPV0SX1SS.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.487Z",
+      "fetchedAt": "2026-08-30T16:15:49.146Z",
       "sponsored": true
     },
     {
@@ -5823,7 +5823,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.393Z",
+      "fetchedAt": "2026-08-30T16:15:48.873Z",
       "sponsored": true
     },
     {
@@ -5839,7 +5839,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2024/12/camwagenius-selfie.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.918Z",
+      "fetchedAt": "2026-08-30T16:15:47.568Z",
       "sponsored": true
     },
     {
@@ -5855,7 +5855,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.670Z",
+      "fetchedAt": "2026-08-30T16:15:48.162Z",
       "sponsored": true
     },
     {
@@ -5871,7 +5871,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/05/Multi-stage-Model-Overview.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.497Z",
+      "fetchedAt": "2026-08-30T16:15:49.029Z",
       "sponsored": true
     },
     {
@@ -5887,7 +5887,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.121Z",
+      "fetchedAt": "2026-08-30T16:15:48.749Z",
       "sponsored": true
     },
     {
@@ -5903,7 +5903,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/MIT-nse-solvent-problem.jpg?itok=rXwEm3ti",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.201Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -5919,7 +5919,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/July_AI_Recap_still.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -5935,7 +5935,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.559Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -5951,7 +5951,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/MIT-AI-Dermatology-01.jpg?itok=SvrI0eha",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.201Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -5967,7 +5967,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.569Z",
+      "fetchedAt": "2026-08-30T16:15:48.095Z",
       "sponsored": true
     },
     {
@@ -5983,7 +5983,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.833Z"
+      "fetchedAt": "2026-08-30T16:15:48.369Z"
     },
     {
       "id": "65bd07859d40",
@@ -5998,7 +5998,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202608/sasha-rakhlin-mit-A1.jpg?itok=E-0MgF5E",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.201Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -6014,7 +6014,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/07/image13.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.499Z",
+      "fetchedAt": "2026-08-30T16:15:49.030Z",
       "sponsored": true
     },
     {
@@ -6030,7 +6030,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Vibe_coding_course_hero.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -6046,7 +6046,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.638Z",
+      "fetchedAt": "2026-08-30T16:15:49.101Z",
       "sponsored": true
     },
     {
@@ -6062,7 +6062,7 @@
       "image": "https://martinfowler.com/rachels-ramblings/card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.559Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6078,7 +6078,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.393Z",
+      "fetchedAt": "2026-08-30T16:15:48.873Z",
       "sponsored": true
     },
     {
@@ -6094,7 +6094,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/mit-csail-daniela-rus-bavarian-award-00.png?itok=9XnNV8-Q",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.202Z",
+      "fetchedAt": "2026-08-30T16:15:47.755Z",
       "sponsored": true
     },
     {
@@ -6110,7 +6110,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/mit-spi-congressional-visit-26.jpg?itok=Vo00t4gt",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.202Z",
+      "fetchedAt": "2026-08-30T16:15:47.756Z",
       "sponsored": true
     },
     {
@@ -6126,7 +6126,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*7Jb6-3knD_VCB_wWN5M3Mw.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.639Z",
+      "fetchedAt": "2026-08-30T16:15:49.101Z",
       "sponsored": true
     },
     {
@@ -6142,7 +6142,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/07/h96-amazon.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.919Z",
+      "fetchedAt": "2026-08-30T16:15:47.568Z",
       "sponsored": true
     },
     {
@@ -6158,7 +6158,7 @@
       "image": "https://martinfowler.com/articles/exploring-gen-ai/donkey-card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.559Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6174,7 +6174,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.670Z",
+      "fetchedAt": "2026-08-30T16:15:48.162Z",
       "sponsored": true
     },
     {
@@ -6190,7 +6190,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/mit-RogerMark-GeorgeMoody.jpg?itok=57wqdl_A",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.203Z",
+      "fetchedAt": "2026-08-30T16:15:47.756Z",
       "sponsored": true
     },
     {
@@ -6206,7 +6206,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/unnamed_2_vNnOv20.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -6222,7 +6222,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.559Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6238,7 +6238,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AI_Mode_real_world.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.769Z",
       "sponsored": true
     },
     {
@@ -6254,7 +6254,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Dinner_parties.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.770Z",
       "sponsored": true
     },
     {
@@ -6270,7 +6270,7 @@
       "image": "https://martinfowler.com/rachels-ramblings/card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.559Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6286,7 +6286,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:17.570Z",
+      "fetchedAt": "2026-08-30T16:15:48.095Z",
       "sponsored": true
     },
     {
@@ -6302,7 +6302,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/MIT-aerial-3-EmilyDahl.jpg?itok=FRjE5Fce",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.203Z",
+      "fetchedAt": "2026-08-30T16:15:47.756Z",
       "sponsored": true
     },
     {
@@ -6318,7 +6318,7 @@
       "image": "https://news.mit.edu/sites/default/files/styles/news_article__cover_image__original/public/images/202607/mit-lids-Bertsekas-obit.jpg?itok=a4V9w4Hq",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.204Z",
+      "fetchedAt": "2026-08-30T16:15:47.756Z",
       "sponsored": true
     },
     {
@@ -6334,7 +6334,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Unpacked_hero.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.770Z",
       "sponsored": true
     },
     {
@@ -6350,7 +6350,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/07/pac-man-brightdata.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.919Z",
+      "fetchedAt": "2026-08-30T16:15:47.569Z",
       "sponsored": true
     },
     {
@@ -6366,7 +6366,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.560Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6382,7 +6382,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*GKGOrp0xddZwHomMhiSeCA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.639Z",
+      "fetchedAt": "2026-08-30T16:15:49.102Z",
       "sponsored": true
     },
     {
@@ -6398,7 +6398,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/ConnectedAppshero.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.770Z",
       "sponsored": true
     },
     {
@@ -6414,7 +6414,7 @@
       "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/omni-blog-header_OarEe2t.max-600x600.format-webp.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.232Z",
+      "fetchedAt": "2026-08-30T16:15:47.770Z",
       "sponsored": true
     },
     {
@@ -6430,7 +6430,7 @@
       "image": "https://martinfowler.com/articles/archaeologist-copilot/card.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.560Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6446,7 +6446,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.833Z",
+      "fetchedAt": "2026-08-30T16:15:48.369Z",
       "sponsored": true
     },
     {
@@ -6462,7 +6462,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/07/image1.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.499Z",
+      "fetchedAt": "2026-08-30T16:15:49.031Z",
       "sponsored": true
     },
     {
@@ -6478,7 +6478,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2021/07/windupate.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.920Z",
+      "fetchedAt": "2026-08-30T16:15:47.569Z",
       "sponsored": true
     },
     {
@@ -6494,7 +6494,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.560Z",
+      "fetchedAt": "2026-08-30T16:15:49.057Z",
       "sponsored": true
     },
     {
@@ -6510,7 +6510,7 @@
       "image": "https://cdn-images-1.medium.com/max/947/1*dgCgcPQv-EvBNb_AXqtnhA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.640Z",
+      "fetchedAt": "2026-08-30T16:15:49.103Z",
       "sponsored": true
     },
     {
@@ -6526,7 +6526,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/07/image1.webp",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.500Z",
+      "fetchedAt": "2026-08-30T16:15:49.031Z",
       "sponsored": true
     },
     {
@@ -6542,7 +6542,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:16.920Z",
+      "fetchedAt": "2026-08-30T16:15:47.569Z",
       "sponsored": true
     },
     {
@@ -6558,7 +6558,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.560Z",
+      "fetchedAt": "2026-08-30T16:15:49.058Z",
       "sponsored": true
     },
     {
@@ -6574,7 +6574,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.834Z",
+      "fetchedAt": "2026-08-30T16:15:48.369Z",
       "sponsored": true
     },
     {
@@ -6590,7 +6590,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.834Z",
+      "fetchedAt": "2026-08-30T16:15:48.369Z",
       "sponsored": true
     },
     {
@@ -6606,7 +6606,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/07/irisc2x.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.920Z",
+      "fetchedAt": "2026-08-30T16:15:47.570Z",
       "sponsored": true
     },
     {
@@ -6622,7 +6622,7 @@
       "image": "https://krebsonsecurity.com/wp-content/uploads/2026/07/netnutseizure.png",
       "fallbackImage": "/assets/fallbacks/security.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:16.921Z",
+      "fetchedAt": "2026-08-30T16:15:47.570Z",
       "sponsored": true
     },
     {
@@ -6638,7 +6638,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/06/Meta-AI-Storage-Blueprint-image-1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.500Z",
+      "fetchedAt": "2026-08-30T16:15:49.031Z",
       "sponsored": true
     },
     {
@@ -6654,7 +6654,7 @@
       "image": "https://engineering.fb.com/wp-content/uploads/2026/06/10-Years-Meta-Python-HERO-large.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.501Z",
+      "fetchedAt": "2026-08-30T16:15:49.032Z",
       "sponsored": true
     },
     {
@@ -6670,7 +6670,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.834Z",
+      "fetchedAt": "2026-08-30T16:15:48.369Z",
       "sponsored": true
     },
     {
@@ -6686,7 +6686,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*RL-TMAFPo93aO3GocVBBvQ.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.641Z",
+      "fetchedAt": "2026-08-30T16:15:49.103Z",
       "sponsored": true
     },
     {
@@ -6702,7 +6702,7 @@
       "image": "https://www.rust-lang.org/static/images/rust-social-wide.jpg",
       "fallbackImage": "/assets/fallbacks/rust.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.835Z",
+      "fetchedAt": "2026-08-30T16:15:48.370Z",
       "sponsored": true
     },
     {
@@ -6718,7 +6718,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*1eo2a8owloSpC-ER1CPFIA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.642Z",
+      "fetchedAt": "2026-08-30T16:15:49.104Z",
       "sponsored": true
     },
     {
@@ -6734,7 +6734,7 @@
       "image": "https://cdn-images-1.medium.com/max/1024/1*MfDuB407Rq81AHZEbhARWA.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.642Z",
+      "fetchedAt": "2026-08-30T16:15:49.104Z",
       "sponsored": true
     },
     {
@@ -6750,7 +6750,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/introducing-mdn-mcp-server/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -6766,7 +6766,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.247Z"
+      "fetchedAt": "2026-08-30T16:15:48.702Z"
     },
     {
       "id": "70b6929e10c8",
@@ -6781,7 +6781,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/mdn-front-end-deep-dive/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "30c913da25ed",
@@ -6796,7 +6796,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.248Z"
+      "fetchedAt": "2026-08-30T16:15:48.702Z"
     },
     {
       "id": "de9b6db27f09",
@@ -6811,7 +6811,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.249Z"
+      "fetchedAt": "2026-08-30T16:15:48.703Z"
     },
     {
       "id": "a86514b77ebf",
@@ -6826,7 +6826,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.249Z"
+      "fetchedAt": "2026-08-30T16:15:48.704Z"
     },
     {
       "id": "ca45479e5cd7",
@@ -6841,7 +6841,7 @@
       "image": "https://thegradient.pub/content/images/2026/02/ramelli-featured.jpg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.981Z"
+      "fetchedAt": "2026-08-30T16:15:48.242Z"
     },
     {
       "id": "fa9ecc90c4d3",
@@ -6856,7 +6856,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.250Z"
+      "fetchedAt": "2026-08-30T16:15:48.704Z"
     },
     {
       "id": "7857080ff594",
@@ -6871,7 +6871,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.250Z"
+      "fetchedAt": "2026-08-30T16:15:48.705Z"
     },
     {
       "id": "2d5d4da2485d",
@@ -6886,7 +6886,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.252Z"
+      "fetchedAt": "2026-08-30T16:15:48.706Z"
     },
     {
       "id": "4790b31b3044",
@@ -6901,7 +6901,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "2293cd579b85",
@@ -6916,7 +6916,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "ec851e97e555",
@@ -6931,7 +6931,7 @@
       "image": "https://go.dev/doc/gopher/runningsquare.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.253Z"
+      "fetchedAt": "2026-08-30T16:15:48.706Z"
     },
     {
       "id": "11e7f6bc3350",
@@ -6946,7 +6946,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/image-formats-codecs-compression-tools/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -6962,7 +6962,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/view-transitions-beginner-guide/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -6978,7 +6978,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/launching-new-front-end/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -6994,7 +6994,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/image-formats-pixels-graphics/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -7010,7 +7010,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/mdn-turns-20/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "1dc008c321b4",
@@ -7025,7 +7025,7 @@
       "image": "https://thegradient.pub/content/images/2025/06/ChatGPT-Image-May-21--2025--11_31_12-AM-copy.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.981Z"
+      "fetchedAt": "2026-08-30T16:15:48.243Z"
     },
     {
       "id": "1e435c8bd02e",
@@ -7040,7 +7040,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/color-models-humans-devices/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -7056,7 +7056,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/h1-element-styles/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "3ec850b7a0da",
@@ -7071,7 +7071,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/global-privacy-control/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.414Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -7087,7 +7087,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/javascript-temporal-is-coming/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.415Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "632e9534a59b",
@@ -7102,7 +7102,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/fix-image-lcp/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.415Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -7118,7 +7118,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/mdn-2024-content-projects/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.415Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "2f51f0f54779",
@@ -7133,7 +7133,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/curriculum-learn-web-development/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.415Z"
+      "fetchedAt": "2026-08-30T16:15:47.899Z"
     },
     {
       "id": "6345c2cab529",
@@ -7148,7 +7148,7 @@
       "image": "https://developer.mozilla.org/en-US/blog/daily-holiday-javascript-challenges/featured.png",
       "fallbackImage": "/assets/fallbacks/javascript.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.415Z",
+      "fetchedAt": "2026-08-30T16:15:47.899Z",
       "sponsored": true
     },
     {
@@ -7164,7 +7164,7 @@
       "image": "https://thegradient.pub/content/images/2024/11/DALL-E-2024-11-15-15.40.52---Create-an-abstract-image-that-illustrates-how-ReLU-based-neural-networks-shatter-input-space-into-numerous-polygonal-regions--each-behaving-like-a-lin.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.983Z"
+      "fetchedAt": "2026-08-30T16:15:48.244Z"
     },
     {
       "id": "c380d26cbf1a",
@@ -7179,7 +7179,7 @@
       "image": "https://thegradient.pub/content/images/2024/08/image5.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.984Z"
+      "fetchedAt": "2026-08-30T16:15:48.245Z"
     },
     {
       "id": "075b455d7583",
@@ -7194,7 +7194,7 @@
       "image": "https://thegradient.pub/content/images/2024/07/wellbeing_ai_cover_image.webp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.985Z"
+      "fetchedAt": "2026-08-30T16:15:48.246Z"
     },
     {
       "id": "6e4f8c8087ce",
@@ -7209,7 +7209,7 @@
       "image": "https://thegradient.pub/content/images/2024/04/Screenshot-2024-04-18-at-3.11.18-PM.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.985Z"
+      "fetchedAt": "2026-08-30T16:15:48.246Z"
     },
     {
       "id": "c1b9140b4dde",
@@ -7224,7 +7224,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "86141a80ded5",
@@ -7239,7 +7239,7 @@
       "image": "https://lh7-us.googleusercontent.com/2boKi96oJS5ZuSRrOr2sg4CtRsOM6aH-U-DRXCnxm6AGIPnvGRRJoButHvmUa9w7eakKB8ohKRIsF6oAbt2jN5R0yGOO-yNSIyUZyd3pdC_DJX7mXdNOsdjENfLOJW0dNJQPAIDoSWKdouczvmEnw40",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.987Z"
+      "fetchedAt": "2026-08-30T16:15:48.247Z"
     },
     {
       "id": "e03a8fbe8af2",
@@ -7254,7 +7254,7 @@
       "image": "https://thegradient.pub/content/images/2024/03/temple_run.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.988Z"
+      "fetchedAt": "2026-08-30T16:15:48.248Z"
     },
     {
       "id": "7a21767383b4",
@@ -7269,7 +7269,7 @@
       "image": "https://lh7-us.googleusercontent.com/YS9WFjjuYTq7QkzPnx4xgTQnU0Pmr22i4fEzXXWuBf6wD--eYL8FvdoEpkqlCMKraBaSDuo7j0sWR7ltUaWI31_Bvq9PtJoPpoWRFQnjKOth1P7mnxfzmGT8ppUslOPMhbOzJY49F4IHBMZfyzax18E",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.990Z"
+      "fetchedAt": "2026-08-30T16:15:48.249Z"
     },
     {
       "id": "0ee0b8f51ebf",
@@ -7284,7 +7284,7 @@
       "image": "https://thegradient.pub/content/images/2024/03/Group-66--3-.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.990Z"
+      "fetchedAt": "2026-08-30T16:15:48.249Z"
     },
     {
       "id": "9dc881aa2545",
@@ -7299,7 +7299,7 @@
       "image": "https://thegradient.pub/content/images/2024/02/2.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.992Z"
+      "fetchedAt": "2026-08-30T16:15:48.250Z"
     },
     {
       "id": "9ee2dc8a6067",
@@ -7314,7 +7314,7 @@
       "image": "https://thegradient.pub/content/images/2024/01/image4.jpg",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.994Z"
+      "fetchedAt": "2026-08-30T16:15:48.251Z"
     },
     {
       "id": "4b8482e1914a",
@@ -7329,7 +7329,7 @@
       "image": "https://thegradient.pub/content/images/2023/08/DALL-E-2023-08-21-18.52.00---frothing-waves-in-the-middle-of-the-spillway-of-a-hydroelectric-dam--shown-by-a-bridge-across-a-river-with-many-arches--with-a-fish-jumping-downstream.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.994Z",
+      "fetchedAt": "2026-08-30T16:15:48.251Z",
       "sponsored": true
     },
     {
@@ -7345,7 +7345,7 @@
       "image": "https://lh3.googleusercontent.com/WHPz3vLGaMr2toopTHNgVwz7YDJRqara4Vj9Fxa0EjigyCWlApk42y_pFFUqUXD_-TnCjbTdxZOhtW0JlrxkD2Y9d8mSCpulh6LuoktBWWXclkxCPOzlaqMY18Cn3LY6DtKOXCGhR21XWSxg_SoxKtzwURHMn996upMOykPfmk1CUsKXhlprWypZcDeen2V7oW-mtmaB24_OSXMz1z7-nR7W9OfMsvhou4Vp",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.996Z",
+      "fetchedAt": "2026-08-30T16:15:48.252Z",
       "sponsored": true
     },
     {
@@ -7361,7 +7361,7 @@
       "image": "https://thegradient.pub/content/images/2023/09/alignment.png",
       "fallbackImage": "/assets/fallbacks/ai.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:17.997Z"
+      "fetchedAt": "2026-08-30T16:15:48.253Z"
     },
     {
       "id": "65b8b06ca115",
@@ -7376,7 +7376,7 @@
       "image": "https://static.ghost.org/v5.0.0/images/publication-cover.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.509Z"
+      "fetchedAt": "2026-08-30T16:15:49.043Z"
     },
     {
       "id": "0176b3ae9f12",
@@ -7391,7 +7391,7 @@
       "image": "https://lh5.googleusercontent.com/kVHMqIxQ6_y0BNVUrY8fLIyS4ZR61WD1POCDX4lhEyUT3ERxVLZ_l8-dS_qZgzoMC4A4G27valSsTNPdMIm6x-LoqwEY4BpDnPfLLsr9u4KItet_0lChBTnF2QRbRz9acQi131_uAR5m988bkvX3mEs",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.509Z"
+      "fetchedAt": "2026-08-30T16:15:49.043Z"
     },
     {
       "id": "bbc81fd6f424",
@@ -7406,7 +7406,7 @@
       "image": "https://storage.ghost.io/c/64/72/647204cd-7ad2-4539-b98a-3489074b932d/content/images/2024/02/ege6ztj-__squarespace_cacheversion-1689515329345-1.png",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.509Z",
+      "fetchedAt": "2026-08-30T16:15:49.043Z",
       "sponsored": true
     },
     {
@@ -7422,7 +7422,7 @@
       "image": "https://live.staticflickr.com/65535/52705024790_8a89921cfb.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.509Z",
+      "fetchedAt": "2026-08-30T16:15:49.043Z",
       "sponsored": true
     },
     {
@@ -7438,7 +7438,7 @@
       "image": "https://live.staticflickr.com/65535/52567686348_753df29d20_w.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.510Z"
+      "fetchedAt": "2026-08-30T16:15:49.043Z"
     },
     {
       "id": "d01cc8978511",
@@ -7453,7 +7453,7 @@
       "image": "https://live.staticflickr.com/65535/52529671687_3433b320e8_z.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.510Z"
+      "fetchedAt": "2026-08-30T16:15:49.043Z"
     },
     {
       "id": "c033586aeb15",
@@ -7468,7 +7468,7 @@
       "image": "https://live.staticflickr.com/65535/52450419526_dc9077a2d1.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.510Z"
+      "fetchedAt": "2026-08-30T16:15:49.044Z"
     },
     {
       "id": "daf2ae718de8",
@@ -7483,7 +7483,7 @@
       "image": "http://farm3.static.flickr.com/2363/5781449767_54902da8a5_o.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.510Z",
+      "fetchedAt": "2026-08-30T16:15:49.044Z",
       "sponsored": true
     },
     {
@@ -7499,7 +7499,7 @@
       "image": "https://live.staticflickr.com/65535/52201588992_e9ba03fa8f.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.510Z"
+      "fetchedAt": "2026-08-30T16:15:49.044Z"
     },
     {
       "id": "84ab1cc669b8",
@@ -7514,7 +7514,7 @@
       "image": "http://farm3.static.flickr.com/2363/5781449767_54902da8a5_o.jpg",
       "fallbackImage": "/assets/fallbacks/architecture.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.511Z",
+      "fetchedAt": "2026-08-30T16:15:49.044Z",
       "sponsored": true
     },
     {
@@ -7530,7 +7530,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "38b90c5959ba",
@@ -7545,7 +7545,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z",
+      "fetchedAt": "2026-08-30T16:15:48.882Z",
       "sponsored": true
     },
     {
@@ -7561,7 +7561,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "f949efaaadd1",
@@ -7576,7 +7576,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.439Z"
+      "fetchedAt": "2026-08-30T16:15:48.882Z"
     },
     {
       "id": "db627e5d5df5",
@@ -7591,7 +7591,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.440Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "ec52507adcf8",
@@ -7606,7 +7606,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.440Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "0daa4b8fed59",
@@ -7621,7 +7621,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.440Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "89eb5721f084",
@@ -7636,7 +7636,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.441Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "feb17f9312d5",
@@ -7651,7 +7651,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.441Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "b5b180506f1c",
@@ -7666,7 +7666,7 @@
       "image": "https://dave.cheney.net/wp-content/uploads/2020/02/mean-girls-you-cant-sit-with-us-main.jpg",
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "real",
-      "fetchedAt": "2026-08-30T15:14:18.443Z"
+      "fetchedAt": "2026-08-30T16:15:48.884Z"
     },
     {
       "id": "e4d2b074d995",
@@ -7681,7 +7681,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.441Z"
+      "fetchedAt": "2026-08-30T16:15:48.883Z"
     },
     {
       "id": "a404db8fb646",
@@ -7696,7 +7696,7 @@
       "image": null,
       "fallbackImage": "/assets/fallbacks/go.svg",
       "imageType": "fallback",
-      "fetchedAt": "2026-08-30T15:14:18.443Z"
+      "fetchedAt": "2026-08-30T16:15:48.884Z"
     }
   ]
 }
