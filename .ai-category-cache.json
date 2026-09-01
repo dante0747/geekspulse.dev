@@ -72607,5 +72607,22 @@
   "sponsored::Carmack: Has early Scratch experience led to fulfilling careers?": "yes",
   "sponsored::V0.1.0.0 of ghcup-gtk released": "yes",
   "summary::Carmack: Has early Scratch experience led to fulfilling careers?": "A recent interview with Sid Meier's former creative director Sid Meier suggests that early exposure to game development tools like Scratch may have played a significant role in shaping his career. Meier's experience with the platform, which allows users to create interactive stories and games without coding, may have helped him develop problem-solving skills and a keen understanding of user interface design. This, in turn, could have contributed to his success in creating engaging and accessible games like Civilization and StarCraft.",
-  "summary::V0.1.0.0 of ghcup-gtk released": "The ghcup-gtk project has released its first major version, V0.1.0.0, which includes a GTK wrapper around the ghcup toolchain manager. This release provides packages for various operating systems and is signed with the Minisign tool. The project's developer is open to feedback and suggestions, particularly from the Haskell community, which was instrumental in making the experience of programming a GTK application more tolerable."
+  "summary::V0.1.0.0 of ghcup-gtk released": "The ghcup-gtk project has released its first major version, V0.1.0.0, which includes a GTK wrapper around the ghcup toolchain manager. This release provides packages for various operating systems and is signed with the Minisign tool. The project's developer is open to feedback and suggestions, particularly from the Haskell community, which was instrumental in making the experience of programming a GTK application more tolerable.",
+  "2004 RuneScape fit a multiplayer RPG into 56k dial-up": "DevOps",
+  "ReactOS Gets An Upgrade": "Open Source",
+  "Janet 1.42.0": "DevOps",
+  "AI adoption at work is broad but shallow": "AI",
+  "Nvidia is building an IP licensing empire on the back of NVLink": "DevOps",
+  "Healthcare cyberattacks hit pacemakers and millions of patient records": "DevOps",
+  "VMware uses Nvidia-favored 'AI factory' brand to build something with rival AMD": "AI",
+  "sponsored::ReactOS Gets An Upgrade": "yes",
+  "sponsored::ISC Stormcast For Tuesday, September 1st, 2026 https://isc.sans.edu/podcastdetail/10076, (Tue, Sep 1st)": "yes",
+  "sponsored::2004 RuneScape fit a multiplayer RPG into 56k dial-up": "yes",
+  "sponsored::Janet 1.42.0": "yes",
+  "sponsored::AI adoption at work is broad but shallow": "yes",
+  "sponsored::Nvidia is building an IP licensing empire on the back of NVLink": "yes",
+  "sponsored::Healthcare cyberattacks hit pacemakers and millions of patient records": "yes",
+  "sponsored::VMware uses Nvidia-favored 'AI factory' brand to build something with rival AMD": "yes",
+  "summary::2004 RuneScape fit a multiplayer RPG into 56k dial-up": "RuneScape's 2004 version fit a multiplayer RPG into 56k dial-up due to its use of Java applets, which ran in a security sandbox, and a small encryption layer, ISAAC, which was set up before any game packets were sent. This allowed the game server to advance in discrete cycles, with every player's view updated before the next one. The encryption layer was not about saving bytes, but rather protecting the game's opcode, which was the only encryption in the stack.",
+  "summary::Janet 1.42.0": "Janet 1.42.0 is a long-coming release with lots of bug fixes and documentation improvements, including a tweak to fix GC collecting active fiber during nested calls and a fix for a missing :symbolmap keyword in disasm function."
 }
