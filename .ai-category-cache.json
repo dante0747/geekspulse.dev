@@ -76293,5 +76293,19 @@
   "sponsored::Berlin is reviewing Rhysida&apos;s 5.79TB release of state data after refusing to pay a ransom; files reportedly include": "yes",
   "sponsored::What makes IMAX theaters different from normal ones?": "yes",
   "sponsored::Voicebox FX is a Blueprint for CircuitPython I2S Audio": "yes",
-  "summary::Anatomy of a Test": "This test case is checking that calling store.start_job(conn, job) marks a job as having been started and removes it from the pending jobs list. The test uses a mock clock to set the start time to January 5th, 2026, and then asserts that the started_at field of the job object is equal to the start time. This test is useful for verifying that the store.start_job function is working correctly."
+  "summary::Anatomy of a Test": "This test case is checking that calling store.start_job(conn, job) marks a job as having been started and removes it from the pending jobs list. The test uses a mock clock to set the start time to January 5th, 2026, and then asserts that the started_at field of the job object is equal to the start time. This test is useful for verifying that the store.start_job function is working correctly.",
+  "Ever wanted earbuds with a touchscreen case? Even if you haven’t, JBL's affordable Live Buds 4 are worth a look; think s": "DevOps",
+  "Ikey Doherty Plans To Show How To \"Properly\" Build A Modern Linux Distro": "DevOps",
+  "The Luxuries in Life": "DevOps",
+  "Learn Programming with OCaml": "General",
+  "Visualizing Rust&#x27;s Vtables: How dyn Trait Works In Memory": "Rust",
+  "Steffen&#x27;s Polyhedron – Greg Egan": "General",
+  "sponsored::Ever wanted earbuds with a touchscreen case? Even if you haven’t, JBL's affordable Live Buds 4 are worth a look; think s": "yes",
+  "sponsored::Learn Programming with OCaml": "yes",
+  "sponsored::The Luxuries in Life": "yes",
+  "sponsored::Ikey Doherty Plans To Show How To \"Properly\" Build A Modern Linux Distro": "yes",
+  "sponsored::Visualizing Rust&#x27;s Vtables: How dyn Trait Works In Memory": "yes",
+  "sponsored::Steffen&#x27;s Polyhedron – Greg Egan": "yes",
+  "summary::Visualizing Rust&#x27;s Vtables: How dyn Trait Works In Memory": "Rust's dyn Trait allows for runtime polymorphism, enabling dynamic dispatch of functions based on the type of object being referred to. This is achieved through a vtable pointer that lives inside the object, which is resolved at runtime. In contrast, C++'s virtual functions rely on a vtable pointer that lives inside the object at compile time, which can lead to runtime errors if not implemented correctly. Rust's monomorphization approach, which involves generating separate copies of functions for each type, provides a more straightforward and simple equivalent to CRTP, offering a more intuitive understanding of how Rust achieves runtime polymorphism.",
+  "summary::Steffen&#x27;s Polyhedron – Greg Egan": "Steffen's Polyhedron by Greg Egan is a flexible polyhedron with 14 triangular faces that can change shape while maintaining the shapes of all its individual faces. This is a significant achievement in mathematics, as it proves that no convex polyhedron can be flexible."
 }
