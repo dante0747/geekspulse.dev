@@ -76399,5 +76399,10 @@
   "US troops can still be tracked by purchased location data, and Congress wants to know why": "Security",
   "sponsored::M2: Episode 1 (or, Asahi Linux on M3)": "yes",
   "sponsored::US troops can still be tracked by purchased location data, and Congress wants to know why": "yes",
-  "summary::M2: Episode 1 (or, Asahi Linux on M3)": "Asahi Linux now officially supports Macs with M3 series SoCs, allowing almost everything supported on the M1 and M2 series machines to work, including the webcam, internal microphones, and hardware-accelerated video decoding. The only major exceptions are full DCP support and the GPU, which will be addressed in the coming months. Users can try the new support by running a command in the terminal and following the prompts, and a system upgrade is recommended after installation."
+  "summary::M2: Episode 1 (or, Asahi Linux on M3)": "Asahi Linux now officially supports Macs with M3 series SoCs, allowing almost everything supported on the M1 and M2 series machines to work, including the webcam, internal microphones, and hardware-accelerated video decoding. The only major exceptions are full DCP support and the GPU, which will be addressed in the coming months. Users can try the new support by running a command in the terminal and following the prompts, and a system upgrade is recommended after installation.",
+  "Chrome again exempts Google from user site data settings": "General",
+  "Can AI Now Design PCBs That Just Work?": "DevOps",
+  "sponsored::Chrome again exempts Google from user site data settings": "yes",
+  "sponsored::Can AI Now Design PCBs That Just Work?": "yes",
+  "summary::Chrome again exempts Google from user site data settings": "Chrome again exempts Google from user site data settings, a feature that was previously fixed six years ago. The bug has been reproduced on two Macs with Chrome version 152.0.7977.83, and the default search engine is changed to DuckDuckGo, but site data persists. The issue is confined to Google.com and appears to be related to the saved site data in the ~/Library/Application Support/Google/Chrome/Default folder. The author suggests that Google may have introduced the issue by not implementing unit tests for the feature, and laments Google's lack of competence and the potential for a Google Search monopoly."
 }
