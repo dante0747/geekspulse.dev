@@ -81346,5 +81346,17 @@
   "sponsored::One problem with Android Auto can be fixed with a simple update": "yes",
   "sponsored::What's the difference between your iPhone's Do Not Disturb and Focus modes?": "yes",
   "sponsored::Getting 50 GB&#x2F;S Back from the Apple Neural Engine": "yes",
-  "summary::Getting 50 GB&#x2F;S Back from the Apple Neural Engine": "Apple's Neural Engine has been experiencing performance issues due to a throttling of DRAM weight streaming throughput, which can be mitigated by avoiding a problematic path in the kernel DMA engine's speculative prefetch ring. This can lead to significant increases in memory usage and token throughput, resulting in slower overall performance. By optimizing the kernel DMA engine, developers can avoid this issue and potentially unlock 50 GB/s of memory bandwidth."
+  "summary::Getting 50 GB&#x2F;S Back from the Apple Neural Engine": "Apple's Neural Engine has been experiencing performance issues due to a throttling of DRAM weight streaming throughput, which can be mitigated by avoiding a problematic path in the kernel DMA engine's speculative prefetch ring. This can lead to significant increases in memory usage and token throughput, resulting in slower overall performance. By optimizing the kernel DMA engine, developers can avoid this issue and potentially unlock 50 GB/s of memory bandwidth.",
+  "Is there any benefit to restarting your gaming handheld regularly?": "DevOps",
+  "What is the difference between a dead pixel and a stuck pixel?": "General",
+  "Twenty police forces in England and Wales recorded 163 crimes involving keywords like \"AI-generated\", \"deepfake\", and \"n": "Security",
+  "EROFS Disables LZ4 Rolling Decompression Due To Data Corruption Possibility": "Security",
+  "Optimizing a single Rust Clippy lint by 3133X": "Rust",
+  "Tree Calculus": "DevOps",
+  "sponsored::EROFS Disables LZ4 Rolling Decompression Due To Data Corruption Possibility": "yes",
+  "sponsored::Twenty police forces in England and Wales recorded 163 crimes involving keywords like \"AI-generated\", \"deepfake\", and \"n": "yes",
+  "sponsored::What is the difference between a dead pixel and a stuck pixel?": "yes",
+  "sponsored::Is there any benefit to restarting your gaming handheld regularly?": "yes",
+  "sponsored::Optimizing a single Rust Clippy lint by 3133X": "yes",
+  "summary::Optimizing a single Rust Clippy lint by 3133X": "Optimizing a single Rust Clippy lint by 3133X uses 0 cookies and is estimated to take 5 minutes to read. This article delves into the code of the Clippy lint clippy::nonstandard_macro_braces, which catches macro calls with the wrong braces. The lint has a hard-coded macro and idiomatic braces, and Clippy runs after macro expansion, resulting in incorrect output. The author investigates the lint by checking for macro expansion, then uses source text trickery to extract the correct braces."
 }
