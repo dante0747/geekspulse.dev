@@ -84461,5 +84461,20 @@
   "sponsored::OpenAI admits its agents went off the rails another six times": "yes",
   "sponsored::This Week in Rust 669": "yes",
   "sponsored::A 32-year-old bug walks into a Telnet server": "yes",
-  "summary::A 32-year-old bug walks into a Telnet server": "A long, long time ago, a Telnet vulnerability was discovered that allowed attackers to corrupt adjacent variables in the LINEMODE SLC negotiation handler, potentially enabling them to execute malicious code. This vulnerability, CVE-2026-32746, affects many Linux distributions, including Ubuntu, Debian, FreeBSD, and others, and is considered a Pandora's box to exploit due to its widespread presence in Telnetd implementations. The vulnerability was patched recently, but its existence highlights the importance of understanding and addressing legacy technologies that still exist in modern systems."
+  "summary::A 32-year-old bug walks into a Telnet server": "A long, long time ago, a Telnet vulnerability was discovered that allowed attackers to corrupt adjacent variables in the LINEMODE SLC negotiation handler, potentially enabling them to execute malicious code. This vulnerability, CVE-2026-32746, affects many Linux distributions, including Ubuntu, Debian, FreeBSD, and others, and is considered a Pandora's box to exploit due to its widespread presence in Telnetd implementations. The vulnerability was patched recently, but its existence highlights the importance of understanding and addressing legacy technologies that still exist in modern systems.",
+  "The end of 'rip and replace'? New survey finds businesses are sticking it out with legacy tech": "DevOps",
+  "An iOS 27 bug can temporarily freeze your iPhone": "DevOps",
+  "Huawei plans to launch the Ascend 960DT AI chip in Q1 2027 and the 960PR in Q3 2027, and says its UnifiedBus tech is key": "DevOps",
+  "PitchBook: companies developing brain-computer interfaces have already raised more than $1B in 2026, compared with $1.56": "DevOps",
+  "TanStack Charts Introduced with a Framework Agnostic Grammar of Graphics for TypeScript": "DevOps",
+  "Google, Nvidia, and Emerald AI launch the AI Energy Management Alliance to advance data centers that dynamically adjust ": "DevOps",
+  "Comparison of Malloc() Algorithms": "General",
+  "sponsored::PitchBook: companies developing brain-computer interfaces have already raised more than $1B in 2026, compared with $1.56": "yes",
+  "sponsored::Huawei plans to launch the Ascend 960DT AI chip in Q1 2027 and the 960PR in Q3 2027, and says its UnifiedBus tech is key": "yes",
+  "sponsored::The end of 'rip and replace'? New survey finds businesses are sticking it out with legacy tech": "yes",
+  "sponsored::An iOS 27 bug can temporarily freeze your iPhone": "yes",
+  "sponsored::TanStack Charts Introduced with a Framework Agnostic Grammar of Graphics for TypeScript": "yes",
+  "sponsored::Google, Nvidia, and Emerald AI launch the AI Energy Management Alliance to advance data centers that dynamically adjust ": "yes",
+  "sponsored::Comparison of Malloc() Algorithms": "yes",
+  "summary::Comparison of Malloc() Algorithms": "Memory allocation problems can limit the performance of multithreaded programs, especially when dealing with large amounts of memory. The malloc() API is often the worst choice due to its inefficient use of the heap and potential for serialization. Alternative solutions such as PF_RING and arena memory pools can improve performance by reducing the number of memory allocation and deallocation operations."
 }
