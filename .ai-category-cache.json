@@ -85242,5 +85242,16 @@
   "sponsored::How to watch Sydney vs Fremantle for FREE: Live streams & TV channels for AFL 2026 Preliminary Final": "yes",
   "sponsored::On Call: Techie fixed Wi-Fi dead zone with a drill": "yes",
   "sponsored::The scourge of x86 emulation": "yes",
-  "summary::The scourge of x86 emulation": "The scourge of x86 emulation affects every application that emulates x86, including those that use ARM's relaxed consistency model. This problem arises from the stark contrast between ARM's weak ordering model and x86's strict total store ordering model. The weak ordering model, which is the default for ARM, allows significant hardware optimizations but also introduces issues with coherence and visibility of memory loads and stores. This can lead to unexpected behavior and bugs in applications that rely on strict consistency and atomicity."
+  "summary::The scourge of x86 emulation": "The scourge of x86 emulation affects every application that emulates x86, including those that use ARM's relaxed consistency model. This problem arises from the stark contrast between ARM's weak ordering model and x86's strict total store ordering model. The weak ordering model, which is the default for ARM, allows significant hardware optimizations but also introduces issues with coherence and visibility of memory loads and stores. This can lead to unexpected behavior and bugs in applications that rely on strict consistency and atomicity.",
+  "Waymo is expanding to Singapore": "DevOps",
+  "TV Audio Tube Makes a Transceiver": "DevOps",
+  "A heap overflow and SSO misconfiguration to compromise OpenAI internal repos": "General",
+  "When the fractional part of a float fixes your shader": "General",
+  "sponsored::Waymo is expanding to Singapore": "yes",
+  "sponsored::Microsoft fixes broken copy and paste for Excel 2016 users": "yes",
+  "sponsored::TV Audio Tube Makes a Transceiver": "yes",
+  "sponsored::A heap overflow and SSO misconfiguration to compromise OpenAI internal repos": "yes",
+  "sponsored::When the fractional part of a float fixes your shader": "yes",
+  "summary::A heap overflow and SSO misconfiguration to compromise OpenAI internal repos": "A heap overflow and SSO misconfiguration to compromise OpenAI internal repos was discovered, allowing hackers to access employee accounts and potentially other connectors. The vulnerability was found in libheif and Image decoder, and was exploited using the employee's Codex to open a PR in the internal monorepo. The attack was quickly patched by OpenAI, and the hackers were paid a $6,500 bounty.",
+  "summary::When the fractional part of a float fixes your shader": "When the fractional part of a float fixes your shader, it's a common issue that can cause stuttering or other performance problems in shaders. This occurs when the fractional part of a float value is not properly clamped to ensure that it remains within a valid range, leading to incorrect calculations and potential crashes. In this article, the author investigates the issue and finds that it's caused by a faulty implementation of the fractional part of a float. The problem is resolved by implementing a proper clamping mechanism, which ensures that the fractional part is always within the valid range."
 }
