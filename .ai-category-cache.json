@@ -85233,5 +85233,14 @@
   "sponsored::The Scourge of x86 Emulation": "yes",
   "sponsored::USA’s Venezuela takeover comes with bonus exposure to Chinese AI surveillance tech": "yes",
   "summary::The Scourge of x86 Emulation": "The x86 Total Store Ordering memory model, or x86-TSO, is a memory ordering system that enforces strict coherency across processors in a system, ensuring that memory loads and stores are logically ordered and visible to all processors. This model is in contrast to the weak consistency model used by ARM, which allows for significant hardware optimizations but also introduces complexities in programming and debugging. The problems with emulating x86-TSO on weak ARM memory models are multi-faceted and cover issues such as atomicity and coherence, making it a challenging problem to solve.",
-  "summary::Jemalloc 5.4.0": "Jemalloc 5.4.0 is a major update that addresses technical debts, including refactorings, bug fixes, and improvements to portability. The new release also includes the addition of new features such as pinned memory statistics and thread selection for per-CPU arena allocation."
+  "summary::Jemalloc 5.4.0": "Jemalloc 5.4.0 is a major update that addresses technical debts, including refactorings, bug fixes, and improvements to portability. The new release also includes the addition of new features such as pinned memory statistics and thread selection for per-CPU arena allocation.",
+  "How to watch Sydney vs Fremantle for FREE: Live streams & TV channels for AFL 2026 Preliminary Final": "DevOps",
+  "Diablo 5 senior director says some complex systems were 'deferred' to the endgame, so it could 'deliver the depth and ma": "DevOps",
+  "The scourge of x86 emulation": "General",
+  "On Call: Techie fixed Wi-Fi dead zone with a drill": "DevOps",
+  "sponsored::Diablo 5 senior director says some complex systems were 'deferred' to the endgame, so it could 'deliver the depth and ma": "yes",
+  "sponsored::How to watch Sydney vs Fremantle for FREE: Live streams & TV channels for AFL 2026 Preliminary Final": "yes",
+  "sponsored::On Call: Techie fixed Wi-Fi dead zone with a drill": "yes",
+  "sponsored::The scourge of x86 emulation": "yes",
+  "summary::The scourge of x86 emulation": "The scourge of x86 emulation affects every application that emulates x86, including those that use ARM's relaxed consistency model. This problem arises from the stark contrast between ARM's weak ordering model and x86's strict total store ordering model. The weak ordering model, which is the default for ARM, allows significant hardware optimizations but also introduces issues with coherence and visibility of memory loads and stores. This can lead to unexpected behavior and bugs in applications that rely on strict consistency and atomicity."
 }
