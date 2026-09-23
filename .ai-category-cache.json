@@ -88653,5 +88653,22 @@
   "sponsored::Python Bytes: #497 Faster than light profiling": "yes",
   "sponsored::No Easy Fix for Bogus Respondents in Online Opt-In Polls": "yes",
   "summary::Data-only attacks are easier than you think (2024)": "Researchers have discovered that data-only attacks, which target the integrity of data rather than the security of the system, are becoming increasingly sophisticated. These attacks can be used to manipulate data in real-time, making them difficult to detect and defend against. The key to understanding these attacks is to recognize the different types of data manipulation, such as data tampering and data poisoning. As a result, developers need to be aware of the potential risks and implement robust data protection measures.",
-  "summary::No Easy Fix for Bogus Respondents in Online Opt-In Polls": "Voter file matching, a common method for identifying and removing bogus respondents in online opt-in polls, has been shown to increase error in some cases. The study tested three screening methods, including trap questions, automated prescreening services, and matching respondents to a national voter file, and found that matching an opt-in sample to a registered voter file slightly increased error by removing mostly good respondents. The study suggests that purging bogus cases is not a surefire solution, and that a combination of methods may be needed to achieve accurate results."
+  "summary::No Easy Fix for Bogus Respondents in Online Opt-In Polls": "Voter file matching, a common method for identifying and removing bogus respondents in online opt-in polls, has been shown to increase error in some cases. The study tested three screening methods, including trap questions, automated prescreening services, and matching respondents to a national voter file, and found that matching an opt-in sample to a registered voter file slightly increased error by removing mostly good respondents. The study suggests that purging bogus cases is not a surefire solution, and that a combination of methods may be needed to achieve accurate results.",
+  "In the age of AI, teaching networking principles remains more important than learning protocols": "DevOps",
+  "Sources: China&apos;s SASAC, which oversees state-owned companies, is surveying the number of Broadcom switches in state": "Security",
+  "Global AI glasses shipments, including display-less and AR & AI glasses, rose 263% YoY in H1 2026, driven by Meta and Es": "AI",
+  "The EU will force data centers to disclose how much water and energy they are using": "DevOps",
+  "The US criticizes Australia&apos;s digital duty-of-care proposal, which has a provision that would require social media ": "DevOps",
+  "Vivo’s ultralight selfie screen could be the year’s standout mobile accessory": "DevOps",
+  "Redis is not a map you talk to over TCP": "General",
+  "Artificial intelligence must have a new name, says politician who likes renaming bodies of water": "DevOps",
+  "sponsored::In the age of AI, teaching networking principles remains more important than learning protocols": "yes",
+  "sponsored::Global AI glasses shipments, including display-less and AR & AI glasses, rose 263% YoY in H1 2026, driven by Meta and Es": "yes",
+  "sponsored::Sources: China&apos;s SASAC, which oversees state-owned companies, is surveying the number of Broadcom switches in state": "yes",
+  "sponsored::The EU will force data centers to disclose how much water and energy they are using": "yes",
+  "sponsored::The US criticizes Australia&apos;s digital duty-of-care proposal, which has a provision that would require social media ": "yes",
+  "sponsored::Vivo’s ultralight selfie screen could be the year’s standout mobile accessory": "yes",
+  "sponsored::Redis is not a map you talk to over TCP": "yes",
+  "sponsored::Artificial intelligence must have a new name, says politician who likes renaming bodies of water": "yes",
+  "summary::Redis is not a map you talk to over TCP": "Standard I work on a service that decides which courier gets offered your delivery at a gig economy delivery app. We need to know how far away every courier is, and we use a routing engine to make good matches. The routing engine is the biggest contributor to our latency, and it's slow when it's slow. The shape of the problem is that we need to know driving time, not distance, and we need it continuously for the entire business. Volume isn't a choice, but scale is the requirement."
 }
