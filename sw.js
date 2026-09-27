@@ -1,35 +1,44 @@
 /**
  * GeeksPulse Service Worker
  *
- * Strategies:
- *   - Static shell (HTML, CSS, JS bundles)  → Cache-first, updated on each SW install
- *   - feed.json / feed-health.json          → Stale-while-revalidate (serve cache, refresh in bg)
- *   - Article images                        → Cache-first with network fallback (images are immutable)
- *   - Everything else                       → Network-first with cache fallback
+ * Lives at the site root so its scope covers the whole app (GitHub Pages
+ * serves the repository root, and cannot send a Service-Worker-Allowed header).
  *
- * Cache names are versioned so old caches are purged on SW update.
+ * Strategies:
+ *   - Pages, CSS and JS modules      → Network-first, cache fallback (offline).
+ *                                      The app ships unhashed ES modules, so a
+ *                                      cache-first shell could pin visitors to
+ *                                      stale code or mix module versions.
+ *   - feed.json / feed-health.json   → Stale-while-revalidate
+ *   - Same-origin images             → Cache-first (bounded)
+ *   - Everything else same-origin    → Network-first with cache fallback
+ *
+ * Bump VERSION whenever caching behaviour changes; old caches are purged.
  */
 
-const SHELL_CACHE   = 'gp-shell-v1';
-const FEED_CACHE    = 'gp-feed-v1';
-const IMAGE_CACHE   = 'gp-images-v1';
-const RUNTIME_CACHE = 'gp-runtime-v1';
+const VERSION       = 'v2';
+const SHELL_CACHE   = `gp-shell-${VERSION}`;
+const FEED_CACHE    = `gp-feed-${VERSION}`;
+const IMAGE_CACHE   = `gp-images-${VERSION}`;
+const RUNTIME_CACHE = `gp-runtime-${VERSION}`;
 
 const ALL_CACHES = [SHELL_CACHE, FEED_CACHE, IMAGE_CACHE, RUNTIME_CACHE];
 
-// Static shell assets to precache on install
+// Minimal offline shell, precached on install
 const SHELL_ASSETS = [
   '/',
-  '/index.html',
   '/styles.css',
   '/favicon.svg',
+  '/manifest.json',
 ];
 
 // ── Install: precache shell ───────────────────────────────────────
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then(cache => cache.addAll(SHELL_ASSETS))
+    caches.open(SHELL_CACHE)
+      .then(cache => cache.addAll(SHELL_ASSETS))
+      .catch(() => { /* a missing asset must not block installation */ })
       .then(() => self.skipWaiting())
   );
 });
@@ -57,28 +66,28 @@ self.addEventListener('fetch', event => {
 
   const path = url.pathname;
 
-  // feed.json and feed-health.json → stale-while-revalidate
+  // Feed data → stale-while-revalidate
   if (path === '/public/feed.json' || path === '/public/feed-health.json' ||
       path === '/feed.json'        || path === '/feed-health.json') {
     event.respondWith(staleWhileRevalidate(request, FEED_CACHE));
     return;
   }
 
-  // Images → cache-first
-  if (/\.(jpe?g|png|webp|avif|gif|svg)(\?|$)/i.test(path)) {
+  // Page navigations → network-first, offline falls back to the cached home page
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request, SHELL_CACHE, '/'));
+    return;
+  }
+
+  // CSS / JS → network-first so deploys take effect on the next load
+  if (/\.(js|mjs|css)(\?|$)/i.test(path)) {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+    return;
+  }
+
+  // Same-origin images (fallback art, icons) → cache-first
+  if (/\.(jpe?g|png|webp|avif|gif|svg|ico)(\?|$)/i.test(path)) {
     event.respondWith(cacheFirst(request, IMAGE_CACHE, { maxEntries: 150 }));
-    return;
-  }
-
-  // Shell assets → cache-first (already in SHELL_CACHE)
-  if (SHELL_ASSETS.includes(path) || path === '/') {
-    event.respondWith(cacheFirst(request, SHELL_CACHE));
-    return;
-  }
-
-  // JS / CSS bundles → cache-first
-  if (/\.(js|css)(\?|$)/i.test(path)) {
-    event.respondWith(cacheFirst(request, SHELL_CACHE));
     return;
   }
 
@@ -89,8 +98,8 @@ self.addEventListener('fetch', event => {
 // ── Strategy helpers ──────────────────────────────────────────────
 
 async function cacheFirst(request, cacheName, { maxEntries } = {}) {
-  const cache    = await caches.open(cacheName);
-  const cached   = await cache.match(request);
+  const cache  = await caches.open(cacheName);
+  const cached = await cache.match(request);
   if (cached) return cached;
   try {
     const response = await fetch(request);
@@ -106,7 +115,7 @@ async function cacheFirst(request, cacheName, { maxEntries } = {}) {
 
 async function staleWhileRevalidate(request, cacheName) {
   const cache  = await caches.open(cacheName);
-  const cached = await cache.match(request);
+  const cached = await cache.match(request, { ignoreSearch: true });
   // Kick off background revalidation regardless
   const networkPromise = fetch(request).then(response => {
     if (response.ok) cache.put(request, response.clone());
@@ -117,15 +126,15 @@ async function staleWhileRevalidate(request, cacheName) {
     new Response('Offline — feed unavailable', { status: 503 });
 }
 
-async function networkFirst(request, cacheName) {
+async function networkFirst(request, cacheName, fallbackPath) {
   const cache = await caches.open(cacheName);
   try {
     const response = await fetch(request);
     if (response.ok) cache.put(request, response.clone());
     return response;
   } catch {
-    const cached = await cache.match(request);
-    return cached ?? new Response('Offline', { status: 503 });
+    const cached = await cache.match(request) ?? (fallbackPath ? await cache.match(fallbackPath) : undefined);
+    return cached ?? new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
   }
 }
 
@@ -136,4 +145,3 @@ async function trimCache(cache, max) {
     await Promise.all(keys.slice(0, keys.length - max).map(k => cache.delete(k)));
   }
 }
-

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#0D1117"/>
+  <g stroke="rgba(148,163,184,0.07)" stroke-width="1">
+    <line x1="0" y1="72" x2="640" y2="72"/><line x1="0" y1="144" x2="640" y2="144"/>
+    <line x1="0" y1="216" x2="640" y2="216"/><line x1="0" y1="288" x2="640" y2="288"/>
+    <line x1="128" y1="0" x2="128" y2="360"/><line x1="256" y1="0" x2="256" y2="360"/>
+    <line x1="384" y1="0" x2="384" y2="360"/><line x1="512" y1="0" x2="512" y2="360"/>
+  </g>
+  <!-- code-2 icon scaled to 72px, centred -->
+  <g transform="translate(320,180) scale(3)" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m18 16 4-4-4-4" transform="translate(-12,-12)"/>
+    <path d="m6 8-4 4 4 4" transform="translate(-12,-12)"/>
+    <path d="m14.5 4-5 16" transform="translate(-12,-12)"/>
+  </g>
+  <text x="320" y="270" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#94A3B8" opacity="0.45">{ breaking; }</text>
+</svg>

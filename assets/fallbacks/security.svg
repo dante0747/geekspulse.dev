@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#0D1117"/>
+  <g stroke="rgba(244,63,94,0.07)" stroke-width="1">
+    <line x1="0" y1="72" x2="640" y2="72"/><line x1="0" y1="144" x2="640" y2="144"/>
+    <line x1="0" y1="216" x2="640" y2="216"/><line x1="0" y1="288" x2="640" y2="288"/>
+    <line x1="128" y1="0" x2="128" y2="360"/><line x1="256" y1="0" x2="256" y2="360"/>
+    <line x1="384" y1="0" x2="384" y2="360"/><line x1="512" y1="0" x2="512" y2="360"/>
+  </g>
+  <!-- shield-check icon scaled to 72px, centred -->
+  <g transform="translate(320,175) scale(3)" fill="none" stroke="#F43F5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" transform="translate(-12,-12)"/>
+    <path d="m9 12 2 2 4-4" transform="translate(-12,-12)"/>
+  </g>
+  <text x="320" y="270" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#F43F5E" opacity="0.45">sudo cat news</text>
+</svg>
