@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('geeksup_theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* follow the OS theme */ }
+    })();
+  </script>
   <title>Terms of Use — GeeksPulse</title>
   <meta name="description" content="GeeksPulse terms of use: aggregator disclaimer, content attribution, DMCA, and liability limitations." />
   <meta name="robots" content="index, follow" />
@@ -14,7 +22,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     .legal-page { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
@@ -33,7 +41,7 @@
     <div class="page-wrap">
       <div class="nav-inner">
         <a href="/" class="logo" aria-label="GeeksPulse home">
-          <div class="logo-mark" aria-hidden="true">GP</div>
+          <img class="logo-mark" src="/favicon.svg" alt="" width="28" height="28" />
           <span class="logo-name">GeeksPulse</span>
         </a>
       </div>

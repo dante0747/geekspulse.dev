@@ -95,8 +95,9 @@ test('pressing / focuses the search input', async ({ page }) => {
   await page.goto('/');
   await waitForCards(page);
 
-  // Click somewhere neutral first (not inside search)
-  await page.locator('#feedGrid').click();
+  // Click somewhere neutral first (not inside search). Cards are whole-card
+  // links now, so clicking the grid itself would open an article tab.
+  await page.locator('#latest-heading').click();
   await page.keyboard.press('/');
 
   const searchInput = page.locator('#articleSearch');

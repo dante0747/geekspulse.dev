@@ -17,7 +17,7 @@
 [![No Ad Trackers](https://img.shields.io/badge/ad_trackers-none-ff5555?style=flat-square)](https://geekspulse.dev)
 [![No Ads](https://img.shields.io/badge/ads-nope-bc8cff?style=flat-square)](https://geekspulse.dev)
 [![Indie](https://img.shields.io/badge/built_by-one_dev_with_coffee-e3c55e?style=flat-square)](https://geekspulse.dev)
-[![Tests](https://img.shields.io/badge/tests-171_passing-39d353?style=flat-square&logo=vitest&logoColor=black)](./tests)
+[![Tests](https://img.shields.io/badge/tests-218_passing-39d353?style=flat-square&logo=vitest&logoColor=black)](./tests)
 
 > *Your daily dev briefing, minus the noise.*
 
@@ -46,7 +46,7 @@
 
 GeeksPulse is a static developer-news site powered by a scheduled feed-generation pipeline. A Node.js script fetches and normalises RSS feeds into static JSON files, and the frontend renders from that cache for speed and reliability.
 
-It pulls from **50 hand-picked RSS feeds** across 11 categories, sorts them newest-first, and presents them in a sleek cyberpunk UI — no doomscrolling Twitter required.
+It pulls from **50 hand-picked RSS feeds** across 11 categories, sorts them newest-first, and presents them in a fast, editorial reading interface with light and dark themes — no doomscrolling Twitter required.
 
 - 🚫 **No ads.** No VC money. No ad trackers.
 - ⚡ **Static hosting.** The site is served as plain HTML/CSS/JS — no application server required.
@@ -64,17 +64,18 @@ It pulls from **50 hand-picked RSS feeds** across 11 categories, sorts them newe
 | 🤖 **AI Summaries** | On-demand article summaries via pre-cached snippets or local Ollama fallback |
 | ⚡ **Static Cache** | Articles pre-built by a Node.js pipeline; browser loads JSON instantly |
 | 🔄 **Auto-Refresh** | Configurable: 1m · 5m · 10m · 15m · 30m · 1h |
-| 🃏 **Grid & List View** | Toggle between layouts, preference saved locally |
+| 🃏 **Grid & List View** | Lead story + card grid, or a dense numbered list — preference saved locally |
 | 💾 **localStorage Prefs** | Your filter, view mode & refresh interval persist across sessions |
 | 💀 **Skeleton Loaders** | Shimmer placeholders while feeds are loading |
-| 🎨 **Cyberpunk UI** | Dark theme, neon glows, glitch animations, scanline overlay |
-| 🖥️ **Animated Terminal** | Hero terminal with staggered fade-in lines |
-| ♿ **Accessible** | ARIA roles, labels, `aria-pressed`, keyboard navigation, `prefers-reduced-motion` |
-| 📱 **Responsive** | Mobile-first with chip filters on small screens |
+| 🌗 **Light & Dark Themes** | Follows the OS by default; override in Settings (no flash on load) |
+| 📰 **Feed-first Layout** | Compact briefing header, sticky topic sidebar, "Show more" paging |
+| 🆕 **New Since Last Visit** | Stories published since your previous visit are marked *New* |
+| 🔗 **Deep Links** | `?q=` search, `?topic=` filter and `?source=` views are shareable URLs |
+| ♿ **Accessible** | WCAG AA contrast in both themes, focus-trapped dialogs, `aria-pressed` toggles, `prefers-reduced-motion` |
+| 📱 **Responsive** | Compact media rows and sticky topic chips on phones, bottom-sheet dialogs |
 | 🔖 **Bookmarks** | Save articles to localStorage for later reading |
-| ⌨️ **Keyboard Shortcuts** | `/` search · `j/k` navigate · `o` open · `r` refresh · `Esc` clear |
+| ⌨️ **Keyboard Shortcuts** | `/` search · `j/k` navigate · `o` open · `b` save · `v` view · `r` refresh · `?` help |
 | 🏥 **Feed Health Panel** | Live status: last updated time, online/failed feed counts |
-| ⏱️ **Reading Time** | Estimated read time displayed on every article card |
 | 🔗 **Share Articles** | Web Share API with automatic clipboard fallback |
 
 ---
@@ -375,10 +376,10 @@ npm run build
 
 ```
 geekspulse.dev/
-├── index.html           # App shell — nav, hero, sidebar, feed grid
-├── styles.css           # Full cyberpunk design system
+├── index.html           # App shell — nav, briefing header, sidebar, feed, FAQ, source directory
+├── styles.css           # Design tokens (light + dark) and all component styles
 ├── playwright.config.js # Playwright E2E configuration
-├── vite.config.js       # Vite + Vitest configuration (test, coverage thresholds)
+├── vite.config.js       # Vite + Vitest config; copies root static files into dist/
 ├── js/                  # ES module source (loaded via <script type="module">)
 │   ├── main.js          # Entry point — app state, render loop, event wiring
 │   ├── config.js        # Static data: feeds list, categories, SVG icons, constants
@@ -391,11 +392,15 @@ geekspulse.dev/
 │   ├── feed.js          # RSS/Atom parsing & feed fetching
 │   ├── cards.js         # Card HTML generators (grid, list, skeleton, placeholder)
 │   ├── feeds-registry.js # Feed registry loader — fetches & caches data/feeds.json at startup
-│   ├── settings-panel.js # Settings popover (auto-refresh, view, theme, cache)
+│   ├── settings-panel.js # Settings popover (theme, layout, auto-refresh, clear data)
+│   ├── theme.js         # Light / dark / system theme preference
 │   ├── pulse-panel.js   # My Pulse drawer (topic/source filters, presets)
 │   ├── summary.js       # AI Summary modal — pre-cached snippets or Ollama fallback
 │   └── paypal-modal.js  # PayPal support modal
-├── favicon.svg          # SVG favicon
+├── favicon.svg          # SVG favicon (also the in-page logo mark)
+├── manifest.json        # PWA manifest (served from the site root)
+├── sw.js                # Service worker (must live at the root for full scope)
+├── icons/               # PWA + Apple touch icons rendered from favicon.svg
 ├── og-image.png         # Open Graph image
 ├── sitemap.xml          # SEO sitemap (auto-generated by scripts/generate-sitemap.mjs)
 ├── robots.txt           # Crawler rules
@@ -406,12 +411,11 @@ geekspulse.dev/
 ├── public/
 │   ├── feed.json        # Pre-built article cache (generated by build script)
 │   ├── feed-health.json # Per-feed health report (generated by build script)
-│   ├── version.json     # Build version info (generated by build script)
-│   └── sw.js            # Service worker
+│   └── version.json     # Build version info (generated by build script)
 ├── scripts/
 │   ├── build-feed.mjs          # Entry point — orchestrates the feed build pipeline
 │   ├── generate-sitemap.mjs    # Generates sitemap.xml from data/feeds.json
-│   ├── generate-seo-content.mjs # Injects latest articles into index.html for SEO
+│   ├── generate-seo-content.mjs # Injects latest stories, source directory + ItemList JSON-LD into index.html
 │   ├── generate-version.mjs    # Writes public/version.json
 │   └── lib/                    # Build pipeline modules (imported by build-feed.mjs)
 │       ├── config.mjs          # All constants, regex patterns, XML parser instance
@@ -435,20 +439,17 @@ geekspulse.dev/
 
 ## 🎨 Design System
 
-The UI uses a cyberpunk-inspired design language with:
+The UI is a calm, editorial reading surface built on CSS custom properties in `styles.css`. Light is the base theme; dark applies when the OS prefers it or when `<html data-theme="dark">` is set from Settings. Every text token meets WCAG AA (4.5:1) on every surface in both themes.
 
-| Token | Value | Usage |
-|---|---|---|
-| `--cyan` | `#58c8ff` | Primary accent, links, glow |
-| `--green` | `#39d353` | Live status, success |
-| `--purple` | `#bc8cff` | Support, AI category |
-| `--red` | `#ff5555` | Security category, errors |
-| `--yellow` | `#e3c55e` | JS category, warnings |
-| `--orange` | `#f07f2f` | Java category |
-| `--bg` | `#080b12` | Page background |
-| `--font` | `JetBrains Mono` | Everything |
+| Token | Light | Dark | Usage |
+|---|---|---|---|
+| `--bg` / `--surface` | `#F6F6F4` / `#FFFFFF` | `#0B0C10` / `#14161C` | Page / cards |
+| `--ink` / `--ink2` / `--ink3` | `#15171C` / `#454A55` / `#626773` | `#EDEEF1` / `#AEB4C0` / `#878E9C` | Headlines / body / metadata |
+| `--accent` | `#4F46E5` | `#9496FF` | Links, active states, focus |
+| `--c-<topic>` | per topic | per topic | Topic dots, pills, icons, placeholders |
+| `--font` / `--mono` | Inter / JetBrains Mono | | UI text / metadata & code |
 
-Animations include: grid drift, scanlines, neon flicker, glitch, cursor blink, and card hover lifts. All animations respect the `prefers-reduced-motion` media query.
+Motion is limited to short entrance and hover transitions; everything respects `prefers-reduced-motion`. Card layouts adapt to the feed column with container queries (media rows on narrow columns, a horizontal lead story on wide ones).
 
 ---
 

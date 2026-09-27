@@ -159,3 +159,76 @@ describe('buildSkeletons', () => {
   });
 });
 
+// ── Redesign contract ─────────────────────────────────────────────────────────
+// Selectors that js/main.js, js/images.js and the e2e suite depend on.
+
+describe('card markup contract', () => {
+  it('grid card title is an h3 with a stretched external link', () => {
+    const html = gridCard(mockArticle, 3);
+    expect(html).toMatch(/<h3 class="card-title"><a href="https:\/\/example\.com\/article" target="_blank" rel="noopener noreferrer">/);
+  });
+
+  it('list card title is an h3 inside a card-row', () => {
+    const html = listCard(mockArticle, 3);
+    expect(html).toContain('<h3 class="card-title">');
+    expect(html).toContain('class="card card-row');
+  });
+
+  it('first grid card is featured and eager-loads its image', () => {
+    const html = gridCard(mockArticle, 0);
+    expect(html).toContain('card-featured');
+    expect(html).toContain('loading="eager"');
+    expect(html).toContain('fetchpriority="high"');
+  });
+
+  it('later grid cards lazy-load images', () => {
+    const html = gridCard(mockArticle, 5);
+    expect(html).not.toContain('card-featured');
+    expect(html).toContain('loading="lazy"');
+  });
+
+  it('source name is a button carrying data-source for "more from this source"', () => {
+    const html = gridCard(mockArticle, 1);
+    expect(html).toContain('class="card-source-name" data-source="Test Source"');
+  });
+
+  it('keeps the share, bookmark and summary data attributes main.js reads', () => {
+    const html = gridCard(mockArticle, 1);
+    expect(html).toContain(`data-share-url="${mockArticle.link}"`);
+    expect(html).toContain(`data-bm-link="${mockArticle.link}"`);
+    expect(html).toContain(`data-summary-link="${mockArticle.link}"`);
+    expect(html).toContain('data-summary-type="snippet"');
+  });
+
+  it('renders a machine-readable <time> for the publish date', () => {
+    const html = gridCard(mockArticle, 1);
+    expect(html).toMatch(/<time class="card-date" datetime="\d{4}-\d{2}-\d{2}T/);
+  });
+
+  it('omits the date block when the date is invalid', () => {
+    const html = gridCard({ ...mockArticle, date: 'not a date' }, 1);
+    expect(html).not.toContain('card-date');
+  });
+
+  it('shows a "New" badge only when isNew is set', () => {
+    expect(gridCard(mockArticle, 1)).not.toContain('card-new');
+    expect(gridCard(mockArticle, 1, { isNew: true })).toContain('card-new');
+    expect(listCard(mockArticle, 1, { isNew: true })).toContain('card-new');
+  });
+
+  it('escapes source names used in attributes', () => {
+    const html = gridCard({ ...mockArticle, source: '"><img src=x>' }, 1);
+    expect(html).not.toContain('"><img src=x>');
+    expect(html).toContain('&quot;&gt;&lt;img src=x&gt;');
+  });
+
+  it('placeholder carries the category class so CSS can tint it', () => {
+    const html = gridCard({ ...mockArticle, image: null, category: 'Security' }, 1);
+    expect(html).toContain('card-placeholder cat-security');
+  });
+
+  it('skeletons include an image block', () => {
+    expect(buildSkeletons(1)).toContain('sk-img');
+  });
+});
+

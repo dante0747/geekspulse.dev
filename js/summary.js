@@ -7,9 +7,12 @@
  * summaryType === ''        → no summary available
  */
 
+import { trapTabKey, restoreFocus } from './utils.js';
+
 // ── Modal DOM ──────────────────────────────────────────────────────
 
 let _modal = null;
+let _returnFocusTo = null;
 
 function getModal() {
   if (_modal) return _modal;
@@ -27,8 +30,8 @@ function getModal() {
           <span id="summaryBadgeIcon" aria-hidden="true"></span>
           <span id="summaryBadgeLabel">AI Summary</span>
         </span>
-        <button class="summary-close" id="summaryClose" aria-label="Close summary">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <button type="button" class="summary-close" id="summaryClose" aria-label="Close summary">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <h3 class="summary-dialog__title" id="summaryModalTitle"></h3>
@@ -37,7 +40,7 @@ function getModal() {
         <p class="summary-error" id="summaryError" hidden></p>
       </div>
       <div class="summary-dialog__footer">
-        <a class="card-link" id="summaryReadLink" href="#" target="_blank" rel="noopener noreferrer">Read full article →</a>
+        <a class="card-link" id="summaryReadLink" href="#" target="_blank" rel="noopener noreferrer">Read the full article <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         <span class="summary-source" id="summarySource"></span>
       </div>
     </div>`;
@@ -47,8 +50,12 @@ function getModal() {
   document.getElementById('summaryBackdrop').addEventListener('click', closeSummaryModal);
   document.getElementById('summaryClose').addEventListener('click', closeSummaryModal);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && _modal.classList.contains('open')) closeSummaryModal();
+    if (!_modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeSummaryModal();
+    else trapTabKey(_modal.querySelector('.summary-dialog'), e);
   });
+  // Opening the article closes the sheet so returning to the tab shows the feed
+  _modal.querySelector('#summaryReadLink').addEventListener('click', () => setTimeout(closeSummaryModal, 0));
 
   // Swipe-down-to-close (mobile bottom sheet)
   const dialog = _modal.querySelector('.summary-dialog');
@@ -92,7 +99,7 @@ export function openSummaryModal({ title, snippet, summaryType, link, source }) 
   document.getElementById('summaryError').hidden = true;
   document.getElementById('summaryError').textContent = '';
   document.getElementById('summaryReadLink').href = link || '#';
-  document.getElementById('summarySource').textContent = source ? `// ${source}` : '';
+  document.getElementById('summarySource').textContent = source || '';
 
   // Differentiate badge label + icon based on summary origin
   const badgeLabel = document.getElementById('summaryBadgeLabel');
@@ -111,6 +118,7 @@ export function openSummaryModal({ title, snippet, summaryType, link, source }) 
     badgeIcon.innerHTML = `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`;
   }
 
+  _returnFocusTo = document.activeElement;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
@@ -129,6 +137,8 @@ export function openSummaryModal({ title, snippet, summaryType, link, source }) 
 
 function closeSummaryModal() {
   if (!_modal) return;
+  if (!_modal.classList.contains('open')) return;
   _modal.classList.remove('open');
   document.body.style.overflow = '';
+  restoreFocus(_returnFocusTo);
 }

@@ -1,6 +1,34 @@
 import { defineConfig } from 'vitest/config';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// The live site is served straight from the repository root, so the app
+// references root-level files (/sw.js, /data/feeds.json, /public/feed.json,
+// /privacy.html …) that Vite does not bundle. Copy them into dist/ so a
+// production build is a complete, deployable mirror of the site.
+const ROOT_STATIC = [
+  'sw.js', 'manifest.json', 'favicon.svg', 'og-image.png', 'robots.txt', 'sitemap.xml',
+  'privacy.html', 'terms.html', 'CNAME', '.nojekyll',
+  'icons', 'assets/fallbacks', 'data/feeds.json', 'public', '.well-known',
+];
+
+function copyRootStatic() {
+  return {
+    name: 'geekspulse-copy-root-static',
+    apply: 'build',
+    closeBundle() {
+      for (const rel of ROOT_STATIC) {
+        const from = path.resolve(rel);
+        if (!fs.existsSync(from)) continue;
+        fs.cpSync(from, path.resolve('dist', rel), { recursive: true });
+      }
+    },
+  };
+}
 
 export default defineConfig({
+  plugins: [copyRootStatic()],
+
   // Serve from project root; index.html at root is the entry point
   root: '.',
 

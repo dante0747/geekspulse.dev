@@ -37,5 +37,5 @@ https://geekspulse.dev/*
   # - connect-src: allow self + CORS proxies used to fetch RSS feeds
   # - img-src: allow self + any https origin (article hero images from any publisher CDN)
   # - frame-src/object-src: none
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.codetabs.com https://api.allorigins.win https://corsproxy.io https://proxy.cors.sh https://thingproxy.freeboard.io https://api.rss2json.com; img-src 'self' https: data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://r.jina.ai https://www.google-analytics.com https://*.google-analytics.com https://api.codetabs.com https://api.allorigins.win https://corsproxy.io https://proxy.cors.sh https://thingproxy.freeboard.io https://api.rss2json.com; img-src 'self' https: data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
 

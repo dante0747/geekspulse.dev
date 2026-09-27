@@ -1,13 +1,21 @@
 /**
  * scripts/generate-seo-content.mjs
  *
- * Reads public/feed.json and injects the latest 10 articles as
- * static HTML into index.html between:
- *   <!-- GENERATED_LATEST_ARTICLES_START -->
- *   <!-- GENERATED_LATEST_ARTICLES_END -->
+ * Injects crawlable, server-rendered content into index.html between marker
+ * comments so search engines (and visitors without JavaScript) see real
+ * content before the app hydrates:
  *
- * This ensures search-engine crawlers see real article content
- * even before JavaScript runs.
+ *   <!-- GENERATED_LATEST_ARTICLES_START --> … <!-- GENERATED_LATEST_ARTICLES_END -->
+ *     The latest articles from public/feed.json, rendered with the same card
+ *     markup the app uses so the hand-off to the live feed is seamless.
+ *
+ *   <!-- GENERATED_SOURCES_START --> … <!-- GENERATED_SOURCES_END -->
+ *     The footer source directory, grouped by topic (from data/feeds.json).
+ *
+ *   <!-- GENERATED_SOURCES_JSONLD_START --> … <!-- GENERATED_SOURCES_JSONLD_END -->
+ *     An ItemList JSON-LD block of every enabled source (from data/feeds.json).
+ *
+ * It also refreshes the JSON-LD dateModified and the static feed-count spans.
  *
  * Run: node scripts/generate-seo-content.mjs
  * Requires Node 18+.
@@ -19,8 +27,24 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, '..');
+const SITE      = 'https://geekspulse.dev';
 
 const SEO_ARTICLE_COUNT = 20;
+
+/** Topic order + human labels for the source directory. */
+const CATEGORY_ORDER = [
+  ['General',      'General developer news'],
+  ['AI',           'AI & machine learning'],
+  ['Security',     'Cybersecurity'],
+  ['DevOps',       'DevOps & cloud'],
+  ['JavaScript',   'JavaScript & TypeScript'],
+  ['Python',       'Python'],
+  ['Rust',         'Rust'],
+  ['Go',           'Go'],
+  ['Java',         'Java & the JVM'],
+  ['Open Source',  'Open source & Linux'],
+  ['Architecture', 'Software architecture'],
+];
 
 /** Same sponsored-content regex used in js/config.js — applied at build time too. */
 const SPONSORED_RE = /\b(sponsored|partner[ -]content|promoted|advertorial|advertisement|webinar|webcast|brought[ -]to[ -]you[ -]by|in[ -]partnership[ -]with|paid[ -]post|native[ -]ad|content[ -]marketing)\b/i;
@@ -34,13 +58,18 @@ function isSponsored(article) {
 }
 
 /** Escape a string for safe inclusion in HTML attribute or text content. */
-function esc(str) {
+export function esc(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+/** Mirrors catClass() in js/utils.js. */
+function catSlug(category) {
+  return 'cat-' + String(category || 'General').toLowerCase().replace(/\s+/g, '-');
 }
 
 /**
@@ -116,135 +145,202 @@ function looksLikeLogo(url) {
   );
 }
 
+/** Cut at a word boundary with an ellipsis — only when the text is actually too long. */
+export function truncateWords(text, max) {
+  if (text.length <= max) return text;
+  return text.slice(0, max).replace(/\s+\S*$/, '').replace(/[\s.,;:!?…-]+$/, '') + '…';
+}
+
 /** Format a date string as a human-readable date. */
 function formatDate(iso) {
   if (!iso) return '';
   try {
-    return new Date(iso).toLocaleDateString('en-US', {
-      year: 'numeric', month: 'short', day: 'numeric',
-    });
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
   } catch {
     return '';
   }
 }
 
-async function main() {
-  // Read feed.json
-  const feedPath = path.join(ROOT, 'public', 'feed.json');
-  let feedData;
-  try {
-    feedData = JSON.parse(await fs.readFile(feedPath, 'utf8'));
-  } catch {
-    console.warn('[generate-seo-content] public/feed.json not found — skipping SEO injection.');
-    process.exit(0);
-  }
+/** Serialise JSON for an inline <script> — `<` can never close the tag. */
+function jsonForScript(value) {
+  return JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
+}
 
+const SHARE_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+
+/** One server-rendered card — same classes as gridCard() in js/cards.js. */
+export function renderArticleCard(a, i) {
+  const featured = i === 0;
+  const rawImage = (!looksLikeLogo(a.image) ? a.image : null) || a.fallbackImage;
+  const imageHtml = rawImage
+    ? `<a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="card-img-wrap" tabindex="-1" aria-hidden="true"><img class="card-img" src="${esc(rawImage)}" alt="" itemprop="image" loading="${featured ? 'eager' : 'lazy'}"${featured ? ' fetchpriority="high"' : ''} decoding="async" referrerpolicy="no-referrer" width="640" height="360" /></a>`
+    : '';
+  const dateStr = formatDate(a.publishedAt);
+  const dateIso = dateStr ? new Date(a.publishedAt).toISOString().slice(0, 10) : '';
+  // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
+  const cleaned = cleanSnippet(a.summary || '');
+  const plainSummary = isLowValueSnippet(cleaned) ? '' : truncateWords(cleaned, 220);
+  const cat = a.category || 'General';
+  const slug = catSlug(cat);
+  return `
+          <article class="card seo-card ${slug}${featured ? ' card-featured' : ''}" itemscope itemtype="https://schema.org/NewsArticle">
+            <meta itemprop="url" content="${esc(a.link)}" />
+            <meta itemprop="articleSection" content="${esc(cat)}" />
+            ${imageHtml}
+            <div class="card-body">
+              <div class="card-top">
+                <div class="card-source"><span class="src-dot ${slug}" aria-hidden="true"></span><span class="card-source-name" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">${esc(a.source)}</span></span></div>
+                ${dateIso ? `<span class="card-sep" aria-hidden="true">·</span><time class="card-date" datetime="${esc(dateIso)}" itemprop="datePublished">${esc(dateStr)}</time>` : ''}
+              </div>
+              <h3 class="card-title" itemprop="headline"><a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h3>
+              ${plainSummary ? `<p class="card-snippet" itemprop="description">${esc(plainSummary)}</p>` : ''}
+            </div>
+            <div class="card-footer">
+              <div class="card-meta"><span class="card-cat ${slug}">${esc(cat)}</span></div>
+              <div class="card-actions">
+                <button type="button" class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">${SHARE_ICON}</button>
+              </div>
+            </div>
+          </article>`;
+}
+
+export function renderLatestArticles(feedData) {
   const articles = (feedData.articles || [])
     .filter(a => !isSponsored(a))
     .slice(0, SEO_ARTICLE_COUNT);
-  if (articles.length === 0) {
-    console.warn('[generate-seo-content] No articles found in feed.json — skipping.');
-    process.exit(0);
+  if (articles.length === 0) return null;
+
+  const generatedAt = feedData.generatedAt
+    ? new Date(feedData.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })
+    : '';
+  const feedCount = feedData.feedCount || feedData.successFeeds || 50;
+  return `
+          <!-- Latest ${articles.length} of ${feedData.articleCount || articles.length} cached stories${generatedAt ? ` (generated ${generatedAt})` : ''} -->
+          <section id="seoLatestFallback" class="seo-latest-articles" aria-labelledby="seoLatestHeading" itemscope itemtype="https://schema.org/CollectionPage">
+            <h2 id="seoLatestHeading" itemprop="name">Latest developer &amp; programming news</h2>
+            <meta itemprop="description" content="The latest developer news aggregated from ${esc(String(feedCount))} curated RSS feeds covering AI, cybersecurity, DevOps, JavaScript, Python, Rust, Go, Java, open source software and software architecture." />
+            <div class="seo-articles-grid feed-grid">
+${articles.map(renderArticleCard).join('\n')}
+            </div>
+          </section>`;
+}
+
+function groupFeeds(feeds) {
+  const groups = new Map(CATEGORY_ORDER.map(([id, label]) => [id, { id, label, feeds: [] }]));
+  for (const f of feeds) {
+    if (!groups.has(f.category)) groups.set(f.category, { id: f.category, label: f.category, feeds: [] });
+    groups.get(f.category).feeds.push(f);
   }
+  return [...groups.values()].filter(g => g.feeds.length > 0);
+}
 
-  // Build article HTML
-  const articleItems = articles.map(a => {
-    // Use image only if it looks like a real hero image; otherwise use fallback
-    const rawImage = (!looksLikeLogo(a.image) ? a.image : null) || a.fallbackImage;
-    const imageHtml = rawImage
-      ? `<div class="seo-card-img-wrap"><img src="${esc(rawImage)}" alt="${esc('Article image for: ' + a.title)}" loading="lazy" decoding="async" width="640" height="360" /></div>`
-      : '';
-    const dateStr = formatDate(a.publishedAt);
-    const dateIso = a.publishedAt ? new Date(a.publishedAt).toISOString().slice(0, 10) : '';
-    // Clean snippet: sanitize first, then escape for HTML output — never escape dirty HTML
-    const cleaned = cleanSnippet(a.summary || '');
-    const plainSummary = !isLowValueSnippet(cleaned) ? cleaned.slice(0, 200).replace(/\s+\S*$/, '…') : '';
-    const summary = plainSummary
-      ? `<div class="seo-card-summary"><span class="seo-ai-badge">AI Summary</span><p>${esc(plainSummary)}</p></div>`
-      : '';
-    // Derive a CSS category slug from the article category field (mirrors app logic)
-    const catSlug = (a.category || 'general').toLowerCase().replace(/\s+/g, '-');
-    const catLabel = esc(a.category || 'General');
-    const timeElem = dateIso
-      ? `<time datetime="${esc(dateIso)}">${esc(dateStr)}</time>`
-      : `<span>${esc(dateStr)}</span>`;
-    return `
-    <article class="seo-card" itemscope itemtype="https://schema.org/NewsArticle">
-      <meta itemprop="headline" content="${esc(a.title)}" />
-      <meta itemprop="url" content="${esc(a.link)}" />
-      ${dateIso ? `<meta itemprop="datePublished" content="${esc(dateIso)}" />` : ''}
-      <meta itemprop="author" content="${esc(a.source)}" />
-      <meta itemprop="articleSection" content="${catLabel}" />
-      ${imageHtml}
-      <h3 itemprop="name"><a href="${esc(a.link)}" rel="noopener noreferrer">${esc(a.title)}</a></h3>
-      ${summary}
-      <div class="seo-card-footer">
-        <div class="card-source">
-          <span class="src-dot cat-${esc(catSlug)}"></span>
-          <span>${esc(a.source)}${dateStr ? ' &middot; ' + timeElem : ''}</span>
+function homepageOf(feed) {
+  if (feed.homepage) return feed.homepage;
+  try { return new URL(feed.url).origin + '/'; } catch { return '#'; }
+}
+
+export function renderSourcesDirectory(feeds) {
+  const groups = groupFeeds(feeds);
+  const blocks = groups.map(g => `
+          <div class="source-group">
+            <h3><span class="src-dot ${catSlug(g.id)}" aria-hidden="true"></span><a href="/?topic=${encodeURIComponent(g.id)}#latest" data-filter="${esc(g.id)}">${esc(g.label)}</a></h3>
+            <ul>
+${g.feeds.map(f => `              <li><a href="${esc(homepageOf(f))}" target="_blank" rel="noopener noreferrer">${esc(f.name)}</a></li>`).join('\n')}
+            </ul>
+          </div>`).join('');
+  return `
+        <div class="footer-sources-head">
+          <h2 id="sources-heading" class="footer-sources-title">Sources</h2>
+          <p>${feeds.length} hand-picked developer &amp; programming news feeds, grouped by topic. <a class="prose-link" href="https://github.com/dante0747/geekspulse.dev/blob/main/docs/feed-selection-criteria.md" target="_blank" rel="noopener noreferrer">How sources are chosen</a></p>
         </div>
-        <div class="card-actions">
-          <button class="card-share-btn" data-share-url="${esc(a.link)}" data-share-title="${esc(a.title)}" title="Share" aria-label="Share article">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <a href="${esc(a.link)}" rel="noopener noreferrer" class="card-link">
-            Read →
-          </a>
-        </div>
-      </div>
-    </article>`;
-  }).join('\n');
+        <div class="sources-grid">${blocks}
+        </div>`;
+}
 
-  const generatedAt = feedData.generatedAt ? new Date(feedData.generatedAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : '';
-  const generatedComment = generatedAt ? ` (generated ${generatedAt})` : '';
+export function renderSourcesJsonLd(feeds) {
+  const list = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Developer news sources aggregated by GeeksPulse',
+    description: `All ${feeds.length} RSS feed sources aggregated by GeeksPulse, the free developer news aggregator.`,
+    url: `${SITE}/#sources`,
+    numberOfItems: feeds.length,
+    itemListElement: feeds.map((f, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: f.name,
+      url: `${SITE}/?${new URLSearchParams({ source: f.name })}`,
+    })),
+  };
+  return `
+  <script type="application/ld+json">
+${jsonForScript(list)}
+  </script>`;
+}
 
-  const injectedHtml = `
-  <!-- Latest articles from ${articles.length} of ${feedData.articleCount || articles.length} cached stories${generatedComment} -->
-  <section id="seoLatestFallback" class="seo-latest-articles" aria-label="Latest developer news (SEO fallback)" style="margin-top:24px" itemscope itemtype="https://schema.org/CollectionPage">
-    <h2 itemprop="name">
-      Latest Developer &amp; Programming News
-    </h2>
-    <p class="sr-only" itemprop="description">The latest developer news aggregated from ${feedData.articleCount || articles.length}+ curated RSS feeds covering AI, cybersecurity, DevOps, JavaScript, Python, Rust, Go, Java, open source software, and software architecture.</p>
-    <div class="seo-articles-grid">
-${articleItems}
-    </div>
-  </section>`;
+/** Replace the content between two marker comments. Returns html unchanged if missing. */
+export function injectBetween(html, name, content) {
+  const START = `<!-- ${name}_START -->`;
+  const END   = `<!-- ${name}_END -->`;
+  const startIdx = html.indexOf(START);
+  const endIdx   = html.indexOf(END);
+  if (startIdx === -1 || endIdx === -1) {
+    console.warn(`[generate-seo-content] ${name} markers not found in index.html — skipping.`);
+    return html;
+  }
+  if (endIdx < startIdx) throw new Error(`Malformed ${name} markers in index.html.`);
+  const indent = (html.slice(html.lastIndexOf('\n', endIdx) + 1, endIdx).match(/^\s*/) || [''])[0];
+  return html.slice(0, startIdx + START.length) + content + '\n' + indent + html.slice(endIdx);
+}
 
-  // Read index.html
+async function readJson(file) {
+  try { return JSON.parse(await fs.readFile(file, 'utf8')); }
+  catch { return null; }
+}
+
+async function main() {
   const indexPath = path.join(ROOT, 'index.html');
   let html = await fs.readFile(indexPath, 'utf8');
 
-  const START_MARKER = '<!-- GENERATED_LATEST_ARTICLES_START -->';
-  const END_MARKER   = '<!-- GENERATED_LATEST_ARTICLES_END -->';
-
-  if (!html.includes(START_MARKER)) {
-    console.warn('[generate-seo-content] Markers not found in index.html — nothing to inject.');
-    process.exit(0);
+  // ── Sources directory + ItemList (data/feeds.json) ───────────────
+  const registry = await readJson(path.join(ROOT, 'data', 'feeds.json'));
+  const feeds = Array.isArray(registry) ? registry.filter(f => f.enabled !== false) : [];
+  if (feeds.length) {
+    html = injectBetween(html, 'GENERATED_SOURCES', renderSourcesDirectory(feeds));
+    html = injectBetween(html, 'GENERATED_SOURCES_JSONLD', renderSourcesJsonLd(feeds));
+    for (const id of ['heroFeedCount', 'termFeedCount', 'statFeeds']) {
+      html = html.replace(new RegExp(`(id="${id}">)\\d+(<)`), `$1${feeds.length}$2`);
+    }
+  } else {
+    console.warn('[generate-seo-content] data/feeds.json missing or empty — sources left unchanged.');
   }
 
-  const startIdx = html.indexOf(START_MARKER) + START_MARKER.length;
-  const endIdx   = html.indexOf(END_MARKER);
-
-  if (endIdx < startIdx) {
-    console.error('[generate-seo-content] Malformed markers in index.html.');
-    process.exit(1);
+  // ── Latest articles (public/feed.json) ───────────────────────────
+  const feedData = await readJson(path.join(ROOT, 'public', 'feed.json'));
+  let articleCount = 0;
+  if (!feedData) {
+    console.warn('[generate-seo-content] public/feed.json not found — latest articles left unchanged.');
+  } else {
+    const latest = renderLatestArticles(feedData);
+    if (latest) {
+      html = injectBetween(html, 'GENERATED_LATEST_ARTICLES', latest);
+      articleCount = Math.min(SEO_ARTICLE_COUNT, (feedData.articles || []).length);
+    } else {
+      console.warn('[generate-seo-content] No articles found in feed.json — latest articles left unchanged.');
+    }
   }
 
-  const before = html.slice(0, startIdx);
-  const after  = html.slice(endIdx);
-
-  const updated = before + '\n' + injectedHtml + '\n  ' + after;
-
-  await fs.writeFile(indexPath, updated, 'utf8');
-
-  // Also update the hardcoded dateModified in the JSON-LD to today's date
+  // Keep the JSON-LD dateModified current
   const today = new Date().toISOString().slice(0, 10);
-  const withDate = (await fs.readFile(indexPath, 'utf8'))
-    .replace(/"dateModified":\s*"\d{4}-\d{2}-\d{2}"/, `"dateModified": "${today}"`);
-  await fs.writeFile(indexPath, withDate, 'utf8');
+  html = html.replace(/"dateModified":\s*"\d{4}-\d{2}-\d{2}"/, `"dateModified": "${today}"`);
 
-  console.log(`[generate-seo-content] ✓ Injected ${articles.length} latest articles into index.html.`);
+  await fs.writeFile(indexPath, html, 'utf8');
+  console.log(`[generate-seo-content] ✓ Injected ${articleCount} latest articles and ${feeds.length} sources into index.html.`);
 }
 
-main().catch(err => { console.error('[generate-seo-content] ✗', err); process.exit(1); });
-
+// Only run when executed directly (the render helpers are unit-tested).
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(err => { console.error('[generate-seo-content] ✗', err); process.exit(1); });
+}

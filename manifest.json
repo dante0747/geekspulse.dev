@@ -1,0 +1,37 @@
+{
+  "id": "/",
+  "name": "GeeksPulse — Developer News",
+  "short_name": "GeeksPulse",
+  "description": "Today's developer news from 50+ hand-picked RSS feeds. No ads, no paywalls.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B0C10",
+  "theme_color": "#0B0C10",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["news", "developer tools", "productivity"],
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Saved stories",
+      "short_name": "Saved",
+      "url": "/?topic=Bookmarks#latest",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "GeeksPulse developer news feed"
+    }
+  ]
+}

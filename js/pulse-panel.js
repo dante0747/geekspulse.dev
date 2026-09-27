@@ -1,7 +1,7 @@
 import { categories } from './config.js';
 import { getFeeds } from './feeds-registry.js';
 import { loadPreferences, savePreferences, resetPreferences, PULSE_PREF_KEY } from './storage.js';
-import { esc, showBmToast } from './utils.js';
+import { esc, catClass, showBmToast, trapTabKey, restoreFocus } from './utils.js';
 
 /**
  * @param {object} ctx
@@ -13,12 +13,15 @@ export function initMyPulse({ render, buildFilters }) {
   if (!navActions) return;
 
   const myPulseBtn = document.createElement('button');
+  myPulseBtn.type = 'button';
   myPulseBtn.id = 'myPulseBtn';
   myPulseBtn.className = 'btn btn-ghost btn-sm';
   myPulseBtn.title = 'My Pulse — customize your feed';
   myPulseBtn.setAttribute('aria-label', 'Open My Pulse signal filters');
   myPulseBtn.setAttribute('aria-haspopup', 'dialog');
-  myPulseBtn.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg><span class="btn-label"> My Pulse</span>`;
+  myPulseBtn.setAttribute('aria-expanded', 'false');
+  myPulseBtn.setAttribute('aria-controls', 'myPulseDrawer');
+  myPulseBtn.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg><span class="btn-label">My Pulse</span>`;
   const settingsBtn = document.getElementById('settingsBtn');
   navActions.insertBefore(myPulseBtn, settingsBtn || navActions.lastElementChild);
 
@@ -38,13 +41,12 @@ export function initMyPulse({ render, buildFilters }) {
   drawer.id = 'myPulseDrawer';
   drawer.className = 'my-pulse-drawer';
   drawer.setAttribute('role', 'dialog');
-  drawer.setAttribute('aria-label', 'My Pulse — Signal Filters');
+  drawer.setAttribute('aria-labelledby', 'myPulseTitle');
   drawer.setAttribute('aria-modal', 'true');
   document.body.appendChild(backdrop);
   document.body.appendChild(drawer);
 
   const filterCategories = categories.filter(c => c.id !== 'All' && c.id !== 'Bookmarks');
-  const sourceNames = getFeeds().map(f => f.name);
   const AGE_OPTIONS = [
     { value: 'any', label: 'Any time' },
     { value: '24h', label: 'Last 24h' },
@@ -61,13 +63,14 @@ export function initMyPulse({ render, buildFilters }) {
 
   function buildDrawerContent() {
     const prefs = loadPreferences();
+    const sourceNames = getFeeds().map(f => f.name);
     drawer.innerHTML = `
       <div class="mpd-header">
-        <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
-          <span class="mpd-title"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>My Pulse</span>
-          <button class="mpd-close" id="myPulseClose" aria-label="Close My Pulse panel">✕</button>
+        <div class="mpd-header-row">
+          <h2 class="mpd-title" id="myPulseTitle"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>My Pulse</h2>
+          <button type="button" class="mpd-close" id="myPulseClose" aria-label="Close My Pulse panel"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         </div>
-        <div class="mpd-subtitle">// customize your developer signal</div>
+        <p class="mpd-subtitle">Tune your feed. Changes apply instantly and stay in this browser.</p>
       </div>
       <div class="mpd-body">
         <div class="settings-section">
@@ -85,30 +88,30 @@ export function initMyPulse({ render, buildFilters }) {
           </div>
         </div>
         <div class="settings-section">
-          <div class="settings-label" style="display:flex;justify-content:space-between;align-items:center">
+          <div class="settings-label mpd-section-head">
             <span>Topics <span class="mpd-count" id="mpCatCount">${prefs.blockedCategories.length > 0 ? `(${prefs.blockedCategories.length} hidden)` : ''}</span></span>
-            <button class="mpd-link" id="mpShowAllCats" aria-label="Show all topics">Show all</button>
+            <button type="button" class="mpd-link" id="mpShowAllCats" aria-label="Show all topics">Show all</button>
           </div>
           <div class="mpd-chip-group" id="mpCategoryChips" role="group" aria-label="Topic filters">
             ${filterCategories.map(c => {
               const blocked = prefs.blockedCategories.includes(c.id);
-              return `<button class="mpd-chip${blocked ? ' mpd-chip--muted' : ''}" data-cat-chip="${esc(c.id)}" aria-pressed="${blocked}" title="${blocked ? 'Show' : 'Hide'} ${esc(c.label)} articles" style="--chip-color:${c.color}">
-                <span aria-hidden="true" style="display:inline-flex;align-items:center;color:${blocked ? 'var(--ink3)' : c.color};margin-right:4px">${c.icon.replace(/width="\d+" height="\d+"/, 'width="11" height="11"')}</span>${esc(c.id)}
+              return `<button type="button" class="mpd-chip${blocked ? ' mpd-chip--muted' : ''}" data-cat-chip="${esc(c.id)}" aria-pressed="${blocked}" title="${blocked ? 'Show' : 'Hide'} ${esc(c.label)} articles">
+                <span class="mpd-chip-icon ${catClass(c.id)}" aria-hidden="true">${c.icon}</span>${esc(c.id)}
               </button>`;
             }).join('')}
           </div>
         </div>
         <div class="settings-section">
-          <div class="settings-label" style="display:flex;justify-content:space-between;align-items:center">
+          <div class="settings-label mpd-section-head">
             <span>Sources <span class="mpd-count" id="mpSrcCount">${prefs.mutedSources.length > 0 ? `(${prefs.mutedSources.length} muted)` : ''}</span></span>
-            <button class="mpd-link" id="mpUnmuteAll" aria-label="Unmute all sources">Unmute all</button>
+            <button type="button" class="mpd-link" id="mpUnmuteAll" aria-label="Unmute all sources">Unmute all</button>
           </div>
           <div class="mpd-source-list" id="mpSourceList" role="group" aria-label="Source mute controls">
             ${sourceNames.map(name => {
               const muted = prefs.mutedSources.includes(name);
-              return `<button class="mpd-source${muted ? ' mpd-source--muted' : ''}" data-src-mute="${esc(name)}" aria-pressed="${muted}" title="${muted ? 'Unmute' : 'Mute'} ${esc(name)}">
+              return `<button type="button" class="mpd-source${muted ? ' mpd-source--muted' : ''}" data-src-mute="${esc(name)}" aria-pressed="${muted}" title="${muted ? 'Unmute' : 'Mute'} ${esc(name)}">
                 <span class="mpd-src-name">${esc(name)}</span>
-                <span class="mpd-src-badge">${muted ? 'muted' : '✓ live'}</span>
+                <span class="mpd-src-badge">${muted ? 'Muted' : 'Live'}</span>
               </button>`;
             }).join('')}
           </div>
@@ -116,21 +119,22 @@ export function initMyPulse({ render, buildFilters }) {
         <div class="settings-section">
           <div class="settings-label">Quick Presets</div>
           <div class="settings-options" role="group" aria-label="Topic presets">
-            ${PRESETS.map(p => `<button class="settings-opt mpd-preset" data-preset='${JSON.stringify(p.cats)}' title="Show only ${p.label} topics">${p.label}</button>`).join('')}
+            ${PRESETS.map(p => `<button type="button" class="settings-opt mpd-preset" data-preset='${JSON.stringify(p.cats)}' title="Show only ${p.label} topics">${p.label}</button>`).join('')}
           </div>
         </div>
       </div>
       <div class="mpd-footer">
-        <button class="settings-opt settings-opt--danger mpd-reset-btn" id="mpResetBtn" aria-label="Reset all My Pulse filters to defaults">
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>Reset to defaults
+        <button type="button" class="settings-opt settings-opt--danger mpd-reset-btn" id="mpResetBtn" aria-label="Reset all My Pulse filters to defaults">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>Reset to defaults
         </button>
-        <span class="settings-note">// prefs saved in localStorage</span>
+        <button type="button" class="btn btn-primary btn-sm" id="myPulseDone">Done</button>
       </div>`;
     wireDrawerEvents();
   }
 
   function wireDrawerEvents() {
     drawer.querySelector('#myPulseClose')?.addEventListener('click', closeDrawer);
+    drawer.querySelector('#myPulseDone')?.addEventListener('click', closeDrawer);
 
     drawer.querySelector('#mpHideSponsored')?.addEventListener('change', e => {
       const p = loadPreferences();
@@ -165,9 +169,6 @@ export function initMyPulse({ render, buildFilters }) {
       btn.classList.toggle('mpd-chip--muted', blocked);
       btn.setAttribute('aria-pressed', String(blocked));
       btn.title = (blocked ? 'Show' : 'Hide') + ' ' + cat + ' articles';
-      const icon = btn.querySelector('span:first-child');
-      const catObj = categories.find(c => c.id === cat);
-      if (icon && catObj) icon.style.color = blocked ? 'var(--ink3)' : catObj.color;
       const countEl = drawer.querySelector('#mpCatCount');
       if (countEl) countEl.textContent = p.blockedCategories.length > 0 ? `(${p.blockedCategories.length} hidden)` : '';
       render();
@@ -195,7 +196,7 @@ export function initMyPulse({ render, buildFilters }) {
       btn.setAttribute('aria-pressed', String(muted));
       btn.title = (muted ? 'Unmute' : 'Mute') + ' ' + src;
       const badge = btn.querySelector('.mpd-src-badge');
-      if (badge) badge.textContent = muted ? 'muted' : '✓ live';
+      if (badge) badge.textContent = muted ? 'Muted' : 'Live';
       const countEl = drawer.querySelector('#mpSrcCount');
       if (countEl) countEl.textContent = p.mutedSources.length > 0 ? `(${p.mutedSources.length} muted)` : '';
       render();
@@ -231,7 +232,10 @@ export function initMyPulse({ render, buildFilters }) {
     });
   }
 
+  let returnFocusTo = null;
+
   function openDrawer() {
+    returnFocusTo = document.activeElement;
     buildDrawerContent();
     drawer.classList.add('open');
     backdrop.classList.add('open');
@@ -239,18 +243,23 @@ export function initMyPulse({ render, buildFilters }) {
     if (!localStorage.getItem('gp:pulse:seen')) localStorage.setItem('gp:pulse:seen', '1');
     const nudge = document.getElementById('pulseNudge');
     if (nudge) nudge.remove();
+    document.body.style.overflow = 'hidden';
     setTimeout(() => {
-      const firstFocus = drawer.querySelector('button,input');
+      const firstFocus = drawer.querySelector('#myPulseClose') || drawer.querySelector('button,input');
       if (firstFocus) firstFocus.focus();
     }, 80);
   }
 
   function closeDrawer() {
+    if (!drawer.classList.contains('open')) return;
     drawer.classList.remove('open');
     backdrop.classList.remove('open');
     myPulseBtn.setAttribute('aria-expanded', 'false');
-    myPulseBtn.focus();
+    document.body.style.overflow = '';
+    restoreFocus(returnFocusTo && returnFocusTo !== document.body ? returnFocusTo : myPulseBtn);
   }
+
+  drawer.addEventListener('keydown', e => trapTabKey(drawer, e));
 
   window.__openMyPulse = openDrawer;
   window.__syncMyPulse = () => { if (drawer.classList.contains('open')) buildDrawerContent(); };
@@ -272,9 +281,9 @@ export function initMyPulse({ render, buildFilters }) {
       nudge.setAttribute('role', 'status');
       nudge.innerHTML = `
         <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--cyan)"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
-        <span>Customize your Pulse in 30 seconds.</span>
-        <button class="pulse-nudge-btn" id="pulseNudgeOpen">Set up My Pulse →</button>
-        <button class="pulse-nudge-close" aria-label="Dismiss this message" id="pulseNudgeDismiss">✕</button>`;
+        <span>Make it yours — hide topics, mute sources and skip sponsored posts in 30 seconds.</span>
+        <button type="button" class="pulse-nudge-btn" id="pulseNudgeOpen">Set up My Pulse</button>
+        <button type="button" class="pulse-nudge-close" aria-label="Dismiss this message" id="pulseNudgeDismiss"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="margin:auto"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`;
       const healthBar = document.getElementById('feedHealthBar');
       const anchor = healthBar || feedGrid;
       if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(nudge, anchor.nextSibling || anchor);

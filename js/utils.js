@@ -93,10 +93,37 @@ export function announce(message) {
   if (el) el.textContent = message;
 }
 
+// ── Focus management for dialogs ──────────────────────────────────
+
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/** Keep Tab / Shift+Tab inside `container`. Call from a keydown handler. */
+export function trapTabKey(container, event) {
+  if (event.key !== 'Tab' || !container) return;
+  const items = Array.from(container.querySelectorAll(FOCUSABLE))
+    .filter(el => el.offsetParent !== null || el === document.activeElement);
+  if (!items.length) return;
+  const first = items[0];
+  const last  = items[items.length - 1];
+  if (event.shiftKey && (document.activeElement === first || !container.contains(document.activeElement))) {
+    event.preventDefault(); last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault(); first.focus();
+  }
+}
+
+/** Return focus to `el` if it is still in the document. */
+export function restoreFocus(el) {
+  if (el && typeof el.focus === 'function' && document.contains(el)) {
+    el.focus({ preventScroll: true });
+  }
+}
+
 // ── Animated counter ──────────────────────────────────────────────
 
 export function animateCounter(el, target, duration = 800) {
   if (!el || isNaN(target)) return;
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) { el.textContent = target; return; }
   const start = performance.now();
   const tick  = now => {
     const p    = Math.min((now - start) / duration, 1);
@@ -111,17 +138,34 @@ export function animateCounter(el, target, duration = 800) {
 
 let toastTimer = null;
 
-export function showBmToast(msg) {
+/**
+ * Show a short status toast. Pass `action` ({ label, onClick }) to add a
+ * button — e.g. "Undo" — which keeps the toast up a little longer.
+ */
+export function showBmToast(msg, action) {
   let toast = document.getElementById('bmToast');
   if (!toast) {
     toast = document.createElement('div');
     toast.id = 'bmToast';
     toast.className = 'bm-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
+  toast.classList.toggle('has-action', Boolean(action));
+  if (action && typeof action.onClick === 'function') {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bm-toast-action';
+    btn.textContent = action.label || 'Undo';
+    btn.addEventListener('click', () => {
+      action.onClick();
+      toast.classList.remove('visible');
+    });
+    toast.appendChild(btn);
+  }
   toast.classList.add('visible');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('visible'), 2400);
+  toastTimer = setTimeout(() => toast.classList.remove('visible'), action ? 6000 : 2400);
 }
-
