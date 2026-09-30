@@ -93698,5 +93698,18 @@
   "summary::Hardly Promethean": "The bottleneck in developing software is not going away, but rather shifting to native applications and Rust on the backend, as the cost of developing these types of applications has decreased significantly due to advancements in low-level programming and the use of large language models.",
   "Commodore 64: Mercenary": "DevOps",
   "Trump administration gets Big Tech to sign weak, non-binding, AI regulations": "DevOps",
-  "sponsored::Trump administration gets Big Tech to sign weak, non-binding, AI regulations": "yes"
+  "sponsored::Trump administration gets Big Tech to sign weak, non-binding, AI regulations": "yes",
+  "A profile of Mariano-Florentino Cuéllar, Anthropic&apos;s first global affairs chief, who had helped shape California&ap": "DevOps",
+  "How to speed up the Rust compiler in September 2026": "Rust",
+  "PSSA: A non-transformer language model written from scratch in Rust": "AI",
+  "Strange Parodies of Atari 2600 Video Game Box Cover Art (2008)": "DevOps",
+  "ESPARGOS - ESP-SDR: Raw IQ Capture with Espressif's ESP32 Chips": "General",
+  "sponsored::A profile of Mariano-Florentino Cuéllar, Anthropic&apos;s first global affairs chief, who had helped shape California&ap": "yes",
+  "sponsored::PSSA: A non-transformer language model written from scratch in Rust": "yes",
+  "sponsored::How to speed up the Rust compiler in September 2026": "yes",
+  "sponsored::Strange Parodies of Atari 2600 Video Game Box Cover Art (2008)": "yes",
+  "sponsored::ESPARGOS - ESP-SDR: Raw IQ Capture with Espressif's ESP32 Chips": "yes",
+  "summary::How to speed up the Rust compiler in September 2026": "The Rust compiler's performance has seen significant improvements, with a mean wall-time reduction of 4.57% over the period 2026-07-29 to 2026-09-28, resulting in a \"sea of green\" effect. The technical term for this result is \"a sea of green\". The improvements are attributed to various key technologies, including the new borrow checker Polonius Alpha, the new trait solver Penelope Hammertime, and the LLVM update. These advancements have resulted in notable speedups across multiple benchmarks, demonstrating the potential for further improvements in the future.",
+  "summary::PSSA: A non-transformer language model written from scratch in Rust": "PSSA is a small language model that reads text one token at a time through a recurrent state-space layer, keeping a bank of episodic memories it can look things up in, and rewrites part of its own weights while it runs, written in Rust from scratch, with no PyTorch, no TensorFlow, and no ML framework underneath it, allowing it to learn faster and generate text more quickly than a transformer on the same corpus and parameters, with a gap of 0.45 nats between the two models' training cross-entropy values.",
+  "summary::ESPARGOS - ESP-SDR: Raw IQ Capture with Espressif's ESP32 Chips": "ESP-SDR Raw IQ Capture with Espressif's ESP32 Chips allows developers to bypass fixed-function modems and capture raw IQ baseband samples, opening up the possibility of using the ESP32 as a low-cost software-defined radio platform. This feature is made possible by Espressif's firmware, which reserves SRAM to write raw IQ samples directly into the chip's internal memory, bypassing normal Wi-Fi processing. The raw IQ path bypasses the fixed-function Wi-Fi modem, giving software access to baseband samples."
 }
