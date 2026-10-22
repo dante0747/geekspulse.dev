@@ -110353,5 +110353,22 @@
   "sponsored::Docker is weird": "yes",
   "sponsored::Spring Batch 6.1.0-RC1 and 6.0.6 available now!": "yes",
   "summary::Arc is being sunset on December 22, 2026": "Arc, a cloud-based infrastructure platform, is being sunset on December 22, 2026. This means that the platform will no longer be supported, and users will no longer be able to access its services. The decision to sunset Arc is likely due to the increasing competition in the cloud infrastructure market, which may have made it difficult for the platform to maintain its market share. As a result, the company will be focusing on its core business of providing infrastructure as a service.",
-  "summary::Docker is weird": "Docker's container runtime is a complex system that combines multiple Linux kernel features to provide a flexible and isolated environment for running applications. While it's a powerful tool, its design choices and implementation can be challenging to understand, especially for developers who are not familiar with Linux syscalls and networking. The fact that Docker requires root access to run a container runtime, which can be a security concern, is also a notable aspect of its design."
+  "summary::Docker is weird": "Docker's container runtime is a complex system that combines multiple Linux kernel features to provide a flexible and isolated environment for running applications. While it's a powerful tool, its design choices and implementation can be challenging to understand, especially for developers who are not familiar with Linux syscalls and networking. The fact that Docker requires root access to run a container runtime, which can be a security concern, is also a notable aspect of its design.",
+  "Canva’s first AI image model plans designs before generating them": "AI",
+  "PC shipments dropped over 20 percent in Q3 due to RAM price hikes": "DevOps",
+  "a hacky fucked up way to portably access errno from outside of c": "General",
+  "Railpass": "General",
+  "Fedora 45 Hits A Second NO-GO: Not Releasing Until November": "General",
+  "Russia's B-1 bomber clone set to get new avionics and a 'modular' architecture — new kit can be added later to boost lon": "DevOps",
+  "Anker Soundcore Space 2 Are at Their Lowest Price Ever": "DevOps",
+  "sponsored::Canva’s first AI image model plans designs before generating them": "yes",
+  "sponsored::Railpass": "yes",
+  "sponsored::PC shipments dropped over 20 percent in Q3 due to RAM price hikes": "yes",
+  "sponsored::a hacky fucked up way to portably access errno from outside of c": "yes",
+  "sponsored::Railway warns devs to rotate secrets after potential breach": "yes",
+  "sponsored::Fedora 45 Hits A Second NO-GO: Not Releasing Until November": "yes",
+  "sponsored::Russia's B-1 bomber clone set to get new avionics and a 'modular' architecture — new kit can be added later to boost lon": "yes",
+  "sponsored::Anker Soundcore Space 2 Are at Their Lowest Price Ever": "yes",
+  "summary::Railpass": "Sami Smith's Railpass is a popular open-source tool for managing and optimizing network routing. The core technology behind Railpass is BGP, or Border Gateway Protocol, which allows for efficient routing of internet traffic. Railpass's implementation of BGP enables developers to easily manage and troubleshoot network routing issues, making it an essential tool for network administrators and developers. By leveraging BGP, developers can improve the performance and reliability of their networks.",
+  "summary::a hacky fucked up way to portably access errno from outside of c": "A hacky way to portably access errno from outside of C involves duplicating standard error file descriptors and modifying low-level functions to redirect stderr to a temporary file. This allows obtaining the error string from perror without relying on a wrapper function written in C."
 }
