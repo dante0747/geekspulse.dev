@@ -114507,5 +114507,21 @@
   "sponsored::This Week in Rust 675": "yes",
   "sponsored::Using Your Own Embeddings in Spring AI 2.1": "yes",
   "sponsored::How we made our MMDB files a 33% smaller": "yes",
-  "summary::How we made our MMDB files a 33% smaller": "The MMDB file format has been optimized to reduce its size by a third, with the new tool mmdbshrink allowing users to shrink existing files by up to 80% without changing a byte of data. This is achieved by rewriting the file in memory, rather than on disk, and by taking advantage of the memory-mapped nature of the file. The reduction in size is due to the removal of unnecessary data and the use of a standard writer that stores both data and pointers in the same location, eliminating the need for decompression or new reader libraries."
+  "summary::How we made our MMDB files a 33% smaller": "The MMDB file format has been optimized to reduce its size by a third, with the new tool mmdbshrink allowing users to shrink existing files by up to 80% without changing a byte of data. This is achieved by rewriting the file in memory, rather than on disk, and by taking advantage of the memory-mapped nature of the file. The reduction in size is due to the removal of unnecessary data and the use of a standard writer that stores both data and pointers in the same location, eliminating the need for decompression or new reader libraries.",
+  "Starlink users heavily surveilled by alleged Israeli spy firm — company served ads to geolocate users and spy on browser": "Security",
+  "Battery Prototype Uses Superextensive Quantum Effects to Charge Faster": "Security",
+  "Want a free Nintendo Switch 2? Upgrade your phone to the Google Pixel 11 Pro or Pro XL at JB Hi-Fi and it’s yours": "DevOps",
+  "Anduril now says its BlueChip laptop will meet Buy American standards at launch": "DevOps",
+  "Google struggling to make AI Mode searches pay": "DevOps",
+  "Nixpkgs for the Front End Impaired": "DevOps",
+  "Human-enhanced tsunami hazard in large lakes": "DevOps",
+  "Why birds can fly over Mount Everest (2020)": "DevOps",
+  "sponsored::ISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156, (Thu, Oct 29th)": "yes",
+  "sponsored::Anduril now says its BlueChip laptop will meet Buy American standards at launch": "yes",
+  "sponsored::Starlink users heavily surveilled by alleged Israeli spy firm — company served ads to geolocate users and spy on browser": "yes",
+  "sponsored::Want a free Nintendo Switch 2? Upgrade your phone to the Google Pixel 11 Pro or Pro XL at JB Hi-Fi and it’s yours": "yes",
+  "sponsored::Battery Prototype Uses Superextensive Quantum Effects to Charge Faster": "yes",
+  "sponsored::Google struggling to make AI Mode searches pay": "yes",
+  "sponsored::Start Doing Graph Theory": "yes",
+  "summary::Start Doing Graph Theory": "Graph theory is a fundamental concept in computer science that can be used to solve complex problems and prove theorems. Mikhail Lavrov's new textbook, Start Doing Graph Theory, provides an introductory guide to the subject, covering topics such as graph traversal and optimization. By applying graph theory to real-world problems, developers can improve their problem-solving skills and gain a deeper understanding of computer science concepts."
 }
