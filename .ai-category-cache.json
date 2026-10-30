@@ -115433,5 +115433,9 @@
   "sponsored::CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "yes",
   "sponsored::CrowdStrike: China-linked hackers used AI tool ARTEX with a DeepSeek LLM and another model to target 200+ organizations ": "yes",
   "sponsored::Binance says initial investigation suggests a compromised DevOps laptop may have enabled a ~$6.3B hack; Tether froze 1.5": "yes",
-  "summary::CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "Linux's TCP stack has a vulnerability that allows attackers to execute arbitrary code after a successful use-after-free attack on a specific socket. This is due to a flaw in the way the Linux kernel handles socket data, which can lead to a denial-of-service attack if exploited. The vulnerability is caused by a combination of a missing check and a flawed implementation of the socket data handling. Patching the issue is crucial to prevent potential security risks to Linux systems."
+  "summary::CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "Linux's TCP stack has a vulnerability that allows attackers to execute arbitrary code after a successful use-after-free attack on a specific socket. This is due to a flaw in the way the Linux kernel handles socket data, which can lead to a denial-of-service attack if exploited. The vulnerability is caused by a combination of a missing check and a flawed implementation of the socket data handling. Patching the issue is crucial to prevent potential security risks to Linux systems.",
+  "TRM Labs attributes the Binance hack to North Korea-based TraderTraitor, which drained ~$6.36B from Binance wallets acro": "Security",
+  "Binance pledges to cover all losses from a ~$6.3B hack, potentially the largest crypto theft ever, surpassing the $1.5B ": "DevOps",
+  "sponsored::TRM Labs attributes the Binance hack to North Korea-based TraderTraitor, which drained ~$6.36B from Binance wallets acro": "yes",
+  "sponsored::Binance pledges to cover all losses from a ~$6.3B hack, potentially the largest crypto theft ever, surpassing the $1.5B ": "yes"
 }
