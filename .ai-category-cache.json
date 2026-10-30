@@ -115422,5 +115422,16 @@
   "sponsored::Cuis: The Modern Smalltalk-80": "yes",
   "summary::Cormac McCarthy&#x27;s Library": "Cormac McCarthy's Library is a comprehensive database of the author's personal library, featuring records for approximately 20,000 of his books. The database allows users to browse and search for specific titles, providing a unique insight into McCarthy's literary tastes. The collection includes annotated copies of some of his most notable works, offering a rare glimpse into the author's reading habits.",
   "summary::Show HN: Lasm – Write formally verified webapps in Lean for Node&#x2F;serverless&#x2F;edge": "Lasm is a tool that allows developers to write formally verified web applications in Lean, a programming language, and compile them ahead of time to WebAssembly, enabling the creation of serverless or edge functions, WASI/Fastly modules, or browser apps. This technology matters to developers because it provides a way to prove properties of the code they deploy, allowing for more reliable and efficient software development.",
-  "summary::Cuis: The Modern Smalltalk-80": "The modern Smalltalk-80 Cuis is a free Smalltalk-80 environment designed to be simple and powerful, portable to any platform, and fast and efficient. It features auto-completion tools, class browsers, and a workspace for coding, making it an ideal choice for small to medium-sized projects."
+  "summary::Cuis: The Modern Smalltalk-80": "The modern Smalltalk-80 Cuis is a free Smalltalk-80 environment designed to be simple and powerful, portable to any platform, and fast and efficient. It features auto-completion tools, class browsers, and a workspace for coding, making it an ideal choice for small to medium-sized projects.",
+  "CrowdStrike: China-linked hackers used AI tool ARTEX with a DeepSeek LLM and another model to target 200+ organizations ": "Security",
+  "Sources: DeepSeek doubled its latest round&apos;s size due to surging black market Nvidia Blackwell chip prices, with Ch": "AI",
+  "Binance says initial investigation suggests a compromised DevOps laptop may have enabled a ~$6.3B hack; Tether froze 1.5": "DevOps",
+  "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "Security",
+  "Solving Postgres&#x27; Count Problem": "DevOps",
+  "sponsored::Sources: DeepSeek doubled its latest round&apos;s size due to surging black market Nvidia Blackwell chip prices, with Ch": "yes",
+  "sponsored::ISC Stormcast For Friday, October 30th, 2026 https://isc.sans.edu/podcastdetail/10158, (Fri, Oct 30th)": "yes",
+  "sponsored::CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "yes",
+  "sponsored::CrowdStrike: China-linked hackers used AI tool ARTEX with a DeepSeek LLM and another model to target 200+ organizations ": "yes",
+  "sponsored::Binance says initial investigation suggests a compromised DevOps laptop may have enabled a ~$6.3B hack; Tether froze 1.5": "yes",
+  "summary::CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation": "Linux's TCP stack has a vulnerability that allows attackers to execute arbitrary code after a successful use-after-free attack on a specific socket. This is due to a flaw in the way the Linux kernel handles socket data, which can lead to a denial-of-service attack if exploited. The vulnerability is caused by a combination of a missing check and a flawed implementation of the socket data handling. Patching the issue is crucial to prevent potential security risks to Linux systems."
 }
