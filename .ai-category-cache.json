@@ -119634,5 +119634,22 @@
   "sponsored::Burnt TOAST": "yes",
   "summary::Local privilege escalation vulnerabilities in Linux": "Local privilege escalation vulnerabilities in Linux are a serious concern for developers. These vulnerabilities allow attackers to gain elevated privileges on a system, potentially leading to unauthorized access to sensitive data and systems. As Linux is widely used in various industries, including cloud computing and DevOps, understanding and addressing these vulnerabilities is crucial for developers to ensure the security of their applications. By learning about local privilege escalation vulnerabilities, developers can take proactive measures to prevent and mitigate them.",
   "summary::Introducing Images 2.6": "Image processing has reached a new milestone with the release of Images 2.6, a major update to Adobe's popular image editing software. The new version boasts improved performance, new tools, and enhanced features that make it easier to work with complex images. Developers will appreciate the increased flexibility and control over image processing, which will enable them to create more sophisticated and realistic graphics. The update is expected to have a significant impact on the development of graphics-intensive applications.",
-  "summary::Burnt TOAST": "Postgres likes to innocuously dub this backronym \"The Oversized-Attribute Storage Technique\" but DBAs in the field maintain a love/hate relationship with the system. This table, event_log, was the canonical ledger of system events and consisted of several million rows. The high row count wasn't a problem by itself, but an unconstrained TEXT type in one of the columns commonly held a large blob of XML, making any fetch from this table inordinately slow."
+  "summary::Burnt TOAST": "Postgres likes to innocuously dub this backronym \"The Oversized-Attribute Storage Technique\" but DBAs in the field maintain a love/hate relationship with the system. This table, event_log, was the canonical ledger of system events and consisted of several million rows. The high row count wasn't a problem by itself, but an unconstrained TEXT type in one of the columns commonly held a large blob of XML, making any fetch from this table inordinately slow.",
+  "I spent a morning with Meta VR Glasses and wish I never had to take them off": "DevOps",
+  "Sources: Goldman Sachs and Apollo are in talks with investors to sell portions of SpaceX&apos;s ~$40B chip financing, as": "General",
+  "Sources: Anthropic and AP struck a licensing deal just before the midterms, marking the first time Anthropic paid a digi": "DevOps",
+  "OpenAI launches Images 2.6 in ChatGPT, Codex, and the API, saying it generates images 50% faster, and adds animated GIF ": "DevOps",
+  "SpaceX – Starfall": "DevOps",
+  "It&#8217;s DOOM, on a Toy Camera": "DevOps",
+  "Bf16 might be freezing your weight updates": "General",
+  "sponsored::Sources: Goldman Sachs and Apollo are in talks with investors to sell portions of SpaceX&apos;s ~$40B chip financing, as": "yes",
+  "sponsored::I spent a morning with Meta VR Glasses and wish I never had to take them off": "yes",
+  "sponsored::[$] LWN.net Weekly Edition for November 5, 2026": "yes",
+  "sponsored::Sources: Anthropic and AP struck a licensing deal just before the midterms, marking the first time Anthropic paid a digi": "yes",
+  "sponsored::OpenAI launches Images 2.6 in ChatGPT, Codex, and the API, saying it generates images 50% faster, and adds animated GIF ": "yes",
+  "sponsored::SpaceX – Starfall": "yes",
+  "sponsored::It&#8217;s DOOM, on a Toy Camera": "yes",
+  "sponsored::Bf16 might be freezing your weight updates": "yes",
+  "summary::Bf16 might be freezing your weight updates": "Bf16 might be freezing your weight updates, which is a common issue when fine-tuning models with weights stored in this specific library. This is due to the way bf16 represents changes to weights, which requires a learning rate of at least 1/512 of the weight itself. This can lead to a sparse fine-tuner that trains the small-magnitude weights and freezes the rest, resulting in a divergent training process.",
+  "summary::SpaceX – Starfall": "SpaceX is set to launch a new spacecraft, Starfall, which is expected to carry a crew of astronauts to the International Space Station. The mission, which is currently in development, aims to demonstrate a new propulsion system that could potentially be used for future deep space missions. The technology behind Starfall is based on a novel approach to propulsion that uses electromagnetic forces to accelerate a spacecraft. As a developer, understanding this technology could be crucial for future space exploration projects."
 }
