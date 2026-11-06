@@ -12,8 +12,8 @@ describe('theme preference', () => {
     localStorage.clear();
     delete document.documentElement.dataset.theme;
     document.head.innerHTML = `
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F6F4">
-      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0C10">`;
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F0E7">
+      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0C0A">`;
   });
 
   it('defaults to following the system', () => {
@@ -41,9 +41,9 @@ describe('theme preference', () => {
   it('forces both theme-color metas to the chosen theme and restores them for system', () => {
     applyTheme('dark');
     const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
-    expect(metas.map(m => m.content)).toEqual(['#0B0C10', '#0B0C10']);
+    expect(metas.map(m => m.content)).toEqual(['#0B0C0A', '#0B0C0A']);
     applyTheme('system');
-    expect(metas.map(m => m.content)).toEqual(['#F6F6F4', '#0B0C10']);
+    expect(metas.map(m => m.content)).toEqual(['#F3F0E7', '#0B0C0A']);
   });
 
   it('initTheme applies the stored preference', () => {

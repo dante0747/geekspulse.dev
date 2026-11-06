@@ -6,7 +6,7 @@ import { PREF } from './storage.js';
 // choice before first paint; this module keeps it in sync afterwards.
 
 export const THEMES = ['system', 'light', 'dark'];
-const THEME_COLORS = { light: '#F6F6F4', dark: '#0B0C10' };
+const THEME_COLORS = { light: '#F3F0E7', dark: '#0B0C0A' };
 
 export function getThemePref() {
   try {

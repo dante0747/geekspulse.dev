@@ -11,7 +11,7 @@ import { loadFeedCache, fetchAllFromRSS, normaliseCachedArticle } from './feed.j
 import { gridCard, listCard, buildSkeletons, cardPlaceholder } from './cards.js';
 import { initSettings } from './settings-panel.js';
 import { initMyPulse } from './pulse-panel.js';
-import { initPayPalModal } from './paypal-modal.js';
+import { renderTicker, renderPulseGraph } from './signal.js';
 import { initSummaryModal, openSummaryModal } from './summary.js';
 import { initTheme } from './theme.js';
 
@@ -258,6 +258,7 @@ function setLoading() {
   statusText.textContent = randomMsg();
   statusText.removeAttribute('title');
   setRefreshBusy(true);
+  syncKeybarStatus();
   hideError();
   // First load: skeletons (unless the server-rendered stories are already
   // showing). Later refreshes keep the current cards in place so the reader
@@ -281,6 +282,7 @@ function setLive() {
     statusText.textContent = `Loaded at ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
   setRefreshBusy(false);
+  syncKeybarStatus();
   const total = feedCount || getFeeds().length;
   const statFeedsEl = document.getElementById('statFeeds');
   if (statFeedsEl && total) animateCounter(statFeedsEl, total, 700);
@@ -291,6 +293,14 @@ function setLive() {
   const activeSourceCount = new Set(allArticles.map(a => a.source).filter(Boolean)).size;
   const statSourcesEl = document.getElementById('statSources');
   if (statSourcesEl) animateCounter(statSourcesEl, activeSourceCount, 850);
+}
+
+/** Mirror the feed status into the bottom key bar. */
+function syncKeybarStatus() {
+  const el = document.getElementById('keybarStatus');
+  if (!el) return;
+  el.textContent = statusText.textContent;
+  el.dataset.state = statusDot.className.replace('status-dot', '').trim();
 }
 
 function setRefreshBusy(busy) {
@@ -418,6 +428,7 @@ function buildFilters() {
   const counts = {};
   allArticles.forEach(a => { counts[a.category] = (counts[a.category] || 0) + 1; });
   const bmCount = loadBookmarks().length;
+  const maxTopic = Math.max(1, ...Object.values(counts));
 
   sidebarFilters.innerHTML = categories.map(c => {
     let count;
@@ -425,8 +436,10 @@ function buildFilters() {
     else if (c.id === 'Bookmarks') count = bmCount;
     else count = counts[c.id] || 0;
     const isActive = c.id === activeFilter;
+    // Share of the busiest topic — drawn as an ncdu-style usage bar.
+    const share = (c.id === 'All' || c.id === 'Bookmarks') ? 0 : count / maxTopic;
     return `
-      <button type="button" class="filter-item${isActive ? ' active' : ''}" data-cat="${esc(c.id)}" aria-pressed="${isActive}">
+      <button type="button" class="filter-item${isActive ? ' active' : ''} ${catClass(c.id)}" data-cat="${esc(c.id)}" aria-pressed="${isActive}" style="--share:${share.toFixed(3)}">
         <span class="fi-icon ${catClass(c.id)}" aria-hidden="true">${c.icon}</span>
         <span class="fi-label">${esc(c.label)}</span>
         <span class="fi-count">${count}</span>
@@ -824,6 +837,8 @@ async function fetchAll() {
   loadSiteVersion();
   buildFilters();
   render({ keepLimit: isRefresh });
+  renderTicker(applyPreferencesFilter(allArticles, loadPreferences()));
+  renderPulseGraph(allArticles);
 
   if (allArticles.length > 0) hideError();
 }
@@ -842,7 +857,7 @@ function showNlMsg(msg, type) {
 
 function isOverlayOpen() {
   return Boolean(document.querySelector(
-    '#summaryModal.open, .pp-modal-backdrop.open, .my-pulse-drawer.open, .settings-popover.open, .cache-confirm-overlay, .nav-drawer.open, dialog[open]'
+    '#summaryModal.open, .my-pulse-drawer.open, .settings-popover.open, .cache-confirm-overlay, .nav-drawer.open, dialog[open]'
   ));
 }
 
@@ -937,7 +952,9 @@ function initKeyboardShortcuts() {
 function renderBriefingDate() {
   const el = document.getElementById('briefingDate');
   if (!el) return;
-  el.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  const d = new Date();
+  el.textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  el.setAttribute('datetime', d.toISOString().slice(0, 10));
 }
 
 // ── Last-visit marker (for "new since your last visit") ──────────
@@ -976,7 +993,6 @@ async function init() {
     startAutoRefresh,
   });
   initMyPulse({ render, buildFilters });
-  initPayPalModal();
   initSummaryModal();
   initShortcutsDialog();
   initKeyboardShortcuts();

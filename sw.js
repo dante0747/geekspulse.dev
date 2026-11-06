@@ -16,7 +16,7 @@
  * Bump VERSION whenever caching behaviour changes; old caches are purged.
  */
 
-const VERSION       = 'v2';
+const VERSION       = 'v3';
 const SHELL_CACHE   = `gp-shell-${VERSION}`;
 const FEED_CACHE    = `gp-feed-${VERSION}`;
 const IMAGE_CACHE   = `gp-images-${VERSION}`;

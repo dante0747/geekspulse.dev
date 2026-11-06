@@ -396,7 +396,7 @@ geekspulse.dev/
 │   ├── theme.js         # Light / dark / system theme preference
 │   ├── pulse-panel.js   # My Pulse drawer (topic/source filters, presets)
 │   ├── summary.js       # AI Summary modal — pre-cached snippets or Ollama fallback
-│   └── paypal-modal.js  # PayPal support modal
+│   └── signal.js        # Headline ticker + 24h activity graph in the header
 ├── favicon.svg          # SVG favicon (also the in-page logo mark)
 ├── manifest.json        # PWA manifest (served from the site root)
 ├── sw.js                # Service worker (must live at the root for full scope)
@@ -437,12 +437,24 @@ geekspulse.dev/
 
 ---
 
-## 🎨 Design System
+## 🎨 Design System — "Signal Terminal"
 
-The UI is a calm, editorial reading surface built on CSS custom properties in `styles.css`. Light is the base theme; dark applies when the OS prefers it or when `<html data-theme="dark">` is set from Settings. Every text token meets WCAG AA (4.5:1) on every surface in both themes.
+GeeksPulse is dressed as a live instrument for developers: a tmux-style status line, an LED headline ticker, btop-style panels with their titles cut into the border, ncdu-style usage bars on every topic, a nano key bar of shortcuts, a `man`-page FAQ, a `tree` source directory and an amber-phosphor accent. Two themes share one token set in `styles.css`: **paper** (light, the base) and **phosphor** (dark, when the OS prefers it or `<html data-theme="dark">` is set from Settings). Text tokens meet WCAG AA (4.5:1) on their surfaces in both themes.
 
-| Token | Light | Dark | Usage |
+| Token | Paper (light) | Phosphor (dark) | Usage |
 |---|---|---|---|
+| `--bg` / `--surface` | `#F3F0E7` / `#FBF9F3` | `#0B0C0A` / `#121410` | Page / panels and cards |
+| `--ink` / `--ink2` / `--ink3` | `#17160F` / `#47443A` / `#6B675A` | `#EDEADC` / `#B8B5A4` / `#8D8B7B` | Headlines / body / metadata |
+| `--accent` / `--accent-fill` | `#9E5600` / `#F2A516` | `#FFB224` / `#FFB224` | Amber text / amber blocks, bars, cursor |
+| `--signal` | `#187A3A` | `#6EF08F` | Live status, "new" badges |
+| `--c-<topic>` | per topic | per topic | Topic LEDs, pills, usage bars, image tints |
+| `--font` / `--mono` / `--dot` | Mona Sans / Martian Mono / Doto | | Reading / interface / dot-matrix numerals |
+
+Story images are shown as a topic-tinted monochrome (a risograph-style duotone) and switch to full colour on hover or focus; stories without an image get an LED-board placeholder with a shell prompt. The header's **pulse** graph plots stories per hour for the last 24 hours from real article timestamps (`js/signal.js`). Motion is limited to short entrance and hover transitions plus the ticker; everything respects `prefers-reduced-motion`. Card layouts adapt to the feed column with container queries (compact media rows on narrow columns, a horizontal lead story on wide ones).
+
+Brand PNGs (`icons/*.png`, `og-image.png`) are rendered from `favicon.svg` by `node scripts/render-brand-assets.mjs` (pass `--logo path/to/logo.png` to render them from a raster logo instead).
+
+---|---|---|---|
 | `--bg` / `--surface` | `#F6F6F4` / `#FFFFFF` | `#0B0C10` / `#14161C` | Page / cards |
 | `--ink` / `--ink2` / `--ink3` | `#15171C` / `#454A55` / `#626773` | `#EDEEF1` / `#AEB4C0` / `#878E9C` | Headlines / body / metadata |
 | `--accent` | `#4F46E5` | `#9496FF` | Links, active states, focus |
@@ -471,16 +483,22 @@ Quick ways to help:
 
 ---
 
-## ☕ Support
+## 💖 Sponsor
 
-GeeksPulse is **free and indie**. No ads, no investors, no data selling.  
-If it saves you from opening 12 tabs today, consider tossing a coffee:
+GeeksPulse is **free and indie**. No ads, no investors, no data selling.
+If it saves you from opening 12 tabs every morning, you can sponsor it on GitHub — monthly or one-time:
 
 <div align="center">
 
-[![Support via PayPal](https://img.shields.io/badge/Support_via-PayPal-bc8cff?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/MajidAbarghooei)
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-dante0747-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dante0747)
 
 </div>
+
+```sh
+$ npm fund
+geekspulse.dev@1.0.0
+└── https://github.com/sponsors/dante0747
+```
 
 ---
 

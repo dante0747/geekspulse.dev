@@ -1,26 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GeeksPulse favicon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GeeksPulse">
   <defs>
-    <linearGradient id="panel" x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#131920"/>
-      <stop offset="0.55" stop-color="#0D1117"/>
-      <stop offset="1" stop-color="#080B10"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="12" y1="10" x2="52" y2="54" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7577F0"/>
-      <stop offset="1" stop-color="#5B5EEA"/>
-    </linearGradient>
+    <pattern id="leds" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="0.9" fill="#FFB224" opacity="0.16"/>
+    </pattern>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
   </defs>
 
-  <!-- Transparent outside corners for browser tabs/bookmarks -->
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#panel)"/>
-  <rect x="5.5" y="5.5" width="53" height="53" rx="12.5" fill="none" stroke="url(#accent)" stroke-width="3"/>
+  <!-- Panel: a dark LED board -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#0B0C0A"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#leds)"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="13.25" fill="none" stroke="#3A3F2F" stroke-width="1.5"/>
 
-  <!-- Terminal prompt: developer/news-feed identity without tiny text -->
-  <path d="M18 21 L29 32 L18 43" fill="none" stroke="#E6EDF3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Pulse: the brand name made visible at favicon size -->
-  <path d="M31 40 H36 L40 25 L45 48 L49 36 H54" fill="none" stroke="#3ECF8E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Pixel-snapped terminal cursor / live signal dot -->
-  <rect x="18" y="48" width="13" height="4" rx="2" fill="#5B5EEA"/>
+  <!-- The pulse: a heartbeat that ends in a terminal cursor -->
+  <g fill="none" stroke="#FFB224" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 37 H20 L25.5 25 L31.5 47 L37.5 15 L42.5 37 H45" opacity="0.55" filter="url(#glow)"/>
+    <path d="M10 37 H20 L25.5 25 L31.5 47 L37.5 15 L42.5 37 H45"/>
+  </g>
+  <rect x="48" y="27" width="8" height="12" rx="1" fill="#6EF08F"/>
 </svg>

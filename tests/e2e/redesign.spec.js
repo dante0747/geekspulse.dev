@@ -117,7 +117,7 @@ test.describe('theme', () => {
     await page.waitForSelector('#feedGrid article.card');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-    expect(bg).toBe('rgb(11, 12, 16)');
+    expect(bg).toBe('rgb(11, 12, 10)');
   });
 
   test.describe('with an OS dark preference', () => {
@@ -127,7 +127,7 @@ test.describe('theme', () => {
       await ready(page);
       await expect(page.locator('html')).not.toHaveAttribute('data-theme', /./);
       const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-      expect(bg).toBe('rgb(11, 12, 16)');
+      expect(bg).toBe('rgb(11, 12, 10)');
     });
   });
 });
@@ -196,15 +196,21 @@ test.describe('panels', () => {
     await expect(trigger).toBeFocused();
   });
 
-  test('support modal only loads its QR code when opened', async ({ page }) => {
+  test('every support link goes straight to GitHub Sponsors', async ({ page }) => {
     await ready(page);
-    const qr = page.locator('#ppModal .pp-qr');
-    expect(await qr.getAttribute('src')).toBeNull();
-    await page.locator('.nav-actions [data-support]').click();
-    await expect(page.locator('#ppModal')).toHaveClass(/open/);
-    expect(await qr.getAttribute('src')).toContain('qrserver');
-    await page.keyboard.press('Escape');
-    await expect(page.locator('#ppModal')).not.toHaveClass(/open/);
+    const links = page.locator('[data-support]');
+    expect(await links.count()).toBeGreaterThanOrEqual(3);
+    for (const href of await links.evaluateAll(els => els.map(el => el.getAttribute('href')))) {
+      expect(href).toBe('https://github.com/sponsors/dante0747');
+    }
+    expect((await page.content()).toLowerCase()).not.toContain('paypal');
+  });
+
+  test('the header ticker and pulse graph are built from the feed', async ({ page }) => {
+    await ready(page);
+    await expect(page.locator('#ticker')).toBeVisible();
+    expect(await page.locator('#tickerTrack .ticker-item a').count()).toBeGreaterThan(0);
+    expect(await page.locator('#pulseBars i').count()).toBe(24);
   });
 
   test('clearing saved stories can be undone', async ({ page }) => {
