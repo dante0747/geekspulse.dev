@@ -28,7 +28,7 @@ const ALL_CACHES = [SHELL_CACHE, FEED_CACHE, IMAGE_CACHE, RUNTIME_CACHE];
 const SHELL_ASSETS = [
   '/',
   '/styles.css',
-  '/favicon.svg',
+  '/icons/logo-96.png',
   '/manifest.json',
 ];
 

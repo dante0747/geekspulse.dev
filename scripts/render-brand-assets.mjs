@@ -1,16 +1,23 @@
 /**
  * scripts/render-brand-assets.mjs
  *
- * Renders the PNG brand assets from favicon.svg with headless Chromium
- * (Playwright, already a dev dependency):
+ * Builds every brand asset from two master images in assets/brand/:
  *
- *   icons/icon-192.png, icons/icon-512.png   transparent corners ("any")
- *   icons/maskable-512.png                   full-bleed, mark inside the safe zone
- *   icons/apple-touch-icon.png               full-bleed 180×180
- *   og-image.png                             1200×630 social preview card
+ *   assets/brand/logo.png        square logo, transparent background
+ *   assets/brand/og-source.jpg   link-preview artwork (any landscape size)
  *
- * Run after changing the logo:  node scripts/render-brand-assets.mjs
- * Pass --logo path/to/logo.png to render the icons from a raster logo instead.
+ * Outputs
+ *   favicon.ico                      16 / 32 / 48 px (PNG-in-ICO)
+ *   icons/favicon-32.png             browser tab
+ *   icons/logo-96.png                in-page logo (nav, footer, legal pages)
+ *   icons/icon-192.png, icon-512.png PWA icons, transparent corners ("any")
+ *   icons/maskable-512.png           PWA maskable, full-bleed, mark in safe zone
+ *   icons/apple-touch-icon.png       180×180, full-bleed
+ *   og-image.jpg                     1200×630 Open Graph / Twitter / WhatsApp /
+ *                                    Telegram preview, kept under 300 KB
+ *
+ * Resizing runs in headless Chromium (Playwright is already a dev dependency).
+ * Run: node scripts/render-brand-assets.mjs [--logo file] [--og file]
  */
 
 import fs from 'node:fs/promises';
@@ -18,81 +25,124 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT  = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PANEL = '#0B0C0A';
+const OG_MAX_BYTES = 300 * 1024;
 
-const logoArg = process.argv.indexOf('--logo');
-const logoPath = logoArg > -1 ? path.resolve(process.argv[logoArg + 1]) : path.join(ROOT, 'favicon.svg');
-const logoExt = path.extname(logoPath).slice(1).toLowerCase();
-const logoMime = logoExt === 'svg' ? 'image/svg+xml' : `image/${logoExt === 'jpg' ? 'jpeg' : logoExt}`;
-const logoUrl = `data:${logoMime};base64,${(await fs.readFile(logoPath)).toString('base64')}`;
+const arg = (name, fallback) => {
+  const i = process.argv.indexOf(name);
+  return path.resolve(i > -1 ? process.argv[i + 1] : path.join(ROOT, fallback));
+};
+const LOGO = arg('--logo', 'assets/brand/logo.png');
+const OG   = arg('--og', 'assets/brand/og-source.jpg');
 
-function iconHtml(size, { bleed, pad }) {
-  const inner = Math.round(size * (1 - pad * 2));
-  return `<!doctype html><html><body style="margin:0">
-    <div style="width:${size}px;height:${size}px;display:grid;place-items:center;background:${bleed ? PANEL : 'transparent'}">
-      <img src="${logoUrl}" width="${inner}" height="${inner}" style="display:block">
-    </div></body></html>`;
+async function dataUrl(file) {
+  const ext = path.extname(file).slice(1).toLowerCase();
+  const mime = ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'webp' ? 'image/webp' : 'image/png';
+  return `data:${mime};base64,${(await fs.readFile(file)).toString('base64')}`;
 }
-
-const OG_HTML = `<!doctype html><html><head>
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@800..900&family=Martian+Mono:wdth,wght@75..112.5,400..700&family=Mona+Sans:wdth,wght@75..125,500..900&display=block" rel="stylesheet">
-<style>
-  * { margin: 0; box-sizing: border-box; }
-  body { width: 1200px; height: 630px; overflow: hidden; background: ${PANEL}; color: #EDEADC; font-family: 'Mona Sans', sans-serif; }
-  .board { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,178,36,.13) 1.2px, transparent 1.8px); background-size: 16px 16px;
-           -webkit-mask-image: linear-gradient(115deg, transparent 30%, #000 95%); }
-  .glow  { position: absolute; inset: 0; background: radial-gradient(70% 90% at 100% 0%, rgba(255,178,36,.16), transparent 60%); }
-  .wrap  { position: absolute; inset: 64px 72px 56px; display: flex; flex-direction: column; }
-  .top   { display: flex; align-items: center; gap: 18px; }
-  .top img { width: 72px; height: 72px; }
-  .name  { font: 700 34px/1 'Martian Mono', monospace; font-stretch: 87.5%; letter-spacing: -.03em; }
-  .name b { color: #FFB224; font-weight: 700; }
-  .air   { margin-left: auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: #FFB224; color: #140F05;
-           font: 700 15px/1 'Martian Mono', monospace; letter-spacing: .16em; text-transform: uppercase; }
-  .air i { width: 10px; height: 10px; border-radius: 50%; background: #D7261E; box-shadow: 0 0 10px #FF3B30; }
-  h1     { margin-top: 54px; font-size: 84px; font-weight: 800; font-stretch: 80%; line-height: .96; letter-spacing: -.03em; max-width: 14ch; }
-  h1 span { color: #8D8B7B; }
-  h1::after { content: ''; display: inline-block; width: .42em; height: .78em; margin-left: .1em; vertical-align: -.04em; background: #FFB224; box-shadow: 0 0 22px rgba(255,178,36,.6); }
-  .foot  { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
-  .meta  { font: 500 19px/1.6 'Martian Mono', monospace; font-stretch: 87.5%; color: #B8B5A4; }
-  .meta em { font-style: normal; color: #6EF08F; }
-  .bars  { display: flex; align-items: flex-end; gap: 5px; height: 110px; }
-  .bars i { width: 11px; background: linear-gradient(to top, rgba(255,178,36,.35), #FFB224); border-radius: 1px 1px 0 0; }
-  .bars i:last-child { background: #6EF08F; box-shadow: 0 0 12px rgba(110,240,143,.6); }
-</style></head><body>
-  <div class="board"></div><div class="glow"></div>
-  <div class="wrap">
-    <div class="top"><img src="${logoUrl}" alt=""><div class="name">geeks<b>pulse</b>.dev</div><div class="air"><i></i>on air</div></div>
-    <h1>Today's developer news, <span>minus the noise.</span></h1>
-    <div class="foot">
-      <p class="meta"><em>❯</em> 50+ hand-picked feeds · AI · security · DevOps<br>Rust · Go · Python · JS · Java · open source<br><em>❯</em> no ads · no paywalls · no algorithm</p>
-      <div class="bars">${[18, 24, 14, 30, 22, 40, 34, 52, 46, 61, 55, 72, 66, 88, 70, 95, 80, 60, 74, 48, 36, 28, 20, 34]
-        .map(h => `<i style="height:${h}%"></i>`).join('')}</div>
-    </div>
-  </div>
-</body></html>`;
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
+await page.setContent('<!doctype html><html><body></body></html>');
 
-const icons = [
-  ['icons/icon-192.png',         192, { bleed: false, pad: 0 }],
-  ['icons/icon-512.png',         512, { bleed: false, pad: 0 }],
-  ['icons/maskable-512.png',     512, { bleed: true,  pad: 0.1 }],
-  ['icons/apple-touch-icon.png', 180, { bleed: true,  pad: 0.04 }],
-];
-for (const [out, size, opts] of icons) {
-  await page.setViewportSize({ width: size, height: size });
-  await page.setContent(iconHtml(size, opts));
-  await page.screenshot({ path: path.join(ROOT, out), omitBackground: !opts.bleed });
-  console.log(`[brand] ✓ ${out}`);
+/**
+ * Draw `src` into a w×h canvas and return the encoded bytes.
+ * fit: 'contain' (letterbox inside `inset`) or 'cover' (crop to fill).
+ * Downscales in halving steps for a sharper result than one big jump.
+ */
+async function render(src, { w, h, fit = 'contain', inset = 0, bg = null, type = 'image/png', quality }) {
+  const b64 = await page.evaluate(async ({ src, w, h, fit, inset, bg, type, quality }) => {
+    const img = new Image();
+    img.src = src;
+    await img.decode();
+    let source = img, sw = img.naturalWidth, sh = img.naturalHeight;
+
+    // Target box for the image
+    let dw, dh, dx, dy, sx = 0, sy = 0, cw = sw, ch = sh;
+    if (fit === 'cover') {
+      const scale = Math.max(w / sw, h / sh);
+      cw = w / scale; ch = h / scale;
+      sx = (sw - cw) / 2; sy = (sh - ch) / 2;
+      dw = w; dh = h; dx = 0; dy = 0;
+    } else {
+      const box = Math.round(Math.min(w, h) * (1 - inset * 2));
+      const scale = Math.min(box / sw, box / sh);
+      dw = Math.round(sw * scale); dh = Math.round(sh * scale);
+      dx = Math.round((w - dw) / 2); dy = Math.round((h - dh) / 2);
+    }
+
+    // Step down by halves until within 2× of the target
+    let curW = cw, curH = ch;
+    let step = document.createElement('canvas');
+    step.width = Math.round(cw); step.height = Math.round(ch);
+    step.getContext('2d').drawImage(source, sx, sy, cw, ch, 0, 0, step.width, step.height);
+    while (curW / 2 >= dw && curH / 2 >= dh) {
+      const next = document.createElement('canvas');
+      next.width = Math.round(curW / 2); next.height = Math.round(curH / 2);
+      const nx = next.getContext('2d');
+      nx.imageSmoothingQuality = 'high';
+      nx.drawImage(step, 0, 0, next.width, next.height);
+      step = next; curW = next.width; curH = next.height;
+    }
+
+    const out = document.createElement('canvas');
+    out.width = w; out.height = h;
+    const ctx = out.getContext('2d');
+    if (bg) { ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h); }
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(step, 0, 0, step.width, step.height, dx, dy, dw, dh);
+    return out.toDataURL(type, quality).split(',')[1];
+  }, { src, w, h, fit, inset, bg, type, quality });
+  return Buffer.from(b64, 'base64');
 }
 
-await page.setViewportSize({ width: 1200, height: 630 });
-await page.setContent(OG_HTML, { waitUntil: 'networkidle' });
-await page.evaluate(() => document.fonts.ready);
-await page.screenshot({ path: path.join(ROOT, 'og-image.png') });
-console.log('[brand] ✓ og-image.png');
+/** Pack PNG images into a single .ico (Vista+ PNG-compressed entries). */
+function packIco(entries) {
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); header.writeUInt16LE(1, 2); header.writeUInt16LE(entries.length, 4);
+  const dir = Buffer.alloc(16 * entries.length);
+  let offset = 6 + dir.length;
+  entries.forEach(({ size, png }, i) => {
+    const o = i * 16;
+    dir.writeUInt8(size >= 256 ? 0 : size, o);
+    dir.writeUInt8(size >= 256 ? 0 : size, o + 1);
+    dir.writeUInt8(0, o + 2); dir.writeUInt8(0, o + 3);
+    dir.writeUInt16LE(1, o + 4); dir.writeUInt16LE(32, o + 6);
+    dir.writeUInt32LE(png.length, o + 8); dir.writeUInt32LE(offset, o + 12);
+    offset += png.length;
+  });
+  return Buffer.concat([header, dir, ...entries.map(e => e.png)]);
+}
+
+const write = async (rel, buf) => {
+  await fs.writeFile(path.join(ROOT, rel), buf);
+  console.log(`[brand] ✓ ${rel} (${Math.round(buf.length / 1024)} KB)`);
+};
+
+const logo = await dataUrl(LOGO);
+
+await write('icons/favicon-32.png',       await render(logo, { w: 32,  h: 32 }));
+await write('icons/logo-96.png',          await render(logo, { w: 96,  h: 96 }));
+await write('icons/icon-192.png',         await render(logo, { w: 192, h: 192 }));
+await write('icons/icon-512.png',         await render(logo, { w: 512, h: 512 }));
+await write('icons/maskable-512.png',     await render(logo, { w: 512, h: 512, inset: 0.1, bg: PANEL }));
+await write('icons/apple-touch-icon.png', await render(logo, { w: 180, h: 180, inset: 0.03, bg: PANEL }));
+
+const ico = [];
+for (const size of [16, 32, 48]) ico.push({ size, png: await render(logo, { w: size, h: size }) });
+await write('favicon.ico', packIco(ico));
+
+try {
+  const og = await dataUrl(OG);
+  let quality = 0.9, jpg;
+  do {
+    jpg = await render(og, { w: 1200, h: 630, fit: 'cover', bg: PANEL, type: 'image/jpeg', quality });
+    quality -= 0.05;
+  } while (jpg.length > OG_MAX_BYTES && quality > 0.5);
+  await write('og-image.jpg', jpg);
+} catch (err) {
+  console.warn(`[brand] og-image skipped: ${err.message}`);
+}
 
 await browser.close();

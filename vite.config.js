@@ -7,7 +7,7 @@ import path from 'node:path';
 // /privacy.html …) that Vite does not bundle. Copy them into dist/ so a
 // production build is a complete, deployable mirror of the site.
 const ROOT_STATIC = [
-  'sw.js', 'manifest.json', 'favicon.svg', 'og-image.png', 'robots.txt', 'sitemap.xml',
+  'sw.js', 'manifest.json', 'favicon.ico', 'og-image.jpg', 'robots.txt', 'sitemap.xml',
   'privacy.html', 'terms.html', 'CNAME', '.nojekyll',
   'icons', 'assets/fallbacks', 'data/feeds.json', 'public', '.well-known',
 ];

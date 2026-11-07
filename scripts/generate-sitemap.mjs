@@ -31,7 +31,7 @@ async function main() {
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>${BASE_URL}/og-image.png</image:loc>
+      <image:loc>${BASE_URL}/og-image.jpg</image:loc>
       <image:title>GeeksPulse — Developer News Aggregator</image:title>
       <image:caption>Developer news from curated RSS feeds. No ads, no paywalls, no ad trackers.</image:caption>
     </image:image>
