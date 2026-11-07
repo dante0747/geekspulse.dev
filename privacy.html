@@ -19,16 +19,23 @@
   <meta property="og:url" content="https://geekspulse.dev/privacy.html" />
   <meta property="og:title" content="Privacy Policy — GeeksPulse" />
   <meta property="og:site_name" content="GeeksPulse" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta property="og:image" content="https://geekspulse.dev/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://geekspulse.dev/og-image.jpg" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@500..900&family=Martian+Mono:wdth,wght@75..112.5,300..700&family=Mona+Sans:wdth,wght@75..125,300..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     .legal-page { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
-    .legal-page h1 { font-size: 2rem; margin-bottom: 0.3em; }
+    .legal-page h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; font-stretch: 84%; letter-spacing: -0.02em; margin-bottom: 0.3em; }
     .legal-page .legal-meta { font-family: var(--mono); font-size: 12px; color: var(--ink3); margin-bottom: 2.5rem; }
-    .legal-page h2 { font-size: 1.1rem; margin: 2rem 0 0.6rem; color: var(--cyan); font-family: var(--mono); }
+    .legal-page h2 { font-size: 0.95rem; margin: 2.2rem 0 0.6rem; color: var(--accent); font-family: var(--mono); font-weight: 700; }
     .legal-page p, .legal-page li { font-size: 0.93rem; line-height: 1.75; color: var(--ink2); }
     .legal-page ul { margin: 0.5rem 0 1rem 1.25rem; }
     .legal-page a { color: var(--cyan); }
@@ -41,8 +48,8 @@
     <div class="page-wrap">
       <div class="nav-inner">
         <a href="/" class="logo" aria-label="GeeksPulse home">
-          <img class="logo-mark" src="/favicon.svg" alt="" width="28" height="28" />
-          <span class="logo-name">GeeksPulse</span>
+          <img class="logo-mark" src="/icons/logo-96.png" alt="" width="28" height="28" />
+          <span class="logo-name">geeks<span class="logo-accent">pulse</span></span>
         </a>
       </div>
     </div>
@@ -79,9 +86,9 @@
 
       <h2>// Third-party services</h2>
       <ul>
-        <li><strong>Google Fonts.</strong> We load typefaces (Inter, JetBrains Mono) from <code>fonts.googleapis.com</code>. Google may log font requests. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</li>
+        <li><strong>Google Fonts.</strong> We load typefaces (Mona Sans, Martian Mono and Doto) from <code>fonts.googleapis.com</code>. Google may log font requests. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</li>
         <li><strong>CORS proxy services.</strong> To work around browser same-origin restrictions when fetching RSS feeds, requests are routed through one of several free CORS proxies (api.codetabs.com, corsproxy.io, allorigins.win, etc.). Only the RSS feed URL is sent — no personal information.</li>
-        <li><strong>PayPal (optional donation).</strong> If you choose to donate, you are redirected to PayPal's own site. We receive only your transaction confirmation. See <a href="https://www.paypal.com/webapps/mpp/ua/privacy-full" target="_blank" rel="noopener noreferrer">PayPal's Privacy Policy</a>.</li>
+        <li><strong>GitHub Sponsors (optional).</strong> If you choose to sponsor the project, you are taken to GitHub Sponsors and the payment is handled entirely by GitHub. GeeksPulse never sees your payment details; GitHub shares only what its sponsorship settings allow. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub&rsquo;s Privacy Statement</a>.</li>
       </ul>
 
       <h2>// Cookies</h2>

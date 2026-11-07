@@ -16,7 +16,7 @@
  * Bump VERSION whenever caching behaviour changes; old caches are purged.
  */
 
-const VERSION       = 'v2';
+const VERSION       = 'v3';
 const SHELL_CACHE   = `gp-shell-${VERSION}`;
 const FEED_CACHE    = `gp-feed-${VERSION}`;
 const IMAGE_CACHE   = `gp-images-${VERSION}`;
@@ -28,7 +28,7 @@ const ALL_CACHES = [SHELL_CACHE, FEED_CACHE, IMAGE_CACHE, RUNTIME_CACHE];
 const SHELL_ASSETS = [
   '/',
   '/styles.css',
-  '/favicon.svg',
+  '/icons/logo-96.png',
   '/manifest.json',
 ];
 
