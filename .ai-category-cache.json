@@ -126344,5 +126344,22 @@
   "sponsored::Cambridge, UK-based Tendrils, which is designing a CPU architecture with thousands of cores operating in parallel, raise": "yes",
   "sponsored::Pointer Provenance in Rust vs C++": "yes",
   "sponsored::Jonathan Blow – If AI solved coding, why is my software still the same? [video]": "yes",
-  "summary::Pointer Provenance in Rust vs C++": "Pointer provenance in Rust vs C++ is a crucial concept that allows the compiler to track the allocation of memory for pointers, enabling it to determine whether a pointer can be safely dereferenced. This is achieved through the use of vtables, which map function pointers to their corresponding function bodies. In Rust, this is done using a combination of compile-time and runtime checks, while in C++, it is done at runtime using the `opaque` function. The compiler assumes that a pointer cannot be equal to a pointer that has been derived from another pointer, and therefore, it can be safely dereferenced. However, the actual provenance of a pointer is not stored in the memory address itself, but rather in the compiler's internal data structure. This means that even if the compiler knows about the provenance of a pointer, it cannot inspect it directly. Instead, it relies on the LLVM IR, which provides a low-level representation of the program's memory layout."
+  "summary::Pointer Provenance in Rust vs C++": "Pointer provenance in Rust vs C++ is a crucial concept that allows the compiler to track the allocation of memory for pointers, enabling it to determine whether a pointer can be safely dereferenced. This is achieved through the use of vtables, which map function pointers to their corresponding function bodies. In Rust, this is done using a combination of compile-time and runtime checks, while in C++, it is done at runtime using the `opaque` function. The compiler assumes that a pointer cannot be equal to a pointer that has been derived from another pointer, and therefore, it can be safely dereferenced. However, the actual provenance of a pointer is not stored in the memory address itself, but rather in the compiler's internal data structure. This means that even if the compiler knows about the provenance of a pointer, it cannot inspect it directly. Instead, it relies on the LLVM IR, which provides a low-level representation of the program's memory layout.",
+  "Operand, which offers AI-powered due diligence tools for PE firms, raised $31M across a seed and a Series A led by Khosl": "DevOps",
+  "Open Source DocumentDB 1.0 Reaches General Availability": "General",
+  "WhiteMatter, which builds \"guardian\" AI agents to oversee file access, software use, decision making, and actions of exi": "Security",
+  "Outlook Went Down? Microsoft May Owe You Money": "DevOps",
+  "FAA allows flights to resume after hours-long ground stop across the US": "DevOps",
+  "Charta Health, which offers AI-powered tools to automate medical chart review, billing, and coding workflows, raised a $": "DevOps",
+  "Luminal, which provides an inference cloud and develops inference compiler software to test running AI models on differe": "DevOps",
+  "ESP32 Flight Tracker on Apple CRT": "DevOps",
+  "sponsored::Operand, which offers AI-powered due diligence tools for PE firms, raised $31M across a seed and a Series A led by Khosl": "yes",
+  "sponsored::Outlook Went Down? Microsoft May Owe You Money": "yes",
+  "sponsored::Open Source DocumentDB 1.0 Reaches General Availability": "yes",
+  "sponsored::WhiteMatter, which builds \"guardian\" AI agents to oversee file access, software use, decision making, and actions of exi": "yes",
+  "sponsored::FAA allows flights to resume after hours-long ground stop across the US": "yes",
+  "sponsored::Charta Health, which offers AI-powered tools to automate medical chart review, billing, and coding workflows, raised a $": "yes",
+  "sponsored::Luminal, which provides an inference cloud and develops inference compiler software to test running AI models on differe": "yes",
+  "sponsored::ESP32 Flight Tracker on Apple CRT": "yes",
+  "summary::Jonathan Blow – If AI solved coding, why is my software still the same? [video]": "Jonathan Blow – If AI solved coding, why is my software still the same Jonathan Blow, a renowned video game designer, discusses the limitations of artificial intelligence in software development, highlighting the challenges of creating intuitive and user-friendly interfaces."
 }
