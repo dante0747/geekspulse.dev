@@ -126810,5 +126810,20 @@
   "sponsored::007 First Light composers reveal their inspirations for the game’s soundtrack — ‘Our mission we set ourselves was to giv": "yes",
   "sponsored::FAA blames ground stop on faulty copper wiring": "yes",
   "sponsored::Write your own kernel optimiser": "yes",
-  "summary::Write your own kernel optimiser": "Write your own kernel optimiser | Csongor Kiss before the browser paints. Runs synchronously, no defer/async. --> Skip to content Optimising a program is done in one of two ways. The first is to write down a program that computes the result we want, and hope that the compiler is smart enough to make it fast. The second, when that isn’t enough, is to rewrite it by hand, so that its data flow matches the hardware. This is where abstractions break down. When the compiler gives up on something written with a nice Python library, we end up writing custom kernels, intrinsics, and inline assembly. Both rely on transformations that preserve meaning only under conditions, such as the output not overlapping the inputs. Compiler optimisations let us keep our original program, but hide the transformations. Hand-optimised code shows the result of the transformations, but hides where we started from."
+  "summary::Write your own kernel optimiser": "Write your own kernel optimiser | Csongor Kiss before the browser paints. Runs synchronously, no defer/async. --> Skip to content Optimising a program is done in one of two ways. The first is to write down a program that computes the result we want, and hope that the compiler is smart enough to make it fast. The second, when that isn’t enough, is to rewrite it by hand, so that its data flow matches the hardware. This is where abstractions break down. When the compiler gives up on something written with a nice Python library, we end up writing custom kernels, intrinsics, and inline assembly. Both rely on transformations that preserve meaning only under conditions, such as the output not overlapping the inputs. Compiler optimisations let us keep our original program, but hide the transformations. Hand-optimised code shows the result of the transformations, but hides where we started from.",
+  "Parsing nested lists in BQN": "General",
+  "'You can suddenly float to the 30,000-foot level and understand how it’s all supposed to work together' — Original Mass ": "DevOps",
+  "23andMe&apos;s Anne Wojcicki, formerly married to Google co-founder Sergey Brin, says Jensen Huang&apos;s affair shows w": "DevOps",
+  "Let's Employ": "General",
+  "Today I learned why wind farms paint one turbine blade black": "DevOps",
+  "Which NVIDIA GPU is closest to the PS5? The answer isn't so simple": "DevOps",
+  "500 Lines or Less A 3D Modeller": "DevOps",
+  "sponsored::Parsing nested lists in BQN": "yes",
+  "sponsored::23andMe&apos;s Anne Wojcicki, formerly married to Google co-founder Sergey Brin, says Jensen Huang&apos;s affair shows w": "yes",
+  "sponsored::Let's Employ": "yes",
+  "sponsored::'You can suddenly float to the 30,000-foot level and understand how it’s all supposed to work together' — Original Mass ": "yes",
+  "sponsored::Today I learned why wind farms paint one turbine blade black": "yes",
+  "sponsored::Which NVIDIA GPU is closest to the PS5? The answer isn't so simple": "yes",
+  "summary::Parsing nested lists in BQN": "The problem of parsing nested lists in BQN involves working with pairs of lists, where each pair is separated by a blank line. A suitable format for working with the data is to parse it all into one list of pairs of lists. This can be achieved using three different approaches: using •BQN to do the heavy lifting, writing a conventional recursive descent parser, or writing an array-style parser.",
+  "summary::Let's Employ": "Let's Employ Draft oJobPub 1.0.0-draft is open for feedback Publish jobs on your own website. Let the whole web find them. oJobPub is a free, open format for job openings. Add one small file to your website, and job boards, search engines and apps can list your jobs, while applications still come straight to you."
 }
