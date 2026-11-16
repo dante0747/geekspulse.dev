@@ -127474,5 +127474,21 @@
   "sponsored::Amazon Uncovers AI Agent Campaign Targeting LiteLLM, Dify, and Other Apps for API Keys": "yes",
   "sponsored::BO Team Exploits Log4Shell in VMware vCenter, Compromises Russian Firm's Code-Signing Server": "yes",
   "sponsored::Techie rigged off-spec fan near flammable liquid and an exposed motherboard, then left it to run for days": "yes",
-  "sponsored::Microsoft’s Azure Linux dons Fedora to dress itself up for mainstream workloads": "yes"
+  "sponsored::Microsoft’s Azure Linux dons Fedora to dress itself up for mainstream workloads": "yes",
+  "Startups unveil plans to develop floating offshore data centers to bypass land and power constraints, while experts warn": "DevOps",
+  "Uno Platform 7.0 Adds WebGPU Backend, Apple TV and Reactor Support, and Retires Native Rendering": "DevOps",
+  "Alpine Linux Users Urged to Patch OpenSSH Authentication Flaw": "Security",
+  "Russia is bringing young foreign influencers to occupied Ukraine, encouraging them to share their highly curated experie": "Security",
+  "Copenhagen-based AI accounting software maker Sumary raised a $25M seed led by Singular, taking its total funding to $29": "DevOps",
+  "AI agent management platform Kindo raised $30M led by Crosspoint and Forgepoint, taking its total funding to $57.6M, and": "AI",
+  "Making Atuin sync 32x faster with packfiles": "General",
+  "sponsored::Kernel prepatch 7.4-rc3": "yes",
+  "sponsored::Alpine Linux Users Urged to Patch OpenSSH Authentication Flaw": "yes",
+  "sponsored::Startups unveil plans to develop floating offshore data centers to bypass land and power constraints, while experts warn": "yes",
+  "sponsored::Uno Platform 7.0 Adds WebGPU Backend, Apple TV and Reactor Support, and Retires Native Rendering": "yes",
+  "sponsored::Russia is bringing young foreign influencers to occupied Ukraine, encouraging them to share their highly curated experie": "yes",
+  "sponsored::Copenhagen-based AI accounting software maker Sumary raised a $25M seed led by Singular, taking its total funding to $29": "yes",
+  "sponsored::AI agent management platform Kindo raised $30M led by Crosspoint and Forgepoint, taking its total funding to $57.6M, and": "yes",
+  "sponsored::Making Atuin sync 32x faster with packfiles": "yes",
+  "summary::Making Atuin sync 32x faster with packfiles": "Atuin sync is now 32x faster, with many thousands of records synced in single-digit seconds. This improvement is due to the client building packfiles to work around the constraint of end-to-end encryption, which prevents the server from reading, compressing, or bundling data. The packfiles collect multiple records and store them in fast Tigris-backed object storage, fully encrypted with the same PASETO-based algorithm used for records. This paradigm shift in sync improves performance, reducing the constant factor in sync times, and making it more suitable for active users."
 }
