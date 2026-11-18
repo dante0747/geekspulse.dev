@@ -129187,5 +129187,18 @@
   "sponsored::Daily disruptive outages that ground planes and halt work – welcome to the new normal": "yes",
   "sponsored::GPU giants throw HPC users some tasty crumbs": "yes",
   "sponsored::Python Bytes: #505 Introducing diskcache-oxide": "yes",
-  "sponsored::PyCon: PyCon US 2027 - Call for Proposals Now Open!": "yes"
+  "sponsored::PyCon: PyCon US 2027 - Call for Proposals Now Open!": "yes",
+  "FreeBSD GUS": "General",
+  "Coding on Windows? Redmond May Already Know.": "DevOps",
+  "Sources: a faction of Nvidia board members is pushing for Jensen Huang&apos;s return despite Chair Harvey Jones stating ": "Security",
+  "After two months of testimony, the US criminal trial against Huawei, accused of bank fraud and trade secret theft, is se": "DevOps",
+  "Harvard researchers find AI coding agents shifted the bottleneck to code review": "DevOps",
+  "sponsored::Coding on Windows? Redmond May Already Know.": "yes",
+  "sponsored::Attackers Used Optimizely to A/B Test Malware on Top Websites": "yes",
+  "sponsored::FreeBSD GUS": "yes",
+  "sponsored::Sources: a faction of Nvidia board members is pushing for Jensen Huang&apos;s return despite Chair Harvey Jones stating ": "yes",
+  "sponsored::After two months of testimony, the US criminal trial against Huawei, accused of bank fraud and trade secret theft, is se": "yes",
+  "sponsored::Harvard researchers find AI coding agents shifted the bottleneck to code review": "yes",
+  "summary::FreeBSD GUS": "FreeBSD's GUS is a safe memory reclamation scheme that uses a quiescent point to ensure memory is freed only after all CPUs have passed through a certain point, providing a barrier between threads and preventing concurrent access to potentially-freed memory. This is achieved through a combination of read and synchronize operations, which block quiescent points and inhibit preemption during read operations. The scheme is part of the Epoch-based reclamation family and has been described in detail by its author, Paul McKenney, in his LWN Articles.",
+  "summary::Harvard researchers find AI coding agents shifted the bottleneck to code review": "Harvard researchers found that AI coding agents shifted the bottleneck to code review, adding about 30 percent more code to firms that adopted these agents without increasing finished work or review time. The study, which measured the impact of AI coding agents on code review, found that the pattern of increased code production and delayed review persists across 718 companies and 725,938 workers."
 }
