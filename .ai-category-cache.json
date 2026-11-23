@@ -132676,5 +132676,15 @@
   "sponsored::What we learned operating auth for 1k APIs": "yes",
   "sponsored::Kodak’s next collectible is a tiny digital photo frame that doubles as a tracker": "yes",
   "summary::What we learned operating auth for 1k APIs": "The incident involving a critical bug in the authentication system of a popular API, which prevented refreshed credentials from being saved to the database, highlights the importance of token rotation in maintaining secure connections. The bug was caused by a faulty if condition that never fired, leading to hundreds of connections being discarded without access and refresh tokens. The incident has taught developers that token rotation is a security win and that a bug in the rotation path can permanently destroy a connection, making it a costly issue to resolve.",
-  "summary::De-fanging dangerous triggers in GitHub Actions across an organization": "GitHub Actions, a popular workflow management tool, can be vulnerable to certain types of attacks. To mitigate this, developers can use a technique called \"de-fanging\" to identify and remove sensitive triggers from their workflows. This involves analyzing the workflow configuration to detect and remove any triggers that could be used to launch malicious attacks. By doing so, developers can significantly reduce the risk of their workflows being compromised."
+  "summary::De-fanging dangerous triggers in GitHub Actions across an organization": "GitHub Actions, a popular workflow management tool, can be vulnerable to certain types of attacks. To mitigate this, developers can use a technique called \"de-fanging\" to identify and remove sensitive triggers from their workflows. This involves analyzing the workflow configuration to detect and remove any triggers that could be used to launch malicious attacks. By doing so, developers can significantly reduce the risk of their workflows being compromised.",
+  "How the World Draws the World": "DevOps",
+  "Alexandr Wang says the Riemann Hypothesis proof shows AI will surpass humans in every field, including AI research, and ": "Security",
+  "Arva AI, which builds AI agents for banks&apos; financial-crime compliance teams and counts Wise as a customer, raised a": "DevOps",
+  "Good morning and welcome to my idea of a new web": "General",
+  "The Unlicensed Gospel: Wisdom Tree&#x27;s Bible Games on the Game Boy": "DevOps",
+  "sponsored::Alexandr Wang says the Riemann Hypothesis proof shows AI will surpass humans in every field, including AI research, and ": "yes",
+  "sponsored::Good morning and welcome to my idea of a new web": "yes",
+  "sponsored::Arva AI, which builds AI agents for banks&apos; financial-crime compliance teams and counts Wise as a customer, raised a": "yes",
+  "sponsored::How the World Draws the World": "yes",
+  "summary::Good morning and welcome to my idea of a new web": "The new web is a platform that allows users to view and edit Markdown files directly in their browser, without the need for external software or plugins. This is achieved through a custom implementation that renders Markdown files as pages, rather than just rendering the source code. The web also features a reader app that can modify the CSS and run JavaScript code, allowing users to customize the rendering and functionality of the platform."
 }
